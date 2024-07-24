@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
 import './navbar.css';
 import logo from '../../assets/RRlogo.png'
+import { Link } from 'react-router-dom';
 
 const Menu = () => (
     <>
@@ -25,7 +26,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="rr__navbar-sign">
-                <p><a href="#login">Login</a></p>
+                <p><Link to="login">Login</Link></p>
                 <button type="button">Zarejestruj</button>
             </div>
             <div className="rr__navbar-menu">
