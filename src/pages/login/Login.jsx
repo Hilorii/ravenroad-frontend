@@ -22,7 +22,7 @@ const LoginPage = () => {
                 <h2>Jesteś gotowy na podróż?</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="username">Username:</label>
+                        <label htmlFor="username">Nazwa użytkownika:</label>
                         <input
                             type="text"
                             id="username"
@@ -32,7 +32,7 @@ const LoginPage = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password:</label>
+                        <label htmlFor="password">Hasło:</label>
                         <input
                             type="password"
                             id="password"
