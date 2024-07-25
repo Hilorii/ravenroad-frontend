@@ -1,0 +1,71 @@
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.bg {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:-moz-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+    /* safari 5.1+,chrome 10+ */
+    background:-webkit-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+    /* opera 11.10+ */
+    background:-o-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+    /* ie 10+ */
+    background:-ms-radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+
+    /* global 92%+ browsers support */
+    background:radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 25%);
+}
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+form {
+    color: white;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: darkblue;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+button:hover {
+    background-color: #0056b3;
+}
+
+img {
+    width: 100px;  /* Szerokość obrazka */
+    height: auto;  /* Automatyczne skalowanie wysokości */
+    margin-bottom: 20px; /* Odstęp pod obrazkiem */
+}
