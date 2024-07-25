@@ -1,18 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
-import './login.css';
+//import './login.css';
 import logo from '../../assets/RRlogo.png';
-import { Link } from 'react-router-dom';
+
+// document.getElementById('togglePassword').addEventListener('click', function () {
+//     const passwordInput = document.getElementById('password');
+//     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+//     passwordInput.setAttribute('type', type);
+//     this.textContent = type === 'password' ? 'Pokaż' : 'Ukryj';
+// });
 
 const LoginPage = () => {
-
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordInput = document.getElementById('password');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        this.textContent = type === 'password' ? 'Pokaż' : 'Ukryj';
-    });
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -33,7 +31,7 @@ const LoginPage = () => {
         <div className="bg">
             <div className="login-container">
                 <img src={logo} alt="Logo" className="login-logo"/>
-                <h1>Witaj ponownie!</h1>
+                <h1>Zapomniałeś hasła?</h1>
                 <h2>Jesteś gotowy na podróż?</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -59,7 +57,7 @@ const LoginPage = () => {
                     </div>
                     <button className='logIn' type="submit">Zaloguj się</button>
                     <div className='link1'>
-                        <a><Link to="../passwordForgot">Zapomniałeś hasła?</Link></a>
+                        <a href='/PasswordForgot'>Zapomniałeś hasła?</a>
                     </div>
                     <div className='link2'>
                         <a href='/Signup'>Zarejestruj się!</a>
@@ -69,7 +67,5 @@ const LoginPage = () => {
         </div>
     );
 };
-
-
 
 export default LoginPage;

@@ -6,6 +6,9 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import LoginPage from './pages/login/Login';
+import SignupPage from './pages/signup/Signup';
+import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
+
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
@@ -14,6 +17,8 @@ root.render(
          <Routes>
              <Route path="" element={<App tab="./App"/>}/>
              <Route path="/login" element={<LoginPage tab="./pages/login/Login"/>}/>
+             <Route path="/passwordForgot" element={<PasswordForgotPage tab="./pages/passwordForgot/PasswordForgot"/>}/>
+             <Route path="/signup" element={<SignupPage tab="./pages/signup/Signup"/>}/>
          </Routes>
     </Router>
  );
