@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 
 const SignupPage = () => {
-    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -14,9 +13,6 @@ const SignupPage = () => {
         confirmPassword: ''
     });
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(prevState => !prevState);
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,28 +54,19 @@ const SignupPage = () => {
                     <div>
                         <input
                             placeholder="Hasło"
-                            type={showPassword ? "text" : "password"}
+                            type="password"
                             id="password"
                             name="password"
                             value={formData.password}
-                            onChange={handleChange}
                         />
-                        <button
-                            type="button"
-                            id="togglePassword"
-                            onClick={togglePasswordVisibility}
-                        >
-                            {showPassword ? 'Ukryj' : 'Pokaż'}
-                        </button>
                     </div>
                     <div>
                         <input
                             placeholder="Powtórz hasło"
-                            type={showPassword ? "text" : "password"}
+                            type="password"
                             id="confirmPassword"
                             name="confirmPassword"
                             value={formData.confirmPassword}
-                            onChange={handleChange}
                         />
                     </div>
                     <button className='logIn' type="submit">Zarejestruj się</button>
