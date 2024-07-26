@@ -1,30 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
-//import './login.css';
+import '../login/login.css';
 import logo from '../../assets/RRlogo.png';
 
-// document.getElementById('togglePassword').addEventListener('click', function () {
-//     const passwordInput = document.getElementById('password');
-//     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-//     passwordInput.setAttribute('type', type);
-//     this.textContent = type === 'password' ? 'Pokaż' : 'Ukryj';
-// });
 
-const LoginPage = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const PasswordForgot = () => {
+    const email = '';
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // Tutaj można dodać logikę logowania
-        console.log('Username:', username);
-        console.log('Password:', password);
-    };
+        console.log('Username:', email);
 
-    const [showPassword, setShowPassword] = useState(false);
-
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
     };
 
     return (
@@ -32,32 +19,20 @@ const LoginPage = () => {
             <div className="login-container">
                 <img src={logo} alt="Logo" className="login-logo"/>
                 <h1>Zapomniałeś hasła?</h1>
-                <h2>Jesteś gotowy na podróż?</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input
-                            placeholder="Nazwa użytkownika"
+                            placeholder="Email"
                             type="text"
-                            id="username"
-                            name="username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            id="email"
+                            name="email"
+                            value={email}
                         />
                     </div>
-                    <div className="form-group password">
-                        <input
-                            placeholder="Hasło"
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button type='button' id='togglePassword'>Pokaż</button>
-                    </div>
-                    <button className='logIn' type="submit">Zaloguj się</button>
+
+                    <button className='logIn' type="submit">Zresetuj hasło</button>
                     <div className='link1'>
-                        <a href='/PasswordForgot'>Zapomniałeś hasła?</a>
+                        <a href='/login'>Zaloguj się!</a>
                     </div>
                     <div className='link2'>
                         <a href='/Signup'>Zarejestruj się!</a>
@@ -68,4 +43,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default PasswordForgot;
