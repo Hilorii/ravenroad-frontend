@@ -6,12 +6,6 @@ import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
 
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordInput = document.getElementById('password');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        this.textContent = type === 'password' ? 'Pokaż' : 'Ukryj';
-    });
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -28,6 +22,7 @@ const LoginPage = () => {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
 
     return (
         <div className="bg">
@@ -49,13 +44,15 @@ const LoginPage = () => {
                     <div className="form-group password">
                         <input
                             placeholder="Hasło"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             id="password"
                             name="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <button type='button' id='togglePassword'>Pokaż</button>
+                        <button type='button' id='togglePassword' onClick={togglePasswordVisibility}>
+                            {showPassword ? 'Ukryj' : 'Pokaż'}
+                        </button>
                     </div>
                     <button className='logIn' type="submit">Zaloguj się</button>
                     <div className='link1'>
@@ -69,7 +66,6 @@ const LoginPage = () => {
         </div>
     );
 };
-
 
 
 export default LoginPage;
