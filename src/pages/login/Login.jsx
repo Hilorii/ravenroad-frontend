@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import axios from 'axios';
 import './login.css';
 import logo from '../../assets/RRlogo.png';
 import { Link } from 'react-router-dom';
@@ -7,14 +8,36 @@ import { Link } from 'react-router-dom';
 const LoginPage = () => {
 
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Tutaj można dodać logikę logowania
-        console.log('Username:', username);
-        console.log('Password:', password);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form data:', formData);
+        axios.post('http://localhost:3000/login', formData) // Sprawdź, czy URL jest poprawny
+            .then(response => {
+                if (response && response.data) {
+                    alert('User logged in successfully');
+                    // Możesz tu dodać logikę przekierowania do innej strony po zalogowaniu
+                } else {
+                    alert('Unexpected response format');
+                }
+            })
+            .catch(error => {
+                console.error('There was an error logging in!', error);
+                if (error.response && error.response.data) {
+                    alert('Login failed: ' + error.response.data);
+                } else {
+                    alert('Login failed: An unexpected error occurred');
+                }
+            });
     };
 
     const [showPassword, setShowPassword] = useState(false);
@@ -33,22 +56,23 @@ const LoginPage = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input
-                            placeholder="Nazwa użytkownika"
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Email"
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                         />
                     </div>
                     <div className="form-group password">
                         <input
                             placeholder="Hasło"
-                            type={showPassword ? "text" : "password"}
+                            //type={showPassword ? "text" : "password"}
+                            type="password"
                             id="password"
                             name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={formData.password}
+                            onChange={handleChange}
                         />
                         <button type='button' id='togglePassword' onClick={togglePasswordVisibility}>
                             {showPassword ? 'Ukryj' : 'Pokaż'}

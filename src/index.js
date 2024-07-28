@@ -15,7 +15,7 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
      <Router>
          <Routes>
-             <Route path="" element={<App tab="./App"/>}/>
+             <Route path="/" element={<App tab="./App"/>}/>
              <Route path="/login" element={<LoginPage tab="./pages/login/Login"/>}/>
              <Route path="/passwordForgot" element={<PasswordForgotPage tab="./pages/passwordForgot/PasswordForgot"/>}/>
              <Route path="/signup" element={<SignupPage tab="./pages/signup/Signup"/>}/>

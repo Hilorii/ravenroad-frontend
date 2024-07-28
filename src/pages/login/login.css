@@ -64,9 +64,9 @@ button:hover {
 }
 
 img {
-    width: 100%;  /* Szerokość obrazka */
-    height: auto;  /* Automatyczne skalowanie wysokości */
-    margin-bottom: 20px; /* Odstęp pod obrazkiem */
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
 }
 .link1 {
     padding-top: 20px;
