@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import '../login/login.css';
 import './signup.css'
 import logo from '../../assets/RRlogo.png'; // Zaktualizuj ścieżkę do obrazka
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 const SignupPage = () => {
@@ -13,6 +14,7 @@ const SignupPage = () => {
         confirmPassword: ''
     });
 
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,8 +23,24 @@ const SignupPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Implementacja logiki rejestracji, np. walidacja danych, wysłanie do serwera itp.
-        console.log('Form data submitted:', formData);
+        console.log('Form data:', formData);
+        axios.post('http://localhost:5000/Signup', formData) // Sprawdź, czy URL jest poprawny
+            .then(response => {
+                if (response && response.data) {
+                    alert('User signed up successfully');
+                    navigate('/');
+                } else {
+                    alert('Unexpected response format');
+                }
+            })
+            .catch(error => {
+                console.error('There was an error signing up!', error);
+                if (error.response && error.response.data) {
+                    alert('Sign up failed: ' + error.response.data);
+                } else {
+                    alert('Sign up failed: An unexpected error occurred');
+                }
+            });
     };
 
     return (
@@ -58,6 +76,7 @@ const SignupPage = () => {
                             id="password"
                             name="password"
                             value={formData.password}
+                            onChange={handleChange}
                         />
                     </div>
                     <div>
@@ -67,6 +86,7 @@ const SignupPage = () => {
                             id="confirmPassword"
                             name="confirmPassword"
                             value={formData.confirmPassword}
+                            onChange={handleChange}
                         />
                     </div>
                     <button className='logIn' type="submit">Zarejestruj się</button>

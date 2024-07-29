@@ -3,11 +3,11 @@ import { useState } from 'react';
 import axios from 'axios';
 import './login.css';
 import logo from '../../assets/RRlogo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -21,11 +21,11 @@ const LoginPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        axios.post('http://localhost:3000/login', formData) // Sprawdź, czy URL jest poprawny
+        axios.post('http://localhost:5000/login', formData) // Sprawdź, czy URL jest poprawny
             .then(response => {
                 if (response && response.data) {
                     alert('User logged in successfully');
-                    // Możesz tu dodać logikę przekierowania do innej strony po zalogowaniu
+                    navigate('/');
                 } else {
                     alert('Unexpected response format');
                 }
@@ -67,8 +67,7 @@ const LoginPage = () => {
                     <div className="form-group password">
                         <input
                             placeholder="Hasło"
-                            //type={showPassword ? "text" : "password"}
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             id="password"
                             name="password"
                             value={formData.password}
