@@ -6,7 +6,6 @@ import logo from '../../assets/RRlogo.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -21,7 +20,7 @@ const LoginPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        axios.post('http://localhost:5000/login', formData) // Sprawdź, czy URL jest poprawny
+        axios.post('http://localhost:5000/login', formData, { withCredentials: true })
             .then(response => {
                 if (response && response.data) {
                     alert('User logged in successfully');
