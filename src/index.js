@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
+import { UserProvider } from './contexts/UserContext';
 
 import './index.css';
 import App from './App';
@@ -11,14 +12,16 @@ import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 
 
 const container = document.getElementById('root');
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
+const root = createRoot(container);
 root.render(
-     <Router>
-         <Routes>
-             <Route path="/" element={<App tab="./App"/>}/>
-             <Route path="/login" element={<LoginPage tab="./pages/login/Login"/>}/>
-             <Route path="/passwordForgot" element={<PasswordForgotPage tab="./pages/passwordForgot/PasswordForgot"/>}/>
-             <Route path="/signup" element={<SignupPage tab="./pages/signup/Signup"/>}/>
-         </Routes>
-    </Router>
+    <UserProvider>
+         <Router>
+             <Routes>
+                 <Route path="/" element={<App tab="./App"/>}/>
+                 <Route path="/login" element={<LoginPage tab="./pages/login/Login"/>}/>
+                 <Route path="/passwordForgot" element={<PasswordForgotPage tab="./pages/passwordForgot/PasswordForgot"/>}/>
+                 <Route path="/signup" element={<SignupPage tab="./pages/signup/Signup"/>}/>
+             </Routes>
+        </Router>
+    </UserProvider>
  );

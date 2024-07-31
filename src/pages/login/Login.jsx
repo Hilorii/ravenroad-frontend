@@ -1,12 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
+import { React, useState, useContext } from 'react';
 import axios from 'axios';
 import './login.css';
 import logo from '../../assets/RRlogo.png';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
     const [formData, setFormData] = useState({
         email: '',
         password: ''
