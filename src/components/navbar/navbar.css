@@ -6,6 +6,17 @@
     padding: 2rem 2rem;
 }
 
+.avatar-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+}
+.avatar-button:hover  {
+    background-color: transparent;
+    cursor: pointer;
+    Box-shadow: 5px 10px inset;
+}
+
 .rr__navbar-links {
     flex: 1;
     display: flex;
@@ -48,8 +59,22 @@
     cursor: pointer;
 }
 
-.rr__navbar-sign button,
-.rr__navbar-menu_container button {
+/*.rr__navbar-sign button,*/
+/*.rr__navbar-menu_container button {*/
+/*    padding: 0.5rem 1rem;*/
+/*    color: #fff;*/
+/*    background: #FF4820;*/
+/*    font-family: var(--font-family) ;*/
+/*    font-weight: 500;*/
+/*    font-size: 18px;*/
+/*    line-height: 25px;*/
+/*    border-radius: 5px;*/
+/*    border: 0;*/
+/*    outline: none;*/
+/*    cursor: pointer;*/
+/*}*/
+
+.signup {
     padding: 0.5rem 1rem;
     color: #fff;
     background: #FF4820;
@@ -62,6 +87,7 @@
     outline: none;
     cursor: pointer;
 }
+
 
 .rr__navbar-menu {
     margin-left: 1rem;
@@ -131,8 +157,4 @@
     .rr__navbar-menu_container-links-sign {
         display: block;
     }
-}
-
-.navbar-user {
-    color: white;
 }

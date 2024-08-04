@@ -5,6 +5,7 @@ import logo from '../../assets/RRlogo.png'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
+import { AvatarDemo } from  '../tamagui'
 
 const Menu = () => (
     <>
@@ -19,6 +20,7 @@ const Navbar = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const [toggleMenu, setToggleMenu] = useState(false);
+    const Avatar = AvatarDemo();
     return (
         <div className="rr__navbar">
             <div className="rr__navbar-links">
@@ -32,21 +34,12 @@ const Navbar = () => {
             <div className="rr__navbar-sign">
                 {user ? (
                     <div className="navbar-user">
-                        <img src='../../assets/default-avatar.jpg' className="navbar-avatar" />
-                        <span>{user.username}</span>
-                        <div className="dropdown">
-                            <button className="dropbtn">Menu</button>
-                            <div className="dropdown-content">
-                                <Link to="/profile">Profile</Link>
-                                <Link to="/settings">Settings</Link>
-                                <Link to="/logout">Logout</Link>
-                            </div>
-                        </div>
+                        <button className="avatar-button">{Avatar}</button>
                     </div>
                 ) : (
                     <>
                     <p><Link to="login">Login</Link></p>
-                    <button onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
+                    <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
                     </>
                 )}
             </div>

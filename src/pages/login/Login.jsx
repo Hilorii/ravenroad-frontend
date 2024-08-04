@@ -25,6 +25,7 @@ const LoginPage = () => {
             .then(response => {
                 if (response && response.data) {
                     alert('User logged in successfully');
+                    setUser(response.data);
                     navigate('/');
                 } else {
                     alert('Unexpected response format');
