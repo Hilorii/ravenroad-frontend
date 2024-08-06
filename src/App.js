@@ -6,7 +6,6 @@ import {CTA, Brand, Navbar} from './components'
 import "./App.css"
 
 const App = () => {
-
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 

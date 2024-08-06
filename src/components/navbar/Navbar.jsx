@@ -5,7 +5,9 @@ import logo from '../../assets/RRlogo.png'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
-import { AvatarDemo } from  '../tamagui'
+
+//Tamagui imports
+import { PopoverDemo } from '../../components/tamagui/avatar-popover'
 
 const Menu = () => (
     <>
@@ -16,11 +18,11 @@ const Menu = () => (
     </>
 )
 
+
 const Navbar = () => {
-    const { user } = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const navigate = useNavigate();
     const [toggleMenu, setToggleMenu] = useState(false);
-    const Avatar = AvatarDemo();
     return (
         <div className="rr__navbar">
             <div className="rr__navbar-links">
@@ -34,11 +36,12 @@ const Navbar = () => {
             <div className="rr__navbar-sign">
                 {user ? (
                     <div className="navbar-user">
-                        <button className="avatar-button">{Avatar}</button>
+                        <PopoverDemo/>
+
                     </div>
                 ) : (
                     <>
-                    <p><Link to="login">Login</Link></p>
+                        <p><Link to="login">Login</Link></p>
                     <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
                     </>
                 )}
