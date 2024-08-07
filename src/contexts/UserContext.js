@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 export const UserContext = createContext();
@@ -36,3 +36,5 @@ export const UserProvider = ({ children }) => {
         </UserContext.Provider>
     );
 };
+
+export const useUser = () => useContext(UserContext);

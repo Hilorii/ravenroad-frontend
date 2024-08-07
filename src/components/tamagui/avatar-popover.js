@@ -4,7 +4,8 @@ import { Adapt, Button, Input, Label, Popover, XStack, YStack, Avatar} from 'tam
 import { AvatarDemo } from  './avatar'
 import React from "react";
 import '../navbar/navbar.css'
-import { Image, View, StyleSheet } from 'react-native';
+
+import { useUser } from '../../contexts/UserContext'
 
 
 import { styled } from '@tamagui/core';
@@ -28,13 +29,18 @@ export function PopoverDemo() {
     return (
         <Demo placement="bottom" Icon={AvatarDemo} Name="bottom-popover" />
     )
-
 }
 export function Demo({
                          Icon,
                          Name,
                          ...props
                      }: PopoverProps & { Icon?: any; Name?: string }) {
+
+    const { logout } = useUser();
+
+    const handleLogout = () => {
+        logout();
+    };
 
     return (
         <Popover size="$5" allowFlip {...props}>
@@ -103,12 +109,10 @@ export function Demo({
 
                         <Button
                             size="$3"
-                            onPress={() => {
-                                /* Custom code goes here, does not interfere with popover closure */
-                            }}
+                            onClick={handleLogout}
                         >
 
-                            Submit
+                            Wyloguj
 
                         </Button>
 
