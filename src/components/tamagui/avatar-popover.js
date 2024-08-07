@@ -3,44 +3,50 @@ import type { PopoverProps } from 'tamagui'
 import { Adapt, Button, Input, Label, Popover, XStack, YStack, Avatar} from 'tamagui'
 import { AvatarDemo } from  './avatar'
 import React from "react";
+import '../navbar/navbar.css'
+import { Image, View, StyleSheet } from 'react-native';
 
+
+import { styled } from '@tamagui/core';
+
+const CustomButton = styled(Button, {
+    backgroundColor: 'transparent',
+    color:  'transparent',
+    padding: '1px 2px',
+    border: 'none',
+    borderRadius: '50px',
+    cursor: 'pointer',
+    outline: 'none',
+    hoverStyle: {
+        border: 'none',
+        backgroundColor: 'transparent',
+    },
+
+});
 
 export function PopoverDemo() {
     return (
         <Demo placement="bottom" Icon={AvatarDemo} Name="bottom-popover" />
-        // <XStack gap="$2" flex={1} justifyContent="center" alignItems="center">
-        //     <Demo placement="bottom"   Name="bottom-popover">
-        //         <Avatar circular size="$8">
-        //             <Avatar.Image
-        //                 accessibilityLabel="Cam"
-        //                 src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-        //                 // src='../assets/default-avatar'
-        //             />
-        //             <Avatar.Fallback backgroundColor="$blue10" />
-        //         </Avatar>
-        //     </Demo>
-        // </XStack>
-
     )
 
 }
 export function Demo({
-
                          Icon,
-
                          Name,
-
                          ...props
-
                      }: PopoverProps & { Icon?: any; Name?: string }) {
 
     return (
-
         <Popover size="$5" allowFlip {...props}>
 
             <Popover.Trigger asChild>
 
-                <Button icon={Icon} />
+                {/*<Button icon={Icon} />*/}
+                {/*<button className="avatar-button">*/}
+                {/*    <img src={Avatar}/>*/}
+                {/*</button>*/}
+
+                <CustomButton icon={Icon}/>
 
             </Popover.Trigger>
             <Adapt when="sm" platform="touch">
@@ -79,6 +85,7 @@ export function Demo({
             >
 
                 <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
+
                 <YStack gap="$3">
 
                     <XStack gap="$3">

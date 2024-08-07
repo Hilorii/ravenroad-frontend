@@ -9,6 +9,7 @@ import { UserContext } from '../../contexts/UserContext';
 //Tamagui imports
 import { PopoverDemo } from '../../components/tamagui/avatar-popover'
 
+
 const Menu = () => (
     <>
         <p><a href="#pro">Pro</a></p>
@@ -37,7 +38,6 @@ const Navbar = () => {
                 {user ? (
                     <div className="navbar-user">
                         <PopoverDemo/>
-
                     </div>
                 ) : (
                     <>

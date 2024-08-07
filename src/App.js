@@ -9,6 +9,7 @@ const App = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
+
     useEffect(() => {
         axios.get('http://localhost:5000/user', { withCredentials: true })
             .then(response => {

@@ -1,8 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { TamaguiProvider, createTamagui } from '@tamagui/core';
+
 import { config } from '@tamagui/config/v3';
+import { TamaguiProvider, createTamagui } from '@tamagui/core';
 
 import { UserProvider } from './contexts/UserContext';
 import './index.css';
@@ -11,9 +12,9 @@ import LoginPage from './pages/login/Login';
 import SignupPage from './pages/signup/Signup';
 import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 
+const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
 const root = createRoot(container);
-const tamaguiConfig = createTamagui(config);
 
 root.render(
     <TamaguiProvider config={tamaguiConfig}>
