@@ -6,7 +6,7 @@ import React from "react";
 import '../navbar/navbar.css'
 
 import { useUser } from '../../contexts/UserContext'
-
+import { useNavigate } from 'react-router-dom';
 
 import { styled } from '@tamagui/core';
 
@@ -37,9 +37,11 @@ export function Demo({
                      }: PopoverProps & { Icon?: any; Name?: string }) {
 
     const { logout } = useUser();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
+        navigate('/');
     };
 
     return (
@@ -110,6 +112,7 @@ export function Demo({
                         <Button
                             size="$3"
                             onClick={handleLogout}
+
                         >
 
                             Wyloguj
