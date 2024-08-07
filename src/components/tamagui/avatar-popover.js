@@ -48,14 +48,7 @@ export function Demo({
         <Popover size="$5" allowFlip {...props}>
 
             <Popover.Trigger asChild>
-
-                {/*<Button icon={Icon} />*/}
-                {/*<button className="avatar-button">*/}
-                {/*    <img src={Avatar}/>*/}
-                {/*</button>*/}
-
                 <CustomButton icon={Icon}/>
-
             </Popover.Trigger>
             <Adapt when="sm" platform="touch">
 

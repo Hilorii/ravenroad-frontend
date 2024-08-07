@@ -5,7 +5,6 @@ import logo from '../../assets/RRlogo.png'; // Zaktualizuj ścieżkę do obrazka
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 const SignupPage = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -14,6 +13,7 @@ const SignupPage = () => {
         confirmPassword: ''
     });
 
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -23,22 +23,30 @@ const SignupPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form data:', formData);
+
+        // Sprawdzenie, czy hasła są zgodne
+        if (formData.password !== formData.confirmPassword) {
+            setErrorMessage('Hasła nie są zgodne.');
+            return;
+        }
+
+        setErrorMessage(''); // Resetowanie wiadomości o błędzie, jeśli hasła są zgodne
+
         axios.post('http://localhost:5000/Signup', formData) // Sprawdź, czy URL jest poprawny
             .then(response => {
                 if (response && response.data) {
-                    alert('User signed up successfully');
-                    navigate('/');
+                    alert('Użytkownik został pomyślnie zarejestrowany');
+                    navigate('/login');
                 } else {
-                    alert('Unexpected response format');
+                    alert('Nieoczekiwany format odpowiedzi');
                 }
             })
             .catch(error => {
-                console.error('There was an error signing up!', error);
+                console.error('Wystąpił błąd podczas rejestracji!', error);
                 if (error.response && error.response.data) {
-                    alert('Sign up failed: ' + error.response.data);
+                    alert('Rejestracja nie powiodła się: ' + error.response.data);
                 } else {
-                    alert('Sign up failed: An unexpected error occurred');
+                    alert('Rejestracja nie powiodła się: Wystąpił nieoczekiwany błąd');
                 }
             });
     };
@@ -89,9 +97,10 @@ const SignupPage = () => {
                             onChange={handleChange}
                         />
                     </div>
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                     <button className='logIn' type="submit">Zarejestruj się</button>
                     <div className='link2'>
-                        <a href='/login'>Zaloguj się!</a>
+                        <Link to="/login">Zaloguj się!</Link>
                     </div>
                 </form>
             </div>
