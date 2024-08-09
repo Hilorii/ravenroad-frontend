@@ -1,7 +1,7 @@
 import React from 'react';
 import type { PopoverProps } from 'tamagui';
 import { Adapt, Button, Input, Label, Popover, XStack, YStack } from 'tamagui';
-import { AvatarDemo } from './avatar';  // Upewnij się, że ścieżka jest poprawna
+import { AvatarDemo } from './avatar';
 import '../navbar/navbar.css';
 
 import { useUser } from '../../contexts/UserContext';
@@ -90,22 +90,26 @@ export function Demo({
             >
                 <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
                 <YStack gap="$3">
+
                     <XStack gap="$3">
                         <Label size="$3" htmlFor={Name}>
                             Name
                         </Label>
                         <Input size="$3" id={Name} />
                     </XStack>
+
                     <Popover.Close asChild>
                         <Button size="$3" onClick={handleProfileClick}>
                             Inne coś
                         </Button>
                     </Popover.Close>
+
                     <Popover.Close asChild>
                         <Button size="$3" onClick={handleLogout}>
                             Wyloguj
                         </Button>
                     </Popover.Close>
+                    
                 </YStack>
             </Popover.Content>
         </Popover>
