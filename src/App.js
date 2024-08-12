@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {Footer, Blog, Possibility, Features, WhatRR, Header} from "./containers";
 import {CTA, Brand, Navbar} from './components'
 import "./App.css"
+import { UserContext } from './contexts/UserContext'
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -27,19 +28,24 @@ const App = () => {
 
     return (
         <div className="App">
-            <div className="gradient__bg">
+        <div className="gradient__bg">
+            <div className="">
                 <Navbar/>
                 {/*<Header/>*/}
             </div>
-            {/*<Brand/>*/}
-            {/*<WhatRR/>*/}
-            {/*<Features/>*/}
-            {/*<Possibility/>*/}
-            {/*<CTA/>*/}
-            {/*<Blog/>*/}
-            {/*<Footer/>*/}
+            {user ? (
+                <div className="">
+                </div>
+                ) : (
+                <div className="">
+                </div>
+            )}
+
         </div>
+        </div>
+
     )
 }
 export default App
+
 

@@ -1,3 +1,23 @@
-.bg {
-  background-color: red;
+.editProfileLabel {
+  border: none;
+}
+.avatar-input {
+  display: none;
+}
+
+/* Stylizacja niestandardowego przycisku */
+.custom-file-upload {
+  background-color: #F8F8F8;
+  color: black;
+  padding: 10px 20px;
+  border: pink;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.custom-file-upload:hover {
+  background-color: #ddd8d8;
+}
+.center-container {
 }

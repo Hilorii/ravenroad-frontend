@@ -5,6 +5,7 @@ import { Navbar } from '../../components/index';
 
 import { AvatarDemo } from '../../components/tamagui/avatar';
 import { ButtonDemo } from '../../components/tamagui/buttons';
+import { DialogDemo } from '../../components/tamagui/edit-profile';
 
 import { useUser } from '../../contexts/UserContext';
 import axios from 'axios';
@@ -12,7 +13,7 @@ import axios from 'axios';
 
 const ProfilePage = () => {
     const { username } = useParams();
-    const { user, setUser } = useUser(); // Użycie kontekstu użytkownika
+    const { user, setUser } = useUser();
     const [isEditing, setIsEditing] = useState(false);
     const [updatedUser, setUpdatedUser] = useState({
         name: '',
@@ -65,6 +66,7 @@ const ProfilePage = () => {
 
     return (
         <div className="App">
+            <DialogDemo/>
             <div className="gradient__bg">
                 <Navbar />
 
@@ -79,6 +81,7 @@ const ProfilePage = () => {
                                 <AvatarDemo />
                             )}
                         </div>
+
                         {isEditing ? (
                             <div className="profile-edit-form">
                                 <label>
@@ -119,6 +122,7 @@ const ProfilePage = () => {
                                 <button onClick={() => setIsEditing(true)}>Edit Profile</button>
                             </div>
                         )}
+
                     </div>
                 </div>
             </div>
