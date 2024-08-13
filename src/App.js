@@ -6,6 +6,8 @@ import {CTA, Brand, Navbar} from './components'
 import "./App.css"
 import { UserContext } from './contexts/UserContext'
 
+import { CardDemo } from './components/tamagui/pro-card';
+
 const App = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
@@ -35,11 +37,14 @@ const App = () => {
             </div>
             {user ? (
                 <div className="">
+                    <CardDemo/>
                 </div>
                 ) : (
                 <div className="">
+
                 </div>
             )}
+
 
         </div>
         </div>

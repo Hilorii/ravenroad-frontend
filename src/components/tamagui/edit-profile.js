@@ -23,11 +23,12 @@ export function DialogDemo() {
 function DialogInstance() {
     const { username } = useParams();
     const { user, setUser } = useUser();
-    const [updatedUser, setUpdatedUser] = useState({
-        name: user ? user.name : '',
-        email: user ? user.email : '',
-        avatar: user ? user.avatar : '',
-    });
+    const [updatedUser, setUpdatedUser] = useState(() => ({
+        name: user?.username || username || "",
+        email: user?.email || "",
+        avatar: user?.avatar || "",
+    }));
+
 
     useEffect(() => {
         if (user) {
@@ -40,6 +41,9 @@ function DialogInstance() {
         }
     }, [user]);
 
+
+    let inputValue;
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         console.log("Field being updated:", name);
@@ -50,7 +54,9 @@ function DialogInstance() {
             [name]: value,
         }));
     };
-    
+
+
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -72,25 +78,25 @@ function DialogInstance() {
                 formData.append('avatar', updatedUser.avatar);
             }
 
-            console.log("Sending data:", {
-                name: updatedUser.name,
-                email: updatedUser.email,
-                avatar: updatedUser.avatar ? updatedUser.avatar.name : 'No avatar'
-            });
-
-            const response = await axios.put(`http://localhost:5000/user/${username}`, formData, {
+            const response = await axios.put(`http://localhost:5000/user`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
                 withCredentials: true,
             });
 
-            setUser(response.data);
-            console.log("Profile updated successfully", response.data);
+            // Log response data to check what is returned
+            console.log("Response from server:", response.data);
+
+            if (response.data.user) {
+                setUser(response.data.user); // Assuming setUser updates user state
+            }
+            console.log("Profile updated successfully");
         } catch (error) {
             console.error('Failed to update user:', error);
         }
     };
+
 
 
     return (
@@ -152,7 +158,7 @@ function DialogInstance() {
                             placeholder={username}
                             type="text"
                             name="name"
-                            value={updatedUser.name || ""}//
+                            value={updatedUser.name} // Używamy stanu updatedUser.name
                             onChange={handleInputChange}
                         />
                     </Fieldset>
