@@ -13,6 +13,8 @@ import LoginPage from './pages/login/Login';
 import SignupPage from './pages/signup/Signup';
 import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 import ProfilePage from './pages/profile/Profile';
+import PrivacyPolicyPage from './pages/privacyPolicy/PrivacyPolicy';
+import TermsOfUsePage from './pages/termsOfUse/TermsOfUse';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -28,6 +30,8 @@ root.render(
                     <Route path="/passwordForgot" element={<PasswordForgotPage />} />
                     <Route path="/signup" element={<SignupPage />} />
                     <Route path="/profile/:username" element={<ProfilePage />} />
+                    <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
+                    <Route path="/termsofuse" element={<TermsOfUsePage/>} />
                 </Routes>
             </Router>
         </UserProvider>

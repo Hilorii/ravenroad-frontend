@@ -18,28 +18,41 @@ const LoginPage = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Form data:', formData);
-        axios.post('http://localhost:5000/login', formData, { withCredentials: true })
-            .then(response => {
-                if (response && response.data) {
-                    alert('User logged in successfully');
-                    setUser(response.data);
-                    navigate('/');
+
+        try {
+            // Wysłanie danych logowania do serwera
+            const response = await axios.post('http://localhost:5000/login', formData, { withCredentials: true });
+
+            if (response && response.data) {
+                // Zapisz token w lokalnym magazynie lub ciasteczkach
+                const { token } = response.data;
+                document.cookie = `token=${token}; path=/`;
+
+                // Pobierz dane użytkownika
+                const userResponse = await axios.get('http://localhost:5000/user', { withCredentials: true });
+
+                if (userResponse && userResponse.data) {
+                    setUser(userResponse.data); // Zaktualizuj stan użytkownika
+                    navigate('/'); // lub inna odpowiednia strona
                 } else {
                     alert('Unexpected response format');
                 }
-            })
-            .catch(error => {
-                console.error('There was an error logging in!', error);
-                if (error.response && error.response.data) {
-                    alert('Login failed: ' + error.response.data);
-                } else {
-                    alert('Login failed: An unexpected error occurred');
-                }
-            });
+            } else {
+                alert('Unexpected response format');
+            }
+        } catch (error) {
+            console.error('There was an error logging in!', error);
+            if (error.response && error.response.data) {
+                alert('Login failed: ' + error.response.data.message);
+            } else {
+                alert('Login failed: An unexpected error occurred');
+            }
+        }
     };
+
 
     const [showPassword, setShowPassword] = useState(false);
 
