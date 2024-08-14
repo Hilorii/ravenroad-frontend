@@ -42,10 +42,24 @@ export function Demo({
     const { user, logout } = useUser();
 
     // Sign out function
-    const handleLogout = () => {
-        logout();
-        navigate('/');
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/logout', {  // upewnij się, że adres URL jest poprawny
+                method: 'POST',
+                credentials: 'include',  // To zapewnia, że ciasteczka są dołączone do żądania
+            });
+
+            if (response.ok) {
+                logout();
+                navigate('/');
+            } else {
+                console.error("Logout failed:", response.status);
+            }
+        } catch (err) {
+            console.error("Logout error:", err);
+        }
     };
+
 
     // Navigate to profile function
     const handleProfileClick = () => {
@@ -91,16 +105,9 @@ export function Demo({
                 <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
                 <YStack gap="$3">
 
-                    <XStack gap="$3">
-                        <Label size="$3" htmlFor={Name}>
-                            Name
-                        </Label>
-                        <Input size="$3" id={Name} />
-                    </XStack>
-
                     <Popover.Close asChild>
                         <Button size="$3" onClick={handleProfileClick}>
-                            Inne coś
+                            Profil
                         </Button>
                     </Popover.Close>
 

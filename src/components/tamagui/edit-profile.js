@@ -15,6 +15,7 @@ import {
     XStack,
 } from 'tamagui';
 import { useEffect, useState } from "react";
+import "../../pages/profile/profile.css"
 
 export function DialogDemo() {
     return <DialogInstance />;
@@ -102,7 +103,7 @@ function DialogInstance() {
     return (
         <Dialog modal>
             <Dialog.Trigger asChild>
-                <Button>Edytuj profil</Button>
+                <button className="edit" role="button"><span className="text">Edytuj profil</span></button>
             </Dialog.Trigger>
 
             <Adapt when="sm" platform="touch">

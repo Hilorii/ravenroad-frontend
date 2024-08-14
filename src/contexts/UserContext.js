@@ -30,6 +30,7 @@ export const UserProvider = ({ children }) => {
     const logout = () => {
         console.log("User logged out");
         setUser(null);
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     };
 
     return (
