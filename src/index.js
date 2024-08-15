@@ -15,6 +15,7 @@ import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 import ProfilePage from './pages/profile/Profile';
 import PrivacyPolicyPage from './pages/privacyPolicy/PrivacyPolicy';
 import TermsOfUsePage from './pages/termsOfUse/TermsOfUse';
+import PricingPage from './pages/pricing/Pricing';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -32,6 +33,7 @@ root.render(
                     <Route path="/profile/:username" element={<ProfilePage />} />
                     <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
                     <Route path="/termsofuse" element={<TermsOfUsePage/>} />
+                    <Route path="/pricing" element={<PricingPage/>} />
                 </Routes>
             </Router>
         </UserProvider>
