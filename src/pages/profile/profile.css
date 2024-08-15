@@ -33,7 +33,6 @@
  color: #FFFFFF;
  display: flex;
  font-family: Phantomsans, sans-serif;
- font-size: 20px;
  justify-content: center;
  line-height: 1em;
  max-width: 100%;
@@ -63,7 +62,7 @@ edit:active,
 }
 @media (min-width: 768px) {
   .edit {
-    font-size: 24px;
+    font-size: 15px;
     min-width: 196px;
   }
 }
