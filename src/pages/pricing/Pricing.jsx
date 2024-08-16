@@ -1,4 +1,4 @@
-import { YStack, XStack, H2, Paragraph, Button, Card } from 'tamagui';
+import { YStack, XStack, H2, Paragraph, Card } from 'tamagui';
 import { Link } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar"
 import './pricing.css'

@@ -1,7 +1,7 @@
 //USED IN NAVBAR
 import React from 'react';
 import type { PopoverProps } from 'tamagui';
-import { Adapt, Button, Input, Label, Popover, XStack, YStack } from 'tamagui';
+import { Adapt, Button, Popover, YStack } from 'tamagui';
 import { AvatarDemo } from './avatar';
 import '../navbar/navbar.css';
 
@@ -40,7 +40,7 @@ export function Demo({
     const navigate = useNavigate();
 
     // Get user from context
-    const { user, logout, setUser } = useUser();
+    const { user, logout } = useUser();
 
     // Sign out function
     const handleLogout = async () => {

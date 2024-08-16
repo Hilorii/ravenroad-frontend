@@ -1,6 +1,6 @@
 //USED IN APP
 import type { CardProps } from 'tamagui'
-import { Button, Card, H2, Image, Paragraph, XStack, YStack } from 'tamagui'
+import { Card, H2, Image, Paragraph, XStack, YStack } from 'tamagui'
 import { Link } from 'react-router-dom'
 import '../../App.css'
 

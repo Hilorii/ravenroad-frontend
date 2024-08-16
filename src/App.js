@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import {Footer, Blog, Possibility, Features, WhatRR, Header} from "./containers";
 import {CTA, Brand, Navbar} from './components'
 import "./App.css"
-import { UserContext } from './contexts/UserContext'
 
 import { ProCard } from './components/tamagui/pro-card';
 

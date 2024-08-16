@@ -1,32 +1,35 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import '../login/login.css';
 import logo from '../../assets/RRlogo.png';
 
-
 const PasswordForgot = () => {
-    const email = '';
+    const [email, setEmail] = useState('');
+
+    const handleChange = (event) => {
+        setEmail(event.target.value);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // Tutaj można dodać logikę logowania
-        console.log('Username:', email);
-
+        console.log('Email:', email);
     };
 
     return (
         <div className="bg">
             <div className="login-container">
-                <img src={logo} alt="Logo" className="login-logo"/>
+                <img src={logo} alt="Logo" className="login-logo" />
                 <h1 className="h">Zapomniałeś hasła?</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <input className="input"
+                        <input
+                            className="input"
                             placeholder="Email"
                             type="text"
                             id="email"
                             name="email"
                             value={email}
+                            onChange={handleChange}
                         />
                     </div>
 
