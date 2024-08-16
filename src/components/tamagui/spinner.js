@@ -1,3 +1,4 @@
+//USED IN APP (isLoading)
 import { Spinner, YStack } from 'tamagui';
 
 export function SpinnerLoading() {

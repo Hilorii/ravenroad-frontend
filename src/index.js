@@ -6,7 +6,7 @@ import { UserProvider } from './contexts/UserContext';
 
 //Tamagui
 import { config } from '@tamagui/config/v3';
-import { TamaguiProvider, createTamagui } from '@tamagui/core';
+import { TamaguiProvider, createTamagui} from '@tamagui/core';
 //Pages
 import App from './App';
 import LoginPage from './pages/login/Login';
@@ -23,19 +23,19 @@ const root = createRoot(container);
 
 root.render(
     <TamaguiProvider config={tamaguiConfig}>
-        <UserProvider>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<App />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/passwordForgot" element={<PasswordForgotPage />} />
-                    <Route path="/signup" element={<SignupPage />} />
-                    <Route path="/profile/:username" element={<ProfilePage />} />
-                    <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
-                    <Route path="/termsofuse" element={<TermsOfUsePage/>} />
-                    <Route path="/pricing" element={<PricingPage/>} />
-                </Routes>
-            </Router>
-        </UserProvider>
+            <UserProvider>
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<App />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/passwordForgot" element={<PasswordForgotPage />} />
+                        <Route path="/signup" element={<SignupPage />} />
+                        <Route path="/profile/:username" element={<ProfilePage />} />
+                        <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
+                        <Route path="/termsofuse" element={<TermsOfUsePage/>} />
+                        <Route path="/pricing" element={<PricingPage/>} />
+                    </Routes>
+                </Router>
+            </UserProvider>
     </TamaguiProvider>
 );
