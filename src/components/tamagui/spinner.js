@@ -13,7 +13,11 @@ export function SpinnerLoading() {
             width="100vw"
             height="100vh"
         >
-            <Spinner size="large" color="$orange10" />
+
+            <div className="bg">
+                <Spinner size="large" color="$orange10" />
+            </div>
+
         </YStack>
     );
 }
