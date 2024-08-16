@@ -18,10 +18,10 @@ const PasswordForgot = () => {
         <div className="bg">
             <div className="login-container">
                 <img src={logo} alt="Logo" className="login-logo"/>
-                <h1>Zapomniałeś hasła?</h1>
+                <h1 className="h">Zapomniałeś hasła?</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <input
+                        <input className="input"
                             placeholder="Email"
                             type="text"
                             id="email"

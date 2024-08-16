@@ -28,12 +28,12 @@ html {
     margin: 0 auto;
     padding: 20px;
 }
-h1, h2 {
+.h {
     text-align: center;
     margin-bottom: 20px;
     color: white;
 }
-input {
+.input_login {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;

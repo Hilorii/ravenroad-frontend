@@ -65,11 +65,11 @@ const LoginPage = () => {
         <div className="bg">
             <div className="login-container">
                 <img src={logo} alt="Logo" className="login-logo"/>
-                <h1>Witaj ponownie!</h1>
-                <h2>Jesteś gotowy na podróż?</h2>
+                <h1 className="h">Witaj ponownie!</h1>
+                <h2 className="h">Jesteś gotowy na podróż?</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <input
+                        <input className="input_login"
                             placeholder="Email"
                             type="email"
                             id="email"
@@ -79,7 +79,7 @@ const LoginPage = () => {
                         />
                     </div>
                     <div className="form-group password">
-                        <input
+                        <input className="input_login"
                             placeholder="Hasło"
                             type={showPassword ? "text" : "password"}
                             id="password"

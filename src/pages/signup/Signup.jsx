@@ -64,10 +64,10 @@ const SignupPage = () => {
         <div className="bg">
             <div className="login-container">
                 <img src={logo} alt="Logo"/>
-                <h1>Dołącz do nas!</h1>
+                <h1 className="h">Dołącz do nas!</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <input
+                        <input className="input"
                             placeholder="Nazwa użytkownika"
                             type="text"
                             id="username"
@@ -77,7 +77,7 @@ const SignupPage = () => {
                         />
                     </div>
                     <div>
-                        <input
+                        <input className="input"
                             placeholder="Email"
                             type="email"
                             id="email"
@@ -87,7 +87,7 @@ const SignupPage = () => {
                         />
                     </div>
                     <div>
-                        <input
+                        <input className="input"
                             placeholder="Hasło"
                             type="password"
                             id="password"
@@ -97,7 +97,7 @@ const SignupPage = () => {
                         />
                     </div>
                     <div>
-                        <input
+                        <input className="input"
                             placeholder="Powtórz hasło"
                             type="password"
                             id="confirmPassword"

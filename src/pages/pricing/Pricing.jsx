@@ -10,7 +10,7 @@ export default function PricingPage() {
             <div className="gradient__bg">
                 <Navbar/>
                 <YStack padding="$6" space>
-                    <h1 className="gradient__text title">Dołącz do Raven Road. Wybierz abonament dla siebie!</h1>
+                    <h1 className="gradient__text title ">Dołącz do Raven Road. Wybierz abonament dla siebie!</h1>
                     <XStack space justifyContent="center" flexWrap="wrap">
 
                         {/* Miesiąc */}
@@ -81,7 +81,7 @@ function PricingCard({ title, price, features, link, buttonText, isRecommended }
             height={400}
             padding="$4"
             marginHorizontal="$6"
-            marginVertical="$6"
+            marginVertical="$8"
             backgroundColor={isRecommended ? '' : ''}
             borderWidth={isRecommended ? 2 : 1}
             borderColor={isRecommended ? '$blue10' : '$gray8'}
