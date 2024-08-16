@@ -39,7 +39,7 @@ export function Demo({
     const navigate = useNavigate();
 
     // Get user from context
-    const { user, logout } = useUser();
+    const { user, logout, setUser } = useUser();
 
     // Sign out function
     const handleLogout = async () => {
@@ -52,6 +52,8 @@ export function Demo({
             if (response.ok) {
                 logout();
                 navigate('/');
+                window.location.reload();
+
             } else {
                 console.error("Logout failed:", response.status);
             }

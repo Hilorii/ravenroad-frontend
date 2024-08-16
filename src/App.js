@@ -11,20 +11,27 @@ import { ProCard } from './components/tamagui/pro-card';
 const App = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         axios.get('http://localhost:5000/user', { withCredentials: true })
             .then(response => {
                 setUser(response.data);
+                setIsLoading(false); // Ustaw ładowanie na false po otrzymaniu danych
             })
             .catch(error => {
                 console.error('There was an error fetching the user data!', error);
-                navigate('/login'); // Przekierowanie na stronę logowania jeśli nie zalogowany
+
+                // Sprawdź, czy użytkownik jest na stronie głównej
+                if (window.location.pathname !== '/') {
+                    navigate('/login'); // Przekierowanie na stronę logowania dla innych stron
+                } else {
+                    setIsLoading(false); // Jeśli jest na stronie głównej, zatrzymaj ładowanie
+                }
             });
     }, [navigate]);
 
-    if (!user) {
+    if (isLoading) {
         return <div>Loading...</div>;
     }
 
@@ -36,13 +43,18 @@ const App = () => {
                 {/*<Header/>*/}
             </div>
             {user ? (
-                <div className="middle">
-                    <ProCard/>
+                <div>
+                    <div className="middle">
+                        <ProCard/>
+                    </div>
                 </div>
                 ) : (
-                <div className="">
-                    <button className="hej"> HALO HALO HALO HALO </button>
-                </div>
+                    <div>
+                        <Header/>
+                        <div className="middle">
+                            <ProCard/>
+                        </div>
+                    </div>
             )}
 
 
