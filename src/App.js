@@ -6,6 +6,7 @@ import {CTA, Brand, Navbar} from './components'
 import "./App.css"
 
 import { ProCard } from './components/tamagui/pro-card';
+import { SpinnerLoading } from './components/tamagui/spinner';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -31,7 +32,7 @@ const App = () => {
     }, [navigate]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <SpinnerLoading/>;
     }
 
     return (
