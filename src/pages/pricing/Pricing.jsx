@@ -10,12 +10,12 @@ export default function PricingPage() {
             <div className="gradient__bg">
                 <Navbar/>
                 <YStack padding="$6" space>
-                    <h1 className="gradient__text">Dołącz do Raven Road. Wybierz abonament dla siebie!</h1>
+                    <h1 className="gradient__text title">Dołącz do Raven Road. Wybierz abonament dla siebie!</h1>
                     <XStack space justifyContent="center" flexWrap="wrap">
 
                         {/* Miesiąc */}
                         <PricingCard
-                            title="Miesiąc"
+                            title="Miesiąc AI"
                             price="25 zł"
                             features={[
                                 "Anuluj w dowolnym momencie",
@@ -41,7 +41,7 @@ export default function PricingPage() {
 
                         {/* Rok z AI */}
                         <PricingCard
-                            title="Rok z AI"
+                            title="Rok AI"
                             price={
                                 <span>
                                     <del style={{ textDecoration: 'line-through', color: 'red' }}>300 zł</del> <strong>180 zł</strong>
@@ -80,7 +80,8 @@ function PricingCard({ title, price, features, link, buttonText, isRecommended }
             width={300}
             height={400}
             padding="$4"
-            marginHorizontal="$2"
+            marginHorizontal="$6"
+            marginVertical="$6"
             backgroundColor={isRecommended ? '' : ''}
             borderWidth={isRecommended ? 2 : 1}
             borderColor={isRecommended ? '$blue10' : '$gray8'}

@@ -1,7 +1,8 @@
 //USED IN APP
 import type { CardProps } from 'tamagui'
-import { Button, Card, H2, Image, Paragraph, XStack } from 'tamagui'
+import { Button, Card, H2, Image, Paragraph, XStack, YStack } from 'tamagui'
 import { Link } from 'react-router-dom'
+import '../../App.css'
 
 export function ProCard() {
     return (
@@ -48,21 +49,30 @@ export function ProCard() {
 
 export function SubscriptionCard({ title, description, url, ...props }: CardProps & { title: string, description: string, url: string }) {
     return (
-        <Card elevate size="$4" bordered {...props}>
+        <Card elevate size="$4"
+              bordered {...props}
+              backgroundColor={''}
+              margin="$6"
+              width={300}
+              height={400}
+
+        >
             <Card.Header padded>
-                <H2>{title}</H2>
-                <Paragraph theme="alt2">{description}</Paragraph>
+                <H2 className="gradient__text">{title}</H2>
+                    <Paragraph className="gradient__text" theme="alt2" fontSize="$8">{description}</Paragraph>
             </Card.Header>
 
             <Card.Footer padded>
                 <XStack flex={1} />
-                <Link to="/pricing">
-                    <Button borderRadius="$10">Wypróbuj za darmo!</Button>
-                </Link>
+                <YStack flex={100} justifyContent="flex-end" alignItems="center" marginTop="$4">
+                    <Link to="/pricing">
+                        <button className="edit" role="button"><span className="text">Wypróbuj za darmo!</span></button>
+                    </Link>
+                </YStack>
             </Card.Footer>
 
             <Card.Background>
-                <Image
+            <Image
                     resizeMode="contain"
                     alignSelf="center"
                     source={{
