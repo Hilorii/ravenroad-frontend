@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../login/login.css';
-import './signup.css'
-import logo from '../../assets/RRlogo.png'; // Zaktualizuj ścieżkę do obrazka
-import { Link, useNavigate } from 'react-router-dom';
+import './signup.css';
+import logo from '../../assets/RRlogo.png';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const SignupPage = () => {
+    const location = useLocation();
     const [formData, setFormData] = useState({
         username: '',
-        email: '',
+        email: '', // Początkowy stan jest pusty
         password: '',
         confirmPassword: ''
     });
 
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (location.state && location.state.email) {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                email: location.state.email
+            }));
+        }
+    }, [location.state]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,15 +34,14 @@ const SignupPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Sprawdzenie, czy hasła są zgodne
         if (formData.password !== formData.confirmPassword) {
             setErrorMessage('Hasła nie są zgodne.');
             return;
         }
 
-        setErrorMessage(''); // Resetowanie wiadomości o błędzie, jeśli hasła są zgodne
+        setErrorMessage('');
 
-        axios.post('http://localhost:5000/Signup', formData) // Sprawdź, czy URL jest poprawny
+        axios.post('http://localhost:5000/Signup', formData)
             .then(response => {
                 if (response && response.data) {
                     alert('Użytkownik został pomyślnie zarejestrowany');

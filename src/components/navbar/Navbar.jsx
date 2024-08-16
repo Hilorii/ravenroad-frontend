@@ -10,14 +10,24 @@ import { UserContext } from '../../contexts/UserContext';
 import { PopoverDemo } from '../../components/tamagui/avatar-popover'
 
 
-const Menu = () => (
-    <>
-        <p><a href="#pro">Pro</a></p>
-        <p><a href="#features">Możliwości</a></p>
-        <p><a href="#createroute">Zaplanuj podróż</a></p>
-        <p><a href="#routes">Gotowe trasy</a></p>
-    </>
-)
+const Menu = () => {
+    if (window.location.pathname === "/") {
+        return (
+            <>
+                <p><a href="#pro">Pro</a></p>
+                <p><a href="#features">Możliwości</a></p>
+                <p><a href="#createroute">Zaplanuj podróż</a></p>
+                <p><a href="#routes">Gotowe trasy</a></p>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <p><a href="/">Strona główna</a></p>
+            </>
+        );
+    }
+};
 
 
 const Navbar = () => {

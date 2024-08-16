@@ -49,12 +49,20 @@ const App = () => {
                     </div>
                 </div>
                 ) : (
-                    <div>
-                        <Header/>
-                        <div className="middle">
-                            <ProCard/>
-                        </div>
+                <div>
+                    <Header/>
+                    <Brand/> {/* ZMIENIĆ MARKI*/}
+                    <WhatRR/>
+                    <div className="middle" id="pro">
+                        <ProCard/>
                     </div>
+                    <Features/>
+                    <Possibility/>
+                    <CTA/>
+                    <Blog/>
+                    <Footer/>
+
+                </div>
             )}
 
 
