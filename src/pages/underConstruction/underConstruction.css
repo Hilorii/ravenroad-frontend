@@ -39,8 +39,8 @@
     border: 1px solid #ced4da;
     border-radius: 5px;
     margin-bottom: 2rem;
-    width: 100%;
-    max-width: 600px;
+    width: 80vw;
+    max-width: 60%;
     height: 50px;
 }
 
@@ -51,14 +51,52 @@
 
 .notify-logo {
     max-width: 300px;
+    padding-top: 40px;
 }
 
 .bt-notify {
     font-size: 1.8rem;
 }
 
+/* Media Queries - Dostosowanie do mniejszych laptopów */
+@media screen and (max-width: 1850px) {
+    .h1-notify {
+        font-size: 3rem;
+    }
+
+    .p-notify {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .notify-strong {
+        font-size: 2rem;
+    }
+
+    .email-form input {
+        font-size: 1.2rem;
+        height: 45px;
+    }
+
+    .message {
+        font-size: 1.8rem;
+    }
+
+    .bt-notify {
+        font-size: 1.6rem;
+    }
+
+    .notify-logo {
+        max-width: 220px;
+    }
+
+    .under-construction-container {
+        padding-bottom: 80px;
+    }
+}
+
 /* Media Queries - Dostosowanie do urządzeń mobilnych */
-@media (max-width: 768px) {
+@media screen and (max-width: 1250px) {
     .h1-notify {
         font-size: 2.5rem;
     }
@@ -86,7 +124,7 @@
     }
 
     .notify-logo {
-        max-width: 200px;
+        max-width: 180px;
     }
 
     .under-construction-container {
@@ -95,7 +133,7 @@
 }
 
 /* Media Queries - Dostosowanie do małych telefonów */
-@media (max-width: 480px) {
+@media screen and (max-width: 430px) {
     .h1-notify {
         font-size: 2rem;
     }
@@ -122,6 +160,8 @@
     }
 
     .notify-logo {
-        max-width: 150px;
+        max-width: 130px;
     }
 }
+
+
