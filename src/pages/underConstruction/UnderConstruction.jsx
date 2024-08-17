@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './underConstruction.css';
 import logo from '../../assets/RRlogo.png';
@@ -6,6 +6,7 @@ import logo from '../../assets/RRlogo.png';
 function UnderConstruction() {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const [subscriberCount, setSubscriberCount] = useState(0);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -17,7 +18,8 @@ function UnderConstruction() {
             const response = await axios.post('http://localhost:5000/notify', { email });
             if (response.status === 200) {
                 setMessage('Dziękujemy! Powiadomimy Cię, gdy aplikacja będzie gotowa. Otrzymasz również 20% zniżki.');
-                setEmail('');  // Resetowanie pola e-mail
+                setEmail('');  // Reset email field
+                setSubscriberCount(prevCount => prevCount + 1);  // Increment the subscriber count locally
             }
         } catch (error) {
             console.error('Wystąpił błąd podczas zapisywania e-maila:', error);
@@ -25,7 +27,23 @@ function UnderConstruction() {
         }
     };
 
-    return (
+    useEffect(() => {
+        // Fetch the number of subscribers when the component mounts
+        const fetchSubscriberCount = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/notify/count');
+                if (response.status === 200) {
+                    setSubscriberCount(response.data.count);
+                }
+            } catch (error) {
+                console.error('Error fetching subscriber count:', error);
+            }
+        };
+
+        fetchSubscriberCount();
+    }, []); // Run this effect once on component mount
+
+        return (
         <div className="gradient__bg">
             <div className="under-construction-container">
                 <img src={logo} alt="Logo" className="notify-logo"/>
