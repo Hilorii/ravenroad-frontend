@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar"
 import './pricing.css'
 import '../profile/profile.css'
+import { TabsDemo } from '../../components/tamagui/pricing-tabs'
 
 export default function PricingPage() {
     return (
@@ -11,6 +12,7 @@ export default function PricingPage() {
                 <Navbar/>
                 <YStack padding="$6" space>
                     <h1 className="gradient__text title ">Dołącz do Raven Road. Wybierz abonament dla siebie!</h1>
+                    <TabsDemo/>
                     <XStack space justifyContent="center" flexWrap="wrap">
 
                         {/* Miesiąc */}

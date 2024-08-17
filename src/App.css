@@ -99,5 +99,8 @@ a {
     justify-content: center;
     margin: 0;
 }
+.container-pro span {
+    line-height: 1.2;
+}
 
 
