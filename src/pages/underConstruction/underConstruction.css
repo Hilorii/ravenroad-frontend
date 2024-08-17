@@ -1,0 +1,53 @@
+.under-construction-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+
+.h1-notify{
+    font-size: 4rem;
+    margin-bottom: 1rem;
+
+}
+
+.p-notify {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    max-width: 90rem;
+}
+.notify-strong {
+ font-size: 2.5rem;
+}
+.email-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.email-form input {
+    padding: 10px;
+    font-size: 1.4rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    width: 600px;
+    height: 50px;
+}
+
+.message {
+    margin-top: 1rem;
+    font-size: 2rem;
+}
+
+.notify-logo {
+    max-width: 300px;
+}
+
+.bt-notify {
+    font-size: 1.8rem;
+}
