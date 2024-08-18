@@ -4,13 +4,13 @@ import './footer.css';
 
 const Footer = () => (
     <div className="rr__footer section__padding">
-        <div className="rr__footer-heading">
-            <h1 className="gradient__text">Jesteś gotowy na swoją podróż do przyszłości?</h1>
-        </div>
+        {/*<div className="rr__footer-heading">*/}
+        {/*    <h1 className="gradient__text">Jesteś gotowy na swoją podróż do przyszłości?</h1>*/}
+        {/*</div>*/}
 
-        <div className="rr__footer-btn">
-            <p>Poproś o wczesny dostęp!</p>
-        </div>
+        {/*<div className="rr__footer-btn">*/}
+        {/*    <p>Poproś o wczesny dostęp!</p>*/}
+        {/*</div>*/}
 
         <div className="rr__footer-links">
             <div className="rr__footer-links_logo">

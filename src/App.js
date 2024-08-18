@@ -40,7 +40,6 @@ const App = () => {
         <div className="gradient__bg">
             <div className="">
                 <Navbar/>
-                {/*<Header/>*/}
             </div>
             {user ? (
                 <div>
@@ -57,9 +56,9 @@ const App = () => {
                         <ProCard/>
                     </div>
                     <Features/>
-                    <Possibility/>
+                    {/*<Possibility/>*/}
                     <CTA/>
-                    <Blog/>
+                    {/*<Blog/>*/}
                     <Footer/>
 
                 </div>

@@ -15,7 +15,7 @@ const WhatRR = () => (
         </div>
         <div className="rr__whatrr-heading">
             <h1 className="gradient__text">Raven Road - Twój niezastąpiony towarzysz w podróży</h1>
-            <p>Dowiedz się wiecej</p>
+            {/*<p>Dowiedz się wiecej</p>*/}
         </div>
         <div className="rr__whatrr-container">
             <Feature title="Interaktywne Mapy i Nawigacja GPS"

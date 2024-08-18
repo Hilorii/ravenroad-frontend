@@ -41,11 +41,6 @@ const Header = () => {
                     />
                     <button type="button" onClick={handleButtonClick}>W drogę</button>
                 </div>
-
-                <div className="rr__header-content__people">
-                    <img src={people} alt="people "/>
-                    <p>1,600 osób w Polsce już korzysta z naszej aplikacji!</p>
-                </div>
             </div>
             <div className="rr__header-image">
                 <img src={banner} alt="banner"/>
