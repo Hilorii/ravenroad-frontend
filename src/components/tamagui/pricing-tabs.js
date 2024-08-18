@@ -1,3 +1,4 @@
+//USED IN PRICING.JSX
 import React from 'react'
 import type { TabsContentProps } from 'tamagui'
 import { Button, H5, Separator, SizableText, Tabs, XStack, YStack, isWeb } from 'tamagui'
@@ -49,78 +50,171 @@ export function TabsDemo() {
 const HorizontalTabs = () => {
 
     return (
+        <div className="pricing-tab-nav">
         <Tabs
             defaultValue="tab1"
             orientation="horizontal"
             flexDirection="column"
-            width={600}
-            height={600}
-            borderRadius="$4"
-            borderWidth="$0.25"
+            width={1300}
+            height={700}
+            borderWidth="0.25"
             overflow="hidden"
             borderColor="transparent"
+            scale={1}
         >
 
             <Tabs.List
-                separator={<Separator vertical />}
-                disablePassBorderRadius="bottom"
-                aria-label="Manage your account"
+                separator={<Separator vertical/>}
             >
-
-                <Tabs.Tab flex={1} value="tab1">
-
-                    <SizableText fontFamily="$body">Profile</SizableText>
-
-                </Tabs.Tab>
-
-                <Tabs.Tab flex={1} value="tab2">
-
-                    <SizableText fontFamily="$body">Connections</SizableText>
-
-                </Tabs.Tab>
-
-                <Tabs.Tab flex={1} value="tab3">
-
-                    <SizableText fontFamily="$body">Notifications</SizableText>
-
-                </Tabs.Tab>
-
+                <CustomTab value="tab0" label="Wersja Darmowa" />
+                <CustomTab value="tab1" label="Premium Miesięczny" />
+                <CustomTab value="tab2" label="Premium Roczny" />
+                <CustomTab value="tab3" label="Premium Roczny Plus" />
             </Tabs.List>
 
-            <Separator />
+            {/*FREE FLIGHT*/}
+            <TabsContent value="tab0">
 
-            <TabsContent value="tab1">
-
-                <H5>Profilee</H5>
                 <PricingCard
-                    title="Miesiąc AI"
-                    price="25 zł"
+                    title="Free Flight"
+                    price={
+                        <span>
+                           <strong>0 zł</strong>
+                        </span>
+                    }
                     features={[
-                        "Anuluj w dowolnym momencie",
-                        "Korzystaj z zaawansowanych funkcji AI",
-                        "1 urządzenie"
+                        <strong>Anuluj w dowolnym momencie!</strong>,
+                        <>
+                            <strong>Podstawowa nawigacja</strong> - Standardowa funkcja nawigacji z dostępem do tras.
+                        </>,
+                        <>
+                            <strong>Tworzenie tras</strong> - Możliwość ręcznego tworzenia i zapisywania własnych tras.
+                        </>,
+                        <>
+                            <strong>Ocenianie tras</strong> - Przeglądanie i ocenianie tras innych użytkowników.
+                        </>,
+                        <>
+                            <strong>Udostępnianie tras na Facebook'u</strong> -  Możliwość publikowania podsumowań tras na swoim profilu.
+                        </>,
+                        <>
+                            <strong>Zgłaszanie zdarzeń na drodze</strong> -  Poinformuj innych o sytuacji na drodze.
+                        </>,
+                        <>
+                            <strong>Zapisywanie się do eventów</strong> -  Możliwość dołączania do wydarzeń stworzonych przez innych użytkowników lub firmy.
+                        </>,
+                        <>
+                            <strong>Zapisywanie się na wyjazdy</strong> -Możliwość dołączenia do zaplanowanych wyjazdów innych użytkowników.
+                        </>,
+                        <>
+                            <strong>Możliwość zobaczenia innych użytkowników na mapie</strong> -  Możliwość podglądu lokalizacji innych użytkowników w czasie rzeczywistym.
+                        </>,
                     ]}
                     link=""
-                    buttonText="Wypróbuj przez 7 dni!!"
+                    buttonText="Wypróbuj przez 7 dni!"
+                />
+            </TabsContent>
+
+            {/*SILVER WING*/}
+            <TabsContent value="tab1">
+
+                <PricingCard
+                    title="Silver Wing"
+                    price={
+                        <span>
+                            <strong>25 zł / miesiąc</strong>
+                        </span>
+                    }
+                    features={[
+                        <strong>Anuluj w dowolnym momencie!</strong>,
+                        <strong>Wszytsko co w Free Flight, plus:</strong>,
+                        <>
+                            <strong>Generowanie tras za pomocą AI</strong> -  Funkcja automatycznego generowania tras na podstawie preferencji i opisu użytkownika. Do 5 tras na miesiąc.
+                        </>,
+                        <>
+                            <strong>Mapy offline</strong> - Pełny dostęp do map offline, bez ograniczeń.
+                        </>,
+                        <>
+                            <strong>Nagrywanie tras z pomiarami</strong> -  Możliwość nagrywania swoich tras z pomiarem prędkości i przechyłów oraz możliwość udostępniania danych na Facebook'u.
+                        </>,
+                        <>
+                            <strong>Publikowanie nagranych tras</strong> -  Opcja publikowania nagranych tras (np. offroad) w aplikacji..
+                        </>,
+                    ]}
+                    link=""
+                    buttonText="Wypróbuj przez 7 dni!"
                 />
 
             </TabsContent>
+
+            {/*BLACK FEATHER*/}
             <TabsContent value="tab2">
 
-                <H5>Connections</H5>
+                <PricingCard
+                    title="Black Feather"
+                    price={
+                        <span>
+                            <strong>160 zł / rok</strong>
+                        </span>
+                    }
+                    features={[
+                        <strong>Anuluj w dowolnym momencie!</strong>,
+                        <strong>Wszytsko co w Silver Wing, plus:</strong>,
+                        <>
+                            <strong>Generowanie tras za pomocą AI</strong> -  Funkcja automatycznego generowania tras na podstawie preferencji i opisu użytkownika. Do 10 tras na miesiąc.
+                        </>,
+                        <>
+                            <strong>Planowanie tras na określony dzień</strong> - Tworzenie tras z wyprzedzeniem i publikowanie ich z opcją dopisania się innych użytkowników.
+                        </>,
+                        <>
+                            <strong>Tworzenie wydarzeń</strong> -  Możliwość tworzenia wydarzeń (dla użytkowników, firm i grup).
+                        </>,
+                        <>
+                            <strong>Tworzenie grup</strong> -   Opcja tworzenia grup, w których inni użytkownicy mogą się zapisywać i dzielić trasami oraz wydarzeniami.
+                        </>,
+                    ]}
+                    link=""
+                    buttonText="Wypróbuj przez 7 dni!"
+                />
 
             </TabsContent>
+
+            {/*SHADOW RAVEN*/}
             <TabsContent value="tab3">
-
-                <H5>Notifications</H5>
-
+                <PricingCard
+                    title="Shadow Raven"
+                    price={
+                        <span>
+                            <strong>180 zł / rok</strong>
+                        </span>
+                    }
+                    features={[
+                        <strong>Anuluj w dowolnym momencie!</strong>,
+                        <strong>Wszytsko co w Black Feather, plus:</strong>,
+                        <>
+                            <strong>Generowanie tras za pomocą AI</strong> -  Funkcja automatycznego generowania tras na podstawie preferencji i opisu użytkownika. Do 20 tras na miesiąc.
+                        </>,
+                        <>
+                            <strong>Priorytetowe wsparcie</strong> - Szybsze wsparcie techniczne i priorytetowy dostęp do nowych funkcji.
+                        </>,
+                        <>
+                            <strong>Ekskluzywne trasy i wydarzenia</strong> -   Dostęp do specjalnych tras i wydarzeń przygotowanych przez partnerów Raven Road.
+                        </>,
+                        <>
+                            <strong>Nielimitowane zapisywanie tras offline</strong> -   Brak limitu w liczbie zapisanych tras offline.
+                        </>,
+                    ]}
+                    link=""
+                    buttonText="Wypróbuj przez 7 dni!"
+                />
+                
             </TabsContent>
-
         </Tabs>
-
+        </div>
     )
 
 }
+
+
 
 const TabsContent = (props: TabsContentProps) => {
 
@@ -147,7 +241,37 @@ const TabsContent = (props: TabsContentProps) => {
 
 }
 
-//Tworzenie kart
+//Tworzy zakładki
+const CustomTab = ({ value, label }) => {
+    return (
+        <Tabs.Tab
+            flex={1}
+            value={value}
+            backgroundColor="transparent"
+            borderColor="white"
+            hoverStyle={{
+                backgroundColor: "transparent",
+                borderColor: "blue",
+            }}
+            pressStyle={{
+                borderColor: "blue",
+            }}
+            focusStyle={{
+                backgroundColor: "transparent",
+                borderColor: "blue",
+            }}
+        >
+            <SizableText
+                color="white"
+                fontSize="20px"
+            >
+                {label}
+            </SizableText>
+        </Tabs.Tab>
+    );
+};
+
+//////////////////////////////////////////////// Tworzenie kart
 function PricingCard({ title, price, features, link, buttonText, isRecommended }: {
     title: string,
     price: string | JSX.Element,
@@ -160,8 +284,8 @@ function PricingCard({ title, price, features, link, buttonText, isRecommended }
         <Card
             elevate size="$4"
             bordered
-            width={300}
-            height={400}
+            width={800}
+            height={600}
             padding="$4"
             marginHorizontal="$6"
             marginVertical="$8"

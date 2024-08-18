@@ -7,7 +7,10 @@
 .title {
     font-size: 60px;
     text-align: center;
+    margin-top: -60px;
+
 }
+
 .pricing-tab-nav {
-    background-color: red;
+    color: transparent;
 }
