@@ -19,24 +19,24 @@ const Footer = () => (
             </div>
             <div className="rr__footer-links_div">
                 <h4>Linki</h4>
-                <p>Trasy</p>
                 <p>Historie</p>
-                <p>Q&A</p>
+                <p>FAQ</p>
                 <p>Pomoc</p>
-                <p>Polityka prywatności</p>
+                <p><a href="/termsofuse">Warunki użytkowania</a></p>
+                <p><a href="/privacypolicy">Polityka prywatności</a></p>
             </div>
             <div className="rr__footer-links_div">
-                <h4>Firma</h4>
+            <h4>Firma</h4>
                 <p>O nas</p>
-                <p>Raven PRO</p>
+                <p><a href="/pricing">Raven PRO</a></p>
                 <p>Zespół</p>
                 <p>Kontakt</p>
             </div>
             <div className="rr__footer-links_div">
                 <h4>Zapraszamy do kontaktu</h4>
-                <p>Discord: </p>
-                <p>Facebook: </p>
-                <p>Email: </p>
+                <p>Discord: już wkrótce!</p>
+                <p><a href="https://www.facebook.com/profile.php?id=61564039045420">Facebook</a></p>
+                <p>Email: kontakt@ravenroad.eu</p>
             </div>
         </div>
 
