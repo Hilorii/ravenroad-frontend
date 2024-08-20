@@ -1,7 +1,8 @@
 import { YStack, XStack } from 'tamagui';
 import Navbar from "../../components/navbar/Navbar";
 import './contact.css';
-import {FB, DC, MAIL} from '../../components/icons'
+import { FB, DC, MAIL } from '../../components/icons'
+import { contactMail } from '../../components/info';
 
 export default function ContactPage() {
     return (
@@ -13,7 +14,7 @@ export default function ContactPage() {
 
                     {/* Sekcja z e-mailem i numerem telefonu */}
                     <YStack padding="$10" space alignItems="center">
-                        <p className="contact-info">Email: <a href="mailto:kontakt@ravenroad.eu">kontakt@ravenroad.eu</a></p>
+                        <p className="contact-info">Email: <a href={`mailto:${contactMail}`}>{contactMail}</a></p>
                         {/*<p className="contact-info">Telefon: +48 123 456 789</p>*/}
                         <p className="contact-info">Serwer Discord: Już wkrótce!</p>
                     </YStack>
@@ -25,7 +26,7 @@ export default function ContactPage() {
                         </div>
                         <div className="contact-item">
                             <MAIL size={40} color="#ffffff" />
-                            <p><a href="mailto:kontakt@ravenroad.eu">Email</a></p>
+                            <p><a href={`mailto:${contactMail}`}>Email</a></p>
                         </div>
                         <div className="contact-item">
                             <DC size={40} color="#ffffff" />
