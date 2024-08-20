@@ -26,14 +26,14 @@ const Footer = () => (
                 <p><a href="/privacypolicy">Polityka prywatności</a></p>
             </div>
             <div className="rr__footer-links_div">
-            <h4>Firma</h4>
+                <h4>Firma</h4>
                 <p>O nas</p>
                 <p><a href="/pricing">Raven PRO</a></p>
                 <p>Zespół</p>
-                <p>Kontakt</p>
+                <p><a href="/contact">Kontakt</a></p>
             </div>
             <div className="rr__footer-links_div">
-                <h4>Zapraszamy do kontaktu</h4>
+            <h4>Zapraszamy do kontaktu</h4>
                 <p>Discord: już wkrótce!</p>
                 <p><a href="https://www.facebook.com/profile.php?id=61564039045420">Facebook</a></p>
                 <p>Email: kontakt@ravenroad.eu</p>

@@ -1,0 +1,25 @@
+.contact-info {
+    font-size: 18px;
+    color: #ffffff;  /* Jasny tekst */
+    margin-bottom: 10px;
+}
+
+.contact-item {
+    text-align: center;
+    margin: 20px;
+}
+
+.contact-item p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #ffffff;  /* Jasny tekst */
+}
+
+.contact-item a {
+    text-decoration: none;
+    color: #ffffff;  /* Jasny tekst */
+}
+
+.contact-item a:hover {
+    color: #ff7f50; /* Kolor tekstu po najechaniu kursorem */
+}
