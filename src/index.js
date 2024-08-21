@@ -19,6 +19,8 @@ import PricingPage from './pages/pricing/Pricing';
 import ConstructionPage from './pages/underConstruction/UnderConstruction';
 import ContactPage from './pages/contact/Contact';
 import HelpPage from './pages/help/Help';
+import AboutPage from './pages/aboutUs/AboutUs';
+import TeamPage from './pages/team/Team';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -41,6 +43,8 @@ root.render(
                         <Route path="/notify" element={<ConstructionPage/>} />
                         <Route path="/contact" element={<ContactPage/>} />
                         <Route path="/help" element={<HelpPage/>} />
+                        <Route path="/about" element={<AboutPage/>} />
+                        <Route path="/team" element={<TeamPage/>} />
 
                         {/*JEŚLI STRONA JEST W BUDOWIE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
                         {/*<Route path="/" element={<ConstructionPage/>} />*/}
