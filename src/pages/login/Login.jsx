@@ -5,6 +5,7 @@ import logo from '../../assets/RRlogo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 
+
 const LoginPage = () => {
     const navigate = useNavigate();
     const { setUser } = useContext(UserContext);
