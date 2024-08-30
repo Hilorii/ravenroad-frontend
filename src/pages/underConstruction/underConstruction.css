@@ -33,7 +33,9 @@
     align-items: center;
 }
 
-.email-form input {
+.email-form input, textarea {
+    font-family: inherit;
+    font-size: inherit;
     padding: 10px;
     font-size: 1.4rem;
     border: 1px solid #ced4da;
@@ -42,6 +44,9 @@
     width: 80vw;
     max-width: 60%;
     height: 50px;
+}
+.email-form textarea {
+    height: 100px;
 }
 
 .message {
@@ -73,7 +78,7 @@
         font-size: 2rem;
     }
 
-    .email-form input {
+    .email-form input, textarea {
         font-size: 1.2rem;
         height: 45px;
     }
@@ -96,7 +101,7 @@
 }
 
 /* Media Queries - Dostosowanie do urządzeń mobilnych */
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1400px) {
     .h1-notify {
         font-size: 2.5rem;
     }
@@ -110,7 +115,7 @@
         font-size: 1.8rem;
     }
 
-    .email-form input {
+    .email-form input, textarea {
         font-size: 1.2rem;
         height: 45px;
     }
@@ -146,7 +151,7 @@
         font-size: 1.5rem;
     }
 
-    .email-form input {
+    .email-form input, textarea {
         font-size: 1rem;
         height: 40px;
     }
