@@ -77,11 +77,7 @@ const HorizontalTabs = () => {
 
                 <PricingCard
                     title="Free Flight"
-                    price={
-                        <span>
-                           <strong>0 zł</strong>
-                        </span>
-                    }
+                    price="0zł"
                     features={[
                         <strong>Anuluj w dowolnym momencie!</strong>,
                         <>
@@ -119,11 +115,7 @@ const HorizontalTabs = () => {
 
                 <PricingCard
                     title="Silver Wing"
-                    price={
-                        <span>
-                            <strong>25 zł / miesiąc</strong>
-                        </span>
-                    }
+                    price="25 zł / miesiąc"
                     features={[
                         <strong>Anuluj w dowolnym momencie!</strong>,
                         <strong>Wszytsko co w Free Flight, plus:</strong>,
@@ -151,11 +143,7 @@ const HorizontalTabs = () => {
 
                 <PricingCard
                     title="Black Feather"
-                    price={
-                        <span>
-                            <strong>160 zł / rok</strong>
-                        </span>
-                    }
+                    price="160 zł / rok"
                     features={[
                         <strong>Anuluj w dowolnym momencie!</strong>,
                         <strong>Wszytsko co w Silver Wing, plus:</strong>,
@@ -182,11 +170,7 @@ const HorizontalTabs = () => {
             <TabsContent value="tab3">
                 <PricingCard
                     title="Shadow Raven"
-                    price={
-                        <span>
-                            <strong>180 zł / rok</strong>
-                        </span>
-                    }
+                    price="180 zł / rok"
                     features={[
                         <strong>Anuluj w dowolnym momencie!</strong>,
                         <strong>Wszytsko co w Black Feather, plus:</strong>,
@@ -272,14 +256,7 @@ const CustomTab = ({ value, label }) => {
 };
 
 //////////////////////////////////////////////// Tworzenie kart
-function PricingCard({ title, price, features, link, buttonText, isRecommended }: {
-    title: string,
-    price: string | JSX.Element,
-    features: string[],
-    link: string,
-    buttonText: string,
-    isRecommended?: boolean
-}) {
+function PricingCard({ title, price, features, link, buttonText, isRecommended }) {
     return (
         <Card
             elevate size="$4"
@@ -308,15 +285,18 @@ function PricingCard({ title, price, features, link, buttonText, isRecommended }
                 {features.map((feature, index) => (
                     <Paragraph key={index} theme="alt2">
                         <span className="gradient__text">
-                            <text className="feature_text">
+                            <span className="feature_text">
                                 {feature}
-                            </text>
+                            </span>
                         </span>
                     </Paragraph>
                 ))}
             </YStack>
             <YStack flex={1} justifyContent="flex-end" alignItems="center" marginTop="$4">
-                <Link to={link}>
+                <Link to="/pricing/purchase" onClick={() => {
+                    localStorage.setItem('subscriptionName', title);
+                    localStorage.setItem('price', price);
+                }}>
                     <button className="edit" role="button"><span className="text">{buttonText}</span></button>
                 </Link>
             </YStack>
