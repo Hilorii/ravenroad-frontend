@@ -1,0 +1,21 @@
+.help-text {
+    font-size: 18px;
+    color: #ffffff;  /* Jasny tekst */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.help-email {
+    font-size: 20px;
+    color: #ffffff;  /* Jasny tekst */
+    margin-left: 10px;
+}
+
+.help-email a {
+    text-decoration: none;
+    color: #ffffff;  /* Jasny tekst */
+}
+
+.help-email a:hover {
+    color: #ff7f50; /* Kolor tekstu po najechaniu kursorem */
+}

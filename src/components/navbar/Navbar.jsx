@@ -18,6 +18,7 @@ const Menu = () => {
                 <p><a href="#features">Możliwości</a></p>
                 <p><a href="#createroute">Zaplanuj podróż</a></p>
                 <p><a href="#routes">Gotowe trasy</a></p>
+                <p><a href="/contact">Kontakt</a></p>
             </>
         );
     } else {
