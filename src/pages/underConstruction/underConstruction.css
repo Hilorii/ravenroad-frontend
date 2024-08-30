@@ -46,7 +46,7 @@
     height: 50px;
 }
 .email-form textarea {
-    height: 100px;
+    height: 101px;
 }
 
 .message {
@@ -168,5 +168,3 @@
         max-width: 130px;
     }
 }
-
-

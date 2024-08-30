@@ -1,25 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import './underConstruction.css';
 import logo from '../../assets/RRlogo.png';
 
 function UnderConstruction() {
     const [email, setEmail] = useState('');
+    const [suggestion, setSuggestion] = useState('');
     const [message, setMessage] = useState('');
-    const [subscriberCount, setSubscriberCount] = useState(0);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
 
+    const handleSuggestionChange = (e) => {
+        setSuggestion(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/notify', { email });
-            if (response.status === 200) {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbziyC74wwF7KhaTXHhasKd7NpTlOXWSRzlh6pmsoIfLcCink3Z5cOX8b6dP2pyvDr8/exec';
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('suggestion', suggestion);
+
+            const response = await fetch(scriptURL, { method: 'POST', body: formData });
+            const resultText = await response.text(); // Odczytaj odpowiedź jako tekst
+
+            if (resultText === "Success") {
                 setMessage('Dziękujemy! Powiadomimy Cię, gdy aplikacja będzie gotowa. Otrzymasz również 20% zniżki.');
                 setEmail('');  // Reset email field
-                setSubscriberCount(prevCount => prevCount + 1);  // Increment the subscriber count locally
+                setSuggestion(''); // Reset suggestion field
+            } else if (resultText === "Email already exists") {
+                setMessage('Ten email został już zapisany.');
+            } else {
+                setMessage('Wystąpił błąd. Spróbuj ponownie później.');
             }
         } catch (error) {
             console.error('Wystąpił błąd podczas zapisywania e-maila:', error);
@@ -27,43 +41,32 @@ function UnderConstruction() {
         }
     };
 
-    useEffect(() => {
-        // Fetch the number of subscribers when the component mounts
-        const fetchSubscriberCount = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/notify/count');
-                if (response.status === 200) {
-                    setSubscriberCount(response.data.count);
-                }
-            } catch (error) {
-                console.error('Error fetching subscriber count:', error);
-            }
-        };
-
-        fetchSubscriberCount();
-    }, []); // Run this effect once on component mount
-
-        return (
+    return (
         <div className="gradient__bg">
             <div className="under-construction-container">
                 <img src={logo} alt="Logo" className="notify-logo"/>
                 <div className="gradient__text">
                     <h1 className="h1-notify">Strona w budowie...</h1>
-                    {/*<p className="p-notify">Nasza strona nie jest obecnie gotowa. Wprowadź swój e-mail, aby*/}
-                    {/*    otrzymać <strong className="notify-strong">20%</strong> zniżki na start!</p>                  */}
                     <p className="p-notify">
                         Zapisz się na testy naszej aplikacji już 23 września! Otrzymaj 7 dni darmowego dostępu do wszystkich funkcji, a potem <strong className="notify-strong">20%</strong> zniżki na wersję premium. Podaj swój e-mail i dołącz do grona testerów!
                     </p>
                 </div>
                 <form onSubmit={handleSubmit} className="email-form">
                     <input
-                           type="email"
-                           placeholder="Twój e-mail"
-                           value={email}
-                           onChange={handleEmailChange}
-                           required
+                        type="email"
+                        placeholder="Twój e-maill"
+                        value={email}
+                        onChange={handleEmailChange}
+                        required
                     />
-                    <button className="edit bt-notify" role="button" type="submit"><span className="text">Zapisz się!</span>
+                    <textarea
+                        placeholder="Twoja sugestia dotycząca aplikacji"
+                        value={suggestion}
+                        onChange={handleSuggestionChange}
+                        minLength={10}
+                    />
+                    <button className="edit bt-notify" role="button" type="submit">
+                        <span className="text">Zapisz się!</span>
                     </button>
                 </form>
 
