@@ -9,7 +9,7 @@ const SignupPage = () => {
     const location = useLocation();
     const [formData, setFormData] = useState({
         username: '',
-        email: '', // Początkowy stan jest pusty
+        email: '',
         password: '',
         confirmPassword: ''
     });
@@ -47,15 +47,16 @@ const SignupPage = () => {
                     alert('Użytkownik został pomyślnie zarejestrowany');
                     navigate('/login');
                 } else {
-                    alert('Nieoczekiwany format odpowiedzi');
+                    setErrorMessage('Nieoczekiwany format odpowiedzi');
                 }
             })
             .catch(error => {
                 console.error('Wystąpił błąd podczas rejestracji!', error);
-                if (error.response && error.response.data) {
-                    alert('Rejestracja nie powiodła się: ' + error.response.data);
+                if (error.response && error.response.data && error.response.data.error) {
+                    // Wyświetlanie komunikatu o błędzie zwróconym z backendu
+                    setErrorMessage(error.response.data.error);
                 } else {
-                    alert('Rejestracja nie powiodła się: Wystąpił nieoczekiwany błąd');
+                    setErrorMessage('Rejestracja nie powiodła się: konto z takim emailem już istnieje');
                 }
             });
     };
@@ -63,47 +64,47 @@ const SignupPage = () => {
     return (
         <div className="bg">
             <div className="login-container">
-                <img src={logo} alt="Logo"/>
+                <img src={logo} alt="Logo" />
                 <h1 className="h">Dołącz do nas!</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <input className="input"
-                            placeholder="Nazwa użytkownika"
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
+                               placeholder="Nazwa użytkownika"
+                               type="text"
+                               id="username"
+                               name="username"
+                               value={formData.username}
+                               onChange={handleChange}
                         />
                     </div>
                     <div>
                         <input className="input"
-                            placeholder="Email"
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
+                               placeholder="Email"
+                               type="email"
+                               id="email"
+                               name="email"
+                               value={formData.email}
+                               onChange={handleChange}
                         />
                     </div>
                     <div>
                         <input className="input"
-                            placeholder="Hasło"
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
+                               placeholder="Hasło"
+                               type="password"
+                               id="password"
+                               name="password"
+                               value={formData.password}
+                               onChange={handleChange}
                         />
                     </div>
                     <div>
                         <input className="input"
-                            placeholder="Powtórz hasło"
-                            type="password"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
+                               placeholder="Powtórz hasło"
+                               type="password"
+                               id="confirmPassword"
+                               name="confirmPassword"
+                               value={formData.confirmPassword}
+                               onChange={handleChange}
                         />
                     </div>
                     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

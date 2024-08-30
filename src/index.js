@@ -32,14 +32,14 @@ root.render(
             <Router>
                 <Routes>
                     {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
-                    {/*<Route path="/" element={<App />} />*/}
-                    {/*<Route path="/login" element={<LoginPage />} />*/}
-                    {/*<Route path="/passwordForgot" element={<PasswordForgotPage />} />*/}
-                    {/*<Route path="/signup" element={<SignupPage />} />*/}
-                    {/*<Route path="/profile/:username" element={<ProfilePage />} />*/}
-                    {/*<Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />*/}
-                    {/*<Route path="/termsofuse" element={<TermsOfUsePage/>} />*/}
-                    {/*<Route path="/pricing" element={<PricingPage/>} />*/}
+                    <Route path="/" element={<App />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/passwordForgot" element={<PasswordForgotPage />} />
+                    <Route path="/signup" element={<SignupPage />} />
+                    <Route path="/profile/:username" element={<ProfilePage />} />
+                    <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
+                    <Route path="/termsofuse" element={<TermsOfUsePage/>} />
+                    <Route path="/pricing" element={<PricingPage/>} />
                     <Route path="/notify" element={<ConstructionPage/>} />
                     <Route path="/contact" element={<ContactPage/>} />
                     <Route path="/help" element={<HelpPage/>} />
@@ -47,7 +47,7 @@ root.render(
                     <Route path="/team" element={<TeamPage/>} />
 
                     {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
-                    <Route path="/" element={<ConstructionPage/>} />
+                    {/*<Route path="/" element={<ConstructionPage/>} />*/}
                 </Routes>
             </Router>
         </UserProvider>

@@ -61,7 +61,6 @@ const LoginPage = () => {
         setShowPassword(!showPassword);
     };
 
-
     return (
         <div className="bg">
             <div className="login-container">
