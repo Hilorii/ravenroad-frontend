@@ -14,12 +14,6 @@ import axios from 'axios';
 const ProfilePage = () => {
     const { username } = useParams();
     const { user, setUser } = useUser();
-
-
-
-
-
-
     return (
         <div className="App">
             <div className="gradient__bg">
