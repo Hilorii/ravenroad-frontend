@@ -5,13 +5,14 @@ import logo from '../../assets/RRlogo.png'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
-
+import { useUser } from '../../contexts/UserContext';
 //Tamagui imports
 import { PopoverDemo } from '../../components/tamagui/avatar-popover'
 
 
 const Menu = () => {
-    if (window.location.pathname === "/") {
+    const { user, setUser } = useUser();
+    if (!user && window.location.pathname === "/") {
         return (
             <>
                 <p><a href="#pro">Pro</a></p>
@@ -21,10 +22,18 @@ const Menu = () => {
                 <p><a href="/contact">Kontakt</a></p>
             </>
         );
+    } else if (user && window.location.pathname === "/"){
+        return (
+            <>
+                <p><a href="/">Strona główna</a></p>
+                <p><a href="/contact">Kontakt</a></p>
+            </>
+        )
     } else {
         return (
             <>
                 <p><a href="/">Strona główna</a></p>
+                <p><a href="/contact">Kontakt</a></p>
             </>
         );
     }
