@@ -10,7 +10,7 @@ export default function PricingPage() {
             <div className="gradient__bg">
                 <Navbar/>
                 <YStack padding="$0" space>
-                    <h1 className="gradient__text title ">Dołącz do Raven Road. Wybierz abonament dla siebie!</h1>
+                    <h1 className="gradient__text titlee ">Dołącz do Raven Road. Wybierz abonament dla siebie!</h1>
                     <XStack space justifyContent="center" flexWrap="wrap">
                         <TabsDemo/>
                     </XStack>

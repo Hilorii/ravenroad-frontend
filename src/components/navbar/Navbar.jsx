@@ -22,11 +22,12 @@ const Menu = () => {
                 <p><a href="/contact">Kontakt</a></p>
             </>
         );
-    } else if (user && window.location.pathname === "/"){
+    } else if (user){
         return (
             <>
                 <p><a href="/">Strona główna</a></p>
                 <p><a href="/contact">Kontakt</a></p>
+                <p><a href="/routes">Zarządzaj trasami</a></p>
             </>
         )
     } else {
