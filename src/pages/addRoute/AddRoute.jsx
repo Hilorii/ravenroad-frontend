@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { YStack, XStack } from 'tamagui';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Navbar from "../../components/navbar/Navbar";
 import './addRoute.css';
 
@@ -7,6 +7,14 @@ export default function AddRoute() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
+    const [date, setDate] = useState('');
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const currentDate = new Date().toISOString().split('T')[0]; // Pobiera datę w formacie YYYY-MM-DD
+        setDate(currentDate);
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,6 +23,7 @@ export default function AddRoute() {
         formData.append('title', title);
         formData.append('description', description);
         formData.append('image', image);
+        formData.append('date', date);
 
         try {
             const response = await fetch('http://localhost:5000/addRoute', {
@@ -28,6 +37,7 @@ export default function AddRoute() {
             }
 
             alert('Trasa została dodana pomyślnie!');
+            navigate('/routes');
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas dodawania trasy.');
@@ -65,7 +75,6 @@ export default function AddRoute() {
                             id="image"
                             onChange={(e) => setImage(e.target.files[0])}
                             accept="image/*"
-                            //required
                         />
                     </div>
                     <button type="submit">Dodaj trasę</button>

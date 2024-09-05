@@ -1,18 +1,73 @@
-import { YStack, XStack} from 'tamagui';
-import Navbar from "../../components/navbar/Navbar"
-import './routes.css'
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import './routes.css';
 
 export default function RoutesContainer() {
+    const [routes, setRoutes] = useState([]);
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    useEffect(() => {
+        // Pobranie tras zalogowanego użytkownika
+        axios.get('http://localhost:5000/routes', { withCredentials: true })
+            .then(response => {
+                // Sortowanie tras od najnowszej do najstarszej
+                const sortedRoutes = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+                setRoutes(sortedRoutes);
+            })
+            .catch(error => {
+                console.error("Błąd podczas pobierania tras:", error);
+            });
+    }, []);
+
+    const handleDelete = async (routeId) => {
+        console.log("Deleting route with ID:", routeId); // Logowanie ID przed usunięciem
+
+        try {
+            const response = await fetch(`http://localhost:5000/routes/${routeId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                throw new Error('Błąd podczas usuwania trasy');
+            }
+
+            alert('Trasa została usunięta pomyślnie!');
+            // Opcjonalnie: odśwież listę tras po usunięciu
+            setRoutes(routes.filter(route => route.id !== routeId));
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Wystąpił problem podczas usuwania trasy.');
+        }
+    };
+
+
+
+    console.log(routes);
     return (
         <div className="rC-container">
-            <div>
-                
-            </div>
+            {routes.map((route) => (
+                <div key={route.id} className="route-card">
+                    <img
+                        src={`http://localhost:5000/uploads/${route.image}`}
+                        alt={route.title}
+                        className="route-image"
+                    />
+                    <h2>{route.title}</h2>
+                    <p>{route.description}</p>
+
+                    {/* Przycisk szczegółów */}
+                    <button onClick={() => navigate(`/routeDetails/${route.id}`)}>
+                        Szczegóły
+                    </button>
+
+                    {/* Przycisk usuwania */}
+                    <button onClick={() => handleDelete(route.id)}>
+                        Usuń
+                    </button>
+                </div>
+            ))}
         </div>
     );
 }
-
-
-
-

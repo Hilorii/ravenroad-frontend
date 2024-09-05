@@ -13,5 +13,28 @@
 }
 
 .rC-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
 
+.route-card {
+    background: transparent;
+    color: white;
+    border-radius: 50px;
+    border-style: outset;
+    border-color: white;
+    box-shadow: 0 1npm startpx 100px rgba(1000, 1000, 1000, 0.2);
+    padding: 20px;
+    width: 60%;
+    height: 400px;
+    text-align: center;
+}
+
+.route-image {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
 }

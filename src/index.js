@@ -26,6 +26,7 @@ import FAQPage from './pages/FAQ/FAQ';
 import PageNotFoundPage from './pages/pageNotFound/PageNotFound';
 import RoutesPage from './pages/routes/Routes';
 import AddRoutePage from './pages/addRoute/AddRoute';
+import RouteDetailsPage from './pages/routeDetails/RouteDetails';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -54,6 +55,7 @@ root.render(
                     <Route path="/FAQ" element={<FAQPage/>} />
                     <Route path="/routes" element={<RoutesPage/>} />
                     <Route path="/addRoute" element={<AddRoutePage/>} />
+                    <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
                     <Route path="*" element={<PageNotFoundPage/>} />
 
                     {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
