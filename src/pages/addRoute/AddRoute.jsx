@@ -47,7 +47,7 @@ export default function AddRoute() {
     return (
         <div className="App">
             <div className="gradient__bg">
-                <Navbar />
+                <Navbar/>
                 <form onSubmit={handleSubmit} className="add-route-form">
                     <div className="form-group">
                         <label htmlFor="title">Tytuł trasy:</label>

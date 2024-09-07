@@ -11,6 +11,7 @@ export default function RoutesContainer() {
         // Pobranie tras zalogowanego użytkownika
         axios.get('http://localhost:5000/routes', { withCredentials: true })
             .then(response => {
+                console.log(response.data);
                 // Sortowanie tras od najnowszej do najstarszej
                 const sortedRoutes = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setRoutes(sortedRoutes);
@@ -56,7 +57,8 @@ export default function RoutesContainer() {
                     />
                     <h2>{route.title}</h2>
                     <p>{route.description}</p>
-
+                    <p>{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
+                    
                     {/* Przycisk szczegółów */}
                     <button onClick={() => navigate(`/routeDetails/${route.id}`)}>
                         Szczegóły
