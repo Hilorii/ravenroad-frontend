@@ -24,6 +24,14 @@ export default function RoutesContainer() {
     const handleDelete = async (routeId) => {
         console.log("Deleting route with ID:", routeId); // Logowanie ID przed usunięciem
 
+        // Show a confirmation dialog before deleting
+        const confirmDelete = window.confirm('Czy na pewno chcesz usunąć tę trasę?'); // Confirmation message
+
+        // If the user clicks "Cancel", exit the function
+        if (!confirmDelete) {
+            return;
+        }
+
         try {
             const response = await fetch(`http://localhost:5000/routes/${routeId}`, {
                 method: 'DELETE',
@@ -45,6 +53,7 @@ export default function RoutesContainer() {
 
 
 
+
     console.log(routes);
     return (
         <div className="rC-container">
@@ -56,18 +65,17 @@ export default function RoutesContainer() {
                         className="route-image"
                     />
                     <h2>{route.title}</h2>
-                    <p>{route.description}</p>
                     <p>{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
-                    
-                    {/* Przycisk szczegółów */}
-                    <button onClick={() => navigate(`/routeDetails/${route.id}`)}>
-                        Szczegóły
-                    </button>
 
-                    {/* Przycisk usuwania */}
-                    <button onClick={() => handleDelete(route.id)}>
-                        Usuń
-                    </button>
+                    <div className="r-button-container">
+                        <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="edit" role="button">
+                            <span>Szczegóły</span>
+                        </button>
+
+                        <button onClick={() => handleDelete(route.id)} className="edit" role="button">
+                            <span>Usuń</span>
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>

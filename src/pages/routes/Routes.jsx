@@ -12,13 +12,11 @@ export default function RoutesPage() {
                 <YStack padding="$0" space>
                     <h1 className="gradient__text r-title ">Zarządzaj Trasami</h1>
                     <Link to="/addRoute" className="r-edit-bt">
-                        <button className="edit" role="button"><span className="text r-edit-bt">Dodaj trasę</span></button>
+                        <button className="edit" role="button"><span>Dodaj trasę</span></button>
                     </Link>
-
                     <YStack space className="r-container">
                         <RoutesContainer/>
                     </YStack>
-
                 </YStack>
             </div>
         </div>

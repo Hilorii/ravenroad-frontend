@@ -6,11 +6,10 @@
 
 .r-edit-bt {
     padding: 20px;
+    max-width: 192px;
+    max-height: 47px;
 }
 
-.r-container {
-
-}
 
 .rC-container {
     display: flex;
@@ -20,21 +19,56 @@
     padding: 20px;
 }
 
+
 .route-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: transparent;
     color: white;
     border-radius: 50px;
     border-style: outset;
     border-color: white;
-    box-shadow: 0 1npm startpx 100px rgba(1000, 1000, 1000, 0.2);
+    box-shadow: 0  1px 100px rgba(1000, 1000, 1000, 0.2);
     padding: 20px;
-    width: 60%;
-    height: 400px;
+    width: 50%;
+    height: auto;
     text-align: center;
 }
+.route-card h2 {
+    font-size: clamp(1.4rem, 2vw, 1rem);
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    padding-bottom: 30px;
+}
 
+.route-card img {
+    width: 25vw;
+    height: 30vh;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.route-card p {
+    position: absolute;
+    top: 10px; /* Odległość od górnej krawędzi karty */
+    left: 10px; /* Odległość od lewej krawędzi karty */
+    padding: 10px; /* Dodaj padding dla estetyki */
+}
 .route-image {
     width: 200px;
     height: auto;
     border-radius: 8px;
 }
+
+.r-button-container {
+    display: flex; /* Ustawia przyciski obok siebie */
+    gap: 20px; /* Odstęp między przyciskami */
+    scale: 0.9;
+}
+
+
+

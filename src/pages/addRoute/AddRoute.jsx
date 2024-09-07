@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 import './addRoute.css';
 
@@ -8,16 +8,43 @@ export default function AddRoute() {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [date, setDate] = useState('');
+    const [error, setError] = useState({ title: '', description: '' }); // State to hold error messages
     const navigate = useNavigate();
 
-
     useEffect(() => {
-        const currentDate = new Date().toISOString().split('T')[0]; // Pobiera datę w formacie YYYY-MM-DD
+        const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
         setDate(currentDate);
     }, []);
 
+    // Handle title change with validation
+    const handleTitleChange = (e) => {
+        const value = e.target.value;
+        if (value.length > 100) {
+            setError({ ...error, title: 'Tytuł nie może przekraczać 100 znaków!' });
+        } else {
+            setError({ ...error, title: '' });
+        }
+        setTitle(value);
+    };
+
+    // Handle description change with validation
+    const handleDescriptionChange = (e) => {
+        const value = e.target.value;
+        if (value.length > 1000) {
+            setError({ ...error, description: 'Opis nie może przekraczać 1000 znaków!' });
+        } else {
+            setError({ ...error, description: '' });
+        }
+        setDescription(value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (error.title || error.description) {
+            alert('Proszę poprawić błędy przed wysłaniem formularza.');
+            return;
+        }
 
         const formData = new FormData();
         formData.append('title', title);
@@ -47,7 +74,7 @@ export default function AddRoute() {
     return (
         <div className="App">
             <div className="gradient__bg">
-                <Navbar/>
+                <Navbar />
                 <form onSubmit={handleSubmit} className="add-route-form">
                     <div className="form-group">
                         <label htmlFor="title">Tytuł trasy:</label>
@@ -55,18 +82,22 @@ export default function AddRoute() {
                             type="text"
                             id="title"
                             value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={handleTitleChange}
+                            maxLength={50}
                             required
                         />
+                        {error.title && <p className="error-message">{error.title}</p>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="description">Opis trasy:</label>
                         <textarea
                             id="description"
                             value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={handleDescriptionChange}
+                            maxLength={1000}
                             required
                         />
+                        {error.description && <p className="error-message">{error.description}</p>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="image">Zdjęcie trasy:</label>
