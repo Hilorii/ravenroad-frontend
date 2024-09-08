@@ -1,20 +1,22 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './routes.css';
 
 export default function RoutesContainer() {
     const [routes, setRoutes] = useState([]);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const [filteredRoutes, setFilteredRoutes] = useState([]);
+    const [sortOrder, setSortOrder] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Pobranie tras zalogowanego użytkownika
         axios.get('http://localhost:5000/routes', { withCredentials: true })
             .then(response => {
                 console.log(response.data);
-                // Sortowanie tras od najnowszej do najstarszej
-                const sortedRoutes = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
-                setRoutes(sortedRoutes);
+                setRoutes(response.data);
+                setFilteredRoutes(response.data);  // Domyślnie wyświetlamy wszystkie trasy
             })
             .catch(error => {
                 console.error("Błąd podczas pobierania tras:", error);
@@ -22,12 +24,9 @@ export default function RoutesContainer() {
     }, []);
 
     const handleDelete = async (routeId) => {
-        console.log("Deleting route with ID:", routeId); // Logowanie ID przed usunięciem
+        console.log("Deleting route with ID:", routeId);
 
-        // Show a confirmation dialog before deleting
-        const confirmDelete = window.confirm('Czy na pewno chcesz usunąć tę trasę?'); // Confirmation message
-
-        // If the user clicks "Cancel", exit the function
+        const confirmDelete = window.confirm('Czy na pewno chcesz usunąć tę trasę?');
         if (!confirmDelete) {
             return;
         }
@@ -43,41 +42,84 @@ export default function RoutesContainer() {
             }
 
             alert('Trasa została usunięta pomyślnie!');
-            // Opcjonalnie: odśwież listę tras po usunięciu
-            setRoutes(routes.filter(route => route.id !== routeId));
+            const updatedRoutes = routes.filter(route => route.id !== routeId);
+            setRoutes(updatedRoutes);
+            setFilteredRoutes(updatedRoutes);
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas usuwania trasy.');
         }
     };
 
+    // Obsługa sortowania i wyszukiwania tras
+    const handleSortAndFilter = () => {
+        let sortedAndFilteredRoutes = routes.filter(route =>
+            route.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
+        if (sortOrder) {
+            sortedAndFilteredRoutes = sortedAndFilteredRoutes.sort((a, b) => {
+                const dateA = new Date(a.add_date);
+                const dateB = new Date(b.add_date);
 
+                // Sprawdzamy, czy daty są poprawnie przekształcone
+                if (isNaN(dateA) || isNaN(dateB)) {
+                    return 0;
+                }
 
-    console.log(routes);
+                return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+            });
+        }
+
+        setFilteredRoutes(sortedAndFilteredRoutes);
+    };
+
+    // Zaktualizuj listę tras po zmianie kryteriów sortowania lub wyszukiwania
+    useEffect(() => {
+        handleSortAndFilter();
+    }, [searchQuery, sortOrder]);
+
     return (
         <div className="rC-container">
-            {routes.map((route) => (
-                <div key={route.id} className="route-card">
-                    <img
-                        src={`http://localhost:5000/uploads/${route.image}`}
-                        alt={route.title}
-                        className="route-image"
-                    />
-                    <h2>{route.title}</h2>
-                    <p>{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
+            <div className="r-filters">
+                <input
+                    className="rC-input"
+                    type="text"
+                    placeholder="Szukaj tras..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <select className="rC-select" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                    <option value="asc">Od najstarszych</option>
+                    <option value="desc">Od najnowszych</option>
+                </select>
+            </div>
 
-                    <div className="r-button-container">
-                        <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="edit" role="button">
-                            <span>Szczegóły</span>
-                        </button>
+            {filteredRoutes.length > 0 ? (
+                filteredRoutes.map((route) => (
+                    <div key={route.id} className="route-card">
+                        <img
+                            src={`http://localhost:5000/uploads/${route.image}`}
+                            alt={route.title}
+                            className="route-image"
+                        />
+                        <h2>{route.title}</h2>
+                        <p>{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
 
-                        <button onClick={() => handleDelete(route.id)} className="edit" role="button">
-                            <span>Usuń</span>
-                        </button>
+                        <div className="r-button-container">
+                            <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="edit" role="button">
+                                <span>Szczegóły</span>
+                            </button>
+
+                            <button onClick={() => handleDelete(route.id)} className="edit" role="button">
+                                <span>Usuń</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))
+            ) : (
+                <p className="gradient__text rC-p">Nie znaleziono trasy o podanej nazwie.</p>
+            )}
         </div>
     );
 }

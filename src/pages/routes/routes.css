@@ -70,5 +70,25 @@
     scale: 0.9;
 }
 
+.r-filters {
+    position: absolute;
+    top: -20px;
+    margin-bottom: 100px;
+}
+.rC-input {
+    border-radius: 5px;
+    scale: 1.4;
+    width: 10vw;
+    margin-right: 70px;
+}
+.rC-select {
+    border-radius: 5px;
+    scale: 1.4;
+    width: 7vw;
+}
+.rC-p {
+    font-size: 4vw;
+}
+
 
 
