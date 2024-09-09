@@ -1,0 +1,126 @@
+
+.add-route-form-main {
+
+}
+
+.add-route-form {
+    position: relative;
+    padding: 15px 1vw 1vh;
+    margin-top: 10px;
+    width: 50%;
+}
+.add-route-text {
+    position: relative;
+    padding: 15px 1vw 1vh;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 82%;
+}
+
+.r-desc {
+    height: 300px;
+    resize: none;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #fff;
+    outline: 0;
+    font-size: 1.3rem;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    &:placeholder-shown ~ .form__label {
+        font-size: 1.3rem;
+        cursor: text;
+        top: 20px;
+    }
+}
+
+.form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.form__field:focus {
+    ~ .form__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: fuchsia;
+        font-weight:700;
+    }
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, fuchsia, #ff9700);
+    border-image-slice: 1;
+}
+/* reset input */
+.form__field{
+    &:required,&:invalid { box-shadow:none; }
+}
+
+
+.r-form-group {
+    font-family: inherit;
+    font-size: 1.3rem;
+    padding: 0 0 50px 15px;
+}
+
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-upload-button {
+    background-color: #fff;
+    color: black;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+.r-input-label {
+    background-color: #b82fb8;
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+.r-input-label:hover {
+    background-color: #9c279c;
+}
+#file-chosen{
+    margin-left: 0.3rem;
+    font-family: sans-serif;
+}
+
+.r-add-bt {
+    margin-left: 15px;
+}
+
+
+
+

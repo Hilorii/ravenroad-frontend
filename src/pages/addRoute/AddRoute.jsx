@@ -8,12 +8,33 @@ export default function AddRoute() {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [date, setDate] = useState('');
-    const [error, setError] = useState({ title: '', description: '' }); // State to hold error messages
+    const [error, setError] = useState({ title: '', description: '' });
     const navigate = useNavigate();
 
     useEffect(() => {
         const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
         setDate(currentDate);
+    }, []);
+
+    useEffect(() => {
+        const actualBtn = document.getElementById('image');
+        const fileChosen = document.getElementById('file-chosen');
+
+        // Check if elements exist before adding event listeners
+        if (actualBtn && fileChosen) {
+            actualBtn.addEventListener('change', function () {
+                fileChosen.textContent = this.files[0]?.name || 'Nie wybrano pliku';
+            });
+        }
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            if (actualBtn) {
+                actualBtn.removeEventListener('change', function () {
+                    fileChosen.textContent = 'Nie wybrano pliku';
+                });
+            }
+        };
     }, []);
 
     // Handle title change with validation
@@ -75,10 +96,11 @@ export default function AddRoute() {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
-                <form onSubmit={handleSubmit} className="add-route-form">
-                    <div className="form-group">
-                        <label htmlFor="title">Tytuł trasy:</label>
+                <form onSubmit={handleSubmit} className="add-route-form-main">
+                    <div className="add-route-form field">
                         <input
+                            placeholder=""
+                            className="form__field"
                             type="text"
                             id="title"
                             value={title}
@@ -86,29 +108,37 @@ export default function AddRoute() {
                             maxLength={50}
                             required
                         />
+                        <label htmlFor="title" className="form__label">Tytuł trasy:</label>
                         {error.title && <p className="error-message">{error.title}</p>}
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="description">Opis trasy:</label>
+                    <div className="add-route-text field">
                         <textarea
+                            placeholder=""
+                            className="r-desc form__field"
                             id="description"
                             value={description}
                             onChange={handleDescriptionChange}
                             maxLength={1000}
                             required
                         />
+                        <label htmlFor="description" className="form__label">Opis trasy:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="image">Zdjęcie trasy:</label>
+                    <div className="r-form-group">
                         <input
                             type="file"
                             id="image"
                             onChange={(e) => setImage(e.target.files[0])}
                             accept="image/*"
+                            required
+                            hidden
                         />
+                        <label className="r-input-label" htmlFor="image">Zdjęcie trasy</label>
+                        <span id="file-chosen">Nie wybrano pliku</span>
                     </div>
-                    <button type="submit">Dodaj trasę</button>
+                    <button className="edit r-add-bt" role="button" type="submit">
+                        <span className="text">Dodaj trasę</span>
+                    </button>
                 </form>
             </div>
         </div>
