@@ -28,6 +28,7 @@ const Menu = () => {
             <>
                 <p><a href="/">Strona główna</a></p>
                 <p><a href="/contact">Kontakt</a></p>
+                <p><a href="#niewiem">Zaplanuj podróż</a></p>
                 <p><a href="/readyRoutes">Gotowe trasy</a></p>
                 <p><a href="/routes">Twoje trasy</a></p>
                 <p><a href="/collaboration">Współpraca</a></p>
