@@ -1,0 +1,85 @@
+.contact-form-container {
+    text-align: center;
+}
+
+.open-form-button {
+    padding: 10px 20px;
+    background-color: #ff3b3b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.open-form-button:hover {
+    background-color: #e33232;
+}
+
+.form-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.contact-form h2 {
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.contact-form .submit-button,
+.contact-form .close-button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-form .submit-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.contact-form .submit-button:hover {
+    background-color: #218838;
+}
+
+.contact-form .close-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.contact-form .close-button:hover {
+    background-color: #c82333;
+}

@@ -1,0 +1,55 @@
+.ad-container {
+    text-align: center;
+    padding: 20px;
+    background-color: transparent;
+    color: white;
+    border-style: groove;
+    width: 60%;
+    margin: 30px;
+    border-radius: 25px;
+    box-shadow: 0 0 1000px rgba(255, 255, 255, 0.1);
+}
+
+.ad-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.ad-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.ad-email {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ad-contact {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.ad-phone {
+    color: #fff;
+    text-decoration: none;
+}
+
+.ad-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a948bf;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.ad-button:hover {
+    background-color: #882c9e;
+    transform: scale(0.95);
+}

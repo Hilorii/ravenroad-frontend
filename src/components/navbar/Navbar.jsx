@@ -17,9 +17,10 @@ const Menu = () => {
             <>
                 <p><a href="#pro">Pro</a></p>
                 <p><a href="#features">Możliwości</a></p>
-                <p><a href="#createroute">Zaplanuj podróż</a></p>
-                <p><a href="#routes">Gotowe trasy</a></p>
+                <p><a href="/Signup">Zaplanuj podróż</a></p>
+                <p><a href="/Signup">Gotowe trasy</a></p>
                 <p><a href="/contact">Kontakt</a></p>
+                <p><a href="/collaboration">Współpraca</a></p>
             </>
         );
     } else if (user){
@@ -27,7 +28,9 @@ const Menu = () => {
             <>
                 <p><a href="/">Strona główna</a></p>
                 <p><a href="/contact">Kontakt</a></p>
-                <p><a href="/routes">Zarządzaj trasami</a></p>
+                <p><a href="/readyRoutes">Gotowe trasy</a></p>
+                <p><a href="/routes">Twoje trasy</a></p>
+                <p><a href="/collaboration">Współpraca</a></p>
             </>
         )
     } else {
@@ -35,6 +38,7 @@ const Menu = () => {
             <>
                 <p><a href="/">Strona główna</a></p>
                 <p><a href="/contact">Kontakt</a></p>
+                <p><a href="/collaboration">Współpraca</a></p>
             </>
         );
     }

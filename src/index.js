@@ -27,6 +27,8 @@ import PageNotFoundPage from './pages/pageNotFound/PageNotFound';
 import RoutesPage from './pages/routes/Routes';
 import AddRoutePage from './pages/addRoute/AddRoute';
 import RouteDetailsPage from './pages/routeDetails/RouteDetails';
+import CollaborationPage from './pages/collaboration/Collaboration';
+import ReadyRoutesPage from './pages/readyRoutes/ReadyRoutes';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -56,6 +58,8 @@ root.render(
                     <Route path="/routes" element={<RoutesPage/>} />
                     <Route path="/addRoute" element={<AddRoutePage/>} />
                     <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
+                    <Route path="/collaboration" element={<CollaborationPage/>} />
+                    <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
                     <Route path="*" element={<PageNotFoundPage/>} />
 
                     {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}

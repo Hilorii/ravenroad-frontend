@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {Footer, Blog, Possibility, Features, WhatRR, Header} from "./containers";
-import {CTA, Brand, Navbar} from './components'
+import {CTA, Brand, Navbar, Ad} from './components'
 import "./App.css"
 
 import { ProCard } from './components/tamagui/pro-card';
@@ -51,6 +51,7 @@ const App = () => {
                 <div>
                     <Header/>
                     <Brand/> {/* ZMIENIĆ MARKI*/}
+                    <Ad/>
                     <WhatRR/>
                     <div className="middle" id="pro">
                         <ProCard/>

@@ -1,0 +1,35 @@
+.collab-info {
+    color: #ffffff;  /* Jasny tekst */
+    margin-bottom: 10px;
+    width: 50vw;
+    font-size: 25px;
+}
+
+.collab-info strong {
+    color: fuchsia;
+}
+.collab-info-mail {
+    font-size: 18px;
+    color: #ffffff;  /* Jasny tekst */
+    margin-bottom: 10px;
+}
+
+.collab-item {
+    text-align: center;
+    margin: 20px;
+}
+
+.collab-item p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #ffffff;  /* Jasny tekst */
+}
+
+.collab-item a {
+    text-decoration: none;
+    color: #ffffff;  /* Jasny tekst */
+}
+
+.collab-item a:hover {
+    color: #ff7f50; /* Kolor tekstu po najechaniu kursorem */
+}
