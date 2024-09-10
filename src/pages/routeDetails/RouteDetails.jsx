@@ -9,6 +9,7 @@ const RouteDetailsPage = () => {
     const [routeDetails, setRouteDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Hook do nawigacji
 
     useEffect(() => {
         const fetchRouteDetails = async () => {
@@ -48,6 +49,11 @@ const RouteDetailsPage = () => {
         return <div>Nie znaleziono szczegółów trasy.</div>;
     }
 
+    // Funkcja obsługująca przekierowanie do edycji trasy
+    const handleEditClick = () => {
+        navigate(`/editRoute/${id}`);
+    };
+
     // Renderowanie szczegółów trasy
     return (
         <div className="App">
@@ -62,9 +68,11 @@ const RouteDetailsPage = () => {
                                 className="routeD-image"
                             />
                             <p><strong>Opis:</strong> {routeDetails.description}</p>
-                            <p><strong>Data
-                                utworzenia: </strong>{routeDetails.add_date ? new Date(routeDetails.add_date).toLocaleDateString() : 'Brak daty'}
-                            </p>
+                            <p><strong>Data utworzenia: </strong>{routeDetails.add_date ? new Date(routeDetails.add_date).toLocaleDateString() : 'Brak daty'}</p>
+                            {/* Przycisk do edycji trasy */}
+                            <button className="edit-button" onClick={handleEditClick}>
+                                Edytuj trasę
+                            </button>
                         </div>
                     </YStack>
                 </div>
