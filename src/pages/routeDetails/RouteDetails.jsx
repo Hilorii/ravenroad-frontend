@@ -53,20 +53,21 @@ const RouteDetailsPage = () => {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
-                <XStack justifyContent="center">
-                    <YStack className="r-details-container" className="gradient__text">
-                        <h2 className="r-details-container">Szczegóły trasy: {routeDetails.title}</h2>
-                        <img
-                            src={`http://localhost:5000/uploads/${routeDetails.image}`}
-                            className="route-image"
-                        />
-                        <p><strong>ID:</strong> {routeDetails.id}</p>
-                        <p><strong>Opis:</strong> {routeDetails.description}</p>
-                        <p><strong>Długość:</strong> {routeDetails.length} km</p>
-                        <p><strong>Data utworzenia:</strong> {new Date(routeDetails.created_at).toLocaleDateString()}
-                        </p>
+                <div className="r-details-container">
+                    <YStack className="">
+                        <div className="r-details-container">
+                            <h2>Trasa: {routeDetails.title}</h2>
+                            <img
+                                src={`http://localhost:5000/uploads/${routeDetails.image}`}
+                                className="routeD-image"
+                            />
+                            <p><strong>Opis:</strong> {routeDetails.description}</p>
+                            <p><strong>Data
+                                utworzenia: </strong>{routeDetails.add_date ? new Date(routeDetails.add_date).toLocaleDateString() : 'Brak daty'}
+                            </p>
+                        </div>
                     </YStack>
-                </XStack>
+                </div>
             </div>
         </div>
     );

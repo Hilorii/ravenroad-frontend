@@ -118,7 +118,7 @@ export default function RoutesContainer() {
                     </div>
                 ))
             ) : (
-                <p className="gradient__text rC-p">Nie znaleziono trasy o podanej nazwie.</p>
+                <p className="gradient__text rC-p">Nie znaleziono trasy.</p>
             )}
         </div>
     );

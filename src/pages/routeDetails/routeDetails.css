@@ -1,3 +1,41 @@
+
 .r-details-container {
-    color: red;
+    padding: 1px;
+    color: #e8dbdb;
+
+}
+
+.r-details-container h2 {
+    font-size: 2vw;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    line-height: 0.8;
+    padding-left: 10px;
+}
+
+.routeD-image {
+    position: fixed;
+    width: 500px;
+    height: auto;
+    max-height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 0 1000px rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+    margin-left: 70vw;
+}
+
+.r-details-container p  {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 50%;
+    padding: 20px;
+    font-size: 1.2vw;
+}
+
+
+
+.rD-y {
+
 }
