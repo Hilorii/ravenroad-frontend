@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
-import axios from 'axios';
 
 export default function EditRoute() {
-    const location = useLocation();
     const navigate = useNavigate();
-    //to dziala wgl?
-    //const { routeDetails } = location.state || {}; // Odbieranie danych z poprzedniej strony
     const { id } = useParams(); // Pobiera id trasy z URL-a
     const [routeDetails, setRouteDetails] = useState(null);
     const [title, setTitle] = useState('');
@@ -16,6 +12,7 @@ export default function EditRoute() {
     const [date, setDate] = useState('');
     const [error, setError] = useState({ title: '', description: '' });
 
+    // Pobierz szczegóły trasy na podstawie ID
     useEffect(() => {
         const fetchRouteDetails = async () => {
             try {
@@ -29,7 +26,7 @@ export default function EditRoute() {
                 }
 
                 const data = await response.json();
-                console.log('Pobrane szczegóły trasy:', data); // Logowanie danych
+                console.log('Pobrane szczegóły trasy:', data);
                 setRouteDetails(data);
             } catch (err) {
                 console.error('Błąd podczas pobierania szczegółów trasy:', err);
@@ -40,12 +37,11 @@ export default function EditRoute() {
         fetchRouteDetails();
     }, [id]);
 
-    // Ustawienie danych trasy w inputach
+    // Ustawienie danych trasy w inputach po pobraniu
     useEffect(() => {
-        console.log('Odebrane szczegóły trasy:', routeDetails); // Sprawdzenie danych
         if (routeDetails) {
-            setTitle(routeDetails.title || ''); // Ustawienie tytułu
-            setDescription(routeDetails.description || ''); // Ustawienie opisu
+            setTitle(routeDetails.title || '');
+            setDescription(routeDetails.description || '');
         }
     }, [routeDetails]);
 
@@ -77,6 +73,7 @@ export default function EditRoute() {
         setDescription(value);
     };
 
+    // Wysyłanie danych formularza do backendu
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -88,12 +85,12 @@ export default function EditRoute() {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
-        formData.append('image', image);
+        formData.append('image', image); // jeśli nie zmienisz zdjęcia, image będzie null
         formData.append('date', date);
 
         try {
-            const response = await fetch(`http://localhost:5000/routes/${routeDetails.id}`, {
-                method: 'PUT',
+            const response = await fetch(`http://localhost:5000/routes/${id}`, {
+                method: 'PUT', // Upewnij się, że metoda jest PUT
                 credentials: 'include',
                 body: formData,
             });
@@ -103,7 +100,7 @@ export default function EditRoute() {
             }
 
             alert('Trasa została zaktualizowana pomyślnie!');
-            navigate('/routes');
+            navigate('/routes'); // Przekierowanie po udanej aktualizacji
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas edycji trasy.');
