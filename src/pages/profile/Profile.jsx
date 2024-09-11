@@ -23,11 +23,7 @@ const ProfilePage = () => {
 
                     <div className="profile-info">
                         <div className="profile-avatar">
-                            {user?.avatar ? (
-                                <img src={`http://localhost:5000/${user.avatar}`} alt="Profile" />
-                            ) : (
                                 <AvatarDemo />
-                            )}
                         </div>
                         <div className="edit-profile-bt">
                             <DialogDemo/>
