@@ -4,6 +4,7 @@ import './signup.css';
 import logo from '../../assets/RRlogo.png';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { GOOGLE } from '../../components/icons';
 
 const SignupPage = () => {
     const location = useLocation();
@@ -107,8 +108,11 @@ const SignupPage = () => {
                                onChange={handleChange}
                         />
                     </div>
-                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                    {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
                     <button className='logIn' type="submit">Zarejestruj się</button>
+                    <button className="logIn">
+                        <Link to="/login"><GOOGLE/> Zaloguj się przez Google</Link>
+                    </button>
                     <div className='link2'>
                         <Link to="/login">Zaloguj się!</Link>
                     </div>
