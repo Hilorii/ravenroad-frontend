@@ -14,34 +14,6 @@ const LoginPage = () => {
         password: ''
     });
 
-
-
-    useEffect(() => {
-        // Odczytaj token z URL
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get('token');
-
-        if (token) {
-            // Zapisz token do ciasteczek
-            document.cookie = `token=${token}; path=/`;
-
-            // Pobierz dane użytkownika
-            axios.get('http://localhost:5000/user', { withCredentials: true })
-                .then(response => {
-                    if (response.data) {
-                        setUser(response.data); // Zaktualizuj stan użytkownika
-                        navigate('/'); // lub inna odpowiednia strona
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching user:', error);
-                });
-        }
-    }, [navigate, setUser]);
-
-
-
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -52,20 +24,17 @@ const LoginPage = () => {
         console.log('Form data:', formData);
 
         try {
-            // Wysłanie danych logowania do serwera
             const response = await axios.post('http://localhost:5000/login', formData, { withCredentials: true });
 
             if (response && response.data) {
-                // Zapisz token w lokalnym magazynie lub ciasteczkach
                 const { token } = response.data;
                 document.cookie = `token=${token}; path=/`;
 
-                // Pobierz dane użytkownika
                 const userResponse = await axios.get('http://localhost:5000/user', { withCredentials: true });
 
                 if (userResponse && userResponse.data) {
-                    setUser(userResponse.data); // Zaktualizuj stan użytkownika
-                    navigate('/'); // lub inna odpowiednia strona
+                    setUser(userResponse.data);
+                    navigate('/');
                 } else {
                     alert('Unexpected response format');
                 }
@@ -87,10 +56,37 @@ const LoginPage = () => {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
-    
+
+    // Funkcja logowania przez Google
     const handleGoogleLogin = () => {
         window.location.href = 'http://localhost:5000/auth/google'; // Przekierowanie do Google OAuth
     };
+
+    // Funkcja logowania przez Facebook
+    const handleFacebookLogin = () => {
+        window.location.href = 'http://localhost:5000/auth/facebook'; // Przekierowanie do Facebook OAuth
+    };
+
+    useEffect(() => {
+        // Odczytaj token z URL
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+
+        if (token) {
+            document.cookie = `token=${token}; path=/`;
+
+            axios.get('http://localhost:5000/user', { withCredentials: true })
+                .then(response => {
+                    if (response.data) {
+                        setUser(response.data);
+                        navigate('/');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user:', error);
+                });
+        }
+    }, [navigate, setUser]);
 
     return (
         <div className="bg">
@@ -125,6 +121,9 @@ const LoginPage = () => {
                     <button className='logIn' type="submit">Zaloguj się</button>
                     <button className="logIn" onClick={handleGoogleLogin}>
                         <GOOGLE/> Zaloguj się przez Google
+                    </button>
+                    <button className="logIn" onClick={handleFacebookLogin}>
+                        Zaloguj się przez Facebook
                     </button>
                     <div className='link1'>
                         <a><Link to="../passwordForgot">Zapomniałeś hasła?</Link></a>
