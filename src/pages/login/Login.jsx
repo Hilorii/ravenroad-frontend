@@ -4,7 +4,8 @@ import './login.css';
 import logo from '../../assets/RRlogo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
-import { GOOGLE } from '../../components/icons';
+import { GOOGLE, FB } from '../../components/icons';
+
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -119,11 +120,11 @@ const LoginPage = () => {
                         </button>
                     </div>
                     <button className='logIn' type="submit">Zaloguj się</button>
-                    <button className="logIn" onClick={handleGoogleLogin}>
+                    <button className="logIn_FB_GOOGLE" onClick={handleGoogleLogin}>
                         <GOOGLE/> Zaloguj się przez Google
                     </button>
-                    <button className="logIn" onClick={handleFacebookLogin}>
-                        Zaloguj się przez Facebook
+                    <button className="logIn_FB_GOOGLE" onClick={handleFacebookLogin}>
+                        <FB/> Zaloguj się przez Facebook
                     </button>
                     <div className='link1'>
                         <a><Link to="../passwordForgot">Zapomniałeś hasła?</Link></a>

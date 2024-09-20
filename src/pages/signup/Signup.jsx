@@ -4,7 +4,7 @@ import './signup.css';
 import logo from '../../assets/RRlogo.png';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { GOOGLE } from '../../components/icons';
+import { GOOGLE, FB } from '../../components/icons';
 
 const SignupPage = () => {
     const location = useLocation();
@@ -110,8 +110,11 @@ const SignupPage = () => {
                     </div>
                     {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
                     <button className='logIn' type="submit">Zarejestruj się</button>
-                    <button className="logIn">
+                    <button className="logIn_FB_GOOGLE">
                         <Link to="/login"><GOOGLE/> Zaloguj się przez Google</Link>
+                    </button>
+                    <button className="logIn_FB_GOOGLE">
+                        <Link to="/login"><FB/> Zaloguj się przez Facebook</Link>
                     </button>
                     <div className='link2'>
                         <Link to="/login">Zaloguj się!</Link>
