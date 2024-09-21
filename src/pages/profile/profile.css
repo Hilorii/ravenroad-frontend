@@ -66,3 +66,26 @@ edit:active,
     min-width: 196px;
   }
 }
+
+.g-add-search {
+    position: sticky;
+}
+.g-filter {
+    position: absolute;
+    top: -5vh;
+    right: -26vw;
+    margin-bottom: 100px;
+}
+.g-button-container {
+    position: absolute;
+    right: 11vw;
+}
+.g-edit-bt {
+    padding: 20px;
+    max-width: 192px;
+    max-height: 47px;
+}
+.gC{
+    position: relative;
+    top: 50px;
+}

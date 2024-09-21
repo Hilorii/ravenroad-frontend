@@ -11,6 +11,8 @@ import { DialogDemo } from '../../components/tamagui/edit-profile';
 import { useUser } from '../../contexts/UserContext';
 import axios from 'axios';
 
+import GroupsContainer from './Groups.jsx'
+
 
 const ProfilePage = () => {
     const { username } = useParams();
@@ -49,10 +51,10 @@ const ProfilePage = () => {
                                 <div className="edit-profile-bt">
                                     <DialogDemo/>
                                 </div>
-                                <button className="edit" role="button"><span className="text" onClick={toggleGrupy}>Grupy</span></button>
-                                <button className="edit" role="button"><span className="text" onClick={toggleWydarzenia}>Wydarzenia</span></button>
+                                <button className="edit" role="button"><span className="text" onClick={toggleGrupy}>Twoje Grupy</span></button>
+                                <button className="edit" role="button"><span className="text" onClick={toggleWydarzenia}>Twoje Wydarzenia</span></button>
                         </XStack>
-                        {isGrupyActive && !isWydarzeniaActive && <Navbar />}
+                        {isGrupyActive && !isWydarzeniaActive && <div className="gC"><GroupsContainer/></div>}
                         {isWydarzeniaActive && !isGrupyActive && <AvatarDemo />}
                         {/*<div className="profile-navigation">*/}
                         {/*    <Link to={`/profile/${username}/groups`}>Twoje Grupy</Link>*/}
