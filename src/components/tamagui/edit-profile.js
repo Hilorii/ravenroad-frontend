@@ -106,16 +106,15 @@ function DialogInstance() {
             <Dialog.Trigger asChild>
                 <button className="edit" role="button"><span className="text">Edytuj profil</span></button>
             </Dialog.Trigger>
-
             <Adapt when="sm" platform="touch">
                 <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
                     <Sheet.Frame padding="$4" gap="$4">
-                        <Adapt.Contents />
+                        <Adapt.Contents/>
                     </Sheet.Frame>
                     <Sheet.Overlay
                         animation="lazy"
-                        enterStyle={{ opacity: 0 }}
-                        exitStyle={{ opacity: 0 }}
+                        enterStyle={{opacity: 0}}
+                        exitStyle={{opacity: 0}}
                     />
                 </Sheet>
             </Adapt>
@@ -124,8 +123,8 @@ function DialogInstance() {
                     key="overlay"
                     animation="slow"
                     opacity={0.5}
-                    enterStyle={{ opacity: 0 }}
-                    exitStyle={{ opacity: 0 }}
+                    enterStyle={{opacity: 0}}
+                    exitStyle={{opacity: 0}}
                 />
                 <Dialog.Content
                     bordered
@@ -140,8 +139,8 @@ function DialogInstance() {
                             },
                         },
                     ]}
-                    enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-                    exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
+                    enterStyle={{x: 0, y: -20, opacity: 0, scale: 0.9}}
+                    exitStyle={{x: 0, y: 10, opacity: 0, scale: 0.95}}
                     gap="$4"
                 >
                     <Dialog.Title>Edytuj profil</Dialog.Title>
