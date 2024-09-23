@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './index.css';
 import { UserProvider } from './contexts/UserContext';
+import { PortalProvider } from './components/PortalProvider'
 
 //Tamagui
 import { config } from '@tamagui/config/v3';
@@ -36,38 +37,40 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
+    <PortalProvider>
     <TamaguiProvider config={tamaguiConfig}>
-        <UserProvider>
-            <Router>
-                <Routes>
-                    {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
-                    <Route path="/" element={<App />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/passwordForgot" element={<PasswordForgotPage />} />
-                    <Route path="/signup" element={<SignupPage />} />
-                    <Route path="/profile/:username" element={<ProfilePage />} />
-                    <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
-                    <Route path="/termsofuse" element={<TermsOfUsePage/>} />
-                    <Route path="/pricing" element={<PricingPage/>} />
-                    <Route path="/notify" element={<ConstructionPage/>} />
-                    <Route path="/contact" element={<ContactPage/>} />
-                    <Route path="/help" element={<HelpPage/>} />
-                    <Route path="/about" element={<AboutPage/>} />
-                    <Route path="/team" element={<TeamPage/>} />
-                    <Route path="/pricing/purchase" element={<PurchasePage/>} />
-                    <Route path="/FAQ" element={<FAQPage/>} />
-                    <Route path="/routes" element={<RoutesPage/>} />
-                    <Route path="/addRoute" element={<AddRoutePage/>} />
-                    <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
-                    <Route path="/collaboration" element={<CollaborationPage/>} />
-                    <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
-                    <Route path="/editRoute/:id" element={<EditRoutePage/>} />
-                    <Route path="*" element={<PageNotFoundPage/>} />
+            <UserProvider>
+                <Router>
+                    <Routes>
+                        {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
+                        <Route path="/" element={<App />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/passwordForgot" element={<PasswordForgotPage />} />
+                        <Route path="/signup" element={<SignupPage />} />
+                        <Route path="/profile/:username" element={<ProfilePage />} />
+                        <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
+                        <Route path="/termsofuse" element={<TermsOfUsePage/>} />
+                        <Route path="/pricing" element={<PricingPage/>} />
+                        <Route path="/notify" element={<ConstructionPage/>} />
+                        <Route path="/contact" element={<ContactPage/>} />
+                        <Route path="/help" element={<HelpPage/>} />
+                        <Route path="/about" element={<AboutPage/>} />
+                        <Route path="/team" element={<TeamPage/>} />
+                        <Route path="/pricing/purchase" element={<PurchasePage/>} />
+                        <Route path="/FAQ" element={<FAQPage/>} />
+                        <Route path="/routes" element={<RoutesPage/>} />
+                        <Route path="/addRoute" element={<AddRoutePage/>} />
+                        <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
+                        <Route path="/collaboration" element={<CollaborationPage/>} />
+                        <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
+                        <Route path="/editRoute/:id" element={<EditRoutePage/>} />
+                        <Route path="*" element={<PageNotFoundPage/>} />
 
-                    {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
-                    {/*<Route path="/" element={<ConstructionPage/>} />*/}
-                </Routes>
-            </Router>
-        </UserProvider>
+                        {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
+                        {/*<Route path="/" element={<ConstructionPage/>} />*/}
+                    </Routes>
+                </Router>
+            </UserProvider>   
     </TamaguiProvider>
+    </PortalProvider>
 );

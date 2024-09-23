@@ -23,6 +23,7 @@
 .route-card {
     position: relative;
     display: flex;
+    z-index: 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -36,6 +37,7 @@
     width: 50%;
     height: auto;
     text-align: center;
+    overflow: visible;
 }
 .route-card h2 {
     font-size: clamp(1.4rem, 2vw, 1rem);
@@ -44,6 +46,7 @@
     overflow-wrap: break-word;
     text-align: center;
     padding-bottom: 30px;
+
 }
 
 .route-card img {
@@ -68,6 +71,7 @@
     display: flex; /* Ustawia przyciski obok siebie */
     gap: 20px; /* Odstęp między przyciskami */
     scale: 0.9;
+    z-index: 2;
 }
 
 .r-filters {

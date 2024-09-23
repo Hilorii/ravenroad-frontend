@@ -1,25 +1,23 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
-import { XStack } from 'tamagui'
-//import './groups.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../../contexts/UserContext';
 
 export default function GroupsContainer() {
     const [groups, setGroups] = useState([]);
     const [filteredGroups, setFilteredGroups] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-
+    const [menuOpen, setMenuOpen] = useState({}); // Zmieniono na obiekt
+    const { user } = useUser();
+    const navigate = useNavigate();
+    const userId = user.id;
 
     useEffect(() => {
-        // Pobranie grup użytkownika
         axios.get('http://localhost:5000/groups', { withCredentials: true })
             .then(response => {
-                console.log('Response data:', response.data);  // Sprawdź pełną odpowiedź serwera
-
-                // Sprawdź, czy `response.data` to tablica
                 if (Array.isArray(response.data)) {
-                    setGroups(response.data);  // Ustaw całą tablicę grup
-                    setFilteredGroups(response.data);  // Ustaw całą tablicę przefiltrowanych grup
+                    setGroups(response.data);
+                    setFilteredGroups(response.data);
                 } else {
                     console.error("Oczekiwano tablicy grup, ale otrzymano:", typeof response.data);
                 }
@@ -29,19 +27,9 @@ export default function GroupsContainer() {
             });
     }, []);
 
-
-
-
-
-
-
     const handleLeaveGroup = async (groupId) => {
-        console.log("Leaving group with ID:", groupId);
-
         const confirmLeave = window.confirm('Czy na pewno chcesz opuścić tę grupę?');
-        if (!confirmLeave) {
-            return;
-        }
+        if (!confirmLeave) return;
 
         try {
             const response = await fetch(`http://localhost:5000/groups/${groupId}`, {
@@ -49,9 +37,7 @@ export default function GroupsContainer() {
                 credentials: 'include',
             });
 
-            if (!response.ok) {
-                throw new Error('Błąd podczas opuszczania grupy');
-            }
+            if (!response.ok) throw new Error('Błąd podczas opuszczania grupy');
 
             alert('Opuszczono grupę pomyślnie!');
             const updatedGroups = groups.filter(group => group.id !== groupId);
@@ -70,17 +56,45 @@ export default function GroupsContainer() {
         setFilteredGroups(filtered);
     };
 
+    const handleEditGroup = (groupId) => {
+        navigate(`/edit-group/${groupId}`);
+    };
+
+    const handleDeleteGroup = async (groupId) => {
+        const confirmDelete = window.confirm('Czy na pewno chcesz usunąć tę grupę?');
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`http://localhost:5000/groups/${groupId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+
+            if (!response.ok) throw new Error('Błąd podczas usuwania grupy');
+
+            alert('Grupa została usunięta!');
+            const updatedGroups = groups.filter(group => group.id !== groupId);
+            setGroups(updatedGroups);
+            setFilteredGroups(updatedGroups);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Wystąpił problem podczas usuwania grupy.');
+        }
+    };
+
+    const toggleMenu = (groupId) => {
+        setMenuOpen(prevState => ({
+            ...prevState,
+            [groupId]: !prevState[groupId] // Tylko menu dla konkretnej grupy
+        }));
+    };
+
     useEffect(() => {
         handleSearch();
     }, [searchQuery]);
 
-    useEffect(() => {
-        console.log('Aktualne grupy:', groups);
-        console.log('Aktualne przefiltrowane grupy:', filteredGroups);
-    }, [groups, filteredGroups]);
-
     return (
-        <div className="rC-container">
+        <div className="gC-container">
             <div className="g-add-search">
                 <div className="g-filter">
                     <input
@@ -92,28 +106,47 @@ export default function GroupsContainer() {
                     />
                 </div>
                 <div className="g-button-container">
-                    <Link to="/" className="g-edit-bt">
+                    <Link to="/create-group" className="g-edit-bt">
                         <button className="edit" role="button"><span>Stwórz grupę</span></button>
                     </Link>
-                    <Link to="/" className="g-edit-bt">
+                    <Link to="/join-group" className="g-edit-bt">
                         <button className="edit" role="button"><span>Dołącz do grupy</span></button>
                     </Link>
                 </div>
             </div>
 
-            {/* Sprawdź, czy filteredGroups zawiera dane */}
-            {console.log('filteredGroups:', filteredGroups)}
-
-            {/* Renderowanie grup */}
             {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
                     <div key={group.id} className="route-card">
                         <h2>{group.name}</h2>
-                        <p>{group.description}</p>
-                        <div className="r-button-container">
-                            <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">
-                                <span>Opuść grupę</span>
+
+                        <div className="g-ham-button-container">
+                            {/* Przycisk hamburgera */}
+                            <button onClick={() => toggleMenu(group.id)} className="hamburger-btn">
+                                {menuOpen[group.id] ? "▲" : "☰"} {/* Zmienia ikonę na otwartą lub zamkniętą */}
                             </button>
+
+                            {menuOpen[group.id] && (
+                                <div className="g-dropdown-menu">
+                                    <button onClick={() => navigate(`/group-details/${group.id}`)} className="edit" role="button">
+                                        <span>Szczegóły grupy</span>
+                                    </button>
+                                    <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">
+                                        <span>Opuść grupę</span>
+                                    </button>
+
+                                    {String(group.created_by) === String(userId) && (
+                                        <div className="group-owner-options">
+                                            <button onClick={() => handleEditGroup(group.id)} className="edit" role="button">
+                                                <span>Edytuj grupę</span>
+                                            </button>
+                                            <button onClick={() => handleDeleteGroup(group.id)} className="edit" role="button">
+                                                <span>Usuń grupę</span>
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))

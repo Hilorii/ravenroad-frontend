@@ -19,7 +19,9 @@
 .custom-file-upload:hover {
   background-color: #ddd8d8;
 }
-.center-container {
+.profile-container {
+  min-height: 100%; 
+  height: auto; 
 }
 
 
@@ -60,12 +62,14 @@ edit:active,
 .edit:hover span {
   background: none;
 }
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .edit {
     font-size: 15px;
     min-width: 196px;
   }
-}
+} */
+
+/* GRUPY */
 
 .g-add-search {
     position: sticky;
@@ -79,6 +83,7 @@ edit:active,
 .g-button-container {
     position: absolute;
     right: 11vw;
+    overflow: visible;
 }
 .g-edit-bt {
     padding: 20px;
@@ -86,6 +91,59 @@ edit:active,
     max-height: 47px;
 }
 .gC{
-    position: relative;
-    top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
 }
+.gC-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1;
+}
+.g-dropdown-menu {
+  position: absolute;
+  top: 0;  /* Na tej samej wysokości co przycisk */
+  left: -17vw;  /* Rozwija się w prawo od przycisku */
+  height: 60px;
+  display: flex;  /* Ustawienie przycisków w jednym rzędzie */
+  gap: 10px;  /* Odstęp między przyciskami */
+  z-index: 9999;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;  /* Zapobiega zawijaniu tekstu */
+}
+.hamburger-btn {
+  position: relative;
+  right: 20vw;  /* Ustawienia przycisku po lewej stronie */
+  z-index: 2;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.g-dropdown-menu button {
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.g-dropdown-menu button:hover {
+  background-color: #ddd;
+}
+
+.g-ham-button-container {
+  display: flex; /* Ustawia przyciski obok siebie */
+  gap: 20px; /* Odstęp między przyciskami */
+  scale: 0.9;
+  z-index: 2;
+}
+.group-owner-options {
+  display: flex;
+  gap: 10px;
+}
+
