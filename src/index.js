@@ -34,6 +34,8 @@ import ReadyRoutesPage from './pages/readyRoutes/ReadyRoutes';
 import EditRoutePage from './pages/editRoute/EditRoute';
 import AddGroupPage from './pages/addGroup/AddGroup';
 import EditGroupPage from './pages/editGroup/EditGroup';
+import SearchGroupsPage from './pages/searchGroups/SearchGroups';
+import SearchedGroupDetailsPage from './pages/searchGroups/SearchedGroupDetails';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -70,6 +72,8 @@ root.render(
                         <Route path="/addGroup" element={<AddGroupPage/>} />
                         <Route path="/editGroup/:id" element={<EditGroupPage/>} />
                         <Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />
+                        <Route path="/searchGroups" element={<SearchGroupsPage/>} />
+                        <Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />
                         <Route path="*" element={<PageNotFoundPage/>} />
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}

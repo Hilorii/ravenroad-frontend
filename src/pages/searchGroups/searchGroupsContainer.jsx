@@ -3,17 +3,20 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 
-export default function GroupsContainer() {
+
+export default function SearchGroupsContainer() {
     const [groups, setGroups] = useState([]);
     const [filteredGroups, setFilteredGroups] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [menuOpen, setMenuOpen] = useState({}); // Zmieniono na obiekt
+    const [menuOpen, setMenuOpen] = useState({});
     const { user } = useUser();
     const navigate = useNavigate();
-    const userId = user.id;
+
+    // Dodaj sprawdzenie, czy user istnieje
+    const userId = user ? user.id : null;
 
     useEffect(() => {
-        axios.get('http://localhost:5000/groups', { withCredentials: true })
+        axios.get('http://localhost:5000/searchGroups', { withCredentials: true })
             .then(response => {
                 if (Array.isArray(response.data)) {
                     setGroups(response.data);
@@ -27,27 +30,7 @@ export default function GroupsContainer() {
             });
     }, []);
 
-    const handleLeaveGroup = async (groupId) => {
-        const confirmLeave = window.confirm('Czy na pewno chcesz opuścić tę grupę?');
-        if (!confirmLeave) return;
 
-        try {
-            const response = await fetch(`http://localhost:5000/groups/${groupId}`, {
-                method: 'DELETE',
-                credentials: 'include',
-            });
-
-            if (!response.ok) throw new Error('Błąd podczas opuszczania grupy');
-
-            alert('Opuszczono grupę pomyślnie!');
-            const updatedGroups = groups.filter(group => group.id !== groupId);
-            setGroups(updatedGroups);
-            setFilteredGroups(updatedGroups);
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Wystąpił problem podczas opuszczania grupy.');
-        }
-    };
 
     const handleSearch = () => {
         const filtered = groups.filter(group =>
@@ -56,36 +39,13 @@ export default function GroupsContainer() {
         setFilteredGroups(filtered);
     };
 
-    const handleEditGroup = (groupId) => {
-        navigate(`/editGroup/${groupId}`);
-    };
 
-    const handleDeleteGroup = async (groupId) => {
-        const confirmDelete = window.confirm('Czy na pewno chcesz usunąć tę grupę?');
-        if (!confirmDelete) return;
 
-        try {
-            const response = await fetch(`http://localhost:5000/deleteGroup/${groupId}`, {
-                method: 'DELETE',
-                credentials: 'include',
-            });
-
-            if (!response.ok) throw new Error('Błąd podczas usuwania grupy');
-
-            alert('Grupa została usunięta!');
-            const updatedGroups = groups.filter(group => group.id !== groupId);
-            setGroups(updatedGroups);
-            setFilteredGroups(updatedGroups);
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Wystąpił problem podczas usuwania grupy.');
-        }
-    };
 
     const toggleMenu = (groupId) => {
         setMenuOpen(prevState => ({
             ...prevState,
-            [groupId]: !prevState[groupId] // Tylko menu dla konkretnej grupy
+            [groupId]: !prevState[groupId]
         }));
     };
 
@@ -105,14 +65,6 @@ export default function GroupsContainer() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
-                <div className="g-button-container">
-                    <Link to="/addGroup" className="g-edit-bt">
-                        <button className="edit" role="button"><span>Stwórz grupę</span></button>
-                    </Link>
-                    <Link to="/searchGroups" className="g-edit-bt">
-                        <button className="edit" role="button"><span>Dołącz do grupy</span></button>
-                    </Link>
-                </div>
             </div>
 
             {filteredGroups.length > 0 ? (
@@ -121,26 +73,25 @@ export default function GroupsContainer() {
                         <h2>{group.name}</h2>
 
                         <div className="g-ham-button-container">
-                            {/* Przycisk hamburgera */}
                             <button onClick={() => toggleMenu(group.id)} className="hamburger-btn">
-                                {menuOpen[group.id] ? "▲" : "☰"} {/* Zmienia ikonę na otwartą lub zamkniętą */}
+                                {menuOpen[group.id] ? "▲" : "☰"}
                             </button>
 
                             {menuOpen[group.id] && (
                                 <div className="g-dropdown-menu">
-                                    <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit" role="button">
+                                    <button onClick={() => navigate(`/searchedGroupDetails/${group.id}`)} className="edit" role="button">
                                         <span>Szczegóły grupy</span>
                                     </button>
-                                    <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">
+                                    <button  className="edit" role="button">
                                         <span>Opuść grupę</span>
                                     </button>
 
                                     {String(group.created_by) === String(userId) && (
                                         <div className="group-owner-options">
-                                            <button onClick={() => handleEditGroup(group.id)} className="edit" role="button">
+                                            <button  className="edit" role="button">
                                                 <span>Edytuj grupę</span>
                                             </button>
-                                            <button onClick={() => handleDeleteGroup(group.id)} className="edit" role="button">
+                                            <button  className="edit" role="button">
                                                 <span>Usuń grupę</span>
                                             </button>
                                         </div>
@@ -156,3 +107,4 @@ export default function GroupsContainer() {
         </div>
     );
 }
+
