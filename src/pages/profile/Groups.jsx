@@ -131,9 +131,13 @@ export default function GroupsContainer() {
                                     <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit" role="button">
                                         <span>Szczegóły grupy</span>
                                     </button>
-                                    <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">
-                                        <span>Opuść grupę</span>
-                                    </button>
+
+                                    {/* Wyświetl "Opuść grupę" tylko, gdy użytkownik nie jest twórcą grupy */}
+                                    {String(group.created_by) !== String(userId) && (
+                                        <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">
+                                            <span>Opuść grupę</span>
+                                        </button>
+                                    )}
 
                                     {String(group.created_by) === String(userId) && (
                                         <div className="group-owner-options">
