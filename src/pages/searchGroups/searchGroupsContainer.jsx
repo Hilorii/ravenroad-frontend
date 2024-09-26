@@ -11,8 +11,6 @@ export default function SearchGroupsContainer() {
     const [menuOpen, setMenuOpen] = useState({});
     const { user } = useUser();
     const navigate = useNavigate();
-
-    // Dodaj sprawdzenie, czy user istnieje
     const userId = user ? user.id : null;
 
     useEffect(() => {
@@ -83,7 +81,7 @@ export default function SearchGroupsContainer() {
                                         <span>Szczegóły grupy</span>
                                     </button>
                                     <button  className="edit" role="button">
-                                        <span>Opuść grupę</span>
+                                        <span>Dołącz do grupy</span>
                                     </button>
 
                                     {String(group.created_by) === String(userId) && (

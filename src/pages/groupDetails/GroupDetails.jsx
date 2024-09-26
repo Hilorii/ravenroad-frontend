@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import { YStack, XStack } from 'tamagui';
 import BackButton from '../../components/backBt/BackButton';
+import { useUser } from '../../contexts/UserContext';
 
 const GroupDetailsPage = () => {
     const { id } = useParams(); // Pobiera id grupy z URL-a
@@ -10,7 +11,8 @@ const GroupDetailsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate(); // Hook do nawigacji
-
+    const { user } = useUser();
+    const userId = user ? user.id : null;
     useEffect(() => {
         const fetchGroupDetails = async () => {
             try {
@@ -71,9 +73,11 @@ const GroupDetailsPage = () => {
                             <p><strong>Opis:</strong> {groupDetails.description}</p>
                             {/*<p><strong>Data utworzenia: </strong>{groupDetails.add_date ? new Date(groupDetails.add_date).toLocaleDateString() : 'Brak daty'}</p>*/}
                             {/* Przycisk do edycji trasy */}
+                            {String(groupDetails.created_by) === String(userId) && (
                             <button className="edit" onClick={handleEditClick} role="button" type="submit">
                                 <span className="text">Edytuj grupę</span>
                             </button>
+                            )}
                         </div>
                     </YStack>
                 </div>
