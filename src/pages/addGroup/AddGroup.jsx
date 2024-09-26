@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 import './addGroup.css';
+import { useUser } from '../../contexts/UserContext';
 
 export default function AddGroup() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState({ title: '', description: '' });
     const navigate = useNavigate();
+    const { user, setUser } = useUser();
     const { username } = useParams();
+    console.log(username);
     // Handle title change with validation
     const handleTitleChange = (e) => {
         const value = e.target.value;
@@ -60,7 +63,7 @@ export default function AddGroup() {
             }
 
             alert('Grupa została dodana pomyślnie!');
-            navigate(`/profile/${username}`);
+            navigate(`/profile/${user.username}`);
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas dodawania grupy.');

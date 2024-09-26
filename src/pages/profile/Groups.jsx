@@ -57,7 +57,7 @@ export default function GroupsContainer() {
     };
 
     const handleEditGroup = (groupId) => {
-        navigate(`/edit-group/${groupId}`);
+        navigate(`/editGroup/${groupId}`);
     };
 
     const handleDeleteGroup = async (groupId) => {
@@ -65,7 +65,7 @@ export default function GroupsContainer() {
         if (!confirmDelete) return;
 
         try {
-            const response = await fetch(`http://localhost:5000/groups/${groupId}`, {
+            const response = await fetch(`http://localhost:5000/deleteGroup/${groupId}`, {
                 method: 'DELETE',
                 credentials: 'include',
             });
@@ -98,7 +98,7 @@ export default function GroupsContainer() {
             <div className="g-add-search">
                 <div className="g-filter">
                     <input
-                        className="rC-input"
+                        className="gC-input"
                         type="text"
                         placeholder="Szukaj grup..."
                         value={searchQuery}
@@ -128,7 +128,7 @@ export default function GroupsContainer() {
 
                             {menuOpen[group.id] && (
                                 <div className="g-dropdown-menu">
-                                    <button onClick={() => navigate(`/group-details/${group.id}`)} className="edit" role="button">
+                                    <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit" role="button">
                                         <span>Szczegóły grupy</span>
                                     </button>
                                     <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">

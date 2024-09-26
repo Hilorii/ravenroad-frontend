@@ -44,8 +44,6 @@ const ProfilePage = () => {
             <div className="gradient__bg">
                 <Navbar />
                 <div className="profile-container">
-                    <h2>Profile Page of {user?.username}</h2>
-
                     <div className="profile-info">
                         <XStack space="$3">
                                 <div className="edit-profile-bt">
