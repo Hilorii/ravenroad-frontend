@@ -106,7 +106,7 @@ export default function GroupsContainer() {
                     />
                 </div>
                 <div className="g-button-container">
-                    <Link to="/create-group" className="g-edit-bt">
+                    <Link to="/addGroup" className="g-edit-bt">
                         <button className="edit" role="button"><span>Stwórz grupę</span></button>
                     </Link>
                     <Link to="/join-group" className="g-edit-bt">
@@ -117,7 +117,7 @@ export default function GroupsContainer() {
 
             {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
-                    <div key={group.id} className="route-card">
+                    <div key={group.id} className="group-card">
                         <h2>{group.name}</h2>
 
                         <div className="g-ham-button-container">

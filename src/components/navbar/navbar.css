@@ -125,13 +125,19 @@
     display: none;
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1120px) {
     .rr__navbar-links_container {
         display: none;
     }
 
     .rr__navbar-menu {
         display: flex;
+    }
+    .rr__navbar-menu_container {
+        top: 20px;
+    }
+    .rr__navbar-sign {
+        display: none;
     }
 }
 

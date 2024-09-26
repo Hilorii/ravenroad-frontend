@@ -93,8 +93,8 @@ const Navbar = () => {
                         <div className="rr__navbar-menu_container-links">
                             <Menu/>
                             <div className="rr__navbar-menu_container=links-sign">
-                                <p><a href="#login">Login</a></p>
-                                <button type="button">Zarejestruj</button>
+                            <p><Link to="login">Login</Link></p>
+                            <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
                             </div>
                         </div>
                     </div>

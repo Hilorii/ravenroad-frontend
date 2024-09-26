@@ -108,7 +108,7 @@ edit:active,
 .g-dropdown-menu {
   position: absolute;
   top: 0;  /* Na tej samej wysokości co przycisk */
-  left: -17vw;  /* Rozwija się w prawo od przycisku */
+  right: -17vw;  /* Rozwija się w prawo od przycisku */
   height: 60px;
   display: flex;  /* Ustawienie przycisków w jednym rzędzie */
   gap: 10px;  /* Odstęp między przyciskami */
@@ -118,12 +118,15 @@ edit:active,
 }
 .hamburger-btn {
   position: relative;
-  right: 20vw;  /* Ustawienia przycisku po lewej stronie */
+  left: 20vw;  /* Ustawienia przycisku po lewej stronie */
   z-index: 2;
   padding: 10px;
+  background-color: transparent;
+  color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  height: 20px;
 }
 .g-dropdown-menu button {
   border: none;
@@ -147,3 +150,52 @@ edit:active,
   gap: 10px;
 }
 
+
+/* za route card */
+
+.group-card {
+  position: relative;
+  display: flex;
+  z-index: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: white;
+  border-radius: 50px;
+  border-style: outset;
+  border-color: white;
+  box-shadow: 0  1px 100px rgba(1000, 1000, 1000, 0.2);
+  padding: 20px;
+  width: 70%;
+  height: auto;
+  text-align: center;
+  overflow: visible;
+}
+.group-card h2 {
+  font-size: clamp(1.4rem, 2vw, 1rem);
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
+  padding-bottom: 30px;
+
+}
+
+.group-card img {
+  width: 25vw;
+  height: 30vh;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.group-card p {
+  position: absolute;
+  top: 10px; /* Odległość od górnej krawędzi karty */
+  left: 10px; /* Odległość od lewej krawędzi karty */
+  padding: 10px; /* Dodaj padding dla estetyki */
+}
+.group-image {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+}

@@ -31,6 +31,7 @@ import RouteDetailsPage from './pages/routeDetails/RouteDetails';
 import CollaborationPage from './pages/collaboration/Collaboration';
 import ReadyRoutesPage from './pages/readyRoutes/ReadyRoutes';
 import EditRoutePage from './pages/editRoute/EditRoute';
+import AddGroupPage from './pages/addGroup/AddGroup';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -64,6 +65,7 @@ root.render(
                         <Route path="/collaboration" element={<CollaborationPage/>} />
                         <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
                         <Route path="/editRoute/:id" element={<EditRoutePage/>} />
+                        <Route path="/addGroup" element={<AddGroupPage/>} />
                         <Route path="*" element={<PageNotFoundPage/>} />
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
