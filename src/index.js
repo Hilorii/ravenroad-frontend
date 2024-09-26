@@ -28,10 +28,12 @@ import PageNotFoundPage from './pages/pageNotFound/PageNotFound';
 import RoutesPage from './pages/routes/Routes';
 import AddRoutePage from './pages/addRoute/AddRoute';
 import RouteDetailsPage from './pages/routeDetails/RouteDetails';
+import GroupDetailsPage from './pages/groupDetails/GroupDetails';
 import CollaborationPage from './pages/collaboration/Collaboration';
 import ReadyRoutesPage from './pages/readyRoutes/ReadyRoutes';
 import EditRoutePage from './pages/editRoute/EditRoute';
 import AddGroupPage from './pages/addGroup/AddGroup';
+import EditGroupPage from './pages/editGroup/EditGroup';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -66,6 +68,8 @@ root.render(
                         <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
                         <Route path="/editRoute/:id" element={<EditRoutePage/>} />
                         <Route path="/addGroup" element={<AddGroupPage/>} />
+                        <Route path="/editGroup/:id" element={<EditGroupPage/>} />
+                        <Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />
                         <Route path="*" element={<PageNotFoundPage/>} />
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
