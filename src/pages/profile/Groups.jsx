@@ -32,22 +32,31 @@ export default function GroupsContainer() {
         if (!confirmLeave) return;
 
         try {
-            const response = await fetch(`http://localhost:5000/groups/${groupId}`, {
-                method: 'DELETE',
-                credentials: 'include',
+            const response = await fetch(`http://localhost:5000/leaveGroup/${groupId}`, {
+                method: 'POST',
+                credentials: 'include',  // Wysyła ciasteczka uwierzytelniające (np. token)
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
 
-            if (!response.ok) throw new Error('Błąd podczas opuszczania grupy');
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Błąd podczas opuszczania grupy');
+            }
 
             alert('Opuszczono grupę pomyślnie!');
+
+            // Aktualizacja listy grup po opuszczeniu
             const updatedGroups = groups.filter(group => group.id !== groupId);
             setGroups(updatedGroups);
             setFilteredGroups(updatedGroups);
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Błąd podczas opuszczania grupy:', error);
             alert('Wystąpił problem podczas opuszczania grupy.');
         }
     };
+
 
     const handleSearch = () => {
         const filtered = groups.filter(group =>
