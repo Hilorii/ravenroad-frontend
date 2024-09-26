@@ -1,0 +1,17 @@
+.back-button {
+    position: absolute;
+    top: 150px; /* Dostosuj w zależności od wysokości navbaru */
+    left: 5px;
+    padding: 10px 15px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    scale: 1.5;
+}
+
+.back-button:hover {
+
+}

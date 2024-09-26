@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import { YStack, XStack } from 'tamagui';
+import BackButton from '../../components/backBt/BackButton';
 
 const GroupDetailsPage = () => {
     const { id } = useParams(); // Pobiera id grupy z URL-a
@@ -58,6 +59,7 @@ const GroupDetailsPage = () => {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
+                <BackButton/>
                 <div className="r-details-container">
                     <YStack className="">
                         <div className="r-details-container">
