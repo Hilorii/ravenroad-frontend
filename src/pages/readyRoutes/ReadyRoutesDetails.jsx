@@ -1,11 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import './routeDetails.css';
 import { YStack, XStack } from 'tamagui';
 import BackButton from '../../components/backBt/BackButton';
 
-const RouteDetailsPage = () => {
+const ReadyRouteDetailsPage = () => {
     const { id } = useParams(); // Pobiera id trasy z URL-a
     const [routeDetails, setRouteDetails] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -74,9 +73,9 @@ const RouteDetailsPage = () => {
                                 utworzenia: </strong>{routeDetails.add_date ? new Date(routeDetails.add_date).toLocaleDateString() : 'Brak daty'}
                             </p>
                             {/* Przycisk do edycji trasy */}
-                            <button className="edit" onClick={handleEditClick} role="button" type="submit">
-                                <span className="text">Edytuj trasę</span>
-                            </button>
+                            {/*<button className="edit" onClick={handleEditClick} role="button" type="submit">*/}
+                            {/*    <span className="text">Edytuj trasę</span>*/}
+                            {/*</button>*/}
                         </div>
                     </YStack>
                 </div>
@@ -85,4 +84,4 @@ const RouteDetailsPage = () => {
     );
 };
 
-export default RouteDetailsPage;
+export default ReadyRouteDetailsPage;

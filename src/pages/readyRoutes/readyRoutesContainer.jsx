@@ -78,7 +78,7 @@ export default function RoutesContainer() {
                         <p>{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
 
                         <div className="r-button-container">
-                            <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="edit" role="button">
+                            <button onClick={() => navigate(`/readyRouteDetails/${route.id}`)} className="edit" role="button">
                                 <span>Szczegóły</span>
                             </button>
                         </div>
