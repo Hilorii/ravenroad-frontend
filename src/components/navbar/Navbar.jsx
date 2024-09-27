@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { useUser } from '../../contexts/UserContext';
+import { INBOX } from '../icons'
 //Tamagui imports
 import { PopoverDemo } from '../../components/tamagui/avatar-popover'
 
 
 const Menu = () => {
     const { user, setUser } = useUser();
+    const [isOpen, setIsOpen] = useState(false);
     if (!user && window.location.pathname === "/") {
         return (
             <>
@@ -74,13 +76,26 @@ const Navbar = () => {
             </div>
             <div className="rr__navbar-sign">
                 {user ? (
-                    <div className="navbar-user">
-                        <PopoverDemo/>
-                    </div>
+                    <>
+                        {/*<div className="inbox-icon-container">*/}
+                        {/*    <button className="inbox-icon" onClick={() => setIsOpen(prev => !prev)}>*/}
+                        {/*        <INBOX style={{width: '24px', height: '24px', color: '#fff', cursor: 'pointer'}}/>*/}
+                        {/*    </button>*/}
+                        {/*    {isOpen && (*/}
+                        {/*        <div className="dropdown-content">*/}
+                        {/*            /!* Tutaj możesz dodać zawartość rozwijanego kontenera *!/*/}
+                        {/*        </div>*/}
+                        {/*    )}*/}
+                        {/*</div>*/}
+                        <div className="navbar-user">
+                            <PopoverDemo/>
+                        </div>
+                    </>
                 ) : (
                     <>
                         <p><Link to="login">Login</Link></p>
-                    <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
+                        <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj
+                        </button>
                     </>
                 )}
             </div>

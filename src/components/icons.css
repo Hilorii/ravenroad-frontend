@@ -1,0 +1,31 @@
+.inbox-icon-container {
+    position: relative; /* Umożliwia pozycjonowanie elementów wewnętrznych */
+}
+
+.inbox-icon {
+    background: transparent; /* Tło przycisku przezroczyste */
+    border: none; /* Brak ramki */
+    cursor: pointer; /* Kursor wskazujący na przycisk */
+    padding: 10px; /* Opcjonalne: dodaje padding do przycisku */
+}
+
+.inbox-icon:hover {
+    background: rgba(255, 255, 255, 0.1); /* Tło przycisku na hover (lekko przezroczyste) */
+}
+
+.inbox-icon:focus {
+    outline: none; /* Usuwa domyślny kontur */
+}
+
+.dropdown-content {
+    display: block; /* Wyświetla kontener po kliknięciu */
+    position: absolute; /* Umiejscowienie względem kontenera */
+    top: 100%; /* Pozycjonuje tuż poniżej ikony */
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.8); /* Przezroczyste tło */
+    backdrop-filter: blur(10px); /* Efekt blur tła */
+    border-radius: 8px; /* Opcjonalne: zaokrąglenie rogów */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Lekki cień dla lepszego efektu */
+    padding: 10px; /* Opcjonalne: padding dla zawartości */
+}
