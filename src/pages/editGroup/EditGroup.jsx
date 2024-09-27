@@ -148,14 +148,14 @@ export default function EditGroup() {
                         <label htmlFor="description" className="form__label">Opis grupy:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
-                    <div className="checkbox-field">
+                    <div className="g-checkbox-field">
                         <input
                             type="checkbox"
                             id="private"
                             checked={isPrivate}
                             onChange={handlePrivateChange}
                         />
-                        <label htmlFor="private">Grupa prywatna</label>
+                        <label htmlFor="private" className="g-checkbox-label">Grupa prywatna</label>
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj grupę</span>
