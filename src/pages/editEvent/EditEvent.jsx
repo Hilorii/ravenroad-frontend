@@ -3,10 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 import { useUser } from '../../contexts/UserContext';
 
-export default function EditGroup() {
+export default function EditEvent() {
     const navigate = useNavigate();
     const { id } = useParams(); // Pobiera id trasy z URL-a
-    const [routeDetails, setRouteDetails] = useState(null);
+    const [eventDetails, setEventDetails] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
@@ -15,9 +15,9 @@ export default function EditGroup() {
     const { user, setUser } = useUser();
     // Pobierz szczegóły trasy na podstawie ID
     useEffect(() => {
-        const fetchRouteDetails = async () => {
+        const fetchEventDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/groups/${id}`, {
+                const response = await fetch(`http://localhost:5000/events/${id}`, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -27,24 +27,24 @@ export default function EditGroup() {
                 }
 
                 const data = await response.json();
-                console.log('Pobrane szczegóły grupy:', data);
-                setRouteDetails(data);
+                console.log('Pobrane szczegóły wydarzenia:', data);
+                setEventDetails(data);
             } catch (err) {
-                console.error('Błąd podczas pobierania szczegółów grupy:', err);
+                console.error('Błąd podczas pobierania szczegółów wydarzenia:', err);
                 setError(err.message);
             }
         };
 
-        fetchRouteDetails();
+        fetchEventDetails();
     }, [id]);
 
     // Ustawienie danych trasy w inputach po pobraniu
     useEffect(() => {
-        if (routeDetails) {
-            setName(routeDetails.name || '');
-            setDescription(routeDetails.description || '');
+        if (eventDetails) {
+            setName(eventDetails.name || '');
+            setDescription(eventDetails.description || '');
         }
-    }, [routeDetails]);
+    }, [eventDetails]);
 
     // Ustawienie bieżącej daty
     useEffect(() => {
@@ -56,7 +56,7 @@ export default function EditGroup() {
     const handleNameChange = (e) => {
         const value = e.target.value;
         if (value.length > 100) {
-            setError({ ...error, name: 'Tytuł nie może przekraczać 100 znaków!' });
+            setError({ ...error, name: 'Nazwa nie może przekraczać 100 znaków!' });
         } else {
             setError({ ...error, name: '' });
         }
@@ -90,21 +90,21 @@ export default function EditGroup() {
         formData.append('date', date);
 
         try {
-            const response = await fetch(`http://localhost:5000/groups/${id}`, {
+            const response = await fetch(`http://localhost:5000/events/${id}`, {
                 method: 'PUT', // Upewnij się, że metoda jest PUT
                 credentials: 'include',
                 body: formData,
             });
 
             if (!response.ok) {
-                throw new Error('Błąd przy edycji grupy');
+                throw new Error('Błąd przy edycji wydarzenia');
             }
 
-            alert('Grupa została zaktualizowana pomyślnie!');
+            alert('Wydarzenie została zaktualizowana pomyślnie!');
             navigate(`/profile/${user.username}`); // Przekierowanie po udanej aktualizacji
         } catch (error) {
             console.error('Error:', error);
-            alert('Wystąpił problem podczas edycji grupy.');
+            alert('Wystąpił problem podczas edycji wydarzenia.');
         }
     };
 
@@ -124,7 +124,7 @@ export default function EditGroup() {
                             maxLength={50}
                             required
                         />
-                        <label htmlFor="name" className="form__label">Nazwa grupy:</label>
+                        <label htmlFor="name" className="form__label">Nazwa wydarzenia:</label>
                         {error.name && <p className="error-message">{error.name}</p>}
                     </div>
                     <div className="add-route-text field">
@@ -137,7 +137,7 @@ export default function EditGroup() {
                             maxLength={1000}
                             required
                         />
-                        <label htmlFor="description" className="form__label">Opis grupy:</label>
+                        <label htmlFor="description" className="form__label">Opis wdyarzenia:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
                     {/* W WYPADKU DODANIA ZDJĘĆ DO GRUP */}
@@ -153,7 +153,7 @@ export default function EditGroup() {
                     {/*    <span id="file-chosen">Nie wybrano pliku</span>*/}
                     {/*</div>*/}
                     <button className="edit r-add-bt" role="button" type="submit">
-                        <span className="text">Zaktualizuj grupę</span>
+                        <span className="text">Zaktualizuj wydarzenie</span>
                     </button>
                 </form>
             </div>

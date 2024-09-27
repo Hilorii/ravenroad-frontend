@@ -5,18 +5,18 @@ import { YStack, XStack } from 'tamagui';
 import BackButton from '../../components/backBt/BackButton';
 import { useUser } from '../../contexts/UserContext';
 
-const GroupDetailsPage = () => {
-    const { id } = useParams(); // Pobiera id grupy z URL-a
-    const [groupDetails, setGroupDetails] = useState(null);
+const EventDetailsPage = () => {
+    const { id } = useParams(); // Pobiera id wydarzenia z URL-a
+    const [eventDetails, setEventDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate(); // Hook do nawigacji
     const { user } = useUser();
     const userId = user ? user.id : null;
     useEffect(() => {
-        const fetchGroupDetails = async () => {
+        const fetchEventDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/groups/${id}`, {
+                const response = await fetch(`http://localhost:5000/events/${id}`, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -26,17 +26,17 @@ const GroupDetailsPage = () => {
                 }
 
                 const data = await response.json();
-                console.log('Pobrane szczegóły grupy:', data); // Logowanie danych
-                setGroupDetails(data);
+                console.log('Pobrane szczegóły wydarzenia:', data); // Logowanie danych
+                setEventDetails(data);
             } catch (err) {
-                console.error('Błąd podczas pobierania szczegółów grupy:', err);
+                console.error('Błąd podczas pobierania szczegółów wydarzenia:', err);
                 setError(err.message);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchGroupDetails();
+        fetchEventDetails();
     }, [id]);
 
     if (loading) {
@@ -47,13 +47,13 @@ const GroupDetailsPage = () => {
         return <div>Błąd: {error}</div>;
     }
 
-    if (!groupDetails) {
-        return <div>Nie znaleziono szczegółów grupy.</div>;
+    if (!eventDetails) {
+        return <div>Nie znaleziono szczegółów wydarzenia.</div>;
     }
 
-    // Funkcja obsługująca przekierowanie do edycji trasy
+    // Funkcja obsługująca przekierowanie do edycji wydarzenia
     const handleEditClick = () => {
-        navigate(`/editGroup/${id}`);
+        navigate(`/editEvent/${id}`);
     };
 
     // Renderowanie szczegółów trasy
@@ -65,18 +65,18 @@ const GroupDetailsPage = () => {
                 <div className="r-details-container">
                     <YStack className="">
                         <div className="r-details-container">
-                            <h2>Grupa: {groupDetails.name}</h2>
+                            <h2>Wydarzenie: {eventDetails.name}</h2>
                             {/*<img*/}
                             {/*    src={`http://localhost:5000/uploads/${groupDetails.image}`}*/}
                             {/*    className="routeD-image"*/}
                             {/*/>*/}
-                            <p><strong>Opis:</strong> {groupDetails.description}</p>
+                            <p><strong>Opis:</strong> {eventDetails.description}</p>
                             {/*<p><strong>Data utworzenia: </strong>{groupDetails.add_date ? new Date(groupDetails.add_date).toLocaleDateString() : 'Brak daty'}</p>*/}
                             {/* Przycisk do edycji trasy */}
-                            {String(groupDetails.created_by) === String(userId) && (
-                            <button className="edit" onClick={handleEditClick} role="button" type="submit">
-                                <span className="text">Edytuj grupę</span>
-                            </button>
+                            {String(eventDetails.created_by) === String(userId) && (
+                                <button className="edit" onClick={handleEditClick} role="button" type="submit">
+                                    <span className="text">Edytuj wydarzenie</span>
+                                </button>
                             )}
                         </div>
                     </YStack>
@@ -86,4 +86,4 @@ const GroupDetailsPage = () => {
     );
 };
 
-export default GroupDetailsPage;
+export default EventDetailsPage;

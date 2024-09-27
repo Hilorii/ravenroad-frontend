@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
-import './addGroup.css';
 import { useUser } from '../../contexts/UserContext';
 import BackButton from '../../components/backBt/BackButton';
 
-export default function AddGroup() {
+export default function AddEvent() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState({ title: '', description: '' });
@@ -17,7 +16,7 @@ export default function AddGroup() {
     const handleTitleChange = (e) => {
         const value = e.target.value;
         if (value.length > 100) {
-            setError({ ...error, title: 'Tytuł nie może przekraczać 100 znaków!' });
+            setError({ ...error, title: 'Nazwa nie może przekraczać 100 znaków!' });
         } else {
             setError({ ...error, title: '' });
         }
@@ -50,7 +49,7 @@ export default function AddGroup() {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/addGroup', {
+            const response = await fetch('http://localhost:5000/createEvent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,14 +59,14 @@ export default function AddGroup() {
             });
 
             if (!response.ok) {
-                throw new Error('Błąd przy dodawaniu grupy');
+                throw new Error('Błąd przy dodawaniu wydarzenia');
             }
 
-            alert('Grupa została dodana pomyślnie!');
+            alert('Wydarzenie zostało dodane pomyślnie!');
             navigate(`/profile/${user.username}`);
         } catch (error) {
             console.error('Error:', error);
-            alert('Wystąpił problem podczas dodawania grupy.');
+            alert('Wystąpił problem podczas dodawania wydarzenia.');
         }
     };
 
@@ -88,7 +87,7 @@ export default function AddGroup() {
                             maxLength={50}
                             required
                         />
-                        <label htmlFor="title" className="form__label">Nazwa grupy:</label>
+                        <label htmlFor="title" className="form__label">Nazwa wydarzenia:</label>
                         {error.title && <p className="error-message">{error.title}</p>}
                     </div>
                     <div className="add-route-text field">
@@ -101,11 +100,11 @@ export default function AddGroup() {
                             maxLength={1000}
                             required
                         />
-                        <label htmlFor="description" className="form__label">Opis grupy:</label>
+                        <label htmlFor="description" className="form__label">Opis wydarzenia:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
-                        <span className="text">Dodaj grupę</span>
+                        <span className="text">Dodaj wydarzenie</span>
                     </button>
                 </form>
             </div>

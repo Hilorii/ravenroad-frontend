@@ -138,7 +138,7 @@ export default function GroupsContainer() {
                             {menuOpen[group.id] && (
                                 <div className="g-dropdown-menu">
                                     <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit" role="button">
-                                        <span>Szczegóły grupy</span>
+                                        <span>Szczegóły</span>
                                     </button>
 
                                     {/* Wyświetl "Opuść grupę" tylko, gdy użytkownik nie jest twórcą grupy */}
@@ -151,10 +151,10 @@ export default function GroupsContainer() {
                                     {String(group.created_by) === String(userId) && (
                                         <div className="group-owner-options">
                                             <button onClick={() => handleEditGroup(group.id)} className="edit" role="button">
-                                                <span>Edytuj grupę</span>
+                                                <span>Edytuj</span>
                                             </button>
                                             <button onClick={() => handleDeleteGroup(group.id)} className="edit" role="button">
-                                                <span>Usuń grupę</span>
+                                                <span>Usuń</span>
                                             </button>
                                         </div>
                                     )}

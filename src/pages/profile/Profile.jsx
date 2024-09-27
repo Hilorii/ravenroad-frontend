@@ -12,6 +12,7 @@ import { useUser } from '../../contexts/UserContext';
 import axios from 'axios';
 
 import GroupsContainer from './Groups.jsx'
+import EventsContainer from './Events'
 
 
 const ProfilePage = () => {
@@ -53,15 +54,7 @@ const ProfilePage = () => {
                                 <button className="edit" role="button"><span className="text" onClick={toggleWydarzenia}>Twoje Wydarzenia</span></button>
                         </XStack>
                         {isGrupyActive && !isWydarzeniaActive && <div className="gC"><GroupsContainer/></div>}
-                        {isWydarzeniaActive && !isGrupyActive && <AvatarDemo />}
-                        {/*<div className="profile-navigation">*/}
-                        {/*    <Link to={`/profile/${username}/groups`}>Twoje Grupy</Link>*/}
-                        {/*    <Link to={`/profile/${username}/events`}>Twoje Wydarzenia</Link>*/}
-                        {/*    <Link to={`/profile/${username}/create-group`}>Stwórz Grupę</Link>*/}
-                        {/*    <Link to={`/profile/${username}/create-event`}>Stwórz Wydarzenie</Link>*/}
-                        {/*    <Link to={`/profile/${username}/search-groups`}>Wyszukaj Grupę</Link>*/}
-                        {/*    <Link to={`/profile/${username}/search-events`}>Wyszukaj Wydarzenia</Link>*/}
-                        {/*</div>*/}
+                        {isWydarzeniaActive && !isGrupyActive && <div className="gC"><EventsContainer/></div>}
                     </div>
                 </div>
             </div>
