@@ -1,0 +1,9 @@
+.g-checkbox-field {
+   scale: 1.2;
+    position: relative;
+    top: -4vh;
+    left: 130px;
+}
+.g-checkbox-label {
+    padding-left: 10px;
+}

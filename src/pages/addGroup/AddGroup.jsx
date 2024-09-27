@@ -8,11 +8,13 @@ import BackButton from '../../components/backBt/BackButton';
 export default function AddGroup() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [isPrivate, setIsPrivate] = useState(false); // New state for private checkbox
     const [error, setError] = useState({ title: '', description: '' });
     const navigate = useNavigate();
     const { user, setUser } = useUser();
     const { username } = useParams();
     console.log(username);
+
     // Handle title change with validation
     const handleTitleChange = (e) => {
         const value = e.target.value;
@@ -35,6 +37,11 @@ export default function AddGroup() {
         setDescription(value);
     };
 
+    // Handle private checkbox change
+    const handlePrivateChange = (e) => {
+        setIsPrivate(e.target.checked); // Update isPrivate state
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -47,6 +54,7 @@ export default function AddGroup() {
         const data = {
             name: title,
             description: description,
+            private: isPrivate ? 1 : 0, // Send '1' for private, '0' otherwise
         };
 
         try {
@@ -75,7 +83,7 @@ export default function AddGroup() {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
-                <BackButton/>
+                <BackButton />
                 <form onSubmit={handleSubmit} className="add-route-form-main">
                     <div className="add-route-form field">
                         <input
@@ -104,6 +112,15 @@ export default function AddGroup() {
                         <label htmlFor="description" className="form__label">Opis grupy:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
+                    <div className="g-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="private"
+                            checked={isPrivate}
+                            onChange={handlePrivateChange}
+                        />
+                        <label htmlFor="private" className="g-checkbox-label">Grupa prywatna</label>
+                    </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Dodaj grupę</span>
                     </button>
@@ -112,3 +129,5 @@ export default function AddGroup() {
         </div>
     );
 }
+
+
