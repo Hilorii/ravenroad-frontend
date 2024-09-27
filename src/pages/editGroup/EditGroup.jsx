@@ -13,6 +13,8 @@ export default function EditGroup() {
     const [date, setDate] = useState('');
     const [error, setError] = useState({ name: '', description: '' });
     const { user, setUser } = useUser();
+    const [isPrivate, setIsPrivate] = useState(false);
+
     // Pobierz szczegóły trasy na podstawie ID
     useEffect(() => {
         const fetchRouteDetails = async () => {
@@ -43,6 +45,7 @@ export default function EditGroup() {
         if (routeDetails) {
             setName(routeDetails.name || '');
             setDescription(routeDetails.description || '');
+            setIsPrivate(routeDetails.private === 1); // Ustawiamy checkbox na podstawie wartości private
         }
     }, [routeDetails]);
 
@@ -88,10 +91,11 @@ export default function EditGroup() {
         formData.append('description', description);
         formData.append('image', image); // jeśli nie zmienisz zdjęcia, image będzie null
         formData.append('date', date);
+        formData.append('private', isPrivate ? 1 : 0); // Dodajemy prywatność
 
         try {
             const response = await fetch(`http://localhost:5000/groups/${id}`, {
-                method: 'PUT', // Upewnij się, że metoda jest PUT
+                method: 'PUT',
                 credentials: 'include',
                 body: formData,
             });
@@ -108,10 +112,14 @@ export default function EditGroup() {
         }
     };
 
+    const handlePrivateChange = (e) => {
+        setIsPrivate(e.target.checked);
+    };
+
     return (
         <div className="App">
             <div className="gradient__bg">
-                <Navbar />
+                <Navbar/>
                 <form onSubmit={handleSubmit} className="add-route-form-main">
                     <div className="add-route-form field">
                         <input
@@ -128,30 +136,27 @@ export default function EditGroup() {
                         {error.name && <p className="error-message">{error.name}</p>}
                     </div>
                     <div className="add-route-text field">
-                        <textarea
-                            placeholder=""
-                            className="r-desc form__field"
-                            id="description"
-                            value={description}
-                            onChange={handleDescriptionChange}
-                            maxLength={1000}
-                            required
-                        />
+        <textarea
+            placeholder=""
+            className="r-desc form__field"
+            id="description"
+            value={description}
+            onChange={handleDescriptionChange}
+            maxLength={1000}
+            required
+        />
                         <label htmlFor="description" className="form__label">Opis grupy:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
-                    {/* W WYPADKU DODANIA ZDJĘĆ DO GRUP */}
-                    {/*<div className="r-form-group">*/}
-                    {/*    <input*/}
-                    {/*        type="file"*/}
-                    {/*        id="image"*/}
-                    {/*        onChange={(e) => setImage(e.target.files[0])}*/}
-                    {/*        accept="image/*"*/}
-                    {/*        hidden*/}
-                    {/*    />*/}
-                    {/*    <label className="r-input-label" htmlFor="image">Zdjęcie grupy</label>*/}
-                    {/*    <span id="file-chosen">Nie wybrano pliku</span>*/}
-                    {/*</div>*/}
+                    <div className="checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="private"
+                            checked={isPrivate}
+                            onChange={handlePrivateChange}
+                        />
+                        <label htmlFor="private">Grupa prywatna</label>
+                    </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj grupę</span>
                     </button>
