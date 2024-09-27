@@ -133,6 +133,7 @@ edit:active,
   cursor: pointer;
   border-radius: 5px;
   height: 20px;
+    scale: 1.5;
 }
 .g-dropdown-menu button {
   border: none;
@@ -202,4 +203,24 @@ edit:active,
   width: 200px;
   height: auto;
   border-radius: 8px;
+}
+
+/*Gwiazdki*/
+.favourite-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    bottom: 7vh;
+    left: 20vw;
+    scale: 1.3;
+}
+
+.gold-star {
+    color: gold;
+}
+
+.empty-star {
+    color: lightgray;
 }

@@ -7,7 +7,7 @@ export default function GroupsContainer() {
     const [groups, setGroups] = useState([]);
     const [filteredGroups, setFilteredGroups] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [menuOpen, setMenuOpen] = useState({}); // Zmieniono na obiekt
+    const [menuOpen, setMenuOpen] = useState({});
     const { user } = useUser();
     const navigate = useNavigate();
     const userId = user.id;
@@ -34,7 +34,7 @@ export default function GroupsContainer() {
         try {
             const response = await fetch(`http://localhost:5000/leaveGroup/${groupId}`, {
                 method: 'POST',
-                credentials: 'include',  // Wysyła ciasteczka uwierzytelniające (np. token)
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -46,8 +46,6 @@ export default function GroupsContainer() {
             }
 
             alert('Opuszczono grupę pomyślnie!');
-
-            // Aktualizacja listy grup po opuszczeniu
             const updatedGroups = groups.filter(group => group.id !== groupId);
             setGroups(updatedGroups);
             setFilteredGroups(updatedGroups);
@@ -57,6 +55,28 @@ export default function GroupsContainer() {
         }
     };
 
+    const handleToggleFavourite = async (groupId, isFavourite) => {
+        try {
+            const response = await fetch(`http://localhost:5000/groups/${groupId}/favourite`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ favourite: !isFavourite })
+            });
+
+            if (!response.ok) throw new Error('Błąd podczas zmiany statusu ulubionej grupy');
+
+            // Po udanej zmianie ulubionej grupy, ponownie pobieramy listę grup
+            const updatedGroupsResponse = await axios.get('http://localhost:5000/groups', { withCredentials: true });
+            setGroups(updatedGroupsResponse.data);
+            setFilteredGroups(updatedGroupsResponse.data);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Wystąpił problem podczas zmiany statusu ulubionej grupy.');
+        }
+    };
 
     const handleSearch = () => {
         const filtered = groups.filter(group =>
@@ -129,10 +149,18 @@ export default function GroupsContainer() {
                     <div key={group.id} className="group-card">
                         <h2>{group.name}</h2>
 
+                        {/* Gwiazdka do ulubionych */}
+                        <button
+                            className={`favourite-btn ${group.favourite ? 'gold-star' : 'empty-star'}`}
+                            onClick={() => handleToggleFavourite(group.id, group.favourite)}
+                        >
+                            ★
+                        </button>
+
                         <div className="g-ham-button-container">
                             {/* Przycisk hamburgera */}
                             <button onClick={() => toggleMenu(group.id)} className="hamburger-btn">
-                                {menuOpen[group.id] ? "▲" : "☰"} {/* Zmienia ikonę na otwartą lub zamkniętą */}
+                                {menuOpen[group.id] ? "▲" : "☰"}
                             </button>
 
                             {menuOpen[group.id] && (
@@ -141,7 +169,6 @@ export default function GroupsContainer() {
                                         <span>Szczegóły</span>
                                     </button>
 
-                                    {/* Wyświetl "Opuść grupę" tylko, gdy użytkownik nie jest twórcą grupy */}
                                     {String(group.created_by) !== String(userId) && (
                                         <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">
                                             <span>Opuść grupę</span>
