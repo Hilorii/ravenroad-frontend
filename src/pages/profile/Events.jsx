@@ -64,7 +64,7 @@ export default function EventsContainer() {
     };
 
     const handleDeleteEvent = async (eventId) => {
-        const confirmDelete = window.confirm('Are you sure you want to delete this event?');
+        const confirmDelete = window.confirm('Czy na pewno chcesz usunąć to wydarzenie?');
         if (!confirmDelete) return;
 
         try {
@@ -75,13 +75,13 @@ export default function EventsContainer() {
 
             if (!response.ok) throw new Error('Error deleting event');
 
-            alert('Event deleted!');
+            alert('Wydarzenie usunięte!');
             const updatedEvents = events.filter(event => event.id !== eventId);
             setEvents(updatedEvents);
             setFilteredEvents(updatedEvents);
         } catch (error) {
             console.error('Error:', error);
-            alert('There was a problem deleting the event.');
+            alert('Wystąpił problem podczas usuwania tego wydarzenia.');
         }
     };
 
