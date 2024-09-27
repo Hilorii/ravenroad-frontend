@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 
-export default function SearchGroupsContainer() {
-    const [groups, setGroups] = useState([]);
-    const [filteredGroups, setFilteredGroups] = useState([]);
+export default function JoinEventsContainer() {
+    const [events, setEvents] = useState([]);
+    const [filteredEvents, setFilteredEvents] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [menuOpen, setMenuOpen] = useState({});
     const { user } = useUser();
@@ -13,15 +13,15 @@ export default function SearchGroupsContainer() {
     const userId = user ? user.id : null;
     const token = user ? user.token : null;
 
-    // Wydzielenie funkcji do pobierania grup
-    const fetchGroups = () => {
-        axios.get('http://localhost:5000/searchGroups', { withCredentials: true })
+    // Wydzielenie funkcji do pobierania wydarzen
+    const fetchEvents = () => {
+        axios.get('http://localhost:5000/joinEvents', { withCredentials: true })
             .then(response => {
                 if (Array.isArray(response.data)) {
-                    setGroups(response.data);
-                    setFilteredGroups(response.data);
+                    setEvents(response.data);
+                    setFilteredEvents(response.data);
                 } else {
-                    console.error("Oczekiwano tablicy grup, ale otrzymano:", typeof response.data);
+                    console.error("Oczekiwano tablicy wydarzen, ale otrzymano:", typeof response.data);
                 }
             })
             .catch(error => {
@@ -29,43 +29,42 @@ export default function SearchGroupsContainer() {
             });
     };
 
-    // Wywołanie fetchGroups w useEffect, aby grupy były pobrane na początku
+    // Wywołanie fetchEvents w useEffect, aby wydarzenia były pobrane na początku
     useEffect(() => {
-        fetchGroups();
+        fetchEvents();
     }, []);
 
     const handleSearch = () => {
-        const filtered = groups.filter(group =>
-            group.name.toLowerCase().includes(searchQuery.toLowerCase())
+        const filtered = events.filter(event =>
+            event.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        setFilteredGroups(filtered);
+        setFilteredEvents(filtered);
     };
 
-    const handleGroupJoin = async (groupId) => {
+    const handleEventJoin = async (eventId) => {
         try {
-            const response = await axios.post(`/joinGroup/${groupId}`, {}, {
+            const response = await axios.post(`/joinEvent/${eventId}`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`  // Użycie tokena
                 }
             });
             alert(response.data.message);  // Pomyślne dołączenie
 
-            // Filtruj grupę z listy, do której użytkownik właśnie dołączył
-            const updatedGroups = groups.filter(group => group.id !== groupId);
-            setGroups(updatedGroups);
-            setFilteredGroups(updatedGroups);
+            // Filtruj wydarzenie z listy, które właśnie dołączył użytkownik
+            const updatedEvents = events.filter(event => event.id !== eventId);
+            setEvents(updatedEvents);
+            setFilteredEvents(updatedEvents);
 
         } catch (error) {
-            console.error('Error joining group:', error);
-            alert(error.response?.data?.error || 'Błąd podczas dołączania do grupy');
+            console.error('Error joining event:', error);
+            alert(error.response?.data?.error || 'Błąd podczas dołączania do wydarzenia');
         }
     };
 
-
-    const toggleMenu = (groupId) => {
+    const toggleMenu = (eventId) => {
         setMenuOpen(prevState => ({
             ...prevState,
-            [groupId]: !prevState[groupId]
+            [eventId]: !prevState[eventId]
         }));
     };
 
@@ -80,40 +79,40 @@ export default function SearchGroupsContainer() {
                     <input
                         className="gC-input"
                         type="text"
-                        placeholder="Szukaj grup..."
+                        placeholder="Szukaj wydarzeń..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
             </div>
 
-            {filteredGroups.length > 0 ? (
-                filteredGroups.map((group) => (
-                    <div key={group.id} className="group-card">
-                        <h2>{group.name}</h2>
+            {filteredEvents.length > 0 ? (
+                filteredEvents.map((event) => (
+                    <div key={event.id} className="group-card">
+                        <h2>{event.name}</h2>
 
                         <div className="g-ham-button-container">
-                            <button onClick={() => toggleMenu(group.id)} className="hamburger-btn">
-                                {menuOpen[group.id] ? "▲" : "☰"}
+                            <button onClick={() => toggleMenu(event.id)} className="hamburger-btn">
+                                {menuOpen[event.id] ? "▲" : "☰"}
                             </button>
 
-                            {menuOpen[group.id] && (
+                            {menuOpen[event.id] && (
                                 <div className="g-dropdown-menu">
-                                    <button onClick={() => navigate(`/searchedGroupDetails/${group.id}`)}
+                                    <button onClick={() => navigate(`/joinEventDetails/${event.id}`)}
                                             className="edit" role="button">
-                                        <span>Szczegóły grupy</span>
+                                        <span>Szczegóły</span>
                                     </button>
-                                    <button className="edit" role="button" onClick={() => handleGroupJoin(group.id)}>
-                                        <span>Dołącz do grupy</span>
+                                    <button className="edit" role="button" onClick={() => handleEventJoin(event.id)}>
+                                        <span>Dołącz</span>
                                     </button>
 
-                                    {String(group.created_by) === String(userId) && (
+                                    {String(event.created_by) === String(userId) && (
                                         <div className="group-owner-options">
                                             <button className="edit" role="button">
-                                                <span>Edytuj grupę</span>
+                                                <span>Edytuj</span>
                                             </button>
                                             <button className="edit" role="button">
-                                                <span>Usuń grupę</span>
+                                                <span>Usuń</span>
                                             </button>
                                         </div>
                                     )}
@@ -123,7 +122,7 @@ export default function SearchGroupsContainer() {
                     </div>
                 ))
             ) : (
-                <p className="gradient__text rC-p">Nie znaleziono grupy.</p>
+                <p className="gradient__text rC-p">Nie znaleziono wydarzenia.</p>
             )}
         </div>
     );

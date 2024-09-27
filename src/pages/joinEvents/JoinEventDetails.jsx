@@ -6,9 +6,9 @@ import BackButton from '../../components/backBt/BackButton';
 import axios from 'axios';
 import { useUser } from '../../contexts/UserContext';
 
-const SearchedGroupDetailsPage = () => {
+const JoinEventDetailsPage = () => {
     const { id } = useParams(); // Pobiera id grupy z URL-a
-    const [groupDetails, setGroupDetails] = useState(null);
+    const [eventDetails, setEventDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate(); // Hook do nawigacji
@@ -16,9 +16,9 @@ const SearchedGroupDetailsPage = () => {
     const token = user ? user.token : null;
 
     useEffect(() => {
-        const fetchGroupDetails = async () => {
+        const fetchEventDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/groups/${id}`, {
+                const response = await fetch(`http://localhost:5000/events/${id}`, {
                     method: 'GET',
                     credentials: 'include',
                 });
@@ -28,17 +28,17 @@ const SearchedGroupDetailsPage = () => {
                 }
 
                 const data = await response.json();
-                console.log('Pobrane szczegóły grupy:', data); // Logowanie danych
-                setGroupDetails(data);
+                console.log('Pobrane szczegóły wydarzenia:', data); // Logowanie danych
+                setEventDetails(data);
             } catch (err) {
-                console.error('Błąd podczas pobierania szczegółów grupy:', err);
+                console.error('Błąd podczas pobierania szczegółów wydarzenia:', err);
                 setError(err.message);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchGroupDetails();
+        fetchEventDetails();
     }, [id]);
 
     if (loading) {
@@ -49,23 +49,23 @@ const SearchedGroupDetailsPage = () => {
         return <div>Błąd: {error}</div>;
     }
 
-    if (!groupDetails) {
-        return <div>Nie znaleziono szczegółów grupy.</div>;
+    if (!eventDetails) {
+        return <div>Nie znaleziono szczegółów wydarzenia.</div>;
     }
 
-    const handleGroupJoin = async (groupId) => {
+    const handleEventJoin = async (eventId) => {
         try {
-            const response = await axios.post(`/joinGroup/${groupId}`, {}, {
+            const response = await axios.post(`/joinEvent/${eventId}`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`  // Użycie tokena
                 }
             });
             alert(response.data.message);  // Pomyślne dołączenie
             // Odświeżenie danych grupy po dołączeniu
-            setGroupDetails(prev => ({ ...prev, joined: true }));
+            setEventDetails(prev => ({ ...prev, joined: true }));
         } catch (error) {
-            console.error('Error joining group:', error);
-            alert(error.response?.data?.error || 'Błąd podczas dołączania do grupy');
+            console.error('Error joining event:', error);
+            alert(error.response?.data?.error || 'Błąd podczas dołączania do wydarzenia');
         }
     };
 
@@ -78,10 +78,10 @@ const SearchedGroupDetailsPage = () => {
                 <div className="r-details-container">
                     <YStack className="">
                         <div className="r-details-container">
-                            <h2>Grupa: {groupDetails.name}</h2>
-                            <p><strong>Opis:</strong> {groupDetails.description}</p>
-                            <button className="edit" onClick={() => handleGroupJoin(groupDetails.id)} role="button" type="submit">
-                                <span className="text">Dołącz do grupy</span>
+                            <h2>Grupa: {eventDetails.name}</h2>
+                            <p><strong>Opis:</strong> {eventDetails.description}</p>
+                            <button className="edit" onClick={() => handleEventJoin(eventDetails.id)} role="button" type="submit">
+                                <span className="text">Dołącz do wydarzenia!</span>
                             </button>
                         </div>
                     </YStack>
@@ -91,4 +91,4 @@ const SearchedGroupDetailsPage = () => {
     );
 };
 
-export default SearchedGroupDetailsPage;
+export default JoinEventDetailsPage;

@@ -40,6 +40,8 @@ import SearchGroupsPage from './pages/searchGroups/SearchGroups';
 import SearchedGroupDetailsPage from './pages/searchGroups/SearchedGroupDetails';
 import ReadyRoutesDetailsPage from './pages/readyRoutes/ReadyRoutesDetails';
 import AddEventPage from './pages/addEvent/AddEvent';
+import JoinEventPage from './pages/joinEvents/JoinEvents';
+import JoinEventDetailsPage from './pages/joinEvents/JoinEventDetails';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -82,6 +84,8 @@ root.render(
                         <Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />
                         <Route path="/readyRouteDetails/:id" element={<ReadyRoutesDetailsPage/>} />
                         <Route path="/createEvent" element={<AddEventPage/>} />
+                        <Route path="/joinEvents" element={<JoinEventPage/>} />
+                        <Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />
                         <Route path="*" element={<PageNotFoundPage/>} />
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
