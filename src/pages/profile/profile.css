@@ -224,3 +224,14 @@ edit:active,
 .empty-star {
     color: lightgray;
 }
+
+.r-favourite-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    bottom: 35vh;
+    left: 20vw;
+    scale: 1.3;
+}
