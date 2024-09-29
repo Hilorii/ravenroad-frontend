@@ -1,8 +1,7 @@
-//USED IN PROFILE
 import { X } from "../icons";
 import { useUser } from '../../contexts/UserContext';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import "../../pages/profile/profile.css";
 import {
     Adapt,
@@ -16,7 +15,6 @@ import {
     XStack,
 } from 'tamagui';
 import { useEffect, useState } from "react";
-import "../../pages/profile/profile.css"
 
 export function DialogDemo() {
     return <DialogInstance />;
@@ -24,6 +22,7 @@ export function DialogDemo() {
 
 function DialogInstance() {
     const { username } = useParams();
+    const navigate = useNavigate();  // Dodano hook useNavigate
     const { user, setUser } = useUser();
     const [updatedUser, setUpdatedUser] = useState(() => ({
         name: user?.username || username || "",
@@ -31,34 +30,24 @@ function DialogInstance() {
         avatar: user?.avatar || "",
     }));
 
-
     useEffect(() => {
         if (user) {
             console.log("Initializing updatedUser with:", user);
             setUpdatedUser({
-                name: user.name || "",
+                name: user.username || "",
                 email: user.email || "",
                 avatar: user.avatar || "",
             });
         }
     }, [user]);
 
-
-    let inputValue;
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log("Field being updated:", name);
-        console.log("New value:", value);
-
         setUpdatedUser((prevUser) => ({
             ...prevUser,
             [name]: value,
         }));
     };
-
-
-
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -74,32 +63,34 @@ function DialogInstance() {
     const handleSaveChanges = async () => {
         try {
             const formData = new FormData();
-            formData.append('name', updatedUser.name);
+            formData.append('username', updatedUser.name);
             formData.append('email', updatedUser.email);
             if (updatedUser.avatar) {
                 formData.append('avatar', updatedUser.avatar);
             }
 
-            const response = await axios.put(`http://localhost:5000/user`, formData, {
+            const response = await axios.put(`http://localhost:5000/user/${user.id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
                 withCredentials: true,
             });
 
-            // Log response data to check what is returned
             console.log("Response from server:", response.data);
 
             if (response.data.user) {
-                setUser(response.data.user); // Assuming setUser updates user state
+                setUser(response.data.user);
             }
-            console.log("Profile updated successfully");
+
+            // Po pomyślnym zapisaniu, nawiguj do profilu użytkownika
+            navigate(`/profile/${updatedUser.name}`);
+
+            // Odśwież stronę, aby załadować nowe zdjęcie profilowe
+            window.location.reload();
         } catch (error) {
             console.error('Failed to update user:', error);
         }
     };
-
-
 
     return (
         <Dialog modal>
@@ -144,57 +135,50 @@ function DialogInstance() {
                     gap="$4"
                 >
                     <Dialog.Title>Edytuj profil</Dialog.Title>
-                    <Dialog.Description>
-                        {/*Opis pod napisem Edytuj profil*/}
-                    </Dialog.Description>
-
-                    {/* Username change */}
                     <Fieldset className="editProfileLabel" gap="$10" horizontal>
                         <Label width={300} justifyContent="flex-end" htmlFor="name">
                             Nazwa użytkownika
                         </Label>
-                        <Input
+                        <input
+                            className="edit-profile-input"
                             flex={1}
                             id="name"
-                            placeholder={username}
+                            placeholder="Wpisz nową nazwę użytkownika"
                             type="text"
                             name="name"
-                            value={updatedUser.name} // Używamy stanu updatedUser.name
+                            value={updatedUser.name}
                             onChange={handleInputChange}
                         />
                     </Fieldset>
-
-                    {/* Email change */}
-                    {/*<Fieldset className="editProfileLabel" gap="$10" horizontal>*/}
-                    {/*    <Label width={300} justifyContent="flex-end" htmlFor="email">*/}
-                    {/*        Email*/}
-                    {/*    </Label>*/}
-                    {/*    <Input*/}
-                    {/*        flex={1}*/}
-                    {/*        id="email"*/}
-                    {/*        placeholder={user.email}*/}
-                    {/*        type="text"*/}
-                    {/*        name="email"*/}
-                    {/*        value={updatedUser.email || ""}*/}
-                    {/*        onChange={handleInputChange}*/}
-                    {/*    />*/}
-                    {/*</Fieldset>*/}
-
-                    {/* Avatar change */}
-                    {/*<Fieldset className="editProfileLabel" gap="$10" horizontal>*/}
-                    {/*    <div className="center-container">*/}
-                    {/*        <input*/}
-                    {/*            type="file"*/}
-                    {/*            name="avatar"*/}
-                    {/*            onChange={handleFileChange}*/}
-                    {/*            className="avatar-input"*/}
-                    {/*            id="file-upload"*/}
-                    {/*        />*/}
-                    {/*        <label htmlFor="file-upload" className="custom-file-upload">*/}
-                    {/*            Zmień profilowe*/}
-                    {/*        </label>*/}
-                    {/*    </div>*/}
-                    {/*</Fieldset>*/}
+                    <Fieldset className="editProfileLabel" gap="$10" horizontal>
+                        <Label width={300} justifyContent="flex-end" htmlFor="email">
+                            Email
+                        </Label>
+                        <input
+                            className="edit-profile-input"
+                            flex={1}
+                            id="email"
+                            placeholder="Wpisz nowy email"
+                            type="text"
+                            name="email"
+                            value={updatedUser.email}
+                            onChange={handleInputChange}
+                        />
+                    </Fieldset>
+                    <Fieldset className="editProfileLabel" gap="$10" horizontal>
+                        <div className="center-container">
+                            <input
+                                type="file"
+                                name="avatar"
+                                onChange={handleFileChange}
+                                className="avatar-input"
+                                id="file-upload"
+                            />
+                            <label htmlFor="file-upload" className="custom-file-upload">
+                                Zmień profilowe
+                            </label>
+                        </div>
+                    </Fieldset>
 
                     <XStack alignSelf="flex-end" gap="$4">
                         <Button theme="active" onPress={handleSaveChanges}>Zapisz zmiany</Button>
