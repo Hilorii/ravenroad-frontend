@@ -1,10 +1,12 @@
 import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import './privacyPolicy.css';  // Stylizacje specyficzne dla tej strony
+import { Cookies } from '../../components/index'
 
 const PrivacyPolicy = () => {
     return (
         <div className="App">
+            <Cookies/>
         <div className="gradient__bg">
             <Navbar />
             <div className="content">

@@ -5,4 +5,5 @@ export { default as Feature } from './feature/Feature';
 export { default as Navbar } from './navbar/Navbar';
 export { default as Ad } from './ad/Ad';
 export { default as ContactForm } from './contactForm/ContactFrom';
+export { default as Cookies } from './Cookies/Cookies';
 

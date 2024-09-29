@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {Footer, Blog, Possibility, Features, WhatRR, Header} from "./containers";
-import {CTA, Brand, Navbar, Ad} from './components'
+import {CTA, Brand, Navbar, Ad, Cookies} from './components'
 import "./App.css"
 
 import { ProCard } from './components/tamagui/pro-card';
@@ -37,6 +37,7 @@ const App = () => {
 
     return (
         <div className="App">
+            <Cookies/>
         <div className="gradient__bg">
             <div className="">
                 <Navbar/>

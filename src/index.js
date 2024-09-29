@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import './index.css';
 import { UserProvider } from './contexts/UserContext';
 import { PortalProvider } from './components/PortalProvider'
+import { Cookies } from './components/index'
 
 //Tamagui
 import { config } from '@tamagui/config/v3';
@@ -43,6 +44,8 @@ import AddEventPage from './pages/addEvent/AddEvent';
 import JoinEventPage from './pages/joinEvents/JoinEvents';
 import JoinEventDetailsPage from './pages/joinEvents/JoinEventDetails';
 
+import Aa from './pages/aa/aa'
+
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -52,6 +55,7 @@ root.render(
     <TamaguiProvider config={tamaguiConfig}>
             <UserProvider>
                 <Router>
+                    <Cookies/>
                     <Routes>
                         {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
                         <Route path="/" element={<App />} />
@@ -87,6 +91,9 @@ root.render(
                         <Route path="/joinEvents" element={<JoinEventPage/>} />
                         <Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />
                         <Route path="*" element={<PageNotFoundPage/>} />
+
+
+                        <Route path="/aa" element={<Aa/>} />
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
                         {/*<Route path="/" element={<ConstructionPage/>} />*/}
