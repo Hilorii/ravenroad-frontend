@@ -5,6 +5,7 @@ import './index.css';
 import { UserProvider } from './contexts/UserContext';
 import { PortalProvider } from './components/PortalProvider'
 import { Cookies } from './components/index'
+import { PrivateRoute } from './contexts/PrivateRoute';
 
 //Tamagui
 import { config } from '@tamagui/config/v3';
@@ -44,7 +45,6 @@ import AddEventPage from './pages/addEvent/AddEvent';
 import JoinEventPage from './pages/joinEvents/JoinEvents';
 import JoinEventDetailsPage from './pages/joinEvents/JoinEventDetails';
 
-import Aa from './pages/aa/aa'
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -62,7 +62,7 @@ root.render(
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/passwordForgot" element={<PasswordForgotPage />} />
                         <Route path="/signup" element={<SignupPage />} />
-                        <Route path="/profile/:username" element={<ProfilePage />} />
+                        <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
                         <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
                         <Route path="/termsofuse" element={<TermsOfUsePage/>} />
                         <Route path="/pricing" element={<PricingPage/>} />
@@ -74,7 +74,7 @@ root.render(
                         <Route path="/pricing/purchase" element={<PurchasePage/>} />
                         <Route path="/FAQ" element={<FAQPage/>} />
                         <Route path="/routes" element={<RoutesPage/>} />
-                        <Route path="/addRoute" element={<AddRoutePage/>} />
+                        <Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />
                         <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
                         <Route path="/collaboration" element={<CollaborationPage/>} />
                         <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
@@ -92,8 +92,6 @@ root.render(
                         <Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />
                         <Route path="*" element={<PageNotFoundPage/>} />
 
-
-                        <Route path="/aa" element={<Aa/>} />
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
                         {/*<Route path="/" element={<ConstructionPage/>} />*/}
