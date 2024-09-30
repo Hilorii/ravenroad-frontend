@@ -4,6 +4,8 @@ import Navbar from "../../components/navbar/Navbar";
 import './addGroup.css';
 import { useUser } from '../../contexts/UserContext';
 import BackButton from '../../components/backBt/BackButton';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+
 
 export default function AddGroup() {
     const [title, setTitle] = useState('');
@@ -99,7 +101,7 @@ export default function AddGroup() {
                         <label htmlFor="title" className="form__label">Nazwa grupy:</label>
                         {error.title && <p className="error-message">{error.title}</p>}
                     </div>
-                    <div className="add-route-text field">
+                    <div className="add-route-text field" >
                         <textarea
                             placeholder=""
                             className="r-desc form__field"
@@ -129,5 +131,7 @@ export default function AddGroup() {
         </div>
     );
 }
+
+
 
 

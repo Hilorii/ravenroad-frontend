@@ -101,16 +101,20 @@ const Navbar = () => {
             </div>
             <div className="rr__navbar-menu">
                 {toggleMenu
-                    ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)} />
-                    : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)} />}
+                    ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)}/>
+                    : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)}/>}
                 {toggleMenu && (
                     <div className="rr__navbar-menu_container scale-up-center">
                         <div className="rr__navbar-menu_container-links">
                             <Menu/>
-                            <div className="rr__navbar-menu_container=links-sign">
-                            <p><Link to="login">Login</Link></p>
-                            <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
-                            </div>
+                            {!user && (
+                                <div className="rr__navbar-menu_container-links-sign">
+                                    <p><Link to="/login">Login</Link></p>
+                                    <button className="signup" onClick={() => navigate('/Signup')}
+                                            type="button">Zarejestruj
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}

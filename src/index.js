@@ -74,7 +74,8 @@ root.render(
                         <Route path="/pricing/purchase" element={<PurchasePage/>} />
                         <Route path="/FAQ" element={<FAQPage/>} />
                         <Route path="/routes" element={<RoutesPage/>} />
-                        <Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />
+                        <Route path="/addRoute" element={<AddRoutePage/>} />
+                        {/*<Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />*/}
                         <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
                         <Route path="/collaboration" element={<CollaborationPage/>} />
                         <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
