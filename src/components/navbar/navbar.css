@@ -136,9 +136,6 @@
     .rr__navbar-menu_container {
         top: 20px;
     }
-    .rr__navbar-sign {
-        display: none;
-    }
 }
 
 @media screen and (max-width: 700px) {
@@ -153,7 +150,7 @@
     }
 
     .rr__navbar-sign {
-        display: none;
+        /*display: none;*/
     }
 
     .rr__navbar-menu_container {

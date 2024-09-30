@@ -137,6 +137,7 @@
     }
 }
 
+
 /* Media Queries - Dostosowanie do małych telefonów */
 @media screen and (max-width: 430px) {
     .h1-notify {
@@ -166,5 +167,127 @@
 
     .notify-logo {
         max-width: 130px;
+    }
+}
+
+/* Media Queries - Dostosowanie do bardzo małych rozdzielczości, np. 600x300 */
+@media screen and (max-height: 600px) {
+    .h1-notify {
+        font-size: 1.8rem;
+    }
+
+    .p-notify {
+        font-size: 1rem;
+    }
+
+    .notify-strong {
+        font-size: 1.2rem;
+    }
+
+    .email-form input, textarea {
+        font-size: 0.9rem;
+        height: 35px;
+    }
+
+    .message {
+        font-size: 1.2rem;
+    }
+
+    .bt-notify {
+        font-size: 1rem;
+    }
+
+    .notify-logo {
+        max-width: 100px;
+    }
+
+    .under-construction-container {
+        padding-bottom: 30px;
+    }
+}
+
+
+@media screen and (max-height: 510px) {
+    .h1-notify {
+        font-size: 1.8rem;
+    }
+
+    .p-notify {
+        font-size: 1rem;
+    }
+
+    .notify-strong {
+        font-size: 1.2rem;
+    }
+
+    .email-form input, textarea {
+        font-size: 0.9rem;
+        height: 10px;
+        scale: 0.7;
+        margin: -7px;
+    }
+
+    .message {
+        font-size: 1.2rem;
+    }
+
+    .bt-notify {
+        scale: 0.5;
+    }
+
+    .notify-logo {
+        max-width: 100px;
+    }
+
+    .under-construction-container {
+        padding-bottom: 30px;
+    }
+}
+@media screen and (max-height: 390px) {
+    .h1-notify {
+        font-size: 1rem;
+    }
+
+    .p-notify {
+        font-size: 15px;
+        margin: 5px;
+    }
+
+    .notify-strong {
+        font-size: 1.2rem;
+    }
+
+    .email-form input, textarea {
+        font-size: 0.9rem;
+        height: 10px;
+        scale: 0.7;
+        margin: -7px;
+    }
+
+    .message {
+        font-size: 1.2rem;
+    }
+
+    .bt-notify {
+        scale: 0.5;
+    }
+
+    .notify-logo {
+        max-width: 100px;
+    }
+
+    .under-construction-container {
+        padding-bottom: 30px;
+    }
+    .notify-logo{
+        scale: 0.5;
+        margin: -35px;
+    }
+}
+
+@media screen and (max-height: 280px) {
+    .notify-logo{
+        scale: 0.3;
+        margin: -50px;
     }
 }
