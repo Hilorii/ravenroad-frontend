@@ -56,7 +56,7 @@ const App = () => {
                     <Brand/> {/* ZMIENIĆ MARKI*/}
                     <Ad/>
                     <WhatRR/>
-                    <div className="middle" id="pro">
+                    <div className="middle yes" id="pro">
                         <ProCard/>
                     </div>
                     <Features/>

@@ -6,7 +6,7 @@ import '../../App.css'
 
 export function ProCard() {
     return (
-        <XStack className='pro-card' $sm={{ flexDirection: 'column' }} paddingHorizontal="$4" space>
+        <XStack className='pro-card' $sm={{ flexDirection: 'column' }} paddingHorizontal="$3" space>
             <SubscriptionCard
                 title="Free Flight"
                 description={
@@ -109,6 +109,7 @@ export function SubscriptionCard({
               margin="$6"
               width={300}
               height={400}
+              className="card"
 
         >
             <Card.Header padded>

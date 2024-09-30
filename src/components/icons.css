@@ -29,3 +29,13 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Lekki cień dla lepszego efektu */
     padding: 10px; /* Opcjonalne: padding dla zawartości */
 }
+
+/*KARTA pro-card.js*/
+@media (max-width: 600px) {
+    .card {
+        width: 20px;
+        height: 30px;
+        font-size: 10px;
+    }
+}
+

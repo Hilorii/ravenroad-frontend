@@ -125,6 +125,11 @@ a {
     justify-content: center;
     margin: 0;
 }
+@media screen and (max-width: 330px) {
+    .yes{
+        scale: 0.7;
+    }
+}
 .container-pro span {
     line-height: 1.2;
 }
