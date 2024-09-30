@@ -154,7 +154,8 @@
     }
 
     .rr__navbar-menu_container {
-        top: 20px;
+        top: -20px;
+        scale: 0.8;
     }
 
     .rr__navbar-menu_container-links-sign {
@@ -167,7 +168,7 @@
         padding: 2rem;
     }
     .rr__navbar-menu_container {
-        top: 20px;
+        top: -20px;
     }
 
     .rr__navbar-menu_container-links-sign {
