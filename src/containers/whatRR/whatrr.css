@@ -121,3 +121,18 @@
         min-width: 100%;
     }
 }
+
+@media screen and (max-width: 300px) {
+    /* Customizing feature component as per needs */
+    .rr__h1 {
+        scale: 0.8;
+    }
+}
+@media screen and (max-width: 270px) {
+    /* Customizing feature component as per needs */
+    .rr__h1 {
+        scale: 0.7;
+        position: relative;
+        left: -30px;
+    }
+}

@@ -14,7 +14,7 @@ const WhatRR = () => (
                      życiem społeczności. Raven Road - tu zaczyna się Twoja podróż, a każda jazda staje się przygodą!"/>
         </div>
         <div className="rr__whatrr-heading">
-            <h1 className="gradient__text">Raven Road - Twój niezastąpiony towarzysz w podróży</h1>
+            <h1 className="rr__h1 gradient__text ">Raven Road - Twój niezastąpiony towarzysz w podróży</h1>
             {/*<p>Dowiedz się wiecej</p>*/}
         </div>
         <div className="rr__whatrr-container">
