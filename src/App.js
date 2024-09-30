@@ -59,7 +59,7 @@ const App = () => {
                     <div className="middle yes" id="pro">
                         <ProCard/>
                     </div>
-                    <Features/>
+                    {/*<Features/>*/}
                     {/*<Possibility/>*/}
                     <CTA/>
                     {/*<Blog/>*/}
