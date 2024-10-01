@@ -35,6 +35,7 @@ const Menu = () => {
                 <p><a href="/readyRoutes">Gotowe trasy</a></p>
                 <p><a href="/routes">Twoje trasy</a></p>
                 <p><a href="/collaboration">Współpraca</a></p>
+                <p><a href="/profile">Profil</a></p>
             </>
         );
     } else if (user) {
@@ -46,6 +47,7 @@ const Menu = () => {
                 <p><a href="/readyRoutes">Gotowe trasy</a></p>
                 <p><a href="/routes">Twoje trasy</a></p>
                 <p><a href="/collaboration">Współpraca</a></p>
+                <p><a href="/profile/${user.username}">Profil</a></p>
             </>
         );
     } else {

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { PortalProvider } from '../../contexts/PortalProvider'
 
 export default function GroupsContainer() {
     const [groups, setGroups] = useState([]);
@@ -123,6 +124,7 @@ export default function GroupsContainer() {
     }, [searchQuery]);
 
     return (
+        <PortalProvider>
         <div className="gC-container">
             <div className="g-add-search">
                 <div className="g-filter">
@@ -194,5 +196,6 @@ export default function GroupsContainer() {
                 <p className="gradient__text rC-p">Nie znaleziono grupy.</p>
             )}
         </div>
+        </PortalProvider>
     );
 }

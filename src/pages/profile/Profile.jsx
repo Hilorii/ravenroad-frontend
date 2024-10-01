@@ -14,6 +14,7 @@ import axios from 'axios';
 import GroupsContainer from './Groups.jsx'
 import EventsContainer from './Events'
 
+import { PortalProvider } from '../../contexts/PortalProvider'
 
 const ProfilePage = () => {
     const { username } = useParams();
@@ -41,6 +42,7 @@ const ProfilePage = () => {
         });
     };
     return (
+        <PortalProvider>
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
@@ -59,6 +61,7 @@ const ProfilePage = () => {
                 </div>
             </div>
         </div>
+            </PortalProvider>
     );
 };
 

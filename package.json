@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apideck/better-ajv-errors": "^0.3.6",
+    "@react-native/normalize-colors": "^0.75.3",
     "@tamagui/config": "^1.108.2",
     "@tamagui/core": "^1.108.2",
     "@tamagui/lucide-icons": "^1.108.2",

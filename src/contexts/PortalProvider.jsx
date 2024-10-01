@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from 'react';
 const PortalStateContext = createContext(null);
 
 export const PortalProvider = ({ children }) => {
-    const [portalState, setPortalState] = useState(/* initial state */);
+    const [portalState, setPortalState] = useState(true);
 
     return (
         <PortalStateContext.Provider value={{ portalState, setPortalState }}>
