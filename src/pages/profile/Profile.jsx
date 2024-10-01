@@ -46,7 +46,7 @@ const ProfilePage = () => {
                 <Navbar />
                 <div className="profile-container">
                     <div className="profile-info">
-                        <XStack space="$3">
+                        <XStack space="$3" className="profile-btContainer">
                                 <div className="edit-profile-bt">
                                     <DialogDemo/>
                                 </div>
