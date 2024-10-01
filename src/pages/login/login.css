@@ -110,3 +110,39 @@ button:focus {
     outline: none;
 }
 
+@media screen and (max-height: 850px) {
+    .login-container{
+        scale: 0.7;
+    }
+}
+@media screen and (max-height: 590px) {
+    .login-container{
+        scale: 0.6;
+    }
+}
+@media screen and (max-height: 550px) {
+    .login-container{
+        scale: 0.5;
+    }
+}
+@media screen and (max-height: 430px) {
+    .login-container{
+        scale: 0.4;
+    }
+}
+@media screen and (max-height: 360px) {
+    .login-logo{
+        position: absolute;
+        left: -70vw;
+        top: -20vh;
+        scale:0.5;
+    }
+    .login-container{
+        scale: 0.5;
+    }
+}
+@media screen and (max-height: 240px) {
+    .login-container{
+        scale: 0.4;
+    }
+}

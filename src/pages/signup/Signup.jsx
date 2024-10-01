@@ -65,7 +65,7 @@ const SignupPage = () => {
     return (
         <div className="bg">
             <div className="login-container">
-                <img src={logo} alt="Logo" />
+                <img src={logo} alt="Logo" className="login-logo" />
                 <h1 className="h">Dołącz do nas!</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
