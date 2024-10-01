@@ -2,11 +2,12 @@
     color: #ffffff;  /* Jasny tekst */
     margin-bottom: 10px;
     width: 50vw;
-    font-size: 25px;
+    font-size: clamp(1rem, 2vw, 3rem);
 }
 
 .collab-info strong {
     color: fuchsia;
+    word-break: break-word;
 }
 .collab-info-mail {
     font-size: 18px;
@@ -32,4 +33,10 @@
 
 .collab-item a:hover {
     color: #ff7f50; /* Kolor tekstu po najechaniu kursorem */
+}
+
+@media screen and (max-width: 400px) {
+    .collab-info{
+        padding: 0;
+    }
 }
