@@ -93,6 +93,7 @@
     margin-left: 1rem;
     display: none;
     position: relative;
+    z-index: +100;
 }
 
 .rr__navbar-menu svg {
