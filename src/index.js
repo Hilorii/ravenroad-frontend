@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './index.css';
 import { UserProvider } from './contexts/UserContext';
-import { PortalProvider } from './components/PortalProvider'
+import { PortalProvider } from './contexts/PortalProvider'
 import { Cookies } from './components/index'
 import { PrivateRoute } from './contexts/PrivateRoute';
 
