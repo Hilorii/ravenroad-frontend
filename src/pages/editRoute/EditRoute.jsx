@@ -4,15 +4,15 @@ import Navbar from "../../components/navbar/Navbar";
 
 export default function EditRoute() {
     const navigate = useNavigate();
-    const { id } = useParams(); // Pobiera id trasy z URL-a
+    const { id } = useParams();
     const [routeDetails, setRouteDetails] = useState(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
+    const [fileName, setFileName] = useState('Nie wybrano pliku'); // Stan dla nazwy pliku
     const [date, setDate] = useState('');
     const [error, setError] = useState({ title: '', description: '' });
 
-    // Pobierz szczegóły trasy na podstawie ID
     useEffect(() => {
         const fetchRouteDetails = async () => {
             try {
@@ -26,7 +26,6 @@ export default function EditRoute() {
                 }
 
                 const data = await response.json();
-                console.log('Pobrane szczegóły trasy:', data);
                 setRouteDetails(data);
             } catch (err) {
                 console.error('Błąd podczas pobierania szczegółów trasy:', err);
@@ -37,7 +36,6 @@ export default function EditRoute() {
         fetchRouteDetails();
     }, [id]);
 
-    // Ustawienie danych trasy w inputach po pobraniu
     useEffect(() => {
         if (routeDetails) {
             setTitle(routeDetails.title || '');
@@ -45,13 +43,11 @@ export default function EditRoute() {
         }
     }, [routeDetails]);
 
-    // Ustawienie bieżącej daty
     useEffect(() => {
         const currentDate = new Date().toISOString().split('T')[0];
         setDate(currentDate);
     }, []);
 
-    // Obsługa zmiany tytułu i walidacja
     const handleTitleChange = (e) => {
         const value = e.target.value;
         if (value.length > 100) {
@@ -62,7 +58,6 @@ export default function EditRoute() {
         setTitle(value);
     };
 
-    // Obsługa zmiany opisu i walidacja
     const handleDescriptionChange = (e) => {
         const value = e.target.value;
         if (value.length > 1000) {
@@ -73,7 +68,17 @@ export default function EditRoute() {
         setDescription(value);
     };
 
-    // Wysyłanie danych formularza do backendu
+    // Obsługa zmiany pliku
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+            setFileName(file.name); // Aktualizacja stanu z nazwą pliku
+        } else {
+            setFileName('Nie wybrano pliku');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -85,12 +90,12 @@ export default function EditRoute() {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
-        formData.append('image', image); // jeśli nie zmienisz zdjęcia, image będzie null
+        formData.append('image', image);
         formData.append('date', date);
 
         try {
             const response = await fetch(`http://localhost:5000/routes/${id}`, {
-                method: 'PUT', // Upewnij się, że metoda jest PUT
+                method: 'PUT',
                 credentials: 'include',
                 body: formData,
             });
@@ -100,7 +105,7 @@ export default function EditRoute() {
             }
 
             alert('Trasa została zaktualizowana pomyślnie!');
-            navigate('/routes'); // Przekierowanie po udanej aktualizacji
+            navigate('/routes');
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas edycji trasy.');
@@ -143,12 +148,12 @@ export default function EditRoute() {
                         <input
                             type="file"
                             id="image"
-                            onChange={(e) => setImage(e.target.files[0])}
+                            onChange={handleImageChange}
                             accept="image/*"
                             hidden
                         />
                         <label className="r-input-label" htmlFor="image">Zdjęcie trasy</label>
-                        <span id="file-chosen">Nie wybrano pliku</span>
+                        <span id="file-chosen">{fileName}</span> {/* Wyświetlanie nazwy pliku */}
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj trasę</span>
