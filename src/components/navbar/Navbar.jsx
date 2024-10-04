@@ -66,6 +66,27 @@ const Navbar = () => {
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
     const [toggleMenu, setToggleMenu] = useState(false);
+    const { logout } = useUser();
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/logout', {  // upewnij się, że adres URL jest poprawny
+                method: 'POST',
+                credentials: 'include',  // To zapewnia, że ciasteczka są dołączone do żądania
+            });
+
+            if (response.ok) {
+                logout();
+                navigate('/');
+                window.location.reload();
+
+            } else {
+                console.error("Logout failed:", response.status);
+            }
+        } catch (err) {
+            console.error("Logout error:", err);
+        }
+    };
+
     return (
         <div className="rr__navbar">
             <div className="rr__navbar-links">
@@ -79,16 +100,6 @@ const Navbar = () => {
             <div className="rr__navbar-sign">
                 {user ? (
                     <>
-                        {/*<div className="inbox-icon-container">*/}
-                        {/*    <button className="inbox-icon" onClick={() => setIsOpen(prev => !prev)}>*/}
-                        {/*        <INBOX style={{width: '24px', height: '24px', color: '#fff', cursor: 'pointer'}}/>*/}
-                        {/*    </button>*/}
-                        {/*    {isOpen && (*/}
-                        {/*        <div className="dropdown-content">*/}
-                        {/*            /!* Tutaj możesz dodać zawartość rozwijanego kontenera *!/*/}
-                        {/*        </div>*/}
-                        {/*    )}*/}
-                        {/*</div>*/}
                         <div className="navbar-user">
                             <PopoverDemo/>
                         </div>
@@ -109,6 +120,7 @@ const Navbar = () => {
                     <div className="rr__navbar-menu_container scale-up-center">
                         <div className="rr__navbar-menu_container-links">
                             <Menu/>
+                            <p><a onClick={handleLogout}>Wyloguj</a></p>
                             {!user && (
                                 <div className="rr__navbar-menu_container-links-sign">
                                     <p><Link to="/login">Login</Link></p>

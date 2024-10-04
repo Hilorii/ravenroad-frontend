@@ -127,6 +127,9 @@
 }
 
 @media screen and (max-width: 1120px) {
+    .rr__navbar-sign {
+        display: none;
+    }
     .rr__navbar-links_container {
         display: none;
     }
@@ -150,9 +153,6 @@
         padding: 2rem;
     }
 
-    .rr__navbar-sign {
-        display: none;
-    }
 
     .rr__navbar-menu_container {
         top: -20px;

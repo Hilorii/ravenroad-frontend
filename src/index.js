@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './index.css';
 import { UserProvider } from './contexts/UserContext';
-import { PortalProvider } from './contexts/PortalProvider'
+//import { PortalProvider } from './contexts/PortalProvider';
+import { PortalProvider } from 'tamagui';
 import { Cookies } from './components/index'
 import { PrivateRoute } from './contexts/PrivateRoute';
 
@@ -51,8 +52,8 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-    <PortalProvider>
     <TamaguiProvider config={tamaguiConfig}>
+        <PortalProvider>
             <UserProvider>
                 <Router>
                     <Cookies/>
@@ -98,7 +99,7 @@ root.render(
                         {/*<Route path="/" element={<ConstructionPage/>} />*/}
                     </Routes>
                 </Router>
-            </UserProvider>   
+            </UserProvider>
+        </PortalProvider>
     </TamaguiProvider>
-    </PortalProvider>
 );
