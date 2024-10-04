@@ -45,7 +45,7 @@ const App = () => {
             {user ? (
                 <div>
                     <Ad/>
-                    <div className="middle">
+                    <div className="middle yes">
                         <ProCard/>
                     </div>
                     <Footer/>
