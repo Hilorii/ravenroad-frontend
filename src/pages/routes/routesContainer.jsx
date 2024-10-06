@@ -135,30 +135,34 @@ export default function RoutesContainer() {
             {filteredRoutes.length > 0 ? (
                 filteredRoutes.map((route) => (
                     <div key={route.id} className="route-card">
-                        <img
-                            src={`http://localhost:5000/uploads/${route.image}`}
-                            alt={route.title}
-                            className="route-image"
-                        />
-                        <h2>{route.title}</h2>
-                        {/* Gwiazdka do ulubionych r-favourite-btn jest w profile.css! nie oceniajcie mnie */}
-                        <button
-                            className={`r-favourite-btn ${route.favourite ? 'gold-star' : 'empty-star'}`}
-                            onClick={() => handleToggleFavourite(route.id, route.favourite)}  // Przekazujemy bieżący stan
-                        >
-                            ★
-                        </button>
-                        <p>{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
+                        <div className="rC-inside">
+                            <img
+                                src={`http://localhost:5000/uploads/${route.image}`}
+                                alt={route.title}
+                                className="route-image"
+                            />
+                            <h2>{route.title}</h2>
+                            {/* Gwiazdka do ulubionych r-favourite-btn jest w profile.css! nie oceniajcie mnie */}
+                            {/*<div className="fBt-div">*/}
+                                <button
+                                    className={`r-favourite-btn ${route.favourite ? 'gold-star' : 'empty-star'}`}
+                                    onClick={() => handleToggleFavourite(route.id, route.favourite)}  // Przekazujemy bieżący stan
+                                >
+                                    ★
+                                </button>
+                            {/*</div>*/}
+                            <p className="route-date">{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
 
-                        <div className="r-button-container">
-                            <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="edit"
-                                    role="button">
-                                <span>Szczegóły</span>
-                            </button>
+                            <div className="r-button-container">
+                                <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="edit"
+                                        role="button">
+                                    <span>Szczegóły</span>
+                                </button>
 
-                            <button onClick={() => handleDelete(route.id)} className="edit" role="button">
-                                <span>Usuń</span>
-                            </button>
+                                <button onClick={() => handleDelete(route.id)} className="edit" role="button">
+                                    <span>Usuń</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 ))
