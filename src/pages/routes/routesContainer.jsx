@@ -144,23 +144,36 @@ export default function RoutesContainer() {
                             <h2>{route.title}</h2>
                             {/* Gwiazdka do ulubionych r-favourite-btn jest w profile.css! nie oceniajcie mnie */}
                             {/*<div className="fBt-div">*/}
-                                <button
-                                    className={`r-favourite-btn ${route.favourite ? 'gold-star' : 'empty-star'}`}
-                                    onClick={() => handleToggleFavourite(route.id, route.favourite)}  // Przekazujemy bieżący stan
-                                >
-                                    ★
-                                </button>
+                            <button
+                                className={`r-favourite-btn ${route.favourite ? 'gold-star' : 'empty-star'}`}
+                                onClick={() => handleToggleFavourite(route.id, route.favourite)}  // Przekazujemy bieżący stan
+                            >
+                                ★
+                            </button>
                             {/*</div>*/}
                             <p className="route-date">{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
 
                             <div className="r-button-container">
-                                <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="edit"
-                                        role="button">
+                                {/* Widoczne dla większych ekranów */}
+                                <button onClick={() => navigate(`/routeDetails/${route.id}`)}
+                                        className="edit full-button" role="button">
                                     <span>Szczegóły</span>
                                 </button>
 
-                                <button onClick={() => handleDelete(route.id)} className="edit" role="button">
+                                <button onClick={() => handleDelete(route.id)} className="edit full-button"
+                                        role="button">
                                     <span>Usuń</span>
+                                </button>
+
+                                {/* Widoczne dla mniejszych ekranów */}
+                                <button onClick={() => navigate(`/routeDetails/${route.id}`)}
+                                        className="icon-button-details" role="button">
+                                    <span>❓</span>
+                                </button>
+
+                                <button onClick={() => handleDelete(route.id)} className="icon-button-delete"
+                                        role="button">
+                                    <span>🗑️</span>
                                 </button>
                             </div>
                         </div>

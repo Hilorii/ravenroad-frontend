@@ -105,7 +105,7 @@
     scale: 1.7;
 }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 850px) {
     .rC-container {
         margin-top: 50px;
         padding: 10px;
@@ -152,24 +152,53 @@
         flex-shrink: 0;
         position: absolute;
         left: 90%;
-
         bottom: 40px;
     }
     .route-date {
         display: none;
     }
     .r-button-container {
-        display: block;
-        scale: 0.7;
+        scale: 0.8;
+        position: absolute;
+        left: 60%;
     }
     .r-button-container button {
         padding: 5px;
         font-size: 12px;
-        background-color: #007bff;
-        color: white;
+        background-color: transparent;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+    }
+}
+.icon-button-details {
+    display: none;
+}
+.icon-button-delete {
+    display: none;
+}
+@media (max-width: 850px) {
+    .full-button {
+        display: none;
+    }
+    .r-button-container {
+        position: absolute;
+        left: 75%;
+
+    }
+    .icon-button-details {
+        display: inline-block;
+        position: absolute;
+        scale: 2.5;
+        bottom: -10px;
+        margin-left: 9vw;
+    }
+    .icon-button-delete {
+        display: inline-block;
+        position: absolute;
+        scale: 2.5;
+        bottom: -10px;
+        right: 10px;
     }
 }
 
