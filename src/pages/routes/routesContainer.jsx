@@ -117,7 +117,7 @@ export default function RoutesContainer() {
     }, [searchQuery, sortOrder]);
 
     return (
-        <div className="rC-container">
+        <div className="gradient__bg rC-container">
             <div className="r-filters">
                 <input
                     className="rC-input"
