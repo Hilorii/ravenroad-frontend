@@ -109,15 +109,13 @@
 }
 
 @media only screen and (max-width: 850px) {
-    .r-container{
-
+    .r-filters {
+        top: 25px;
     }
     .rC-container {
         margin-top: 50px;
         padding: 10px;
         max-width: 100vw;
-        position: absolute;
-        height: auto;
     }
     .route-card {
         padding: 10px;
