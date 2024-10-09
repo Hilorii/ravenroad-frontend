@@ -62,15 +62,16 @@ edit:active,
 .edit:hover span {
   background: none;
 }
-/* @media (min-width: 768px) {
-  .edit {
-    font-size: 15px;
-    min-width: 196px;
-  }
-} */
 
 /* GRUPY */
-
+.gC-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
 .g-add-search {
     position: sticky;
 }
@@ -86,12 +87,32 @@ edit:active,
     width: 20vw;
     margin-right: 70px;
 }
+.g-join-bt{
+    margin-top: 10px;
+}
+.g-button-container{
+    position: absolute;
+}
 @media (max-width: 890px) {
     .gC-input {
         margin: 0;
         position: absolute;
         right: 20vw;
         width: 40vw;
+    }
+    .gC-container {
+        margin-top: 100px;
+        padding: 10px;
+        max-width: 100vw;
+    }
+    .g-button-container{
+        top: -100px;
+        margin-left: -30vw;
+        display: flex;
+        scale: 0.8;
+    }
+    .g-join-bt{
+        margin-top: 0;
     }
 }
 @media (max-width: 550px) {
@@ -101,22 +122,8 @@ edit:active,
     }
 }
 .g-button-container {
-    position: absolute;
     right: 11vw;
     overflow: visible;
-}
-.g-edit-bt {
-    padding: 20px;
-    max-width: 192px;
-    max-height: 47px;
-}
-.gC-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
-  z-index: 1;
 }
 .g-dropdown-menu {
   position: absolute;
@@ -229,9 +236,6 @@ edit:active,
 
 }
 @media screen and (max-width: 390px) {
-    .g-button-container{
-        scale: 0.7;
-    }
     .profile-btContainer{
         scale: 0.8;
     }
@@ -239,37 +243,6 @@ edit:active,
         position: relative;
         scale: 1.8;
         top: 15px;
-    }
-}
-
-.g-edit-bt {
-    transform: rotate(0deg); /* Domyślnie bez obrotu */
-    text-align: center;
-    margin: 10px;
-}
-
-@media screen and (max-width: 390px) {
-    .g-button-container {
-        display: flex;
-        flex-direction: row; /* Domyślnie poziomo */
-        justify-content: space-around;
-        max-height: 100%;
-        top: 30px;
-    }
-    .g-button-container {
-        flex-direction: column; /* Zmiana kierunku na pionowy */
-        align-items: flex-start; /* Wyrównanie do lewej */
-    }
-
-    .g-edit-bt {
-        transform: rotate(-90deg); /* Obrócenie o 90 stopni */
-        transform-origin: left center; /* Punkt obrotu przy lewej krawędzi */
-        margin: 60px 0;
-    }
-
-    .g-button-container button {
-        width: 120px; /* Możesz dostosować szerokość przycisku */
-        height: 50px; /* Możesz dostosować wysokość przycisku */
     }
 }
 

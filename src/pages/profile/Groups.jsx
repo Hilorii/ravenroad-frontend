@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
-import { PortalProvider } from '../../contexts/PortalProvider'
 
 export default function GroupsContainer() {
     const [groups, setGroups] = useState([]);
@@ -124,8 +123,7 @@ export default function GroupsContainer() {
     }, [searchQuery]);
 
     return (
-        <PortalProvider>
-        <div className="rC-container">
+        <div className="gC-container">
             <div className="g-add-search">
                 <div className="g-filter">
                     <input
@@ -136,14 +134,14 @@ export default function GroupsContainer() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
-                {/*<div className="g-button-container">*/}
-                {/*    <Link to="/addGroup" className="g-edit-bt">*/}
-                {/*        <button className="edit" role="button"><span>Stwórz grupę</span></button>*/}
-                {/*    </Link>*/}
-                {/*    <Link to="/searchGroups" className="g-edit-bt">*/}
-                {/*        <button className="edit" role="button"><span>Dołącz do grupy</span></button>*/}
-                {/*    </Link>*/}
-                {/*</div>*/}
+                <div className="g-button-container">
+                    <Link to="/addGroup" className="g-edit-bt">
+                        <button className="edit" role="button"><span>Stwórz grupę</span></button>
+                    </Link>
+                    <Link to="/searchGroups" className="g-edit-bt">
+                        <button className="edit g-join-bt" role="button"><span>Dołącz do grupy</span></button>
+                    </Link>
+                </div>
             </div>
             {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
@@ -218,6 +216,5 @@ export default function GroupsContainer() {
                 <p className="gradient__text rC-p">Nie znaleziono grupy.</p>
             )}
         </div>
-        </PortalProvider>
     );
 }
