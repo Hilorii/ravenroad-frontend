@@ -125,7 +125,7 @@ export default function GroupsContainer() {
 
     return (
         <PortalProvider>
-        <div className="gC-container">
+        <div className="rC-container">
             <div className="g-add-search">
                 <div className="g-filter">
                     <input
@@ -136,59 +136,81 @@ export default function GroupsContainer() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
-                <div className="g-button-container">
-                    <Link to="/addGroup" className="g-edit-bt">
-                        <button className="edit" role="button"><span>Stwórz grupę</span></button>
-                    </Link>
-                    <Link to="/searchGroups" className="g-edit-bt">
-                        <button className="edit" role="button"><span>Dołącz do grupy</span></button>
-                    </Link>
-                </div>
+                {/*<div className="g-button-container">*/}
+                {/*    <Link to="/addGroup" className="g-edit-bt">*/}
+                {/*        <button className="edit" role="button"><span>Stwórz grupę</span></button>*/}
+                {/*    </Link>*/}
+                {/*    <Link to="/searchGroups" className="g-edit-bt">*/}
+                {/*        <button className="edit" role="button"><span>Dołącz do grupy</span></button>*/}
+                {/*    </Link>*/}
+                {/*</div>*/}
             </div>
-
             {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
-                    <div key={group.id} className="group-card">
-                        <h2>{group.name}</h2>
-
-                        {/* Gwiazdka do ulubionych */}
-                        <button
-                            className={`favourite-btn ${group.favourite ? 'gold-star' : 'empty-star'}`}
-                            onClick={() => handleToggleFavourite(group.id, group.favourite)}
-                        >
-                            ★
-                        </button>
-
-                        <div className="g-ham-button-container">
-                            {/* Przycisk hamburgera */}
-                            <button onClick={() => toggleMenu(group.id)} className="hamburger-btn">
-                                {menuOpen[group.id] ? "▲" : "☰"}
+                    <div key={group.id} className="route-card">
+                        <div className="rC-inside">
+                            <img
+                                src={`http://localhost:5000/uploads/default-avatar.jpg`}
+                                alt={group.title}
+                                className="route-image"
+                            />
+                            <h2>{group.name}</h2>
+                            {/* Gwiazdka do ulubionych */}
+                            <button
+                                className={`r-favourite-btn ${group.favourite ? 'gold-star' : 'empty-star'}`}
+                                onClick={() => handleToggleFavourite(group.id, group.favourite)}
+                            >
+                                ★
                             </button>
 
-                            {menuOpen[group.id] && (
-                                <div className="g-dropdown-menu">
-                                    <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit" role="button">
-                                        <span>Szczegóły</span>
+                            <div className="r-button-container">
+                                <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit full-button"
+                                        role="button">
+                                    <span>Szczegóły</span>
+                                </button>
+                                {String(group.created_by) !== String(userId) && (
+                                    <button onClick={() => handleLeaveGroup(group.id)} className="edit full-button"
+                                            role="button">
+                                        <span>Opuść grupę</span>
                                     </button>
-
-                                    {String(group.created_by) !== String(userId) && (
-                                        <button onClick={() => handleLeaveGroup(group.id)} className="edit" role="button">
-                                            <span>Opuść grupę</span>
+                                )}
+                                {String(group.created_by) === String(userId) && (
+                                    <div className="group-owner-options">
+                                        <button onClick={() => handleEditGroup(group.id)} className="edit full-button"
+                                                role="button">
+                                            <span>Edytuj</span>
                                         </button>
-                                    )}
+                                        <button onClick={() => handleDeleteGroup(group.id)} className="edit full-button"
+                                                role="button">
+                                            <span>Usuń</span>
+                                        </button>
+                                    </div>
+                                )}
 
-                                    {String(group.created_by) === String(userId) && (
-                                        <div className="group-owner-options">
-                                            <button onClick={() => handleEditGroup(group.id)} className="edit" role="button">
-                                                <span>Edytuj</span>
-                                            </button>
-                                            <button onClick={() => handleDeleteGroup(group.id)} className="edit" role="button">
-                                                <span>Usuń</span>
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
+
+                                {/* Widoczne dla mniejszych ekranów */}
+                                <button onClick={() => navigate(`/groupDetails/${group.id}`)}
+                                        className="icon-button-details" role="button">
+                                    <span>❓</span>
+                                </button>
+                                {String(group.created_by) === String(userId) && (
+                                    <>
+                                <button  className="icon-button-delete" onClick={() => handleDeleteGroup(group.id)}
+                                        role="button">
+                                    <span>🗑️</span>
+                                </button>
+                                <button className="icon-button-edit" onClick={() => handleEditGroup(group.id)}
+                                        role="button">
+                                    <span>✏️</span>
+                                </button>
+                                </>
+                                )}
+                                {String(group.created_by) !== String(userId) && (
+                                    <button className="icon-button-leave" onClick={() => handleLeaveGroup(group.id)} role="button">
+                                        <span>❌</span>
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 ))

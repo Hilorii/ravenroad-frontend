@@ -86,6 +86,20 @@ edit:active,
     width: 20vw;
     margin-right: 70px;
 }
+@media (max-width: 890px) {
+    .gC-input {
+        margin: 0;
+        position: absolute;
+        right: 20vw;
+        width: 40vw;
+    }
+}
+@media (max-width: 550px) {
+    .gC-input {
+        right: 15vw;
+        width: 50vw;
+    }
+}
 .g-button-container {
     position: absolute;
     right: 11vw;
@@ -95,13 +109,6 @@ edit:active,
     padding: 20px;
     max-width: 192px;
     max-height: 47px;
-}
-.gC{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
 }
 .gC-container {
   display: flex;
@@ -216,10 +223,6 @@ edit:active,
     .g-filter{
         left: 18vw;
     }
-    .gC-input{
-        width: 25vw;
-        overflow: visible;
-    }
     .rC-p{
         scale: 1.3;
     }
@@ -269,14 +272,6 @@ edit:active,
         height: 50px; /* Możesz dostosować wysokość przycisku */
     }
 }
-
-
-
-
-
-
-
-
 
 
 

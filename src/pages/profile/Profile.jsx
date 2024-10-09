@@ -55,8 +55,8 @@ const ProfilePage = () => {
                                 <button className="edit" role="button"><span className="text" onClick={toggleGrupy}>Twoje Grupy</span></button>
                                 <button className="edit" role="button"><span className="text" onClick={toggleWydarzenia}>Twoje Wydarzenia</span></button>
                         </XStack>
-                        {isGrupyActive && !isWydarzeniaActive && <div className="gC"><GroupsContainer/></div>}
-                        {isWydarzeniaActive && !isGrupyActive && <div className="gC"><EventsContainer/></div>}
+                        {isGrupyActive && !isWydarzeniaActive && <GroupsContainer/>}
+                        {isWydarzeniaActive && !isGrupyActive && <EventsContainer/>}
                     </div>
                 </div>
             </div>
