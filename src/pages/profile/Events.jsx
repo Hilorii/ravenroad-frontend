@@ -103,63 +103,78 @@ export default function EventsContainer() {
                     <input
                         className="gC-input"
                         type="text"
-                        placeholder="Search events..."
+                        placeholder="Szukaj wydarzeń..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
                 <div className="g-button-container">
                     <Link to="/createEvent" className="g-edit-bt">
-                        <button className="edit" role="button"><span>Stwórz wydarzenie</span></button>
+                        <button className="edit e-filter-buttons" role="button"><span>Stwórz wydarzenie</span></button>
                     </Link>
                     <Link to="/joinEvents" className="g-edit-bt">
-                        <button className="edit" role="button"><span>Znajdź wydarzenie</span></button>
+                        <button className="edit g-join-bt e-filter-buttons" role="button"><span>Znajdź wydarzenie</span></button>
                     </Link>
                 </div>
             </div>
 
             {filteredEvents.length > 0 ? (
                 filteredEvents.map((event) => (
-                    <div key={event.id} className="group-card">
-                        <h2>{event.name}</h2>
+                    <div key={event.id} className="route-card">
+                        <div className="rC-inside">
+                            <img
+                                src={`http://localhost:5000/uploads/default-avatar.jpg`}
+                                alt={event.name}
+                                className="route-image"
+                            />
+                            <h2>{event.name}</h2>
 
-                        <div className="g-ham-button-container">
-                            <button onClick={() => toggleMenu(event.id)} className="hamburger-btn">
-                                {menuOpen[event.id] ? "▲" : "☰"}
-                            </button>
+                            <div className="r-button-container">
+                                <button onClick={() => navigate(`/eventDetails/${event.id}`)} className="edit full-button" role="button">
+                                    <span>Szczegóły</span>
+                                </button>
+                                {String(event.created_by) !== String(userId) && (
+                                    <button onClick={() => handleLeaveEvent(event.id)} className="edit full-button" role="button">
+                                        <span>Opuść wydarzenie</span>
+                                    </button>
+                                )}
+                                {String(event.created_by) === String(userId) && (
+                                    <div className="group-owner-options">
+                                        <button onClick={() => handleEditEvent(event.id)} className="edit full-button" role="button">
+                                            <span>Edytuj</span>
+                                        </button>
+                                        <button onClick={() => handleDeleteEvent(event.id)} className="edit full-button" role="button">
+                                            <span>Usuń</span>
+                                        </button>
+                                    </div>
+                                )}
 
-                            {menuOpen[event.id] && (
-                                <div className="g-dropdown-menu">
-                                    <button onClick={() => navigate(`/eventDetails/${event.id}`)} className="edit" role="button">
-                                        <span>Szczegóły</span>
-                                          </button>
-
-                            {/* Show "Leave Event" button only if the user is not the creator */}
-                            {String(event.created_by) !== String(userId) && (
-                                <button onClick={() => handleLeaveEvent(event.id)} className="edit" role="button">
-                            <span>Leave Event</span>
-                        </button>
-                        )}
-
-                        {/* Show edit and delete options only if the user is the creator */}
-                        {String(event.created_by) === String(userId) && (
-                        <div className="group-owner-options">
-                            <button onClick={() => handleEditEvent(event.id)} className="edit" role="button">
-                                <span>Edytuj</span>
-                            </button>
-                            <button onClick={() => handleDeleteEvent(event.id)} className="edit" role="button">
-                                <span>Usuń</span>
-                            </button>
+                                {/* Widoczne dla mniejszych ekranów */}
+                                <button onClick={() => navigate(`/eventDetails/${event.id}`)} className="icon-button-details" role="button">
+                                    <span>❓</span>
+                                </button>
+                                {String(event.created_by) === String(userId) && (
+                                    <>
+                                        <button className="icon-button-delete" onClick={() => handleDeleteEvent(event.id)} role="button">
+                                            <span>🗑️</span>
+                                        </button>
+                                        <button className="icon-button-edit" onClick={() => handleEditEvent(event.id)} role="button">
+                                            <span>✏️</span>
+                                        </button>
+                                    </>
+                                )}
+                                {String(event.created_by) !== String(userId) && (
+                                    <button className="icon-button-leave" onClick={() => handleLeaveEvent(event.id)} role="button">
+                                        <span>❌</span>
+                                    </button>
+                                )}
+                            </div>
                         </div>
-                        )}
                     </div>
-                )}
+                ))
+            ) : (
+                <p className="gradient__text rC-p">Nie znaleziono wydarzenia.</p>
+            )}
         </div>
-</div>
-))
-) : (
-        <p className="gradient__text rC-p">Nie znaleziono wydarzenia.</p>
-    )}
-</div>
-);
+    );
 }
