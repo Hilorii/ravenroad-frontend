@@ -48,7 +48,7 @@ function UnderConstruction() {
                 <div className="gradient__text">
                     <h1 className="h1-notify">Strona w budowie...</h1>
                     <p className="p-notify">
-                        Zapisz się na testy naszej aplikacji już 7 października! Otrzymaj 7 dni darmowego dostępu do wszystkich funkcji, a potem <strong className="notify-strong">20%</strong> zniżki na wersję premium. Podaj swój e-mail i dołącz do grona testerów!
+                        Zapisz się na testy naszej aplikacji już 14 października! Otrzymaj 7 dni darmowego dostępu do wszystkich funkcji, a potem <strong className="notify-strong">20%</strong> zniżki na wersję premium. Podaj swój e-mail i dołącz do grona testerów!
                     </p>
                 </div>
                 <form onSubmit={handleSubmit} className="email-form">

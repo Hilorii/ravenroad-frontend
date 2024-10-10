@@ -89,36 +89,35 @@ export default function SearchGroupsContainer() {
 
             {filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
-                    <div key={group.id} className="group-card">
-                        <h2>{group.name}</h2>
+                    <div key={group.id} className="route-card">
+                        <div className="rC-inside">
+                            <img
+                                src={`http://localhost:5000/uploads/default-avatar.jpg`}
+                                alt={group.title}
+                                className="route-image"
+                            />
+                            <h2>{group.name}</h2>
+                            <div className="r-button-container">
+                                <button onClick={() => navigate(`/searchedGroupDetails/${group.id}`)}
+                                        className="edit full-button" role="button">
+                                    <span>Szczegóły grupy</span>
+                                </button>
+                                <button className="edit full-button" role="button"
+                                        onClick={() => handleGroupJoin(group.id)}>
+                                    <span>Dołącz do grupy</span>
+                                </button>
 
-                        <div className="g-ham-button-container">
-                            <button onClick={() => toggleMenu(group.id)} className="hamburger-btn">
-                                {menuOpen[group.id] ? "▲" : "☰"}
-                            </button>
 
-                            {menuOpen[group.id] && (
-                                <div className="g-dropdown-menu">
-                                    <button onClick={() => navigate(`/searchedGroupDetails/${group.id}`)}
-                                            className="edit" role="button">
-                                        <span>Szczegóły grupy</span>
-                                    </button>
-                                    <button className="edit" role="button" onClick={() => handleGroupJoin(group.id)}>
-                                        <span>Dołącz do grupy</span>
-                                    </button>
-
-                                    {String(group.created_by) === String(userId) && (
-                                        <div className="group-owner-options">
-                                            <button className="edit" role="button">
-                                                <span>Edytuj grupę</span>
-                                            </button>
-                                            <button className="edit" role="button">
-                                                <span>Usuń grupę</span>
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
+                                {/* Widoczne dla mniejszych ekranów */}
+                                <button onClick={() => navigate(`/searchedGroupDetails/${group.id}`)}
+                                        className="icon-button-details" role="button">
+                                    <span>❓</span>
+                                </button>
+                                <button className="icon-button-delete" onClick={() => handleGroupJoin(group.id)}
+                                        role="button">
+                                    <span>➕</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 ))
@@ -127,4 +126,5 @@ export default function SearchGroupsContainer() {
             )}
         </div>
     );
+
 }

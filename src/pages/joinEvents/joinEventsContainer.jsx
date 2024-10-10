@@ -88,36 +88,39 @@ export default function JoinEventsContainer() {
 
             {filteredEvents.length > 0 ? (
                 filteredEvents.map((event) => (
-                    <div key={event.id} className="group-card">
-                        <h2>{event.name}</h2>
+                    <div key={event.id} className="route-card">
+                        <div className="rC-inside">
+                            <img
+                                src={`http://localhost:5000/uploads/default-avatar.jpg`}
+                                alt={event.name}
+                                className="route-image"
+                            />
+                            <h2>{event.name}</h2>
+                            <div className="r-button-container">
+                                <button onClick={() => navigate(`/joinEventDetails/${event.id}`)}
+                                        className="edit full-button" role="button">
+                                    <span>Szczegóły</span>
+                                </button>
 
-                        <div className="g-ham-button-container">
-                            <button onClick={() => toggleMenu(event.id)} className="hamburger-btn">
-                                {menuOpen[event.id] ? "▲" : "☰"}
-                            </button>
+                                {/* Przycisk Dołącz z ikonką */}
+                                <button className="edit full-button" role="button"
+                                        onClick={() => handleEventJoin(event.id)}>
+                                    <span>Dołącz</span>
+                                </button>
 
-                            {menuOpen[event.id] && (
-                                <div className="g-dropdown-menu">
+
+                                 {/* Widoczne dla mniejszych ekranów */}
+                                <div className="icon-buttons">
                                     <button onClick={() => navigate(`/joinEventDetails/${event.id}`)}
-                                            className="edit" role="button">
-                                        <span>Szczegóły</span>
+                                            className="icon-button-details" role="button">
+                                        <span>❓</span>
                                     </button>
-                                    <button className="edit" role="button" onClick={() => handleEventJoin(event.id)}>
-                                        <span>Dołącz</span>
+                                    <button className="icon-button-delete" onClick={() => handleEventJoin(event.id)}
+                                            role="button">
+                                        <span>➕</span>
                                     </button>
-
-                                    {String(event.created_by) === String(userId) && (
-                                        <div className="group-owner-options">
-                                            <button className="edit" role="button">
-                                                <span>Edytuj</span>
-                                            </button>
-                                            <button className="edit" role="button">
-                                                <span>Usuń</span>
-                                            </button>
-                                        </div>
-                                    )}
                                 </div>
-                            )}
+                            </div>
                         </div>
                     </div>
                 ))
@@ -126,4 +129,5 @@ export default function JoinEventsContainer() {
             )}
         </div>
     );
+
 }

@@ -69,18 +69,26 @@ export default function RoutesContainer() {
             {filteredRoutes.length > 0 ? (
                 filteredRoutes.map((route) => (
                     <div key={route.id} className="route-card">
-                        <img
-                            src={`http://localhost:5000/uploads/${route.image}`}
-                            alt={route.title}
-                            className="route-image"
-                        />
-                        <h2>{route.title}</h2>
-                        <p>{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
+                        <div className="rC-inside">
+                            <img
+                                src={`http://localhost:5000/uploads/${route.image}`}
+                                alt={route.title}
+                                className="route-image"
+                            />
+                            <h2>{route.title}</h2>
+                            <p className="route-date">{route.add_date ? new Date(route.add_date).toLocaleDateString() : 'Brak daty'}</p>
 
-                        <div className="r-button-container">
-                            <button onClick={() => navigate(`/readyRouteDetails/${route.id}`)} className="edit" role="button">
-                                <span>Szczegóły</span>
-                            </button>
+                            <div className="r-button-container">
+                                {/* Pełny przycisk "Szczegóły" dla większych ekranów */}
+                                <button onClick={() => navigate(`/readyRouteDetails/${route.id}`)} className="edit full-button" role="button">
+                                    <span>Szczegóły</span>
+                                </button>
+
+                                {/* Ikona "Szczegóły" dla mniejszych ekranów */}
+                                <button onClick={() => navigate(`/readyRouteDetails/${route.id}`)} className="icon-button-details" role="button">
+                                    <span>❓</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 ))
@@ -89,4 +97,5 @@ export default function RoutesContainer() {
             )}
         </div>
     );
+
 }
