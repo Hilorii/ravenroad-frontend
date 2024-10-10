@@ -120,13 +120,22 @@ const Navbar = () => {
                     <div className="rr__navbar-menu_container scale-up-center">
                         <div className="rr__navbar-menu_container-links">
                             <Menu/>
-                            <p><a onClick={handleLogout}>Wyloguj</a></p>
-                            {!user && (
+                            {!user ? (
                                 <div className="rr__navbar-menu_container-links-sign">
-                                    <p><Link to="/login">Login</Link></p>
-                                    <button className="signup" onClick={() => navigate('/Signup')}
-                                            type="button">Zarejestruj
+                                    <p>
+                                        <Link to="/login">Login</Link>
+                                    </p>
+                                    <button
+                                        className="signup"
+                                        onClick={() => navigate('/Signup')}
+                                        type="button"
+                                    >
+                                        Zarejestruj
                                     </button>
+                                </div>
+                            ) : (
+                                <div className="rr__navbar-menu_container-links-sign">
+                                    <p><a onClick={handleLogout}>Wyloguj</a></p>
                                 </div>
                             )}
                         </div>
