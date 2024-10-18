@@ -20,17 +20,17 @@ const Footer = () => (
             </div>
             <div className="rr__footer-links_div">
                 <h4>Linki</h4>
-                <p>Historie</p>
-                <p>FAQ</p>
-                <p>Pomoc</p>
+                {/*<p>Historie</p>*/}
+                <p><a href="/FAQ">FAQ</a></p>
+                <p><a href="/help">Pomoc</a></p>
                 <p><a href="/termsofuse">Warunki użytkowania</a></p>
                 <p><a href="/privacypolicy">Polityka prywatności</a></p>
             </div>
             <div className="rr__footer-links_div">
                 <h4>Firma</h4>
-                <p>O nas</p>
+                <p><a href="/about">O nas</a></p>
                 <p><a href="/pricing">Raven PRO</a></p>
-                <p>Zespół</p>
+                <p><a href="/team">Zespół</a></p>
                 <p><a href="/contact">Kontakt</a></p>
             </div>
             <div className="rr__footer-links_div">
