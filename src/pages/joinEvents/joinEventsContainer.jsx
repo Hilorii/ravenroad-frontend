@@ -8,24 +8,30 @@ export default function JoinEventsContainer() {
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [menuOpen, setMenuOpen] = useState({});
+    const [loading, setLoading] = useState(true); // Nowy stan do śledzenia ładowania
     const { user } = useUser();
     const navigate = useNavigate();
     const userId = user ? user.id : null;
     const token = user ? user.token : null;
 
-    // Wydzielenie funkcji do pobierania wydarzen
+    // Wydzielenie funkcji do pobierania wydarzeń
     const fetchEvents = () => {
+        setLoading(true);  // Rozpocznij ładowanie
         axios.get('http://localhost:5000/joinEvents', { withCredentials: true })
             .then(response => {
                 if (Array.isArray(response.data)) {
+                    console.log("Pobrane wydarzenia:", response.data); // Logowanie pobranych danych
                     setEvents(response.data);
                     setFilteredEvents(response.data);
                 } else {
-                    console.error("Oczekiwano tablicy wydarzen, ale otrzymano:", typeof response.data);
+                    console.error("Oczekiwano tablicy wydarzeń, ale otrzymano:", typeof response.data);
                 }
             })
             .catch(error => {
-                console.error("Błąd podczas pobierania grup:", error);
+                console.error("Błąd podczas pobierania wydarzeń:", error);
+            })
+            .finally(() => {
+                setLoading(false);  // Zakończ ładowanie po zakończeniu pobierania
             });
     };
 
@@ -50,13 +56,13 @@ export default function JoinEventsContainer() {
             });
             alert(response.data.message);  // Pomyślne dołączenie
 
-            // Filtruj wydarzenie z listy, które właśnie dołączył użytkownik
+            // Filtruj wydarzenie z listy, do którego użytkownik właśnie dołączył
             const updatedEvents = events.filter(event => event.id !== eventId);
             setEvents(updatedEvents);
             setFilteredEvents(updatedEvents);
 
         } catch (error) {
-            console.error('Error joining event:', error);
+            console.error('Błąd podczas dołączania do wydarzenia:', error);
             alert(error.response?.data?.error || 'Błąd podczas dołączania do wydarzenia');
         }
     };
@@ -71,6 +77,10 @@ export default function JoinEventsContainer() {
     useEffect(() => {
         handleSearch();
     }, [searchQuery]);
+
+    if (loading) {
+        return <div>Ładowanie wydarzeń...</div>; // Komunikat ładowania
+    }
 
     return (
         <div className="gC-container">
@@ -109,7 +119,7 @@ export default function JoinEventsContainer() {
                                 </button>
 
 
-                                 {/* Widoczne dla mniejszych ekranów */}
+                                {/* Widoczne dla mniejszych ekranów */}
                                 <div className="icon-buttons">
                                     <button onClick={() => navigate(`/joinEventDetails/${event.id}`)}
                                             className="icon-button-details" role="button">
@@ -129,5 +139,4 @@ export default function JoinEventsContainer() {
             )}
         </div>
     );
-
 }

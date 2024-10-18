@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 import './addRoute.css';
+import BackButton from '../../components/backBt/BackButton';
 
 export default function AddRoute() {
     const [title, setTitle] = useState('');
@@ -96,6 +97,7 @@ export default function AddRoute() {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
+                <BackButton />
                 <form onSubmit={handleSubmit} className="add-route-form-main">
                     <div className="add-route-form field">
                         <input

@@ -7,6 +7,7 @@ export default function RoutesContainer() {
     const [filteredRoutes, setFilteredRoutes] = useState([]);
     const [sortOrder, setSortOrder] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true); // Nowy stan do śledzenia ładowania
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,9 +17,11 @@ export default function RoutesContainer() {
                 console.log(response.data);
                 setRoutes(response.data);
                 setFilteredRoutes(response.data);  // Domyślnie wyświetlamy wszystkie trasy
+                setLoading(false); // Zakończ ładowanie po pobraniu danych
             })
             .catch(error => {
                 console.error("Błąd podczas pobierania tras:", error);
+                setLoading(false); // Zakończ ładowanie nawet w przypadku błędu
             });
     }, []);
 
@@ -49,6 +52,10 @@ export default function RoutesContainer() {
     useEffect(() => {
         handleSortAndFilter();
     }, [searchQuery, sortOrder]);
+
+    if (loading) {
+        return <div>Ładowanie tras...</div>; // Komunikat w trakcie ładowania danych
+    }
 
     return (
         <div className="rC-container">
@@ -97,5 +104,4 @@ export default function RoutesContainer() {
             )}
         </div>
     );
-
 }

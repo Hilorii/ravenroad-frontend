@@ -16,8 +16,9 @@ export default function EventsContainer() {
         axios.get('http://localhost:5000/events', { withCredentials: true })
             .then(response => {
                 if (Array.isArray(response.data)) {
+                    console.log('Events fetched:', response.data); // Log do sprawdzenia pobranych danych
                     setEvents(response.data);
-                    setFilteredEvents(response.data);
+                    setFilteredEvents(response.data); // Inicjalizacja filtrowanych wydarzeń
                 } else {
                     console.error("Expected an array of events, but received:", typeof response.data);
                 }
@@ -27,8 +28,9 @@ export default function EventsContainer() {
             });
     }, []);
 
+
     const handleLeaveEvent = async (eventId) => {
-        const confirmLeave = window.confirm('Are you sure you want to leave this event?');
+        const confirmLeave = window.confirm('Czy na pewno chcesz opuścić to wydarzenie?');
         if (!confirmLeave) return;
 
         try {
@@ -93,8 +95,10 @@ export default function EventsContainer() {
     };
 
     useEffect(() => {
-        handleSearch();
-    }, [searchQuery]);
+        if (events.length > 0) {
+            handleSearch();
+        }
+    }, [searchQuery, events]); // Dodaj events do zależności
 
     return (
         <div className="gC-container">
@@ -148,30 +152,12 @@ export default function EventsContainer() {
                                         </button>
                                     </div>
                                 )}
-
-                                {/* Widoczne dla mniejszych ekranów */}
-                                <button onClick={() => navigate(`/eventDetails/${event.id}`)} className="icon-button-details" role="button">
-                                    <span>❓</span>
-                                </button>
-                                {String(event.created_by) === String(userId) && (
-                                    <>
-                                        <button className="icon-button-delete" onClick={() => handleDeleteEvent(event.id)} role="button">
-                                            <span>🗑️</span>
-                                        </button>
-                                        <button className="icon-button-edit" onClick={() => handleEditEvent(event.id)} role="button">
-                                            <span>✏️</span>
-                                        </button>
-                                    </>
-                                )}
-                                {String(event.created_by) !== String(userId) && (
-                                    <button className="icon-button-leave" onClick={() => handleLeaveEvent(event.id)} role="button">
-                                        <span>❌</span>
-                                    </button>
-                                )}
                             </div>
                         </div>
                     </div>
                 ))
+            ) : events.length === 0 ? (
+                <p className="gradient__text rC-p">Ładowanie wydarzeń...</p> // Zamiast "Nie znaleziono", dopóki dane się ładują
             ) : (
                 <p className="gradient__text rC-p">Nie znaleziono wydarzenia.</p>
             )}

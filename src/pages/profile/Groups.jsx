@@ -8,6 +8,7 @@ export default function GroupsContainer() {
     const [filteredGroups, setFilteredGroups] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [menuOpen, setMenuOpen] = useState({});
+    const [loading, setLoading] = useState(true); // Nowy stan do śledzenia ładowania
     const { user } = useUser();
     const navigate = useNavigate();
     const userId = user.id;
@@ -21,9 +22,11 @@ export default function GroupsContainer() {
                 } else {
                     console.error("Oczekiwano tablicy grup, ale otrzymano:", typeof response.data);
                 }
+                setLoading(false); // Zakończ ładowanie po pobraniu danych
             })
             .catch(error => {
                 console.error("Błąd podczas pobierania grup:", error);
+                setLoading(false); // Zakończ ładowanie nawet w przypadku błędu
             });
     }, []);
 
@@ -68,7 +71,6 @@ export default function GroupsContainer() {
 
             if (!response.ok) throw new Error('Błąd podczas zmiany statusu ulubionej grupy');
 
-            // Po udanej zmianie ulubionej grupy, ponownie pobieramy listę grup
             const updatedGroupsResponse = await axios.get('http://localhost:5000/groups', { withCredentials: true });
             setGroups(updatedGroupsResponse.data);
             setFilteredGroups(updatedGroupsResponse.data);
@@ -114,13 +116,17 @@ export default function GroupsContainer() {
     const toggleMenu = (groupId) => {
         setMenuOpen(prevState => ({
             ...prevState,
-            [groupId]: !prevState[groupId] // Tylko menu dla konkretnej grupy
+            [groupId]: !prevState[groupId]
         }));
     };
 
     useEffect(() => {
         handleSearch();
     }, [searchQuery]);
+
+    if (loading) {
+        return <div>Ładowanie grup...</div>; // Komunikat w trakcie ładowania danych
+    }
 
     return (
         <div className="gC-container">
@@ -153,7 +159,6 @@ export default function GroupsContainer() {
                                 className="route-image"
                             />
                             <h2>{group.name}</h2>
-                            {/* Gwiazdka do ulubionych */}
                             <button
                                 className={`r-favourite-btn ${group.favourite ? 'gold-star' : 'empty-star'}`}
                                 onClick={() => handleToggleFavourite(group.id, group.favourite)}
@@ -162,46 +167,36 @@ export default function GroupsContainer() {
                             </button>
 
                             <div className="r-button-container">
-                                <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit full-button"
-                                        role="button">
+                                <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="edit full-button" role="button">
                                     <span>Szczegóły</span>
                                 </button>
                                 {String(group.created_by) !== String(userId) && (
-                                    <button onClick={() => handleLeaveGroup(group.id)} className="edit full-button"
-                                            role="button">
+                                    <button onClick={() => handleLeaveGroup(group.id)} className="edit full-button" role="button">
                                         <span>Opuść grupę</span>
                                     </button>
                                 )}
                                 {String(group.created_by) === String(userId) && (
                                     <div className="group-owner-options">
-                                        <button onClick={() => handleEditGroup(group.id)} className="edit full-button"
-                                                role="button">
+                                        <button onClick={() => handleEditGroup(group.id)} className="edit full-button" role="button">
                                             <span>Edytuj</span>
                                         </button>
-                                        <button onClick={() => handleDeleteGroup(group.id)} className="edit full-button"
-                                                role="button">
+                                        <button onClick={() => handleDeleteGroup(group.id)} className="edit full-button" role="button">
                                             <span>Usuń</span>
                                         </button>
                                     </div>
                                 )}
-
-
-                                {/* Widoczne dla mniejszych ekranów */}
-                                <button onClick={() => navigate(`/groupDetails/${group.id}`)}
-                                        className="icon-button-details" role="button">
+                                <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="icon-button-details" role="button">
                                     <span>❓</span>
                                 </button>
                                 {String(group.created_by) === String(userId) && (
                                     <>
-                                <button  className="icon-button-delete" onClick={() => handleDeleteGroup(group.id)}
-                                        role="button">
-                                    <span>🗑️</span>
-                                </button>
-                                <button className="icon-button-edit" onClick={() => handleEditGroup(group.id)}
-                                        role="button">
-                                    <span>✏️</span>
-                                </button>
-                                </>
+                                        <button className="icon-button-delete" onClick={() => handleDeleteGroup(group.id)} role="button">
+                                            <span>🗑️</span>
+                                        </button>
+                                        <button className="icon-button-edit" onClick={() => handleEditGroup(group.id)} role="button">
+                                            <span>✏️</span>
+                                        </button>
+                                    </>
                                 )}
                                 {String(group.created_by) !== String(userId) && (
                                     <button className="icon-button-leave" onClick={() => handleLeaveGroup(group.id)} role="button">

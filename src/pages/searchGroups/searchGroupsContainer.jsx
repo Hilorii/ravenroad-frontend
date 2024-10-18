@@ -8,6 +8,7 @@ export default function SearchGroupsContainer() {
     const [filteredGroups, setFilteredGroups] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [menuOpen, setMenuOpen] = useState({});
+    const [loading, setLoading] = useState(true);  // Dodano stan ładowania
     const { user } = useUser();
     const navigate = useNavigate();
     const userId = user ? user.id : null;
@@ -18,14 +19,17 @@ export default function SearchGroupsContainer() {
         axios.get('http://localhost:5000/searchGroups', { withCredentials: true })
             .then(response => {
                 if (Array.isArray(response.data)) {
+                    console.log('Groups fetched:', response.data);  // Logowanie pobranych danych
                     setGroups(response.data);
                     setFilteredGroups(response.data);
                 } else {
                     console.error("Oczekiwano tablicy grup, ale otrzymano:", typeof response.data);
                 }
+                setLoading(false);  // Wyłącz ładowanie po pobraniu danych
             })
             .catch(error => {
                 console.error("Błąd podczas pobierania grup:", error);
+                setLoading(false);  // Wyłącz ładowanie w przypadku błędu
             });
     };
 
@@ -61,7 +65,6 @@ export default function SearchGroupsContainer() {
         }
     };
 
-
     const toggleMenu = (groupId) => {
         setMenuOpen(prevState => ({
             ...prevState,
@@ -70,8 +73,10 @@ export default function SearchGroupsContainer() {
     };
 
     useEffect(() => {
-        handleSearch();
-    }, [searchQuery]);
+        if (groups.length > 0) {
+            handleSearch();
+        }
+    }, [searchQuery, groups]);
 
     return (
         <div className="gC-container">
@@ -87,7 +92,9 @@ export default function SearchGroupsContainer() {
                 </div>
             </div>
 
-            {filteredGroups.length > 0 ? (
+            {loading ? (
+                <p className="gradient__text rC-p">Ładowanie grup...</p>  // Komunikat podczas ładowania
+            ) : filteredGroups.length > 0 ? (
                 filteredGroups.map((group) => (
                     <div key={group.id} className="route-card">
                         <div className="rC-inside">
@@ -107,7 +114,6 @@ export default function SearchGroupsContainer() {
                                     <span>Dołącz do grupy</span>
                                 </button>
 
-
                                 {/* Widoczne dla mniejszych ekranów */}
                                 <button onClick={() => navigate(`/searchedGroupDetails/${group.id}`)}
                                         className="icon-button-details" role="button">
@@ -126,5 +132,4 @@ export default function SearchGroupsContainer() {
             )}
         </div>
     );
-
 }
