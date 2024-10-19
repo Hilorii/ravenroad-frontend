@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
+import BackButton from '../../components/backBt/BackButton';
 
 export default function EditRoute() {
     const navigate = useNavigate();
@@ -116,6 +117,7 @@ export default function EditRoute() {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
+                <BackButton/>
                 <form onSubmit={handleSubmit} className="add-route-form-main">
                     <div className="add-route-form field">
                         <input

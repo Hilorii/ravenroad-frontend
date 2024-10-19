@@ -152,6 +152,27 @@ export default function EventsContainer() {
                                         </button>
                                     </div>
                                 )}
+
+                                {/* Widoczne dla mniejszych ekranów */}
+                                <button onClick={() => navigate(`/eventDetails/${event.id}`)} className="icon-button-details" role="button">
+                                    <span>❓</span>
+                                </button>
+                                {String(event.created_by) === String(userId) && (
+                                    <>
+                                        <button className="icon-button-delete" onClick={() => handleDeleteEvent(event.id)} role="button">
+                                            <span>🗑️</span>
+                                        </button>
+                                        <button className="icon-button-edit" onClick={() => handleEditEvent(event.id)} role="button">
+                                            <span>✏️</span>
+                                        </button>
+                                    </>
+                                )}
+                                {String(event.created_by) !== String(userId) && (
+                                    <button className="icon-button-leave" onClick={() => handleLeaveEvent(event.id)} role="button">
+                                        <span>❌</span>
+                                    </button>
+                                )}
+
                             </div>
                         </div>
                     </div>
