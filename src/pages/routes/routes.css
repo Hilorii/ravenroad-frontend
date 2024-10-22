@@ -208,28 +208,28 @@
         display: inline-block;
         position: absolute;
         scale: 2.5;
-        bottom: -10px;
+        bottom: -15px;
         margin-left: -2vw;
     }
     .icon-button-details {
         display: inline-block;
         position: absolute;
         scale: 2.5;
-        bottom: -10px;
+        bottom: -15px;
         margin-left: 7vw;
     }
     .icon-button-delete {
         display: inline-block;
         position: absolute;
         scale: 2.5;
-        bottom: -10px;
+        bottom: -15px;
         right: -2px;
     }
     .icon-button-edit {
         display: inline-block;
         position: absolute;
         scale: 2.5;
-        bottom: -10px;
+        bottom: -15px;
         right: 10vw;
     }
 }

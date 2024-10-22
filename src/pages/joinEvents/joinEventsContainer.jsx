@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { Details, Plus } from '../../components/icons';
 
 export default function JoinEventsContainer() {
     const [events, setEvents] = useState([]);
@@ -123,11 +124,15 @@ export default function JoinEventsContainer() {
                                 <div className="icon-buttons">
                                     <button onClick={() => navigate(`/joinEventDetails/${event.id}`)}
                                             className="icon-button-details" role="button">
-                                        <span>❓</span>
+                                    <span style={{color: 'white'}}>
+                                        <Details/>
+                                    </span>
                                     </button>
                                     <button className="icon-button-delete" onClick={() => handleEventJoin(event.id)}
                                             role="button">
-                                        <span>➕</span>
+                                    <span style={{color: 'white'}}>
+                                        <Plus/>
+                                    </span>
                                     </button>
                                 </div>
                             </div>

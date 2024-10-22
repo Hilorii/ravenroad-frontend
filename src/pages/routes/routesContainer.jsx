@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './routes.css';
 import '../profile/profile.css';
+import { Details, Trash } from '../../components/icons';
 
 export default function RoutesContainer() {
     const [routes, setRoutes] = useState([]);
@@ -148,10 +149,14 @@ export default function RoutesContainer() {
                                     <span>Usuń</span>
                                 </button>
                                 <button onClick={() => navigate(`/routeDetails/${route.id}`)} className="icon-button-details" role="button">
-                                    <span>❓</span>
+                                    <span style={{color: 'white'}}>
+                                        <Details/>
+                                    </span>
                                 </button>
                                 <button onClick={() => handleDelete(route.id)} className="icon-button-delete" role="button">
-                                    <span>🗑️</span>
+                                    <span style={{color: 'white'}}>
+                                        <Trash/>
+                                    </span>
                                 </button>
                             </div>
                         </div>

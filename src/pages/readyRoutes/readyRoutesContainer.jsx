@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Details } from '../../components/icons';
 
 export default function RoutesContainer() {
     const [routes, setRoutes] = useState([]);
@@ -92,8 +93,11 @@ export default function RoutesContainer() {
                                 </button>
 
                                 {/* Ikona "Szczegóły" dla mniejszych ekranów */}
-                                <button onClick={() => navigate(`/readyRouteDetails/${route.id}`)} className="icon-button-details" role="button">
-                                    <span>❓</span>
+                                <button onClick={() => navigate(`/readyRouteDetails/${route.id}`)}
+                                        className="icon-button-details" role="button">
+                                    <span style={{color: 'white'}}>
+                                        <Details/>
+                                    </span>
                                 </button>
                             </div>
                         </div>

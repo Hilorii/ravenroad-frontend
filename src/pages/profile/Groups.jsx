@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { Details, Trash, Edit, Leave } from '../../components/icons';
 
 export default function GroupsContainer() {
     const [groups, setGroups] = useState([]);
@@ -185,22 +186,33 @@ export default function GroupsContainer() {
                                         </button>
                                     </div>
                                 )}
-                                <button onClick={() => navigate(`/groupDetails/${group.id}`)} className="icon-button-details" role="button">
-                                    <span>❓</span>
+                                <button onClick={() => navigate(`/groupDetails/${group.id}`)}
+                                        className="icon-button-details" role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Details/>
+                                             </span>
                                 </button>
                                 {String(group.created_by) === String(userId) && (
                                     <>
                                         <button className="icon-button-delete" onClick={() => handleDeleteGroup(group.id)} role="button">
-                                            <span>🗑️</span>
+                                            <span style={{color: 'white'}}>
+                                                <Trash/>
+                                             </span>
                                         </button>
-                                        <button className="icon-button-edit" onClick={() => handleEditGroup(group.id)} role="button">
-                                            <span>✏️</span>
+                                        <button className="icon-button-edit" onClick={() => handleEditGroup(group.id)}
+                                                role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Edit/>
+                                             </span>
                                         </button>
                                     </>
                                 )}
                                 {String(group.created_by) !== String(userId) && (
-                                    <button className="icon-button-leave" onClick={() => handleLeaveGroup(group.id)} role="button">
-                                        <span>❌</span>
+                                    <button className="icon-button-leave" onClick={() => handleLeaveGroup(group.id)}
+                                            role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Leave/>
+                                             </span>
                                     </button>
                                 )}
                             </div>

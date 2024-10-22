@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { Details, Trash, Edit, Leave } from '../../components/icons';
 
 export default function EventsContainer() {
     const [events, setEvents] = useState([]);
@@ -154,22 +155,34 @@ export default function EventsContainer() {
                                 )}
 
                                 {/* Widoczne dla mniejszych ekranów */}
-                                <button onClick={() => navigate(`/eventDetails/${event.id}`)} className="icon-button-details" role="button">
-                                    <span>❓</span>
+                                <button onClick={() => navigate(`/eventDetails/${event.id}`)}
+                                        className="icon-button-details" role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Details/>
+                                             </span>
                                 </button>
                                 {String(event.created_by) === String(userId) && (
                                     <>
-                                        <button className="icon-button-delete" onClick={() => handleDeleteEvent(event.id)} role="button">
-                                            <span>🗑️</span>
+                                        <button className="icon-button-delete"
+                                                onClick={() => handleDeleteEvent(event.id)} role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Trash/>
+                                             </span>
                                         </button>
-                                        <button className="icon-button-edit" onClick={() => handleEditEvent(event.id)} role="button">
-                                            <span>✏️</span>
+                                        <button className="icon-button-edit" onClick={() => handleEditEvent(event.id)}
+                                                role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Edit/>
+                                             </span>
                                         </button>
                                     </>
                                 )}
                                 {String(event.created_by) !== String(userId) && (
-                                    <button className="icon-button-leave" onClick={() => handleLeaveEvent(event.id)} role="button">
-                                        <span>❌</span>
+                                    <button className="icon-button-leave" onClick={() => handleLeaveEvent(event.id)}
+                                            role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Leave/>
+                                             </span>
                                     </button>
                                 )}
 

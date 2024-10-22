@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { Details, Plus } from '../../components/icons';
 
 export default function SearchGroupsContainer() {
     const [groups, setGroups] = useState([]);
@@ -117,11 +118,15 @@ export default function SearchGroupsContainer() {
                                 {/* Widoczne dla mniejszych ekranów */}
                                 <button onClick={() => navigate(`/searchedGroupDetails/${group.id}`)}
                                         className="icon-button-details" role="button">
-                                    <span>❓</span>
+                                    <span style={{color: 'white'}}>
+                                        <Details/>
+                                    </span>
                                 </button>
                                 <button className="icon-button-delete" onClick={() => handleGroupJoin(group.id)}
                                         role="button">
-                                    <span>➕</span>
+                                    <span style={{color: 'white'}}>
+                                        <Plus/>
+                                    </span>
                                 </button>
                             </div>
                         </div>
