@@ -76,7 +76,13 @@ export function Demo({
     return (
         <Popover size="$5" allowFlip {...props}>
             <Popover.Trigger asChild>
-                <CustomButton icon={Icon} />
+                <CustomButton
+                    icon={Icon}
+                    style={{
+                        backgroundColor: 'transparent',
+                        border: 'none'
+                    }}
+                />
             </Popover.Trigger>
             <Adapt when="sm" platform="touch">
                 <Popover.Sheet modal dismissOnSnapToBottom>
