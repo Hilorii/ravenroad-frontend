@@ -118,6 +118,10 @@
 }
 
 .r-add-bt {
+    position: relative;
+    bottom: 100px;
+    left: 80vw;
+    scale: 1.4;
     margin-left: 15px;
 }
 

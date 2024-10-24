@@ -3,15 +3,24 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 import { useUser } from '../../contexts/UserContext';
 import BackButton from '../../components/backBt/BackButton';
+import './addEvent.css';
 
 export default function AddEvent() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [error, setError] = useState({ title: '', description: '' });
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [error, setError] = useState({ title: '', description: '', startDate: '', endDate: '' });
     const navigate = useNavigate();
     const { user, setUser } = useUser();
     const { username } = useParams();
-    console.log(username);
+
+    // Get the current date and time in the format required for input[type="datetime-local"]
+    const getCurrentDateTime = () => {
+        const now = new Date();
+        return now.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm
+    };
+
     // Handle title change with validation
     const handleTitleChange = (e) => {
         const value = e.target.value;
@@ -34,18 +43,38 @@ export default function AddEvent() {
         setDescription(value);
     };
 
+    // Handle submit with validation
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (error.title || error.description) {
+        if (error.title || error.description || !startDate || !endDate) {
             alert('Proszę poprawić błędy przed wysłaniem formularza.');
             return;
         }
+
+        // Additional validation for date
+        if (new Date(startDate) < new Date()) {
+            setError({ ...error, startDate: 'Data rozpoczęcia nie może być wcześniejsza niż aktualna data.' });
+            return;
+        }
+
+        if (new Date(endDate) <= new Date(startDate)) {
+            setError({ ...error, endDate: 'Data zakończenia nie może być wcześniejsza niż data rozpoczęcia.' });
+            return;
+        }
+
+        // Rozdzielenie daty i czasu dla startu i końca
+        const [start_date, start_time] = startDate.split('T');
+        const [end_date, end_time] = endDate.split('T');
 
         // Przygotowanie danych do wysłania
         const data = {
             name: title,
             description: description,
+            startDate: start_date,
+            startTime: start_time,
+            endDate: end_date,
+            endTime: end_time
         };
 
         try {
@@ -74,7 +103,7 @@ export default function AddEvent() {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
-                <BackButton/>
+                <BackButton />
                 <form onSubmit={handleSubmit} className="add-route-form-main">
                     <div className="add-route-form field">
                         <input
@@ -102,6 +131,46 @@ export default function AddEvent() {
                         />
                         <label htmlFor="description" className="form__label">Opis wydarzenia:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
+                    </div>
+                    <div className="add-route-form field">
+                        <label htmlFor="startDate" className="form__label">Data i godzina rozpoczęcia:</label>
+                        <input
+                            type="datetime-local"
+                            id="startDate"
+                            className="form__field"
+                            value={startDate}
+                            min={getCurrentDateTime()}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            required
+                        />
+                        {error.startDate && <p className="error-message">{error.startDate}</p>}
+                    </div>
+                    <div className="add-route-form field">
+                        <label htmlFor="endDate" className="form__label">Data i godzina zakończenia:</label>
+                        <input
+                            type="datetime-local"
+                            id="endDate"
+                            className="form__field"
+                            value={endDate}
+                            min={startDate || getCurrentDateTime()}  // Minimum is either startDate or current date
+                            onChange={(e) => setEndDate(e.target.value)}
+                            required
+                        />
+                        {error.endDate && <p className="error-message">{error.endDate}</p>}
+                    </div>
+                    <div className="e-image">
+                        <div className="r-form-group">
+                            <input
+                                type="file"
+                                id="image"
+                                // onChange={(e) => setImage(e.target.files[0])}
+                                accept="image/*"
+                                required
+                                hidden
+                            />
+                            <label className="r-input-label" htmlFor="image">Zdjęcie wydarzenia</label>
+                            <span id="file-chosen">Nie wybrano pliku</span>
+                        </div>
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Dodaj wydarzenie</span>

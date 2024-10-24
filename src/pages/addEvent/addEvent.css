@@ -1,0 +1,11 @@
+.e-image{
+    margin-top: 10px;
+}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Zmienia kolor ikony kalendarza na biały */
+    opacity: 0.7; /* Opcjonalne: ustawienie przezroczystości, aby ikona nie była zbyt jasna */
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1; /* Zmiana przezroczystości po najechaniu */
+}
