@@ -6,16 +6,18 @@ import BackButton from '../../components/backBt/BackButton';
 
 export default function EditEvent() {
     const navigate = useNavigate();
-    const { id } = useParams(); // Pobiera id trasy z URL-a
+    const { id } = useParams();
     const [eventDetails, setEventDetails] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [fileName, setFileName] = useState('Nie wybrano pliku');
-    const [date, setDate] = useState('');
-    const [error, setError] = useState({ name: '', description: '' });
-    const { user, setUser } = useUser();
-    // Pobierz szczegóły trasy na podstawie ID
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [error, setError] = useState({ name: '', description: '', startDate: '', endDate: '' });
+    const { user } = useUser();
+
+    // Pobierz szczegóły wydarzenia
     useEffect(() => {
         const fetchEventDetails = async () => {
             try {
@@ -29,7 +31,6 @@ export default function EditEvent() {
                 }
 
                 const data = await response.json();
-                console.log('Pobrane szczegóły wydarzenia:', data);
                 setEventDetails(data);
             } catch (err) {
                 console.error('Błąd podczas pobierania szczegółów wydarzenia:', err);
@@ -40,21 +41,67 @@ export default function EditEvent() {
         fetchEventDetails();
     }, [id]);
 
-    // Ustawienie danych trasy w inputach po pobraniu
+    // Ustawienie danych wydarzenia po pobraniu
     useEffect(() => {
         if (eventDetails) {
-            setName(eventDetails.name || '');
-            setDescription(eventDetails.description || '');
+            console.log(eventDetails); // Dodaj log, aby sprawdzić eventDetails
+            const { startDate, startTime, endDate, endTime, name, description } = eventDetails;
+
+            // Upewnij się, że dane istnieją przed ich ustawieniem
+            if (startDate && startTime && endDate && endTime) {
+                const formatDateTime = (date, time) => {
+                    return `${date}T${time.slice(0, 5)}`; // Formatuj datę i godzinę
+                };
+
+                setStartDate(formatDateTime(startDate, startTime));
+                setEndDate(formatDateTime(endDate, endTime));
+            }
+
+            // Ustaw dane do pól tekstowych (jeśli są dostępne)
+            setName(name || '');
+            setDescription(description || '');
         }
     }, [eventDetails]);
 
-    // Ustawienie bieżącej daty
-    useEffect(() => {
-        const currentDate = new Date().toISOString().split('T')[0];
-        setDate(currentDate);
-    }, []);
+    // Walidacja dat
+    const validateDates = (startDate, endDate) => {
+        const currentDate = new Date();
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let hasError = false;
 
-    // Obsługa zmiany tytułu i walidacja
+        // Sprawdź, czy data rozpoczęcia nie jest w przeszłości
+        if (start < currentDate) {
+            setError((prevError) => ({
+                ...prevError,
+                startDate: 'Data rozpoczęcia nie może być wcześniejsza niż aktualna.',
+            }));
+            hasError = true;
+        } else {
+            setError((prevError) => ({
+                ...prevError,
+                startDate: '',
+            }));
+        }
+
+        // Sprawdź, czy data zakończenia nie jest wcześniejsza niż data rozpoczęcia
+        if (end < start) {
+            setError((prevError) => ({
+                ...prevError,
+                endDate: 'Data zakończenia nie może być wcześniejsza niż data rozpoczęcia.',
+            }));
+            hasError = true;
+        } else {
+            setError((prevError) => ({
+                ...prevError,
+                endDate: '',
+            }));
+        }
+
+        return !hasError;
+    };
+
+
     const handleNameChange = (e) => {
         const value = e.target.value;
         if (value.length > 100) {
@@ -65,7 +112,6 @@ export default function EditEvent() {
         setName(value);
     };
 
-    // Obsługa zmiany opisu i walidacja
     const handleDescriptionChange = (e) => {
         const value = e.target.value;
         if (value.length > 1000) {
@@ -76,22 +122,20 @@ export default function EditEvent() {
         setDescription(value);
     };
 
-    // Obsługa zmiany pliku
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setImage(file);
-            setFileName(file.name); // Aktualizacja stanu z nazwą pliku
+            setFileName(file.name);
         } else {
             setFileName('Nie wybrano pliku');
         }
     };
 
-    // Wysyłanie danych formularza do backendu
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (error.name || error.description) {
+        if (error.name || error.description || error.startDate || error.endDate || !validateDates()) {
             alert('Proszę poprawić błędy przed wysłaniem formularza.');
             return;
         }
@@ -99,12 +143,15 @@ export default function EditEvent() {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
-        formData.append('image', image); // jeśli nie zmienisz zdjęcia, image będzie null
-        formData.append('date', date);
+        formData.append('image', image);
+        formData.append('startDate', startDate.split('T')[0]);
+        formData.append('startTime', startDate.split('T')[1]);
+        formData.append('endDate', endDate.split('T')[0]);
+        formData.append('endTime', endDate.split('T')[1]);
 
         try {
             const response = await fetch(`http://localhost:5000/events/${id}`, {
-                method: 'PUT', // Upewnij się, że metoda jest PUT
+                method: 'PUT',
                 credentials: 'include',
                 body: formData,
             });
@@ -113,8 +160,8 @@ export default function EditEvent() {
                 throw new Error('Błąd przy edycji wydarzenia');
             }
 
-            alert('Wydarzenie została zaktualizowana pomyślnie!');
-            navigate(`/profile/${user.username}`); // Przekierowanie po udanej aktualizacji
+            alert('Wydarzenie zostało zaktualizowane pomyślnie!');
+            navigate(`/profile/${user.username}`);
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas edycji wydarzenia.');
@@ -125,7 +172,7 @@ export default function EditEvent() {
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
-                <BackButton/>
+                <BackButton />
                 <form onSubmit={handleSubmit} className="add-route-form-main">
                     <div className="add-route-form field">
                         <input
@@ -149,10 +196,40 @@ export default function EditEvent() {
                             value={description}
                             onChange={handleDescriptionChange}
                             maxLength={1000}
-                            required
                         />
-                        <label htmlFor="description" className="form__label">Opis wdyarzenia:</label>
+                        <label htmlFor="description" className="form__label">Opis wydarzenia:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
+                    </div>
+                    <div className="add-route-form field">
+                        <label htmlFor="startDate" className="form__label">Data i godzina rozpoczęcia:</label>
+                        <input
+                            type="datetime-local"
+                            id="startDate"
+                            className="form__field"
+                            value={startDate || ''}  // Ustaw pusty string jeśli startDate jest undefined
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setStartDate(value);
+                                validateDates(value, endDate); // waliduj startDate i endDate
+                            }}
+                        />
+                        {error.startDate && <p className="error-message">{error.startDate}</p>}
+                    </div>
+
+                    <div className="add-route-form field">
+                        <label htmlFor="endDate" className="form__label">Data i godzina zakończenia:</label>
+                        <input
+                            type="datetime-local"
+                            id="endDate"
+                            className="form__field"
+                            value={endDate || ''}  // Ustaw pusty string jeśli endDate jest undefined
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setEndDate(value);
+                                validateDates(startDate, value); // waliduj startDate i endDate
+                            }}
+                        />
+                        {error.endDate && <p className="error-message">{error.endDate}</p>}
                     </div>
                     <div className="r-form-group">
                         <input
@@ -162,8 +239,8 @@ export default function EditEvent() {
                             accept="image/*"
                             hidden
                         />
-                        <label className="r-input-label" htmlFor="image">Zdjęcie trasy</label>
-                        <span id="file-chosen">{fileName}</span> {/* Wyświetlanie nazwy pliku */}
+                        <label className="r-input-label" htmlFor="image">Zdjęcie wydarzenia</label>
+                        <span id="file-chosen">{fileName}</span>
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj wydarzenie</span>
