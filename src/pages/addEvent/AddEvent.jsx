@@ -65,7 +65,6 @@ export default function AddEvent() {
         setDescription(value);
     };
 
-    // Handle submit with validation
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -89,25 +88,23 @@ export default function AddEvent() {
         const [start_date, start_time] = startDate.split('T');
         const [end_date, end_time] = endDate.split('T');
 
-        // Przygotowanie danych do wysłania
-        const data = {
-            name: title,
-            description: description,
-            startDate: start_date,
-            startTime: start_time,
-            endDate: end_date,
-            endTime: end_time,
-            image: image
-        };
+        // Przygotowanie danych do wysłania za pomocą FormData
+        const formData = new FormData();
+        formData.append('name', title);
+        formData.append('description', description);
+        formData.append('startDate', start_date); // data rozpoczęcia
+        formData.append('startTime', start_time); // czas rozpoczęcia
+        formData.append('endDate', end_date); // data zakończenia
+        formData.append('endTime', end_time); // czas zakończenia
+        if (image) {
+            formData.append('image', image); // Dodanie pliku obrazu
+        }
 
         try {
             const response = await fetch('http://localhost:5000/createEvent', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 credentials: 'include',
-                body: JSON.stringify(data),
+                body: formData, // Użycie FormData zamiast JSON
             });
 
             if (!response.ok) {
@@ -121,6 +118,8 @@ export default function AddEvent() {
             alert('Wystąpił problem podczas dodawania wydarzenia.');
         }
     };
+
+
 
     return (
         <div className="App">
