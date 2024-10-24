@@ -142,18 +142,6 @@ export default function EditEvent() {
                         <label htmlFor="description" className="form__label">Opis wdyarzenia:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
-                    {/* W WYPADKU DODANIA ZDJĘĆ DO GRUP */}
-                    {/*<div className="r-form-group">*/}
-                    {/*    <input*/}
-                    {/*        type="file"*/}
-                    {/*        id="image"*/}
-                    {/*        onChange={(e) => setImage(e.target.files[0])}*/}
-                    {/*        accept="image/*"*/}
-                    {/*        hidden*/}
-                    {/*    />*/}
-                    {/*    <label className="r-input-label" htmlFor="image">Zdjęcie grupy</label>*/}
-                    {/*    <span id="file-chosen">Nie wybrano pliku</span>*/}
-                    {/*</div>*/}
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj wydarzenie</span>
                     </button>

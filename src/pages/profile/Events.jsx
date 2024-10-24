@@ -128,7 +128,7 @@ export default function EventsContainer() {
                     <div key={event.id} className="route-card">
                         <div className="rC-inside">
                             <img
-                                src={`http://localhost:5000/uploads/default-avatar.jpg`}
+                                src={`http://localhost:5000/uploads/${event.image}`}
                                 alt={event.name}
                                 className="route-image"
                             />

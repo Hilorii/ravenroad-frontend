@@ -14,12 +14,34 @@ export default function AddEvent() {
     const navigate = useNavigate();
     const { user, setUser } = useUser();
     const { username } = useParams();
+    const [image, setImage] = useState(null);
 
     // Get the current date and time in the format required for input[type="datetime-local"]
     const getCurrentDateTime = () => {
         const now = new Date();
         return now.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm
     };
+
+    useEffect(() => {
+        const actualBtn = document.getElementById('image');
+        const fileChosen = document.getElementById('file-chosen');
+
+        // Check if elements exist before adding event listeners
+        if (actualBtn && fileChosen) {
+            actualBtn.addEventListener('change', function () {
+                fileChosen.textContent = this.files[0]?.name || 'Nie wybrano pliku';
+            });
+        }
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            if (actualBtn) {
+                actualBtn.removeEventListener('change', function () {
+                    fileChosen.textContent = 'Nie wybrano pliku';
+                });
+            }
+        };
+    }, []);
 
     // Handle title change with validation
     const handleTitleChange = (e) => {
@@ -74,7 +96,8 @@ export default function AddEvent() {
             startDate: start_date,
             startTime: start_time,
             endDate: end_date,
-            endTime: end_time
+            endTime: end_time,
+            image: image
         };
 
         try {
@@ -163,7 +186,7 @@ export default function AddEvent() {
                             <input
                                 type="file"
                                 id="image"
-                                // onChange={(e) => setImage(e.target.files[0])}
+                                onChange={(e) => setImage(e.target.files[0])}
                                 accept="image/*"
                                 required
                                 hidden
