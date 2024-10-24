@@ -44,24 +44,32 @@ export default function EditEvent() {
     // Ustawienie danych wydarzenia po pobraniu
     useEffect(() => {
         if (eventDetails) {
-            console.log(eventDetails); // Dodaj log, aby sprawdzić eventDetails
-            const { startDate, startTime, endDate, endTime, name, description } = eventDetails;
+            console.log('Dane wydarzenia:', eventDetails);
 
-            // Upewnij się, że dane istnieją przed ich ustawieniem
-            if (startDate && startTime && endDate && endTime) {
-                const formatDateTime = (date, time) => {
-                    return `${date}T${time.slice(0, 5)}`; // Formatuj datę i godzinę
-                };
+            const { start_date, start_time, end_date, end_time, name, description } = eventDetails;
 
-                setStartDate(formatDateTime(startDate, startTime));
-                setEndDate(formatDateTime(endDate, endTime));
-            }
+            // Funkcja do formatowania daty i godziny
+            const formatDateTime = (date, time) => {
+                if (!date || !time) return ''; // Sprawdzamy, czy obie wartości istnieją
 
-            // Ustaw dane do pól tekstowych (jeśli są dostępne)
+                // Zwracamy datę w formacie RRRR-MM-DDTHH:MM
+                return `${date.split('T')[0]}T${time.slice(0, 5)}`;
+            };
+
+            // Ustaw startDate i endDate w odpowiednim formacie
+            setStartDate(formatDateTime(start_date, start_time));
+            setEndDate(formatDateTime(end_date, end_time));
+
+            // Ustaw dane tekstowe (nazwa, opis) jeśli są dostępne
             setName(name || '');
             setDescription(description || '');
         }
     }, [eventDetails]);
+
+
+
+
+
 
     // Walidacja dat
     const validateDates = (startDate, endDate) => {
@@ -188,29 +196,31 @@ export default function EditEvent() {
                         <label htmlFor="name" className="form__label">Nazwa wydarzenia:</label>
                         {error.name && <p className="error-message">{error.name}</p>}
                     </div>
+
                     <div className="add-route-text field">
-                        <textarea
-                            placeholder=""
-                            className="r-desc form__field"
-                            id="description"
-                            value={description}
-                            onChange={handleDescriptionChange}
-                            maxLength={1000}
-                        />
+                    <textarea
+                        placeholder=""
+                        className="r-desc form__field"
+                        id="description"
+                        value={description}
+                        onChange={handleDescriptionChange}
+                        maxLength={1000}
+                    />
                         <label htmlFor="description" className="form__label">Opis wydarzenia:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
+
                     <div className="add-route-form field">
                         <label htmlFor="startDate" className="form__label">Data i godzina rozpoczęcia:</label>
                         <input
                             type="datetime-local"
                             id="startDate"
                             className="form__field"
-                            value={startDate || ''}  // Ustaw pusty string jeśli startDate jest undefined
+                            value={startDate || ''} // Pusty string jeśli brak danych
                             onChange={(e) => {
                                 const value = e.target.value;
                                 setStartDate(value);
-                                validateDates(value, endDate); // waliduj startDate i endDate
+                                validateDates(value, endDate);
                             }}
                         />
                         {error.startDate && <p className="error-message">{error.startDate}</p>}
@@ -222,15 +232,16 @@ export default function EditEvent() {
                             type="datetime-local"
                             id="endDate"
                             className="form__field"
-                            value={endDate || ''}  // Ustaw pusty string jeśli endDate jest undefined
+                            value={endDate || ''} // Pusty string jeśli brak danych
                             onChange={(e) => {
                                 const value = e.target.value;
                                 setEndDate(value);
-                                validateDates(startDate, value); // waliduj startDate i endDate
+                                validateDates(startDate, value);
                             }}
                         />
                         {error.endDate && <p className="error-message">{error.endDate}</p>}
                     </div>
+
                     <div className="r-form-group">
                         <input
                             type="file"
@@ -242,6 +253,7 @@ export default function EditEvent() {
                         <label className="r-input-label" htmlFor="image">Zdjęcie wydarzenia</label>
                         <span id="file-chosen">{fileName}</span>
                     </div>
+
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj wydarzenie</span>
                     </button>
