@@ -11,6 +11,7 @@ export default function EditEvent() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
+    const [fileName, setFileName] = useState('Nie wybrano pliku');
     const [date, setDate] = useState('');
     const [error, setError] = useState({ name: '', description: '' });
     const { user, setUser } = useUser();
@@ -73,6 +74,17 @@ export default function EditEvent() {
             setError({ ...error, description: '' });
         }
         setDescription(value);
+    };
+
+    // Obsługa zmiany pliku
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+            setFileName(file.name); // Aktualizacja stanu z nazwą pliku
+        } else {
+            setFileName('Nie wybrano pliku');
+        }
     };
 
     // Wysyłanie danych formularza do backendu
@@ -141,6 +153,17 @@ export default function EditEvent() {
                         />
                         <label htmlFor="description" className="form__label">Opis wdyarzenia:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
+                    </div>
+                    <div className="r-form-group">
+                        <input
+                            type="file"
+                            id="image"
+                            onChange={handleImageChange}
+                            accept="image/*"
+                            hidden
+                        />
+                        <label className="r-input-label" htmlFor="image">Zdjęcie trasy</label>
+                        <span id="file-chosen">{fileName}</span> {/* Wyświetlanie nazwy pliku */}
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj wydarzenie</span>

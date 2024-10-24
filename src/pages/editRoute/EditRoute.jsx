@@ -10,7 +10,7 @@ export default function EditRoute() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
-    const [fileName, setFileName] = useState('Nie wybrano pliku'); // Stan dla nazwy pliku
+    const [fileName, setFileName] = useState('Nie wybrano pliku'); 
     const [date, setDate] = useState('');
     const [error, setError] = useState({ title: '', description: '' });
 
