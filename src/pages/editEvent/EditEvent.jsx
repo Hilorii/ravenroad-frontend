@@ -241,22 +241,23 @@ export default function EditEvent() {
                         />
                         {error.endDate && <p className="error-message">{error.endDate}</p>}
                     </div>
-
-                    <div className="r-form-group">
-                        <input
-                            type="file"
-                            id="image"
-                            onChange={handleImageChange}
-                            accept="image/*"
-                            hidden
-                        />
-                        <label className="r-input-label" htmlFor="image">Zdjęcie wydarzenia</label>
-                        <span id="file-chosen">{fileName}</span>
+                    <div className="e-image">
+                        <div className="r-form-group">
+                            <input
+                                type="file"
+                                id="image"
+                                onChange={handleImageChange}
+                                accept="image/*"
+                                hidden
+                            />
+                            <label className="r-input-label" htmlFor="image">Zdjęcie wydarzenia</label>
+                            <span id="file-chosen">{fileName}</span>
+                        </div>
                     </div>
 
-                    <button className="edit r-add-bt" role="button" type="submit">
-                        <span className="text">Zaktualizuj wydarzenie</span>
-                    </button>
+                        <button className="edit r-add-bt" role="button" type="submit">
+                            <span className="text">Zaktualizuj wydarzenie</span>
+                        </button>
                 </form>
             </div>
         </div>
