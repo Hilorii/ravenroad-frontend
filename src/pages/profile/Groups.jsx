@@ -126,12 +126,12 @@ export default function GroupsContainer() {
     }, [searchQuery]);
 
     if (loading) {
-        return <div>Ładowanie grup...</div>; // Komunikat w trakcie ładowania danych
+        return
     }
 
     return (
         <div className="gC-container">
-            <div className="g-add-search">
+        <div className="g-add-search">
                 <div className="g-filter">
                     <input
                         className="gC-input"

@@ -73,13 +73,17 @@ edit:active,
     padding: 20px;
 }
 .g-add-search {
-    position: sticky;
+    position: absolute;
 }
 .g-filter {
     position: absolute;
     top: -3vh;
-    right: -40vw;
+    right: -15vw;
     margin-bottom: 100px;
+}
+.g-edit-bt {
+    position: relative;
+    left: -24vw;
 }
 .gC-input {
     border-radius: 5px;
@@ -94,6 +98,13 @@ edit:active,
     position: absolute;
 }
 @media (max-width: 890px) {
+    .g-filter{
+        right: -40vw;
+    }
+    .g-edit-bt {
+        position: relative;
+        left: 0;
+    }
     .gC-input {
         margin: 0;
         position: absolute;
