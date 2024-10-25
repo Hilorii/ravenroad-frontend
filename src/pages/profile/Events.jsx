@@ -191,9 +191,9 @@ export default function EventsContainer() {
                     </div>
                 ))
             ) : events.length === 0 ? (
-                <p></p> // Zamiast "Nie znaleziono", dopóki dane się ładują
+                <p></p>
             ) : (
-                    <p className="gradient__text rC-p">Nie znaleziono wydarzenia.</p>
+                <p className="gradient__text rC-p">Nie znaleziono wydarzenia.</p>
             )}
         </div>
     );

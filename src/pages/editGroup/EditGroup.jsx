@@ -11,6 +11,7 @@ export default function EditGroup() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
+    const [fileName, setFileName] = useState('Nie wybrano pliku');
     const [date, setDate] = useState('');
     const [error, setError] = useState({ name: '', description: '' });
     const { user, setUser } = useUser();
@@ -65,6 +66,16 @@ export default function EditGroup() {
             setError({ ...error, name: '' });
         }
         setName(value);
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file);
+            setFileName(file.name);
+        } else {
+            setFileName('Nie wybrano pliku');
+        }
     };
 
     // Obsługa zmiany opisu i walidacja
@@ -138,15 +149,15 @@ export default function EditGroup() {
                         {error.name && <p className="error-message">{error.name}</p>}
                     </div>
                     <div className="add-route-text field">
-        <textarea
-            placeholder=""
-            className="r-desc form__field"
-            id="description"
-            value={description}
-            onChange={handleDescriptionChange}
-            maxLength={1000}
-            required
-        />
+                        <textarea
+                            placeholder=""
+                            className="r-desc form__field"
+                            id="description"
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            maxLength={1000}
+                            required
+                        />
                         <label htmlFor="description" className="form__label">Opis grupy:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
                     </div>
@@ -158,6 +169,20 @@ export default function EditGroup() {
                             onChange={handlePrivateChange}
                         />
                         <label htmlFor="private" className="g-checkbox-label">Grupa prywatna</label>
+                    </div>
+                    <div className="e-image">
+                        <div className="r-form-group">
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                onChange={handleImageChange}
+                                accept="image/*"
+                                hidden
+                            />
+                            <label className="r-input-label" htmlFor="image">Zdjęcie grupy</label>
+                            <span id="file-chosen">{fileName}</span>
+                        </div>
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Zaktualizuj grupę</span>
