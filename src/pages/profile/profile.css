@@ -335,3 +335,11 @@ edit:active,
     flex: 0 0 auto; /* Elementy mają zachować swoją szerokość i nie zawijać się */
     margin-right: 10px; /* Dodatkowa przestrzeń między przyciskami */
 }
+
+.e-checkbox-field {
+    scale: 1.2;
+    position: relative;
+    top: 80px;
+    left: 3vw;
+    width: 250px;
+}

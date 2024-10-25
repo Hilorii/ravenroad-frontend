@@ -15,6 +15,7 @@ export default function AddEvent() {
     const { user, setUser } = useUser();
     const { username } = useParams();
     const [image, setImage] = useState(null);
+    const [isPrivate, setIsPrivate] = useState(false);
 
     const getCurrentDateTime = () => {
         const now = new Date();
@@ -61,11 +62,15 @@ export default function AddEvent() {
         setDescription(value);
     };
 
+    const handlePrivateChange = (e) => {
+        setIsPrivate(e.target.checked);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
 
-        
+
 
         // Sprawdzanie pozostałych pól
         if (error.title || error.description || !startDate || !endDate) {
@@ -92,6 +97,7 @@ export default function AddEvent() {
         formData.append('startTime', startDate.split('T')[1]);
         formData.append('endDate', endDate.split('T')[0]);
         formData.append('endTime', endDate.split('T')[1]);
+        formData.append('private', isPrivate ? 1 : 0);
         if (image) formData.append('image', image);
 
         try {
@@ -169,6 +175,15 @@ export default function AddEvent() {
                             required
                         />
                         {error.endDate && <p className="error-message">{error.endDate}</p>}
+                    </div>
+                    <div className="e-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="private"
+                            checked={isPrivate}
+                            onChange={handlePrivateChange}
+                        />
+                        <label htmlFor="private" className="g-checkbox-label">Wydarzenie prywatne</label>
                     </div>
                     <div className="e-image">
                         <div className="r-form-group">

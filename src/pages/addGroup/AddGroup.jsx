@@ -10,7 +10,7 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 export default function AddGroup() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [isPrivate, setIsPrivate] = useState(false); // New state for private checkbox
+    const [isPrivate, setIsPrivate] = useState(false);
     const [error, setError] = useState({ title: '', description: '' });
     const navigate = useNavigate();
     const { user, setUser } = useUser();
@@ -37,7 +37,7 @@ export default function AddGroup() {
         };
     }, []);
 
-    // Handle title change with validation
+  
     const handleTitleChange = (e) => {
         const value = e.target.value;
         if (value.length > 100) {
@@ -48,7 +48,7 @@ export default function AddGroup() {
         setTitle(value);
     };
 
-    // Handle description change with validation
+    
     const handleDescriptionChange = (e) => {
         const value = e.target.value;
         if (value.length > 1000) {
@@ -59,9 +59,9 @@ export default function AddGroup() {
         setDescription(value);
     };
 
-    // Handle private checkbox change
+   
     const handlePrivateChange = (e) => {
-        setIsPrivate(e.target.checked); // Update isPrivate state
+        setIsPrivate(e.target.checked);
     };
 
     const handleSubmit = async (e) => {
