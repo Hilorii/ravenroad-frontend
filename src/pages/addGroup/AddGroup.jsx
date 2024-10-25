@@ -15,7 +15,27 @@ export default function AddGroup() {
     const navigate = useNavigate();
     const { user, setUser } = useUser();
     const { username } = useParams();
-    console.log(username);
+    const [image, setImage] = useState(null);
+
+    useEffect(() => {
+        const actualBtn = document.getElementById('image');
+        const fileChosen = document.getElementById('file-chosen');
+
+        if (actualBtn && fileChosen) {
+            actualBtn.addEventListener('change', function () {
+                fileChosen.textContent = this.files[0]?.name || 'Nie wybrano pliku';
+                setError((prevError) => ({ ...prevError, image: '' })); // Resetuje błąd obrazu po wyborze pliku
+            });
+        }
+
+        return () => {
+            if (actualBtn) {
+                actualBtn.removeEventListener('change', function () {
+                    fileChosen.textContent = 'Nie wybrano pliku';
+                });
+            }
+        };
+    }, []);
 
     // Handle title change with validation
     const handleTitleChange = (e) => {
@@ -52,21 +72,23 @@ export default function AddGroup() {
             return;
         }
 
-        // Przygotowanie danych do wysłania
-        const data = {
-            name: title,
-            description: description,
-            private: isPrivate ? 1 : 0, // Send '1' for private, '0' otherwise
-        };
+        if (!image) {
+            setError({ ...error, image: 'Zdjęcie grupy jest wymagane.' });
+            return;
+        }
+
+        // Przygotowanie danych do wysłania z użyciem FormData
+        const formData = new FormData();
+        formData.append('name', title);
+        formData.append('description', description);
+        formData.append('private', isPrivate ? 1 : 0);
+        if (image) formData.append('image', image);
 
         try {
             const response = await fetch('http://localhost:5000/addGroup', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 credentials: 'include',
-                body: JSON.stringify(data),
+                body: formData,
             });
 
             if (!response.ok) {
@@ -81,12 +103,13 @@ export default function AddGroup() {
         }
     };
 
+
     return (
         <div className="App">
             <div className="gradient__bg">
                 <Navbar />
                 <BackButton />
-                <form onSubmit={handleSubmit} className="add-route-form-main">
+                <form onSubmit={handleSubmit} className="ab add-route-form-main">
                     <div className="add-route-form field">
                         <input
                             placeholder=""
@@ -101,7 +124,7 @@ export default function AddGroup() {
                         <label htmlFor="title" className="form__label">Nazwa grupy:</label>
                         {error.title && <p className="error-message">{error.title}</p>}
                     </div>
-                    <div className="add-route-text field" >
+                    <div className="add-route-text field">
                         <textarea
                             placeholder=""
                             className="r-desc form__field"
@@ -122,6 +145,21 @@ export default function AddGroup() {
                             onChange={handlePrivateChange}
                         />
                         <label htmlFor="private" className="g-checkbox-label">Grupa prywatna</label>
+                    </div>
+                    <div className="e-image">
+                        <div className="r-form-group">
+                            <input
+                                type="file"
+                                id="image"
+                                onChange={(e) => setImage(e.target.files[0])}
+                                accept="image/*"
+                                hidden
+                                name="imageName"
+                            />
+                            <label className="r-input-label" htmlFor="image">Zdjęcie grupy</label>
+                            <span id="file-chosen">Nie wybrano pliku</span>
+                            {error.image && <p className="error-message e-image-error">{error.image}</p>}
+                        </div>
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">
                         <span className="text">Dodaj grupę</span>

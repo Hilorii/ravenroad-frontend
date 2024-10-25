@@ -10,13 +10,12 @@ export default function AddEvent() {
     const [description, setDescription] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [error, setError] = useState({ title: '', description: '', startDate: '', endDate: '' });
+    const [error, setError] = useState({ title: '', description: '', startDate: '', endDate: '', image: '' });
     const navigate = useNavigate();
     const { user, setUser } = useUser();
     const { username } = useParams();
     const [image, setImage] = useState(null);
 
-    // Get the current date and time in the format required for input[type="datetime-local"]
     const getCurrentDateTime = () => {
         const now = new Date();
         return now.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm
@@ -26,14 +25,13 @@ export default function AddEvent() {
         const actualBtn = document.getElementById('image');
         const fileChosen = document.getElementById('file-chosen');
 
-        // Check if elements exist before adding event listeners
         if (actualBtn && fileChosen) {
             actualBtn.addEventListener('change', function () {
                 fileChosen.textContent = this.files[0]?.name || 'Nie wybrano pliku';
+                setError((prevError) => ({ ...prevError, image: '' })); // Resetuje błąd obrazu po wyborze pliku
             });
         }
 
-        // Clean up the event listener when the component unmounts
         return () => {
             if (actualBtn) {
                 actualBtn.removeEventListener('change', function () {
@@ -43,7 +41,6 @@ export default function AddEvent() {
         };
     }, []);
 
-    // Handle title change with validation
     const handleTitleChange = (e) => {
         const value = e.target.value;
         if (value.length > 100) {
@@ -54,7 +51,6 @@ export default function AddEvent() {
         setTitle(value);
     };
 
-    // Handle description change with validation
     const handleDescriptionChange = (e) => {
         const value = e.target.value;
         if (value.length > 1000) {
@@ -68,12 +64,16 @@ export default function AddEvent() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
+        
+
+        // Sprawdzanie pozostałych pól
         if (error.title || error.description || !startDate || !endDate) {
             alert('Proszę poprawić błędy przed wysłaniem formularza.');
             return;
         }
 
-        // Additional validation for date
+        // Walidacja daty
         if (new Date(startDate) < new Date()) {
             setError({ ...error, startDate: 'Data rozpoczęcia nie może być wcześniejsza niż aktualna data.' });
             return;
@@ -84,32 +84,24 @@ export default function AddEvent() {
             return;
         }
 
-        // Rozdzielenie daty i czasu dla startu i końca
-        const [start_date, start_time] = startDate.split('T');
-        const [end_date, end_time] = endDate.split('T');
-
-        // Przygotowanie danych do wysłania za pomocą FormData
+        // Przygotowanie formData
         const formData = new FormData();
         formData.append('name', title);
         formData.append('description', description);
-        formData.append('startDate', start_date); // data rozpoczęcia
-        formData.append('startTime', start_time); // czas rozpoczęcia
-        formData.append('endDate', end_date); // data zakończenia
-        formData.append('endTime', end_time); // czas zakończenia
-        if (image) {
-            formData.append('image', image); // Dodanie pliku obrazu
-        }
+        formData.append('startDate', startDate.split('T')[0]);
+        formData.append('startTime', startDate.split('T')[1]);
+        formData.append('endDate', endDate.split('T')[0]);
+        formData.append('endTime', endDate.split('T')[1]);
+        if (image) formData.append('image', image);
 
         try {
             const response = await fetch('http://localhost:5000/createEvent', {
                 method: 'POST',
                 credentials: 'include',
-                body: formData, // Użycie FormData zamiast JSON
+                body: formData,
             });
 
-            if (!response.ok) {
-                throw new Error('Błąd przy dodawaniu wydarzenia');
-            }
+            if (!response.ok) throw new Error('Błąd przy dodawaniu wydarzenia');
 
             alert('Wydarzenie zostało dodane pomyślnie!');
             navigate(`/profile/${user.username}`);
@@ -118,8 +110,6 @@ export default function AddEvent() {
             alert('Wystąpił problem podczas dodawania wydarzenia.');
         }
     };
-
-
 
     return (
         <div className="App">
@@ -174,7 +164,7 @@ export default function AddEvent() {
                             id="endDate"
                             className="form__field"
                             value={endDate}
-                            min={startDate || getCurrentDateTime()}  // Minimum is either startDate or current date
+                            min={startDate || getCurrentDateTime()}
                             onChange={(e) => setEndDate(e.target.value)}
                             required
                         />
@@ -187,11 +177,12 @@ export default function AddEvent() {
                                 id="image"
                                 onChange={(e) => setImage(e.target.files[0])}
                                 accept="image/*"
-                                required
                                 hidden
+                                name="imageName"
                             />
                             <label className="r-input-label" htmlFor="image">Zdjęcie wydarzenia</label>
                             <span id="file-chosen">Nie wybrano pliku</span>
+                            {error.image && <p className="error-message e-image-error">{error.image}</p>}
                         </div>
                     </div>
                     <button className="edit r-add-bt" role="button" type="submit">

@@ -2,8 +2,12 @@
    scale: 1.2;
     position: relative;
     top: -4vh;
-    left: 11vw;
+    left: 3vw;
+    width: 250px;
 }
 .g-checkbox-label {
     padding-left: 10px;
+}
+.ab{
+    height: auto;
 }

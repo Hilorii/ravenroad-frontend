@@ -258,6 +258,10 @@ edit:active,
 }
 
 /*EVENTY*/
+.e-image-error{
+    margin-top: 10px;
+    color: red;
+}
 .e-filter-buttons{
     min-width: 150px;
 }

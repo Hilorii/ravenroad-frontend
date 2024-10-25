@@ -8,7 +8,6 @@ export default function GroupsContainer() {
     const [groups, setGroups] = useState([]);
     const [filteredGroups, setFilteredGroups] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [menuOpen, setMenuOpen] = useState({});
     const [loading, setLoading] = useState(true); // Nowy stan do śledzenia ładowania
     const { user } = useUser();
     const navigate = useNavigate();
@@ -114,13 +113,6 @@ export default function GroupsContainer() {
         }
     };
 
-    const toggleMenu = (groupId) => {
-        setMenuOpen(prevState => ({
-            ...prevState,
-            [groupId]: !prevState[groupId]
-        }));
-    };
-
     useEffect(() => {
         handleSearch();
     }, [searchQuery]);
@@ -155,7 +147,7 @@ export default function GroupsContainer() {
                     <div key={group.id} className="route-card">
                         <div className="rC-inside">
                             <img
-                                src={`http://localhost:5000/uploads/default-avatar.jpg`}
+                                src={`http://localhost:5000/uploads/${group.image}`}
                                 alt={group.title}
                                 className="route-image"
                             />
