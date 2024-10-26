@@ -130,22 +130,27 @@ export default function EventsContainer() {
                                 className="route-image"
                             />
                             <h2>{event.name}</h2>
+                            <p className="route-date">{new Date(event.start_date).toLocaleDateString()}</p>
 
                             <div className="r-button-container">
-                                <button onClick={() => navigate(`/eventDetails/${event.id}`)} className="edit full-button" role="button">
+                                <button onClick={() => navigate(`/eventDetails/${event.id}`)}
+                                        className="edit full-button" role="button">
                                     <span>Szczegóły</span>
                                 </button>
                                 {String(event.created_by) !== String(userId) && (
-                                    <button onClick={() => handleLeaveEvent(event.id)} className="edit full-button" role="button">
+                                    <button onClick={() => handleLeaveEvent(event.id)} className="edit full-button"
+                                            role="button">
                                         <span>Opuść wydarzenie</span>
                                     </button>
                                 )}
                                 {String(event.created_by) === String(userId) && (
                                     <div className="group-owner-options">
-                                        <button onClick={() => handleEditEvent(event.id)} className="edit full-button" role="button">
+                                        <button onClick={() => handleEditEvent(event.id)} className="edit full-button"
+                                                role="button">
                                             <span>Edytuj</span>
                                         </button>
-                                        <button onClick={() => handleDeleteEvent(event.id)} className="edit full-button" role="button">
+                                        <button onClick={() => handleDeleteEvent(event.id)} className="edit full-button"
+                                                role="button">
                                             <span>Usuń</span>
                                         </button>
                                     </div>

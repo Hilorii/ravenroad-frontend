@@ -122,7 +122,7 @@ export default function RoutesContainer() {
             </div>
 
             {loading ? (
-                <p>Ładowanie tras...</p>  // Spinner lub tekst w trakcie ładowania
+                <p></p>
             ) : filteredRoutes.length > 0 ? (
                 filteredRoutes.map((route) => (
                     <div key={route.id} className="route-card">
