@@ -55,7 +55,7 @@ export default function RoutesContainer() {
     }, [searchQuery, sortOrder]);
 
     if (loading) {
-        return <div>Ładowanie tras...</div>; // Komunikat w trakcie ładowania danych
+        return <div></div>; // Komunikat w trakcie ładowania danych
     }
 
     return (

@@ -117,9 +117,6 @@ export default function EventsContainer() {
                     <Link to="/createEvent" className="g-edit-bt">
                         <button className="edit e-filter-buttons" role="button"><span>Stwórz wydarzenie</span></button>
                     </Link>
-                    <Link to="/joinEvents" className="g-edit-bt">
-                        <button className="edit g-join-bt e-filter-buttons" role="button"><span>Znajdź wydarzenie</span></button>
-                    </Link>
                 </div>
             </div>
 

@@ -6,21 +6,14 @@ import RoutesContainer from './routesContainer'
 
 export default function RoutesPage() {
     return (
-        <div className="App">
-            <div className="gradient__bg">
-                <Navbar/>
-                <YStack padding="$0" space>
-                    <h1 className="gradient__text r-title ">Zarządzaj Trasami</h1>
-                    <Link to="/addRoute" className="r-edit-bt">
-                        <button className="edit" role="button"><span>Dodaj trasę</span></button>
-                    </Link>
-                    <YStack space className="r-container">
-                        <RoutesContainer/>
-                    </YStack>
-                </YStack>
-            </div>
-        </div>
-
+        <YStack padding="$0" space>
+            <Link to="/addRoute" className="r-edit-bt">
+                <button className="edit" role="button"><span>Dodaj trasę</span></button>
+            </Link>
+            <YStack space className="r-container">
+                <RoutesContainer/>
+            </YStack>
+        </YStack>
     );
 }
 

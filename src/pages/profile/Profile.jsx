@@ -1,69 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './profile.css';
 import { Navbar } from '../../components/index';
 import { XStack } from 'tamagui'
 
-import { AvatarDemo } from '../../components/tamagui/avatar';
-import { ButtonDemo } from '../../components/tamagui/buttons';
 import { DialogDemo } from '../../components/tamagui/edit-profile';
 
 import { useUser } from '../../contexts/UserContext';
-import axios from 'axios';
+import GroupsContainer from './Groups.jsx';
+import EventsContainer from './Events';
+import RoutesContainer from '../routes/Routes'; // Dodaj import, gdy dodasz komponent
 
-import GroupsContainer from './Groups.jsx'
-import EventsContainer from './Events'
-
-import { PortalProvider } from '../../contexts/PortalProvider'
+import { PortalProvider } from '../../contexts/PortalProvider';
 
 const ProfilePage = () => {
     const { username } = useParams();
     const { user, setUser } = useUser();
-    const [isGrupyActive, setIsGrupyActive] = useState(false);
-    const [isWydarzeniaActive, setIsWydarzeniaActive] = useState(false);
+    const [activeContainer, setActiveContainer] = useState(null);
 
-    const toggleGrupy = () => {
-        setIsGrupyActive((prevValue) => {
-            const newValue = !prevValue;
-            if (newValue) {
-                setIsWydarzeniaActive(false);
-            }
-            return newValue;
-        });
+    const toggleContainer = (container) => {
+        setActiveContainer((prevContainer) => (prevContainer === container ? null : container));
     };
 
-    const toggleWydarzenia = () => {
-        setIsWydarzeniaActive((prevValue) => {
-            const newValue = !prevValue;
-            if (newValue) {
-                setIsGrupyActive(false);
-            }
-            return newValue;
-        });
-    };
     return (
         <PortalProvider>
-        <div className="App">
-            <div className="gradient__bg">
-                <Navbar />
-                <div className="profile-container">
-                    <div className="profile-info">
-                        <XStack space="$3" className="profile-btContainer">
+            <div className="App">
+                <div className="gradient__bg">
+                    <Navbar />
+                    <div className="profile-container">
+                        <div className="profile-info">
+                            <XStack space="$3" className="profile-btContainer">
                                 <div className="edit-profile-bt">
-                                    <DialogDemo/>
+                                    <DialogDemo />
                                 </div>
-                                <button className="edit" role="button"><span className="text" onClick={toggleGrupy}>Twoje Grupy</span></button>
-                                <button className="edit" role="button"><span className="text" onClick={toggleWydarzenia}>Twoje Wydarzenia</span></button>
-                        </XStack>
-                        {isGrupyActive && !isWydarzeniaActive && <GroupsContainer/>}
-                        {isWydarzeniaActive && !isGrupyActive && <EventsContainer/>}
+                                <button className="edit" role="button" onClick={() => toggleContainer("Grupy")}>
+                                    <span className="text">Twoje Grupy</span>
+                                </button>
+                                <button className="edit" role="button" onClick={() => toggleContainer("Wydarzenia")}>
+                                    <span className="text">Twoje Wydarzenia</span>
+                                </button>
+                                <button className="edit" role="button" onClick={() => toggleContainer("Trasy")}>
+                                    <span className="text">Twoje Trasy</span>
+                                </button>
+                            </XStack>
+                            {activeContainer === "Grupy" && <GroupsContainer />}
+                            {activeContainer === "Wydarzenia" && <EventsContainer />}
+                            {activeContainer === "Trasy" && <RoutesContainer />}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-            </PortalProvider>
+        </PortalProvider>
     );
 };
 
 export default ProfilePage;
-

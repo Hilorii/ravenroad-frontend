@@ -80,7 +80,7 @@ export default function JoinEventsContainer() {
     }, [searchQuery]);
 
     if (loading) {
-        return <div>Ładowanie wydarzeń...</div>; // Komunikat ładowania
+        return <div></div>; // Komunikat ładowania
     }
 
     return (
