@@ -16,6 +16,7 @@ export default function EditEvent() {
     const [endDate, setEndDate] = useState('');
     const [error, setError] = useState({ name: '', description: '', startDate: '', endDate: '' });
     const { user } = useUser();
+    const [isPrivate, setIsPrivate] = useState(false);
 
     // Pobierz szczegóły wydarzenia
     useEffect(() => {
@@ -56,11 +57,9 @@ export default function EditEvent() {
                 return `${date.split('T')[0]}T${time.slice(0, 5)}`;
             };
 
-            // Ustaw startDate i endDate w odpowiednim formacie
             setStartDate(formatDateTime(start_date, start_time));
             setEndDate(formatDateTime(end_date, end_time));
-
-            // Ustaw dane tekstowe (nazwa, opis) jeśli są dostępne
+            setIsPrivate(eventDetails.private === 1);
             setName(name || '');
             setDescription(description || '');
         }
@@ -139,7 +138,9 @@ export default function EditEvent() {
             setFileName('Nie wybrano pliku');
         }
     };
-
+    const handlePrivateChange = (e) => {
+        setIsPrivate(e.target.checked);
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -156,6 +157,7 @@ export default function EditEvent() {
         formData.append('startTime', startDate.split('T')[1]);
         formData.append('endDate', endDate.split('T')[0]);
         formData.append('endTime', endDate.split('T')[1]);
+        formData.append('private', isPrivate ? 1 : 0);
 
         try {
             const response = await fetch(`http://localhost:5000/events/${id}`, {
@@ -241,6 +243,15 @@ export default function EditEvent() {
                         />
                         {error.endDate && <p className="error-message">{error.endDate}</p>}
                     </div>
+                    <div className="e-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="private"
+                            checked={isPrivate}
+                            onChange={handlePrivateChange}
+                        />
+                        <label htmlFor="private" className="g-checkbox-label">Wydarzenie prywatne</label>
+                    </div>
                     <div className="e-image">
                         <div className="r-form-group">
                             <input
@@ -255,9 +266,9 @@ export default function EditEvent() {
                         </div>
                     </div>
 
-                        <button className="edit r-add-bt" role="button" type="submit">
-                            <span className="text">Zaktualizuj wydarzenie</span>
-                        </button>
+                    <button className="edit r-add-bt" role="button" type="submit">
+                        <span className="text">Zaktualizuj wydarzenie</span>
+                    </button>
                 </form>
             </div>
         </div>

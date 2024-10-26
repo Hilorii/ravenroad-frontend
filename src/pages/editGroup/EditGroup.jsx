@@ -103,7 +103,7 @@ export default function EditGroup() {
         formData.append('description', description);
         formData.append('image', image); // jeśli nie zmienisz zdjęcia, image będzie null
         formData.append('date', date);
-        formData.append('private', isPrivate ? 1 : 0); // Dodajemy prywatność
+        formData.append('private', isPrivate ? 1 : 0); 
 
         try {
             const response = await fetch(`http://localhost:5000/groups/${id}`, {
