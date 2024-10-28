@@ -101,6 +101,28 @@ const Navbar = () => {
         };
     }, [showNotifications]);
 
+    //fetch zaproszeń
+    useEffect(() => {
+        const fetchInvitations = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/invitations`, { credentials: 'include' });
+                if (response.ok) {
+                    const data = await response.json();
+                    setNotifications(data); // Store invitations in the notifications state
+                } else {
+                    console.error("Failed to fetch invitations");
+                }
+            } catch (error) {
+                console.error("Error fetching invitations:", error);
+            }
+        };
+
+        if (user) {
+            fetchInvitations();
+        }
+    }, [user]);
+
+
     return (
         <div className="rr__navbar">
             <div className="rr__navbar-links">
@@ -125,8 +147,15 @@ const Navbar = () => {
                             <div className={`notifications-popup ${showNotifications ? 'show' : ''}`}>
                                 <div className="popup-arrow"></div>
                                 {notifications.length > 0 ? (
-                                    notifications.map((notif) => (
-                                        <p key={notif.id}>{notif.text}</p>
+                                    notifications.map((invitation) => (
+                                        <div key={invitation.id} className="notification-container">
+                                            <p>Od: {invitation.sender_username}</p>
+                                            {invitation.grupa && <p>Zaproszenie do grupy ID: {invitation.grupa_id}</p>}
+                                            {invitation.event && <p>Zaproszenie na wydarzenie ID: {invitation.event_id}</p>}
+                                            {invitation.route && <p>Zaproszenie do trasy ID: {invitation.route_id}</p>}
+                                            <p>Data wysłania: {new Date(invitation.send_date).toLocaleString()}</p>
+                                            <p>Data ważności: {new Date(invitation.valid_date).toLocaleString()}</p>
+                                        </div>
                                     ))
                                 ) : (
                                     <p>Brak nowych powiadomień</p>

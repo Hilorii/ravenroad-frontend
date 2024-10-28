@@ -154,21 +154,23 @@
     position: absolute;
     top: 135px;
     right: 30px;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.9);
+    border-style: solid;
     color: black;
     padding: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     height: auto;
     z-index: 10;
-    opacity: 0;
-    pointer-events: none;
+    pointer-events: auto; /* Change to 'auto' so you can interact with the popup */
 }
 
 .notifications-popup.show {
     opacity: 1;
     pointer-events: auto;
     animation: fadeIn 0.5s forwards;
+
 }
 
 .notifications-popup.hide {
@@ -176,22 +178,20 @@
     pointer-events: none;
     animation: fadeOut 0.5s forwards;
 }
-/*.notifications-popup::before {*/
-/*    display: none;*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    top: -10px; !* pozycja trójkąta nad popupem *!*/
-/*    right: 10px; !* dostosuj pozycję w zależności od ikony *!*/
-/*    width: 0;*/
-/*    height: 0;*/
-/*    border-left: 8px solid transparent;*/
-/*    border-right: 8px solid transparent;*/
-/*    border-bottom: 8px solid white; !* kolor trójkąta *!*/
-/*}*/
+.notification-container {
+    background-color: rgba(19, 19, 19, 0.9);
+    border: 1px solid #ddd;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 15px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    color: red;
+}
+
 .popup-arrow {
     position: absolute;
     top: -10px;
-    right: 111px;
+    right: 108px;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
