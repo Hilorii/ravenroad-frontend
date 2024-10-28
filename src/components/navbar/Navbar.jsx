@@ -1,15 +1,12 @@
-import React, {useState, useContext} from 'react';
-import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
+import React, { useState, useContext, useEffect } from 'react';
+import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
+import { FaInbox } from 'react-icons/fa';
 import './navbar.css';
-import logo from '../../assets/RRlogo.png'
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/RRlogo.png';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { useUser } from '../../contexts/UserContext';
-import { INBOX } from '../icons'
-//Tamagui imports
-import { PopoverDemo } from '../../components/tamagui/avatar-popover'
-
+import { PopoverDemo } from '../../components/tamagui/avatar-popover';
 
 const Menu = () => {
     const { user, setUser } = useUser();
@@ -61,24 +58,24 @@ const Menu = () => {
     }
 };
 
-
 const Navbar = () => {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
-    const [toggleMenu, setToggleMenu] = useState(false);
     const { logout } = useUser();
+    const [toggleMenu, setToggleMenu] = useState(false);
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [notifications, setNotifications] = useState([{ id: 1, text: 'Nowe powiadomienie!' }]);
+
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:5000/logout', {  // upewnij się, że adres URL jest poprawny
+            const response = await fetch('http://localhost:5000/logout', {
                 method: 'POST',
-                credentials: 'include',  // To zapewnia, że ciasteczka są dołączone do żądania
+                credentials: 'include',
             });
-
             if (response.ok) {
                 logout();
                 navigate('/');
                 window.location.reload();
-
             } else {
                 console.error("Logout failed:", response.status);
             }
@@ -86,6 +83,23 @@ const Navbar = () => {
             console.error("Logout error:", err);
         }
     };
+
+    const toggleNotifications = () => {
+        setShowNotifications(prevState => !prevState);
+    };
+
+    // Ukrywanie popupu po kliknięciu poza nim
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (showNotifications && !event.target.closest('.notifications-popup') && !event.target.closest('.notify-icon')) {
+                setShowNotifications(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showNotifications]);
 
     return (
         <div className="rr__navbar">
@@ -99,27 +113,42 @@ const Navbar = () => {
             </div>
             <div className="rr__navbar-sign">
                 {user ? (
-                    <>
-                        <div className="navbar-user">
-                            <PopoverDemo/>
+                    <div className="navbar-user">
+                        <div className="notify-icon" onClick={toggleNotifications} style={{ position: 'relative', cursor: 'pointer' }}>
+                            <FaInbox color={notifications.length > 0 ? 'orange' : 'white'} size={20} />
+                            {notifications.length > 0 && (
+                                <span className="notification-alert">!</span>
+                            )}
                         </div>
-                    </>
+                        <PopoverDemo />
+                        {showNotifications && (
+                            <div className={`notifications-popup ${showNotifications ? 'show' : ''}`}>
+                                <div className="popup-arrow"></div>
+                                {notifications.length > 0 ? (
+                                    notifications.map((notif) => (
+                                        <p key={notif.id}>{notif.text}</p>
+                                    ))
+                                ) : (
+                                    <p>Brak nowych powiadomień</p>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 ) : (
                     <>
                         <p><Link to="login">Login</Link></p>
-                        <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj
-                        </button>
+                        <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
                     </>
                 )}
             </div>
             <div className="rr__navbar-menu">
                 {toggleMenu
-                    ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)}/>
-                    : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)}/>}
+                    ? <RiCloseLine color="#fff" size={27} onClick={() => setToggleMenu(false)} />
+                    : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)} />}
                 {toggleMenu && (
                     <div className="rr__navbar-menu_container scale-up-center">
                         <div className="rr__navbar-menu_container-links">
-                            <Menu/>
+                            <Menu />
                             {!user ? (
                                 <div className="rr__navbar-menu_container-links-sign">
                                     <p>
@@ -143,6 +172,7 @@ const Navbar = () => {
                 )}
             </div>
         </div>
-    )
+    );
 }
-export default Navbar
+
+export default Navbar;

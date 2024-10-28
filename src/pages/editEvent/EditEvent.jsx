@@ -64,12 +64,7 @@ export default function EditEvent() {
             setDescription(description || '');
         }
     }, [eventDetails]);
-
-
-
-
-
-
+    
     // Walidacja dat
     const validateDates = (startDate, endDate) => {
         const currentDate = new Date();

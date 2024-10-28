@@ -107,6 +107,7 @@ export default function JoinEventsContainer() {
                                 className="route-image"
                             />
                             <h2>{event.name}</h2>
+                            <p className="route-date">{new Date(event.start_date).toLocaleDateString()}</p>
                             <div className="r-button-container">
                                 <button onClick={() => navigate(`/joinEventDetails/${event.id}`)}
                                         className="edit full-button" role="button">

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 import './addRoute.css';
 import BackButton from '../../components/backBt/BackButton';
+import { useUser } from '../../contexts/UserContext';
 
 export default function AddRoute() {
     const [title, setTitle] = useState('');
@@ -11,6 +12,8 @@ export default function AddRoute() {
     const [date, setDate] = useState('');
     const [error, setError] = useState({ title: '', description: '' });
     const navigate = useNavigate();
+    const [isPrivate, setIsPrivate] = useState(false);
+    const { user } = useUser();
 
     useEffect(() => {
         const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
@@ -49,6 +52,10 @@ export default function AddRoute() {
         setTitle(value);
     };
 
+    const handlePrivateChange = (e) => {
+        setIsPrivate(e.target.checked);
+    };
+
     // Handle description change with validation
     const handleDescriptionChange = (e) => {
         const value = e.target.value;
@@ -73,7 +80,8 @@ export default function AddRoute() {
         formData.append('description', description);
         formData.append('image', image);
         formData.append('date', date);
-
+        formData.append('private', isPrivate ? 1 : 0);
+        console.log(isPrivate);
         try {
             const response = await fetch('http://localhost:5000/addRoute', {
                 method: 'POST',
@@ -86,7 +94,7 @@ export default function AddRoute() {
             }
 
             alert('Trasa została dodana pomyślnie!');
-            navigate('/routes');
+            navigate(`/profile/${user.username}`);
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas dodawania trasy.');
@@ -125,6 +133,15 @@ export default function AddRoute() {
                         />
                         <label htmlFor="description" className="form__label">Opis trasy:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
+                    </div>
+                    <div className="e-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="private"
+                            checked={isPrivate}
+                            onChange={handlePrivateChange}
+                        />
+                        <label htmlFor="private" className="g-checkbox-label">Trasa prywatna</label>
                     </div>
                     <div className="r-form-group">
                         <input

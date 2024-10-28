@@ -65,12 +65,9 @@ export default function AddEvent() {
     const handlePrivateChange = (e) => {
         setIsPrivate(e.target.checked);
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
-
 
         // Sprawdzanie pozostałych pól
         if (error.title || error.description || !startDate || !endDate) {
@@ -88,7 +85,6 @@ export default function AddEvent() {
             setError({ ...error, endDate: 'Data zakończenia nie może być wcześniejsza niż data rozpoczęcia.' });
             return;
         }
-
         // Przygotowanie formData
         const formData = new FormData();
         formData.append('name', title);

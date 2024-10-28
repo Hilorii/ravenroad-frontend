@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/navbar/Navbar";
 import BackButton from '../../components/backBt/BackButton';
+import { useUser } from '../../contexts/UserContext';
 
 export default function EditRoute() {
     const navigate = useNavigate();
@@ -13,7 +14,9 @@ export default function EditRoute() {
     const [fileName, setFileName] = useState('Nie wybrano pliku'); 
     const [date, setDate] = useState('');
     const [error, setError] = useState({ title: '', description: '' });
-
+    const [isPrivate, setIsPrivate] = useState(false);
+    const { user } = useUser();
+    
     useEffect(() => {
         const fetchRouteDetails = async () => {
             try {
@@ -41,6 +44,7 @@ export default function EditRoute() {
         if (routeDetails) {
             setTitle(routeDetails.title || '');
             setDescription(routeDetails.description || '');
+            setIsPrivate(routeDetails.private === 1);
         }
     }, [routeDetails]);
 
@@ -58,7 +62,9 @@ export default function EditRoute() {
         }
         setTitle(value);
     };
-
+    const handlePrivateChange = (e) => {
+        setIsPrivate(e.target.checked);
+    };
     const handleDescriptionChange = (e) => {
         const value = e.target.value;
         if (value.length > 1000) {
@@ -93,6 +99,7 @@ export default function EditRoute() {
         formData.append('description', description);
         formData.append('image', image);
         formData.append('date', date);
+        formData.append('private', isPrivate ? 1 : 0);
 
         try {
             const response = await fetch(`http://localhost:5000/routes/${id}`, {
@@ -106,7 +113,7 @@ export default function EditRoute() {
             }
 
             alert('Trasa została zaktualizowana pomyślnie!');
-            navigate('/routes');
+            navigate(`/profile/${user.username}`);
         } catch (error) {
             console.error('Error:', error);
             alert('Wystąpił problem podczas edycji trasy.');
@@ -145,6 +152,15 @@ export default function EditRoute() {
                         />
                         <label htmlFor="description" className="form__label">Opis trasy:</label>
                         {error.description && <p className="error-message">{error.description}</p>}
+                    </div>
+                    <div className="e-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="private"
+                            checked={isPrivate}
+                            onChange={handlePrivateChange}
+                        />
+                        <label htmlFor="private" className="g-checkbox-label">Trasa prywatna</label>
                     </div>
                     <div className="r-form-group">
                         <input
