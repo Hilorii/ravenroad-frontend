@@ -16,6 +16,7 @@ export default function AddGroup() {
     const { user, setUser } = useUser();
     const { username } = useParams();
     const [image, setImage] = useState(null);
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         const actualBtn = document.getElementById('image');
@@ -63,6 +64,9 @@ export default function AddGroup() {
     const handlePrivateChange = (e) => {
         setIsPrivate(e.target.checked);
     };
+    const handleVisibleChange = (e) => {
+        setIsVisible(e.target.checked);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -82,6 +86,7 @@ export default function AddGroup() {
         formData.append('name', title);
         formData.append('description', description);
         formData.append('private', isPrivate ? 1 : 0);
+        formData.append('visible', isVisible ? 0 : 1);
         if (image) formData.append('image', image);
 
         try {
@@ -145,6 +150,15 @@ export default function AddGroup() {
                             onChange={handlePrivateChange}
                         />
                         <label htmlFor="private" className="g-checkbox-label">Grupa prywatna</label>
+                    </div>
+                    <div className="g-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="visible"
+                            checked={isVisible}
+                            onChange={handleVisibleChange}
+                        />
+                        <label htmlFor="visible" className="g-checkbox-label">Grupa niewidoczna</label>
                     </div>
                     <div className="e-image">
                         <div className="r-form-group">

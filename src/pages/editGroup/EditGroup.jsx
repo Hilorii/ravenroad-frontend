@@ -16,6 +16,7 @@ export default function EditGroup() {
     const [error, setError] = useState({ name: '', description: '' });
     const { user, setUser } = useUser();
     const [isPrivate, setIsPrivate] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     // Pobierz szczegóły trasy na podstawie ID
     useEffect(() => {
@@ -47,7 +48,8 @@ export default function EditGroup() {
         if (routeDetails) {
             setName(routeDetails.name || '');
             setDescription(routeDetails.description || '');
-            setIsPrivate(routeDetails.private === 1); // Ustawiamy checkbox na podstawie wartości private
+            setIsPrivate(routeDetails.private === 1);
+            setIsVisible(routeDetails.visible === 0);
         }
     }, [routeDetails]);
 
@@ -104,6 +106,7 @@ export default function EditGroup() {
         formData.append('image', image); // jeśli nie zmienisz zdjęcia, image będzie null
         formData.append('date', date);
         formData.append('private', isPrivate ? 1 : 0); 
+        formData.append('visible', isVisible ? 0 : 1);
 
         try {
             const response = await fetch(`http://localhost:5000/groups/${id}`, {
@@ -126,6 +129,9 @@ export default function EditGroup() {
 
     const handlePrivateChange = (e) => {
         setIsPrivate(e.target.checked);
+    };
+    const handleVisibleChange = (e) => {
+        setIsVisible(e.target.checked);
     };
 
     return (
@@ -169,6 +175,15 @@ export default function EditGroup() {
                             onChange={handlePrivateChange}
                         />
                         <label htmlFor="private" className="g-checkbox-label">Grupa prywatna</label>
+                    </div>
+                    <div className="g-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="visible"
+                            checked={isVisible}
+                            onChange={handleVisibleChange}
+                        />
+                        <label htmlFor="visible" className="g-checkbox-label">Grupa niewidoczna</label>
                     </div>
                     <div className="e-image">
                         <div className="r-form-group">
