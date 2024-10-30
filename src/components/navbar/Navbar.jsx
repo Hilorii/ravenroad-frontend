@@ -14,9 +14,7 @@ const Menu = () => {
     if (!user && window.location.pathname === "/") {
         return (
             <>
-                {/*<p><a href="/">Strona główna</a></p>*/}
                 <p><a href="#pro">Pro</a></p>
-                {/*<p><a href="#features">Możliwości</a></p>*/}
                 <p><a href="/Signup">Zaplanuj podróż</a></p>
                 <p><a href="/Signup">Gotowe trasy</a></p>
                 <p><a href="/contact">Kontakt</a></p>
@@ -32,7 +30,7 @@ const Menu = () => {
                 <p><a href="/readyRoutes">Gotowe trasy</a></p>
                 <p><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
                 <p><a href="/collaboration">Współpraca</a></p>
-                <p><a href="/profile/${user.username}">Profil</a></p>
+                <p><a href={`/profile/${user.username}`}>Profil</a></p>
             </>
         );
     } else if (user) {
@@ -40,11 +38,10 @@ const Menu = () => {
             <>
                 <p><a href="/">Strona główna</a></p>
                 <p><a href="/contact">Kontakt</a></p>
-                {/*<p><a href="#niewiem">Zaplanuj podróż</a></p>*/}
                 <p><a href="/readyRoutes">Gotowe trasy</a></p>
                 <p><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
                 <p><a href="/collaboration">Współpraca</a></p>
-                <p><a href="/profile/${user.username}">Profil</a></p>
+                <p><a href={`/profile/${user.username}`}>Profil</a></p>
             </>
         );
     } else {
@@ -66,6 +63,8 @@ const Navbar = () => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notifications, setNotifications] = useState([{ id: 1, text: 'Nowe powiadomienie!' }]);
 
+    const hasNewNotifications = notifications.some(notification => notification.new === 1);
+    console.log("New notifications exist:", hasNewNotifications);
     const handleLogout = async () => {
         try {
             const response = await fetch('http://localhost:5000/logout', {
@@ -84,11 +83,30 @@ const Navbar = () => {
         }
     };
 
-    const toggleNotifications = () => {
+    const toggleNotifications = async () => {
         setShowNotifications(prevState => !prevState);
+
+        if (hasNewNotifications) {
+            try {
+                const response = await fetch(`http://localhost:5000/invitations/mark-as-read`, {
+                    method: 'PATCH',
+                    credentials: 'include',
+                });
+                if (response.ok) {
+                    const updatedNotifications = notifications.map(notification => ({
+                        ...notification,
+                        new: 0,
+                    }));
+                    setNotifications(updatedNotifications);
+                } else {
+                    console.error("Failed to mark notifications as read");
+                }
+            } catch (error) {
+                console.error("Error marking notifications as read:", error);
+            }
+        }
     };
 
-    // Ukrywanie popupu po kliknięciu poza nim
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (showNotifications && !event.target.closest('.notifications-popup') && !event.target.closest('.notify-icon')) {
@@ -101,14 +119,14 @@ const Navbar = () => {
         };
     }, [showNotifications]);
 
-    //fetch zaproszeń
     useEffect(() => {
         const fetchInvitations = async () => {
             try {
                 const response = await fetch(`http://localhost:5000/invitations`, { credentials: 'include' });
                 if (response.ok) {
                     const data = await response.json();
-                    setNotifications(data); // Store invitations in the notifications state
+                    setNotifications(data);
+                    console.log("Fetched notifications:", data); // Dodano logowanie
                 } else {
                     console.error("Failed to fetch invitations");
                 }
@@ -121,7 +139,6 @@ const Navbar = () => {
             fetchInvitations();
         }
     }, [user]);
-
 
     return (
         <div className="rr__navbar">
@@ -137,8 +154,8 @@ const Navbar = () => {
                 {user ? (
                     <div className="navbar-user">
                         <div className="notify-icon" onClick={toggleNotifications} style={{ position: 'relative', cursor: 'pointer' }}>
-                            <FaInbox color={notifications.length > 0 ? 'orange' : 'white'} size={20} />
-                            {notifications.length > 0 && (
+                            <FaInbox color={hasNewNotifications ? 'orange' : 'white'} size={20} />
+                            {hasNewNotifications && (
                                 <span className="notification-alert">!</span>
                             )}
                         </div>
@@ -202,6 +219,6 @@ const Navbar = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Navbar;
