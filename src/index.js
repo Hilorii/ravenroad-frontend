@@ -45,6 +45,7 @@ import ReadyRoutesDetailsPage from './pages/readyRoutes/ReadyRoutesDetails';
 import AddEventPage from './pages/addEvent/AddEvent';
 import JoinEventPage from './pages/joinEvents/JoinEvents';
 import JoinEventDetailsPage from './pages/joinEvents/JoinEventDetails';
+import DeleteDataPage from './pages/deleteData/DeleteData';
 
 
 const tamaguiConfig = createTamagui(config);
@@ -66,6 +67,7 @@ root.render(
                         <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
                         <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
                         <Route path="/termsofuse" element={<TermsOfUsePage/>} />
+                        <Route path="/deleteData" element={<DeleteDataPage/>} />
                         <Route path="/pricing" element={<PricingPage/>} />
                         <Route path="/notify" element={<ConstructionPage/>} />
                         <Route path="/contact" element={<ContactPage/>} />
@@ -96,7 +98,8 @@ root.render(
 
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
-                        {/*<Route path="/" element={<ConstructionPage/>} />*/}
+                        {/*<Route path="/" element={<Navigate to="/construction" replace />} />*/}
+                        {/*<Route path="/construction" element={<ConstructionPage />} />*/}
                     </Routes>
                 </Router>
             </UserProvider>

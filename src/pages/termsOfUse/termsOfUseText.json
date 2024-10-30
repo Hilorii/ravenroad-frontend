@@ -1,0 +1,56 @@
+{
+  "terms_of_use": {
+    "effective_date": "10 października 2024 r.",
+    "sections": [
+      {
+        "title": "Wstęp",
+        "content": "Niniejsze Warunki korzystania (zwane dalej 'Warunkami' lub 'Warunkami korzystania') opisują zasady korzystania z aplikacji mobilnych i witryn internetowych Raven Road ('Raven Road', 'my', 'nasz' lub 'nas'), w tym z aplikacji Raven Road oraz jej usług."
+      },
+      {
+        "title": "Własność i akceptacja",
+        "content": "Witryny internetowe i aplikacje Raven Road są własnością i są obsługiwane przez Lunar Feather. Uzyskując dostęp do naszych witryn internetowych lub aplikacji, pobierając je, używając ich lub przeglądając, potwierdzasz, że zapoznałeś się z niniejszymi Warunkami i zgadzasz się być nimi związany. Jeśli nie zgadzasz się z niniejszymi Warunkami lub naszą Polityką Prywatności, prosimy o niekorzystanie z naszych witryn internetowych ani aplikacji. Każde korzystanie z naszych witryn internetowych lub aplikacji, które jest niezgodne z niniejszymi Warunkami, będzie uznawane za nieautoryzowany dostęp."
+      },
+      {
+        "title": "Zmiany w Warunkach korzystania",
+        "content": "Zastrzegamy sobie prawo do wprowadzania zmian w niniejszych Warunkach korzystania. O wszelkich planowanych zmianach poinformujemy Cię z co najmniej 14-dniowym wyprzedzeniem poprzez publikację nowej wersji Warunków na naszej stronie internetowej oraz poprzez powiadomienie w aplikacji. Jeśli nie akceptujesz nowych Warunków, masz prawo zrezygnować z korzystania z naszych usług."
+      },
+      {
+        "title": "Ograniczone prawo do użytkowania",
+        "content": "W zamian za Twoją zgodę na niniejsze Warunki oraz uiszczenie wszelkich obowiązujących opłat, Raven Road przyznaje Ci ograniczone, niewyłączne, osobiste, odwołalne prawo oraz licencję do pobierania, uzyskiwania dostępu i korzystania z funkcjonalności naszych witryn internetowych i aplikacji."
+      },
+      {
+        "title": "Prawa do korzystania z witryn internetowych i aplikacji",
+        "content": "Prawa do pobierania i korzystania z witryn internetowych i aplikacji są licencjonowane, a nie sprzedawane. Nie posiadasz żadnych praw do witryn internetowych ani aplikacji, poza prawem do korzystania z nich zgodnie z niniejszymi Warunkami. Raven Road zastrzega sobie prawo do zakończenia Twojego dostępu do swoich witryn internetowych i aplikacji w dowolnym momencie i z dowolnego powodu."
+      },
+      {
+        "title": "Użytkowanie osobiste i niekomercyjne",
+        "content": "Korzystanie z naszych witryn internetowych i aplikacji jest ograniczone do użytku osobistego i niekomercyjnego."
+      }
+    ]
+  },
+  "privacy_policy": {
+    "effective_date": "10 października 2024 r.",
+    "sections": [
+      {
+        "title": "Administrator danych osobowych",
+        "content": "Administratorem Twoich danych osobowych jest Lunar Feather, 18A, 09-411 Stara Biała, NIP: 6482400639, REGON: 529882826, E-mail: privacy@ravenroad.eu."
+      },
+      {
+        "title": "Zakres i cele przetwarzania danych osobowych",
+        "content": "Przetwarzamy Twoje dane osobowe w następujących celach: świadczenie usług i funkcjonalności aplikacji, realizacja umowy, obsługa płatności, komunikacja z użytkownikami, marketing bezpośredni (za zgodą), analityka i statystyka, oraz zapewnienie bezpieczeństwa."
+      },
+      {
+        "title": "Podstawy prawne przetwarzania danych",
+        "content": "Przetwarzamy Twoje dane osobowe na podstawie: zgody (Art. 6 ust. 1 lit. a RODO), wykonania umowy (Art. 6 ust. 1 lit. b RODO), obowiązków prawnych (Art. 6 ust. 1 lit. c RODO), oraz prawnie uzasadnionego interesu (Art. 6 ust. 1 lit. f RODO)."
+      },
+      {
+        "title": "Odbiorcy danych osobowych",
+        "content": "Twoje dane osobowe mogą być przekazywane podmiotom przetwarzającym, partnerom biznesowym oraz organom publicznym zgodnie z obowiązującym prawem."
+      },
+      {
+        "title": "Przekazywanie danych poza EOG",
+        "content": "Dane osobowe mogą być przekazywane poza Europejski Obszar Gospodarczy, szczególnie przy korzystaniu z technologii AI spoza EOG."
+      }
+    ]
+  }
+}

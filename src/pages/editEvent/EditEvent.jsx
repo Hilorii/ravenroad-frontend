@@ -17,6 +17,7 @@ export default function EditEvent() {
     const [error, setError] = useState({ name: '', description: '', startDate: '', endDate: '' });
     const { user } = useUser();
     const [isPrivate, setIsPrivate] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     // Pobierz szczegóły wydarzenia
     useEffect(() => {
@@ -60,6 +61,7 @@ export default function EditEvent() {
             setStartDate(formatDateTime(start_date, start_time));
             setEndDate(formatDateTime(end_date, end_time));
             setIsPrivate(eventDetails.private === 1);
+            setIsVisible(eventDetails.visible === 0);
             setName(name || '');
             setDescription(description || '');
         }
@@ -136,6 +138,9 @@ export default function EditEvent() {
     const handlePrivateChange = (e) => {
         setIsPrivate(e.target.checked);
     };
+    const handleVisibleChange = (e) => {
+        setIsVisible(e.target.checked);
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -153,6 +158,7 @@ export default function EditEvent() {
         formData.append('endDate', endDate.split('T')[0]);
         formData.append('endTime', endDate.split('T')[1]);
         formData.append('private', isPrivate ? 1 : 0);
+        formData.append('visible', isVisible ? 0 : 1);
 
         try {
             const response = await fetch(`http://localhost:5000/events/${id}`, {
@@ -246,6 +252,15 @@ export default function EditEvent() {
                             onChange={handlePrivateChange}
                         />
                         <label htmlFor="private" className="g-checkbox-label">Wydarzenie prywatne</label>
+                    </div>
+                    <div className="e-checkbox-field">
+                        <input
+                            type="checkbox"
+                            id="visible"
+                            checked={isVisible}
+                            onChange={handleVisibleChange}
+                        />
+                        <label htmlFor="visible" className="g-checkbox-label">Wydarzenie niewidoczne</label>
                     </div>
                     <div className="e-image">
                         <div className="r-form-group">
