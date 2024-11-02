@@ -19,6 +19,8 @@ import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 import ProfilePage from './pages/profile/Profile';
 import PrivacyPolicyPage from './pages/privacyPolicy/PrivacyPolicy';
 import TermsOfUsePage from './pages/termsOfUse/TermsOfUse';
+import TermsOfUsePageEN from './pages/termsOfUse/TermsOfUseEn';
+import TermsOfUsePageDE from './pages/termsOfUse/TermsOfUseDe';
 import PricingPage from './pages/pricing/Pricing';
 import ConstructionPage from './pages/underConstruction/UnderConstruction';
 import ContactPage from './pages/contact/Contact';
@@ -66,7 +68,9 @@ root.render(
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
                         <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
-                        <Route path="/termsofuse" element={<TermsOfUsePage/>} />
+                        <Route path="/termsofusepl" element={<TermsOfUsePage/>} />
+                        <Route path="/termsofuseen" element={<TermsOfUsePageEN/>} />
+                        <Route path="/termsofusede" element={<TermsOfUsePageDE/>} />
                         <Route path="/deleteData" element={<DeleteDataPage/>} />
                         <Route path="/pricing" element={<PricingPage/>} />
                         <Route path="/notify" element={<ConstructionPage/>} />
@@ -78,7 +82,7 @@ root.render(
                         <Route path="/FAQ" element={<FAQPage/>} />
                         <Route path="/routes" element={<RoutesPage/>} />
                         <Route path="/addRoute" element={<AddRoutePage/>} />
-                        {/*<Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />*/}
+                        <Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />
                         <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
                         <Route path="/collaboration" element={<CollaborationPage/>} />
                         <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />

@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import './termsOfUse.css';
 
-const TermsOfUse = () => {
+const TermsOfUsePl = () => {
     return (
         <div className="App">
             <div className="gradient__bg">
@@ -181,20 +181,7 @@ const TermsOfUse = () => {
                             użytkownika bez jakiegokolwiek odniesienia lub przypisania.
                         </p>
                         <br/>
-                        <strong>Przesyłając lub w inny sposób udostępniając Treści użytkownika za pośrednictwem naszych
-                            witryn internetowych lub aplikacji, udzielasz Raven Road oraz naszym agentom, podmiotom
-                            stowarzyszonym i powiązanym niewyłącznej, nieodpłatnej, odwołalnej, ogólnoświatowej licencji
-                            na używanie, przechowywanie, powielanie, dystrybuowanie, publikowanie, modyfikowanie oraz
-                            tworzenie dzieł pochodnych z Twoich Treści użytkownika w zakresie niezbędnym do świadczenia
-                            usług zgodnie z funkcjonalnościami naszych witryn i aplikacji.
-                            Masz prawo w każdej chwili cofnąć udzieloną licencję, usuwając swoje Treści użytkownika z
-                            naszych witryn i aplikacji lub kontaktując się z nami pod adresem privacy@ravenroad.eu.
-                            Raven Road ma prawo używać, powielać, dystrybuować, łączyć z innymi materiałami, zmieniać
-                            i/lub edytować Twoje Treści użytkownika w dowolny sposób według własnego uznania, bez
-                            żadnych zobowiązań ani dodatkowych zezwoleń z Twojej strony. Zgadzasz się zrzec wszelkich
-                            praw do bycia wymienionym w Treściach użytkownika i zezwalasz nam na używanie Twoich Treści
-                            użytkownika bez jakiegokolwiek odniesienia lub przypisania.
-                        </strong>
+                        <strong>Oświadczenia i gwarancje</strong>
                         <p>Korzystając z naszych witryn internetowych lub aplikacji, odpowiadając na nasze prośby o
                             korzystanie, lub używając dowolnych naszych hashtagów w mediach społecznościowych,
                             oświadczasz i gwarantujesz, że:
@@ -850,4 +837,4 @@ const TermsOfUse = () => {
     );
 }
 
-export default TermsOfUse;
+export default TermsOfUsePl;

@@ -76,7 +76,7 @@ function UnderConstruction() {
                 {message && <p className="message gradient__text">{message}</p>}
 
                 <div className="quick-links">
-                    <Link to="/termsofuse" className="quick-link-button">Terms of Use</Link>
+                    <Link to="/termsofusepl" className="quick-link-button">Terms of Use</Link>
                     <Link to="/deleteData" className="quick-link-button">Delete Data</Link>
                 </div>
             </div>
