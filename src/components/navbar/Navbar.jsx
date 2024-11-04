@@ -63,7 +63,7 @@ const Navbar = () => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notifications, setNotifications] = useState([{ id: 1, text: 'Nowe powiadomienie!' }]);
 
-    const hasNewNotifications = notifications.some(notification => notification.new === 1);
+    const hasNewNotifications = notifications.some(notification => notification.is_read === 0);
     console.log("New notifications exist:", hasNewNotifications);
     const handleLogout = async () => {
         try {
@@ -88,14 +88,14 @@ const Navbar = () => {
 
         if (hasNewNotifications) {
             try {
-                const response = await fetch(`http://localhost:5000/invitations/mark-as-read`, {
+                const response = await fetch(`http://localhost:5000/notifications/mark-as-read`, {
                     method: 'PATCH',
                     credentials: 'include',
                 });
                 if (response.ok) {
                     const updatedNotifications = notifications.map(notification => ({
                         ...notification,
-                        new: 0,
+                        is_read: 1,
                     }));
                     setNotifications(updatedNotifications);
                 } else {
@@ -122,7 +122,7 @@ const Navbar = () => {
     useEffect(() => {
         const fetchInvitations = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/invitations`, { credentials: 'include' });
+                const response = await fetch(`http://localhost:5000/notifications`, { credentials: 'include' });
                 if (response.ok) {
                     const data = await response.json();
                     setNotifications(data);
@@ -164,14 +164,13 @@ const Navbar = () => {
                             <div className={`notifications-popup ${showNotifications ? 'show' : ''}`}>
                                 <div className="popup-arrow"></div>
                                 {notifications.length > 0 ? (
-                                    notifications.map((invitation) => (
-                                        <div key={invitation.id} className="notification-container">
-                                            <p>Od: {invitation.sender_username}</p>
-                                            {invitation.grupa && <p>Zaproszenie do grupy ID: {invitation.grupa_id}</p>}
-                                            {invitation.event && <p>Zaproszenie na wydarzenie ID: {invitation.event_id}</p>}
-                                            {invitation.route && <p>Zaproszenie do trasy ID: {invitation.route_id}</p>}
-                                            <p>Data wysłania: {new Date(invitation.send_date).toLocaleString()}</p>
-                                            <p>Data ważności: {new Date(invitation.valid_date).toLocaleString()}</p>
+                                    notifications.map((notification) => (
+                                        <div key={notification.id} className="notification-container">
+                                            <p>{notification.content}</p>
+                                            <p>Data wysłania: {new Date(notification.created_at).toLocaleDateString()}</p>
+                                            <p>Data ważności: {new Date(new Date(notification.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</p>
+
+
                                         </div>
                                     ))
                                 ) : (
