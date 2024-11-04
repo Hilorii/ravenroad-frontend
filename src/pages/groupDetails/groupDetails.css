@@ -1,0 +1,131 @@
+.g-details-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    margin-top: 250px;
+    padding-bottom: 300px;
+}
+
+.group-banner-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px;
+}
+
+.groupD-banner {
+    position: relative; /* Ustawienie kontekstu pozycjonowania dla absolutnego overlay */
+    width: 300px;
+    height: 150px;
+    scale: 2.5;
+    object-fit: fill;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    transition: box-shadow 0.3s ease;
+    top: -180px;
+}
+
+.groupD-banner:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.group-overlay {
+    position: absolute; /* Umieszczenie overlay w kontekście banneru */
+    bottom: -30px; /* Dopasowanie do dolnej krawędzi banneru */
+    margin-left: -300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%; /* Dostosowanie szerokości do dostępnej przestrzeni */
+
+}
+.groupD-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-left: -200px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    border: 2px solid #040c18;
+
+}
+
+.group-name {
+    position: absolute;
+    left: 20vw;
+    margin-top: 20px;
+    font-size: 2vw;
+    color: #fff;
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+    width: 70%;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.group-description, .group-members, .group-settings {
+    position: absolute;
+    top: 50px; /* Ustawienie pozycji względem górnej krawędzi rodzica */
+    width: 100%;
+    font-size: 1em;
+    line-height: 1.5;
+    text-align: left;
+    color: white;
+}
+
+.menuG-container{
+    position: relative;
+    width: 40%;
+    padding-bottom: 200px;
+    box-sizing: border-box;
+}
+
+
+
+/*Przyciski menu*/
+.group-options {
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.group-options button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    background-color: #f3f4f6;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.group-options button:hover {
+    background-color: #e2e8f0;
+}
+
+.group-options .active {
+    color: #ffffff;
+    background-color: #4f46e5; /* Kolor aktywnej zakładki */
+    border-color: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    transform: scale(1.05);
+}
+
+/* Animacja przejścia między zakładkami */
+.group-options button:not(.active):hover {
+    transform: scale(1.02);
+}
+
