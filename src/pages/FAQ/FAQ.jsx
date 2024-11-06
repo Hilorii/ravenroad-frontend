@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from "../../components/navbar/Navbar";
 import './faq.css';
 import { XStack } from 'tamagui';
+import NavbarTmp from '../../components/navbar/NavbarTmp';
 
 const FaqPage = () => {
     const [faqData, setFaqData] = useState([]);
@@ -24,7 +25,8 @@ const FaqPage = () => {
     return (
         <div className="App">
             <div className="gradient__bg">
-                <Navbar />
+                {/*<Navbar />*/}
+                <NavbarTmp />
                 <XStack justifyContent="center" className="gradient__text">
                     <div className="faq-container gradient__text">
                         <h1>FAQ - Najczęściej zadawane pytania</h1>

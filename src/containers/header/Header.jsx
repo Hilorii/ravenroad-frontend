@@ -10,6 +10,12 @@ const Header = () => {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
 
+    //TMP
+    const [suggestion, setSuggestion] = useState('');
+    const [message, setMessage] = useState('');
+
+
+
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
@@ -22,6 +28,33 @@ const Header = () => {
         }
     };
 
+    //TMP
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbziyC74wwF7KhaTXHhasKd7NpTlOXWSRzlh6pmsoIfLcCink3Z5cOX8b6dP2pyvDr8/exec';
+            const formData = new FormData();
+            formData.append('email', email);
+
+            const response = await fetch(scriptURL, { method: 'POST', body: formData });
+            const resultText = await response.text(); // Odczytaj odpowiedź jako tekst
+
+            if (resultText === "Success") {
+                setMessage('Dziękujemy! Powiadomimy Cię, gdy aplikacja będzie gotowa. Otrzymasz również 20% zniżki.');
+                setEmail('');  // Reset email field
+                setSuggestion(''); // Reset suggestion field
+            } else if (resultText === "Email already exists") {
+                setMessage('Ten email został już zapisany.');
+            } else {
+                setMessage('Wystąpił błąd. Spróbuj ponownie później.');
+            }
+        } catch (error) {
+            console.error('Wystąpił błąd podczas zapisywania e-maila:', error);
+            setMessage('Wystąpił błąd. Spróbuj ponownie później.');
+        }
+    };
+
+
     return (
         <div className="rr__header section__padding" id="Home">
             <div className="rr__header-content">
@@ -32,18 +65,18 @@ const Header = () => {
                     Dołącz do wspaniałego community Raven Road już dziś za free!
                 </p>
 
-                <div className="rr__header-content__input">
-                    <input
-                        type="email"
-                        placeholder="Twój adres email"
-                        value={email}
-                        onChange={handleEmailChange}
-                    />
-                    <button type="button" onClick={handleButtonClick}>W drogę</button>
+                <div className="rr__header-content__input" onSubmit={handleSubmit}>
+                        <input
+                            type="email"
+                            placeholder="Twój adres email"
+                            value={email}
+                            onChange={handleEmailChange}
+                        />
+                        <button role="button" type="submit">W drogę</button>
                 </div>
             </div>
             <div className="rr__header-image">
-                <img src={banner} alt="banner"/>
+            <img src={banner} alt="banner"/>
             </div>
         </div>
     )

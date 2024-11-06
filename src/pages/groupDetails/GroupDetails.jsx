@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import { YStack, XStack } from 'tamagui';
 import BackButton from '../../components/backBt/BackButton';
 import { useUser } from '../../contexts/UserContext';
 import './groupDetails.css';
+import '../profile/membersList.css'
+import { Details, Trash, Edit, Leave } from '../../components/icons';
 
 const GroupDetailsPage = () => {
     const { id } = useParams(); // Pobiera id grupy z URL-a
@@ -15,6 +16,8 @@ const GroupDetailsPage = () => {
     const { user } = useUser();
     const userId = user ? user.id : null;
     const [activeTab, setActiveTab] = useState("description");
+
+
     useEffect(() => {
         const fetchGroupDetails = async () => {
             try {
@@ -67,12 +70,7 @@ const GroupDetailsPage = () => {
                     </div>
                 );
             case "members":
-                return (
-                    <div className="group-members">
-                        <p><strong>Członkowie grupy:</strong></p>
-                        {/* Tutaj zaimplementuj listę członków grupy */}
-                    </div>
-                );
+                return <DetailsMemberList groupId={id} />;
             case "settings":
                 return (
                     <div className="group-settings">
@@ -123,7 +121,83 @@ const GroupDetailsPage = () => {
             </div>
         </div>
     );
+};
 
+const DetailsMemberList = ({ groupId }) => {
+    const [members, setMembers] = useState([]);
+
+    useEffect(() => {
+        const fetchMembers = async () => {
+            try {
+                const response = await fetch(`/group/${groupId}/members`);
+                if (!response.ok) {
+                    throw new Error('Błąd w odpowiedzi serwera');
+                }
+                const data = await response.json();
+                setMembers(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error('Błąd podczas pobierania danych członków:', error);
+                setMembers([]); // Ustaw pustą tablicę w przypadku błędu
+            }
+        };
+
+        if (groupId) {
+            fetchMembers();
+        }
+    }, [groupId]);
+
+    return (
+        <div className="member-list-container">
+                {members.length > 0 ? (
+                    members.map((member) => (
+                        <div key={member.username} className="member-list">
+                            <div className="rC-inside">
+                                <img
+                                    src={`http://localhost:5000/uploads/${member.avatar}`}
+                                    alt={member.avatar}
+                                    className="member-list-img"
+                                />
+                                <h2>{member.username}</h2>
+
+                                <div className="r-button-container">
+                                    <button
+                                            className="edit full-button" role="button">
+                                        <span>Szczegóły</span>
+                                    </button>
+
+
+                                    <button
+                                            className="icon-button-details" role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Details/>
+                                             </span>
+                                    </button>
+
+                                        <>
+                                            <button className="icon-button-delete"
+                                                    role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Trash/>
+                                             </span>
+                                            </button>
+                                            <button className="icon-button-edit"
+
+                                                    role="button">
+                                            <span style={{color: 'white'}}>
+                                                <Edit/>
+                                             </span>
+                                            </button>
+                                        </>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : null}
+
+        </div>
+    );
 };
 
 export default GroupDetailsPage;

@@ -20,7 +20,7 @@ const Cookies = () => {
     };
 
     const handlePrivacyPolicyClick = () => {
-        navigate('/privacyPolicy');
+        navigate('/termsofusepl');
     };
 
     if (!showBanner) return null;

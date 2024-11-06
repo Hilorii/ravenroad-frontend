@@ -3,12 +3,14 @@ import Navbar from "../../components/navbar/Navbar";
 import { MAIL } from '../../components/icons';
 import { contactMail } from '../../components/info';
 import './help.css';
+import NavbarTmp from '../../components/navbar/NavbarTmp';
 
 export default function HelpPage() {
     return (
         <div className="App">
             <div className="gradient__bg">
-                <Navbar />
+                {/*<Navbar />*/}
+                <NavbarTmp />
                 <YStack padding="$4" space alignItems="center">
                     <h1 className="gradient__text title">Potrzebujesz pomocy? Skontaktuj się z nami!</h1>
 

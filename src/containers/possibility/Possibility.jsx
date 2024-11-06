@@ -8,10 +8,8 @@ const Possibility = () => (
             <img src={possibilityImage} alt="possibility" />
         </div>
         <div className="rr__possibility-content">
-            <h4>Poproś o wczesny dostęp do aplikacji</h4>
             <h1 className="gradient__text">Możliwości są nieograniczone</h1>
             <p>Poznaj możliwości Raven Road i zaplanuj trasę jakiej nigdy wcześniej nie znałeś</p>
-            <h4>Poproś o wczesny dostęp do aplikacji</h4>
         </div>
     </div>
 );
