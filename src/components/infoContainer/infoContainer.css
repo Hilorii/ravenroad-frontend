@@ -1,0 +1,96 @@
+/* Kontener główny */
+.info-raven-road {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 2em;
+    background-color: transparent;
+    color: #f5f5f5;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+
+/* Nagłówek */
+.info-header h1 {
+    font-size: 2.2em;
+    color: #aa5afd;
+    margin-bottom: 0.3em;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.info-tagline {
+    font-size: 1.2em;
+    color: #9124b5;
+    margin-bottom: 1.5em;
+}
+
+/* Opis */
+.info-description {
+    font-size: 1em;
+    margin-bottom: 1.5em;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+/* Sekcja zalet */
+.info-benefits h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.8em;
+    color: #9a45ea;
+}
+
+.info-benefits ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    display: inline-block;
+}
+
+.info-benefits li {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    transition: color 0.3s ease;
+}
+
+.info-benefits li:hover {
+    color: #730ad3;
+}
+
+/* Sekcja "Jak zacząć?" */
+.info-get-started h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.8em;
+    color: #9124b5;
+}
+
+.info-get-started ol {
+    padding-left: 1.2em;
+    text-align: left;
+    font-size: 1em;
+}
+
+.info-get-started li {
+    margin-bottom: 0.5em;
+    color: #e0e0e0;
+}
+
+/* Przycisk */
+.info-start-button {
+    margin-top: 1.5em;
+    padding: 0.8em 1.8em;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #1a1a1a;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.info-start-button:hover {
+    background-color: #ff4500;
+    transform: translateY(-3px);
+}

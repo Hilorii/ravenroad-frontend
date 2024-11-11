@@ -1,0 +1,93 @@
+/* Kontener główny */
+.raven-road-container {
+    position: relative;
+    padding: 2em 1.5em;
+    background-color: transparent;
+    color: #f5f5f5;
+    text-align: center;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: 20px auto;
+    overflow: hidden;
+    /*box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);*/
+}
+
+/* Styl nagłówków */
+.raven-road-container h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.5em 0;
+    color: #af71f3;
+    text-shadow: 0 0 8px rgba(230, 207, 237, 0.6);
+}
+
+.subheader {
+    font-size: 1.1em;
+    color: #b76be1;
+    margin-bottom: 1.5em;
+    text-shadow: 0 0 6px rgba(184, 148, 227, 0.4);
+}
+
+/* Sekcja funkcji */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 1.5em;
+    margin-bottom: 2em;
+}
+
+.feature {
+    text-align: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.feature:hover {
+    transform: scale(1.1);
+    color: #c896ea;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #730b83, #d4bce6);
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover .icon {
+    transform: rotate(360deg);
+}
+
+/* Style przycisków */
+.cta-button, .demo-button {
+    padding: 0.8em 1.5em;
+    margin: 0.5em;
+    font-size: 1em;
+    font-weight: bold;
+    color: #1a1a1a;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover, .demo-button:hover {
+    background-color: #ff4500;
+    transform: translateY(-2px);
+}
+
+.demo-button {
+    background-color: #32cd32;
+}
+
+.demo-button:hover {
+    background-color: #28a745;
+}
+@media (max-width: 600px) {
+    .features {
+        flex-direction: column;
+        gap: 1em;
+    }
+}

@@ -58,3 +58,8 @@
         line-height: 38px;
     }
 }
+@media screen and (max-width: 350px) {
+    .rr__features-container__feature{
+        display: none;
+    }
+}

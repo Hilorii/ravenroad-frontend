@@ -40,7 +40,7 @@ const Header = () => {
             const resultText = await response.text(); // Odczytaj odpowiedź jako tekst
 
             if (resultText === "Success") {
-                setMessage('Dziękujemy! Powiadomimy Cię, gdy aplikacja będzie gotowa. Otrzymasz również 20% zniżki.');
+                setMessage('Dziękujemy!');
                 setEmail('');  // Reset email field
                 setSuggestion(''); // Reset suggestion field
             } else if (resultText === "Email already exists") {
@@ -65,15 +65,17 @@ const Header = () => {
                     Dołącz do wspaniałego community Raven Road już dziś za free!
                 </p>
 
-                <div className="rr__header-content__input" onSubmit={handleSubmit}>
+                <form className="rr__header-content__input" onSubmit={handleSubmit}>
                         <input
                             type="email"
                             placeholder="Twój adres email"
                             value={email}
                             onChange={handleEmailChange}
+                            required
                         />
                         <button role="button" type="submit">W drogę</button>
-                </div>
+                </form>
+                {message && <p className="message gradient__text">{message}</p>}
             </div>
             <div className="rr__header-image">
             <img src={banner} alt="banner"/>

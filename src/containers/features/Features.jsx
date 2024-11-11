@@ -25,7 +25,6 @@ const Features = () => (
     <div className="rr__features section__padding" id="features">
         <div className="rr__features-heading">
             <h1 className="gradient__text">Wkrocz w przyszłość z Raven Road!</h1>
-            <p>Poproś o wczesny dostęp</p>
         </div>
         <div className="rr__features-container">
             {featuresData.map((item, index) => (

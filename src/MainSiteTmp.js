@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import {Footer, Blog, Possibility, Features, WhatRR, Header} from "./containers";
 import {CTA, Brand, Navbar, Ad, Cookies} from './components'
 import NavbarTmp from './components/navbar/NavbarTmp'
+import RotatingIcons from './components/rotatingIcons/RotatingIcons'
+import InfoContainer from './components/infoContainer/InfoContainer'
 import "./App.css"
 
 import { ProCard } from './components/tamagui/pro-card';
@@ -25,10 +27,12 @@ const MainSite = () => {
                         {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
                         <Ad/>
                         <WhatRR/>
+                        <RotatingIcons/>
                         <div className="middle yes" id="pro">
                             <ProCard/>
                         </div>
                         <Features/>
+                        <InfoContainer/>
                         <Possibility/>
                         {/*<CTA/>*/}
                         {/*<Blog/> /!*Znaleźć kogoś od blogów fajny pomysł*!/*/}

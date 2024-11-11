@@ -60,3 +60,16 @@
         margin: 1rem 0;
     }
 }
+
+@media screen and (max-width: 350px) {
+    /*.rr__features-container__feature-title{*/
+    /*    max-width: 20%;*/
+    /*    word-break: break-word;*/
+    /*    overflow-wrap: break-word;*/
+    /*}*/
+    /*.rr__features-container__feature-title h1{*/
+    /*    font-size: 10px;*/
+    /*}*/
+
+
+}

@@ -53,3 +53,9 @@
     background-color: #882c9e;
     transform: scale(0.95);
 }
+@media screen and (max-width: 250px) {
+    .ad-text {
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+}
