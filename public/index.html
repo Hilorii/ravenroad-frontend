@@ -1,18 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Poznaj Rave Road - nawigacja zasilana AI!" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <title>Raven Road</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Poznaj Rave Road - nawigacja zasilana AI!" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>Raven Road</title>
+
+  <!-- Google Translate Script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'pl',
+        includedLanguages: 'en,pl,de',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+
+<body>
+<!-- Custom Language Bar -->
+<div id="custom-translate-bar" style="text-align: center; background-color: #f1f1f1; padding: 10px;">
+<!--  <label for="language-select">Wybierz język:</label>-->
+  <select id="language-select">
+    <option value="pl">Polski</option>
+    <option value="en">Angielski</option>
+    <option value="de">Niemiecki</option>
+  </select>
+</div>
+
+<!-- Root div for React app -->
+<div id="root"></div>
+
+<!-- JavaScript to Control Language Selection -->
+<script type="text/javascript">
+  document.getElementById('language-select').addEventListener('change', function() {
+    var language = this.value;
+    var googleTranslateElement = document.querySelector('.goog-te-combo');
+    if (googleTranslateElement) {
+      googleTranslateElement.value = language;
+      googleTranslateElement.dispatchEvent(new Event('change'));
+    }
+  });
+</script>
+<style>
+  #custom-translate-bar {
+    position: fixed;
+    right: 0;
+    border-color: transparent;
+    width: 100px;
+    text-align: center;
+    z-index: 1000;
+    scale: 0.8;
+    background-clip: content-box;
+    padding-left: 100px;
+  }
+  #language-select {
+    border-color: transparent;
+    background-color: #09092b;
+    color: white;
+  }
+</style>
+</body>
 </html>
