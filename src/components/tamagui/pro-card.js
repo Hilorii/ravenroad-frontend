@@ -120,9 +120,9 @@ export function SubscriptionCard({
             <Card.Footer padded>
                 <XStack flex={1} />
                 <YStack flex={100} justifyContent="flex-end" alignItems="center" marginTop="$-4">
-                    <Link to="/pricing">
-                        <button className="edit" role="button"><span className="text">Dowiedz się więcej!</span></button>
-                    </Link>
+                    {/*<Link to="/pricing">*/}
+                        <button className="edit" role="button"><span className="text">Więcej w aplikacji!</span></button>
+                    {/*</Link>*/}
                 </YStack>
             </Card.Footer>
 

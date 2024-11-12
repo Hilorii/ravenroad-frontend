@@ -15,10 +15,12 @@ export default function HelpPage() {
                     <h1 className="gradient__text title">Potrzebujesz pomocy? Skontaktuj się z nami!</h1>
 
                     {/* Sekcja z e-mailem do kontaktu */}
-                    <YStack padding="$6" space alignItems="center">
+                    <YStack padding="$6" space alignItems="center" width="100%">
                         <p className="help-text">Jeśli napotkałeś jakiekolwiek problemy, prosimy o kontakt pod poniższy adres e-mail:</p>
                         <XStack alignItems="center" space>
-                            <MAIL size={40} color="#ffffff" />
+                            <div style={{maxWidth: '50px', width: '100%', display: 'flex', justifyContent: 'center'}}>
+                                <MAIL size="100%" color="#ffffff"/>
+                            </div>
                             <p className="help-email">Email: <a href={`mailto:${contactMail}`}>{contactMail}</a></p>
                         </XStack>
                         <p className="help-text">Zrobimy co w naszej mocy, aby pomóc Ci jak najszybciej!</p>

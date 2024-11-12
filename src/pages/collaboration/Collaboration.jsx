@@ -1,5 +1,6 @@
 import { YStack, XStack} from 'tamagui';
 import Navbar from "../../components/navbar/Navbar"
+import NavbarTmp from '../../components/navbar/NavbarTmp'
 import './collaboration.css'
 import { Link } from 'react-router-dom';
 import { MAIL } from '../../components/icons'
@@ -9,7 +10,7 @@ export default function CollaborationPage() {
     return (
         <div className="App">
             <div className="gradient__bg">
-                <Navbar/>
+                <NavbarTmp/>
                 <YStack padding="$4" space>
                     <h1 className="gradient__text">Współpracuj z nami!</h1>
                     <YStack padding="$10" space alignItems="center">

@@ -24,11 +24,11 @@ const Footer = () => (
                 <p><a href="/FAQ">FAQ</a></p>
                 <p><a href="/help">Pomoc</a></p>
                 <p><a href="/termsofusepl">Warunki użytkowania</a></p>
-                <p><a href="/privacypolicy">Polityka prywatności</a></p>
+                <p><a href="/termsofusepl">Polityka prywatności</a></p>
             </div>
             <div className="rr__footer-links_div">
                 <h4>Firma</h4>
-                <p><a href="/about">O nas</a></p>
+                {/*<p><a href="/about">O nas</a></p>*/}
                 <p><a href="/pricing">Raven PRO</a></p>
                 {/*<p><a href="/team">Zespół</a></p>*/}
                 <p><a href="/contact">Kontakt</a></p>
