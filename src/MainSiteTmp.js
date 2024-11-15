@@ -35,7 +35,7 @@ const MainSite = () => {
                         <Features/>
                         <InfoContainer/>
                         <Possibility/>
-                        {/*<CTA/>*/}
+                        {/*<CTA/> Gdy będzie już gdzie przekierować na stronke zarejetruj*/}
                         {/*<Blog/> /!*Znaleźć kogoś od blogów fajny pomysł*!/*/}
                         <Footer/>
                     </div>

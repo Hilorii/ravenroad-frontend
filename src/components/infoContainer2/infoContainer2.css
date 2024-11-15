@@ -16,6 +16,11 @@
     text-align: center;
     text-shadow: 0 4px 6px rgb(163, 72, 177);
 }
+@media (max-width: 360px) {
+    .ad-header2 h1 {
+        font-size: 1.5rem;
+    }
+}
 
 .ad-description2 p {
     font-size: 1.2rem;
