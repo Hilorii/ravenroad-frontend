@@ -18,7 +18,6 @@ const MainSite = () => {
 
     return (
         <div className="App">
-            <Cookies/>
             <div className="gradient__bg">
                 <div className="">
                     <NavbarTmp/>
