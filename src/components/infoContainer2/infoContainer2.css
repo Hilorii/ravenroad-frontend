@@ -1,0 +1,72 @@
+.ad-container2 {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #1e375a, #010713);
+    color: #f3f4f6;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    font-family: 'Arial', sans-serif;
+}
+
+.ad-header2 h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #aa5afd;
+    text-align: center;
+    text-shadow: 0 4px 6px rgb(163, 72, 177);
+}
+
+.ad-description2 p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 2rem;
+    color: #e5e7eb;
+}
+
+.ad-features2 h2,
+.ad-roadmap2 h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #9a45ea;
+}
+
+.ad-features2 ul,
+.ad-roadmap2 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ad-features2 li,
+.ad-roadmap2 li {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    text-indent: -1.5rem;
+    line-height: 1.6;
+    color: #d1d5db;
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.ad-features2 li:hover,
+.ad-roadmap2 li:hover {
+    color: #ce7cea;
+    transform: translateX(5px);
+}
+
+.ad-footer2 p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 2rem;
+    line-height: 1.6;
+    color: #9ca3af;
+}
+
+.ad-footer2 p:hover {
+    color: #aa5afd;
+    text-shadow: 0 2px 4px rgb(147, 93, 188);
+}

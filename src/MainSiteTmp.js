@@ -6,6 +6,7 @@ import {CTA, Brand, Navbar, Ad, Cookies} from './components'
 import NavbarTmp from './components/navbar/NavbarTmp'
 import RotatingIcons from './components/rotatingIcons/RotatingIcons'
 import InfoContainer from './components/infoContainer/InfoContainer'
+import InfoContainer2 from './components/infoContainer2/InfoContainer2'
 import "./App.css"
 
 import { ProCard } from './components/tamagui/pro-card';
@@ -24,10 +25,10 @@ const MainSite = () => {
                 </div>
                     <div>
                         <Header/>
-                        {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
-                        <Ad/>
-                        <WhatRR/>
                         <RotatingIcons/>
+                        <InfoContainer2/>
+                        <WhatRR/>
+                        <Ad/>
                         <div className="middle yes" id="pro">
                             <ProCard/>
                         </div>
