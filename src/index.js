@@ -63,48 +63,49 @@ root.render(
                     <Cookies/>
                     <Routes>
                         {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
-                        <Route path="/" element={<App />} />
+                        {/*<Route path="/" element={<App />} />*/}
                         <Route path="/main" element={<MainSite />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/passwordForgot" element={<PasswordForgotPage />} />
-                        <Route path="/signup" element={<SignupPage />} />
-                        <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
-                        <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
+                        {/*<Route path="/login" element={<LoginPage />} />*/}
+                        {/*<Route path="/passwordForgot" element={<PasswordForgotPage />} />*/}
+                        {/*<Route path="/signup" element={<SignupPage />} />*/}
+                        {/*<Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />*/}
+                        {/*<Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />*/}
                         <Route path="/termsofusepl" element={<TermsOfUsePage/>} />
                         <Route path="/termsofuseen" element={<TermsOfUsePageEN/>} />
                         <Route path="/termsofusede" element={<TermsOfUsePageDE/>} />
                         <Route path="/deleteData" element={<DeleteDataPage/>} />
                         <Route path="/pricing" element={<PricingPage/>} />
-                        <Route path="/notify" element={<ConstructionPage/>} />
+                        {/*<Route path="/notify" element={<ConstructionPage/>} />*/}
                         <Route path="/contact" element={<ContactPage/>} />
                         <Route path="/help" element={<HelpPage/>} />
-                        <Route path="/about" element={<AboutPage/>} />
-                        <Route path="/team" element={<TeamPage/>} />
-                        <Route path="/pricing/purchase" element={<PurchasePage/>} />
+                        {/*<Route path="/about" element={<AboutPage/>} />*/}
+                        {/*<Route path="/team" element={<TeamPage/>} />*/}
+                        {/*<Route path="/pricing/purchase" element={<PurchasePage/>} />*/}
                         <Route path="/FAQ" element={<FAQPage/>} />
-                        <Route path="/routes" element={<RoutesPage/>} />
-                        <Route path="/addRoute" element={<AddRoutePage/>} />
-                        <Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />
-                        <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
+                        {/*<Route path="/routes" element={<RoutesPage/>} />*/}
+                        {/*<Route path="/addRoute" element={<AddRoutePage/>} />*/}
+                        {/*<Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />*/}
+                        {/*<Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />*/}
                         <Route path="/collaboration" element={<CollaborationPage/>} />
-                        <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
-                        <Route path="/editRoute/:id" element={<EditRoutePage/>} />
-                        <Route path="/addGroup" element={<AddGroupPage/>} />
-                        <Route path="/editGroup/:id" element={<EditGroupPage/>} />
-                        <Route path="/editEvent/:id" element={<EditEventPage/>} />
-                        <Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />
-                        <Route path="/eventDetails/:id" element={<EventDetailsPage/>} />
-                        <Route path="/searchGroups" element={<SearchGroupsPage/>} />
-                        <Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />
-                        <Route path="/readyRouteDetails/:id" element={<ReadyRoutesDetailsPage/>} />
-                        <Route path="/createEvent" element={<AddEventPage/>} />
-                        <Route path="/joinEvents" element={<JoinEventPage/>} />
-                        <Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />
+                        {/*<Route path="/readyRoutes" element={<ReadyRoutesPage/>} />*/}
+                        {/*<Route path="/editRoute/:id" element={<EditRoutePage/>} />*/}
+                        {/*<Route path="/addGroup" element={<AddGroupPage/>} />*/}
+                        {/*<Route path="/editGroup/:id" element={<EditGroupPage/>} />*/}
+                        {/*<Route path="/editEvent/:id" element={<EditEventPage/>} />*/}
+                        {/*<Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />*/}
+                        {/*<Route path="/eventDetails/:id" element={<EventDetailsPage/>} />*/}
+                        {/*<Route path="/searchGroups" element={<SearchGroupsPage/>} />*/}
+                        {/*<Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />*/}
+                        {/*<Route path="/readyRouteDetails/:id" element={<ReadyRoutesDetailsPage/>} />*/}
+                        {/*<Route path="/createEvent" element={<AddEventPage/>} />*/}
+                        {/*<Route path="/joinEvents" element={<JoinEventPage/>} />*/}
+                        {/*<Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />*/}
                         <Route path="*" element={<PageNotFoundPage/>} />
 
 
                         {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
                         {/*<Route path="/" element={<Navigate to="/construction" replace />} />*/}
+                        <Route path="/" element={<Navigate to="/main" replace />} />
                         {/*<Route path="/construction" element={<ConstructionPage />} />*/}
                     </Routes>
                 </Router>

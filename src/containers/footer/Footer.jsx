@@ -29,7 +29,7 @@ const Footer = () => (
             <div className="rr__footer-links_div">
                 <h4>Firma</h4>
                 {/*<p><a href="/about">O nas</a></p>*/}
-                <p><a href="/pricing">Raven PRO</a></p>
+                {/*<p><a href="/pricing">Raven PRO</a></p>*/}
                 {/*<p><a href="/team">Zespół</a></p>*/}
                 <p><a href="/contact">Kontakt</a></p>
             </div>

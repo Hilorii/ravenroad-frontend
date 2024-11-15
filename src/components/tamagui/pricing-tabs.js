@@ -106,7 +106,7 @@ const HorizontalTabs = () => {
                         </>,
                     ]}
                     link=""
-                    buttonText="Wypróbuj przez 7 dni!"
+                    buttonText="Więcej w aplikacji!"
                 />
             </TabsContent>
 
@@ -133,7 +133,7 @@ const HorizontalTabs = () => {
                         </>,
                     ]}
                     link=""
-                    buttonText="Wypróbuj przez 7 dni!"
+                    buttonText="Więcej w aplikacji!"
                 />
 
             </TabsContent>
@@ -161,7 +161,7 @@ const HorizontalTabs = () => {
                         </>,
                     ]}
                     link=""
-                    buttonText="Wypróbuj przez 7 dni!"
+                    buttonText="Więcej w aplikacji!"
                 />
 
             </TabsContent>
@@ -188,7 +188,7 @@ const HorizontalTabs = () => {
                         </>,
                     ]}
                     link=""
-                    buttonText="Wypróbuj przez 7 dni!"
+                    buttonText="Więcej w aplikacji!"
                 />
                 
             </TabsContent>
@@ -293,12 +293,12 @@ function PricingCard({ title, price, features, link, buttonText, isRecommended }
                 ))}
             </YStack>
             <YStack flex={1} justifyContent="flex-end" alignItems="center" marginTop="$4">
-                <Link to="/pricing/purchase" onClick={() => {
-                    localStorage.setItem('subscriptionName', title);
-                    localStorage.setItem('price', price);
-                }}>
+                {/*<Link to="/pricing/purchase" onClick={() => {*/}
+                {/*    localStorage.setItem('subscriptionName', title);*/}
+                {/*    localStorage.setItem('price', price);*/}
+                {/*}}>*/}
                     <button className="edit" role="button"><span className="text">{buttonText}</span></button>
-                </Link>
+                {/*</Link>*/}
             </YStack>
         </Card>
     );
