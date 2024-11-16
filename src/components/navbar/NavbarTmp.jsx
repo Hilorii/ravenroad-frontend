@@ -1,33 +1,28 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
-import { FaInbox } from 'react-icons/fa';
 import './navbar.css';
 import logo from '../../assets/RRlogo.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContext';
-import { useUser } from '../../contexts/UserContext';
-import { PopoverDemo } from '../../components/tamagui/avatar-popover';
+import { useTranslation } from 'react-i18next';
 
 const Menu = () => {
-    const [isOpen, setIsOpen] = useState(false);
-        return(
-            <>
-                <p><a href="/main">Strona główna</a></p>
-                <p><a href="/contact">Kontakt</a></p>
-                <p><a href="/collaboration">Współpraca</a></p>
-            </>
-        )
+    const { t } = useTranslation(); // Importujemy funkcję tłumaczeń
+    return (
+        <>
+            <p><a href="/main">{t('navbar.home')}</a></p>
+            <p><a href="/contact">{t('navbar.contact')}</a></p>
+            <p><a href="/collaboration">{t('navbar.collaboration')}</a></p>
+        </>
+    );
 };
 
 const NavbarTmp = () => {
-    const navigate = useNavigate();
     const [toggleMenu, setToggleMenu] = useState(false);
 
     return (
         <div className="rr__navbar">
             <div className="rr__navbar-links">
                 <div className="rr__navbar-links_logo">
-                    <a href="/main"><img src={logo} alt='logo' /></a>
+                    <a href="/main"><img src={logo} alt="logo" /></a>
                 </div>
                 <div className="rr__navbar-links_container">
                     <Menu />

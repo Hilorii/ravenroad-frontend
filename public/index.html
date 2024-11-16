@@ -1,48 +1,18 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-
-<!--Jeśli chcesz żeby się skalowało wraz z zmniejszaniem strony to usuń poniższe-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Poznaj Rave Road - nawigacja zasilana AI!" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <title>Raven Road</title>
-
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      // Tworzymy instancję Google Translate bez widocznego widgetu
-      new google.translate.TranslateElement({
-        pageLanguage: 'pl',
-        includedLanguages: 'en,pl,de', // Języki do tłumaczenia
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE, // Ukrycie widgetu
-        autoDisplay: false
-      });
-    }
-
-    // Automatyczne tłumaczenie na język użytkownika
-    function setLanguageAutomatically() {
-      const userLang = navigator.language || navigator.userLanguage; // Preferencje użytkownika
-      const lang = userLang.split('-')[0]; // Kod języka (np. 'en', 'pl', itp.)
-
-      // Sprawdzamy i zmieniamy język po załadowaniu tłumacza
-      const interval = setInterval(() => {
-        const googleTranslateCombo = document.querySelector('.goog-te-combo'); // Znajdź menu języków
-        if (googleTranslateCombo) {
-          googleTranslateCombo.value = lang; // Ustaw język
-          googleTranslateCombo.dispatchEvent(new Event('change')); // Wywołaj zmianę języka
-          clearInterval(interval); // Przerywamy sprawdzanie
-        }
-      }, 500); // Sprawdzaj co 500 ms
-    }
-
-    // Ładujemy API Google Translate i konfigurujemy język
-    window.onload = function () {
-      setLanguageAutomatically();
-    };
-  </script>
-  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-<div id="root"></div> <!-- Twój root aplikacji -->
+<div id="root"></div>
 </body>
 </html>
