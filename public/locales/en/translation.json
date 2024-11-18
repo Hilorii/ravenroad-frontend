@@ -175,14 +175,13 @@
     "description": "Discover the capabilities of Raven Road and plan a route like never before"
   },
   "footer": {
-    "heading": "Are you ready for your journey into the future?",
-    "earlyAccess": "Request early access!",
+    "heading": "Contact",
     "companyDetails": "Raven Road LLC, All rights reserved",
     "links": "Links",
     "stories": "Stories",
     "faq": "FAQ",
     "help": "Help",
-    "termsOfUse": "Terms of Use",
+    "termsOfUse": "Terms of Use & Privacy Policy",
     "privacyPolicy": "Privacy Policy",
     "company": "Company",
     "aboutUs": "About Us",
@@ -193,6 +192,31 @@
     "discord": "Discord: Coming soon!",
     "facebook": "Facebook",
     "email": "Email",
-    "copyright": "@2024 Raven Road. All rights reserved."
+    "copyright": "@2024 Raven Road. All rights reserved.",
+    "comingSoon": "Coming soon!"
+  },
+  "cookies": {
+    "imageAlt": "Cookie",
+    "text": "This site uses cookies to ensure the best experience on our website. More information in our",
+    "privacyPolicy": "privacy policy",
+    "accept": "Accept"
+  },
+  "contactPage": {
+    "title": "Contact us!",
+    "email": "Email",
+    "phone": "Phone",
+    "discord": "Discord Server",
+    "facebook": "Facebook",
+    "comingSoon": "Coming soon!"
+  },
+  "faq": {
+    "title": "FAQ - Frequently Asked Questions",
+    "errorLoadingData": "Error loading FAQ data:"
+  },
+  "help": {
+    "title": "Need help? Contact us!",
+    "problemContact": "If you encounter any issues, please contact us at the following email address:",
+    "emailLabel": "Email",
+    "assistance": "We will do our best to assist you as quickly as possible!"
   }
 }

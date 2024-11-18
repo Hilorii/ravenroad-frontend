@@ -72,9 +72,9 @@ root.render(
                             {/*<Route path="/signup" element={<SignupPage />} />*/}
                             {/*<Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />*/}
                             {/*<Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />*/}
-                            <Route path="/termsofusepl" element={<TermsOfUsePage/>} />
-                            <Route path="/termsofuseen" element={<TermsOfUsePageEN/>} />
-                            <Route path="/termsofusede" element={<TermsOfUsePageDE/>} />
+                            <Route path="/pl/termsofuse" element={<TermsOfUsePage/>} />
+                            <Route path="/en/termsofuse" element={<TermsOfUsePageEN/>} />
+                            <Route path="/de/termsofuse" element={<TermsOfUsePageDE/>} />
                             <Route path="/deleteData" element={<DeleteDataPage/>} />
                             <Route path="/pricing" element={<PricingPage/>} />
                             {/*<Route path="/notify" element={<ConstructionPage/>} />*/}

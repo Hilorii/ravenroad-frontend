@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import dla nawigacji w aplikacji
-import './cookies.css'; // Import stylów
-import cookieImage from '../../assets/cookie.png'; // Import obrazka ciasteczka
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; // Import i18n
+import './cookies.css';
+import cookieImage from '../../assets/cookie.png';
 
 const Cookies = () => {
     const [showBanner, setShowBanner] = useState(false);
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation(); // Uzyskanie dostępu do tłumaczeń i języka
 
     useEffect(() => {
         const consent = localStorage.getItem('cookieConsent');
@@ -20,7 +22,9 @@ const Cookies = () => {
     };
 
     const handlePrivacyPolicyClick = () => {
-        navigate('/termsofusepl');
+        // Nawigacja w zależności od języka
+        const currentLanguage = i18n.language;
+        navigate(`/${currentLanguage}/termsofuse`);
     };
 
     if (!showBanner) return null;
@@ -28,16 +32,16 @@ const Cookies = () => {
     return (
         <div className="cookie-overlay">
             <div className="cookie-banner">
-                <img src={cookieImage} alt="Cookie" className="cookie-image" />
+                <img src={cookieImage} alt={t('cookies.imageAlt')} className="cookie-image" />
                 <div className="cookie-content">
                     <p>
-                        Ta strona używa plików cookies, aby zapewnić najlepszą jakość korzystania z niej. Więcej informacji w naszej{' '}
+                        {t('cookies.text')}{' '}
                         <span className="cookie-link" onClick={handlePrivacyPolicyClick}>
-              polityce prywatności
-            </span>.
+                            {t('cookies.privacyPolicy')}
+                        </span>.
                     </p>
                     <button onClick={handleAccept} className="cookie-button">
-                        Akceptuj
+                        {t('cookies.accept')}
                     </button>
                 </div>
             </div>

@@ -1,11 +1,13 @@
 import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
+import NavbarTmp from '../../components/navbar/NavbarTmp';
 import './termsOfUse.css';
 
 const TermsOfUsePl = () => {
     return (
         <div className="App">
             <div className="gradient__bg">
+                <NavbarTmp/>
                 <div className="terms-of-use-page">
                     {/*<Navbar />*/}
                     <div className="content">

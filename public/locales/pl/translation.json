@@ -175,14 +175,13 @@
     "description": "Poznaj możliwości Raven Road i zaplanuj trasę jakiej nigdy wcześniej nie znałeś"
   },
   "footer": {
-    "heading": "Jesteś gotowy na swoją podróż do przyszłości?",
-    "earlyAccess": "Poproś o wczesny dostęp!",
+    "heading": "Kontakt",
     "companyDetails": "Raven Road sp z o.o., Wszelkie prawa zastrzeżone",
     "links": "Linki",
     "stories": "Historie",
     "faq": "FAQ",
     "help": "Pomoc",
-    "termsOfUse": "Warunki użytkowania",
+    "termsOfUse": "Warunki użytkowania i polityka prywatności",
     "privacyPolicy": "Polityka prywatności",
     "company": "Firma",
     "aboutUs": "O nas",
@@ -193,7 +192,31 @@
     "discord": "Discord: już wkrótce!",
     "facebook": "Facebook",
     "email": "Email",
-    "copyright": "@2024 Raven Road. Wszelkie prawa zastrzeżone."
+    "copyright": "@2024 Raven Road. Wszelkie prawa zastrzeżone.",
+    "comingSoon": "Już wkrótce!"
+  },
+  "cookies": {
+    "imageAlt": "Ciasteczko",
+    "text": "Ta strona używa plików cookies, aby zapewnić najlepszą jakość korzystania z niej. Więcej informacji w naszej",
+    "privacyPolicy": "polityce prywatności",
+    "accept": "Akceptuj"
+  },
+  "contactPage": {
+    "title": "Skontaktuj się z nami!",
+    "email": "Email",
+    "phone": "Telefon",
+    "discord": "Serwer Discord",
+    "facebook": "Facebook",
+    "comingSoon": "Już wkrótce!"
+  },
+  "faq": {
+    "title": "FAQ - Najczęściej zadawane pytania",
+    "errorLoadingData": "Błąd wczytywania danych FAQ:"
+  },
+  "help": {
+    "title": "Potrzebujesz pomocy? Skontaktuj się z nami!",
+    "problemContact": "Jeśli napotkałeś jakiekolwiek problemy, prosimy o kontakt pod poniższy adres e-mail:",
+    "emailLabel": "Email",
+    "assistance": "Zrobimy co w naszej mocy, aby pomóc Ci jak najszybciej!"
   }
-
 }
