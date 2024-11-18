@@ -218,5 +218,12 @@
     "problemContact": "If you encounter any issues, please contact us at the following email address:",
     "emailLabel": "Email",
     "assistance": "We will do our best to assist you as quickly as possible!"
+  },
+  "collaboration": {
+    "title": "Collaborate with us!",
+    "description": "Want your company to be visible in our navigation app? This is a great opportunity to reach new customers. Contact us by sending an email to",
+    "details": "In response, you will receive all the details about the collaboration. Join the companies already working with us and gain an edge in the market!",
+    "emailLabel": "Email",
+    "email": "Email"
   }
 }

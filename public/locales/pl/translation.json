@@ -218,5 +218,12 @@
     "problemContact": "Jeśli napotkałeś jakiekolwiek problemy, prosimy o kontakt pod poniższy adres e-mail:",
     "emailLabel": "Email",
     "assistance": "Zrobimy co w naszej mocy, aby pomóc Ci jak najszybciej!"
+  },
+  "collaboration": {
+    "title": "Współpracuj z nami!",
+    "description": "Chcesz, aby Twoja firma była widoczna w naszej aplikacji nawigacyjnej? To doskonała okazja, by dotrzeć do nowych klientów. Skontaktuj się z nami, wysyłając wiadomość na",
+    "details": "W odpowiedzi otrzymasz wszystkie szczegóły dotyczące współpracy. Dołącz do grona firm, które już z nami współpracują i zyskaj przewagę na rynku!",
+    "emailLabel": "Email",
+    "email": "Email"
   }
 }

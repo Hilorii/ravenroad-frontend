@@ -218,5 +218,12 @@
     "problemContact": "Wenn du auf Probleme stößt, kontaktiere uns bitte unter der folgenden E-Mail-Adresse:",
     "emailLabel": "Email",
     "assistance": "Wir werden unser Bestes tun, um dir so schnell wie möglich zu helfen!"
+  },
+  "collaboration": {
+    "title": "Arbeiten Sie mit uns zusammen!",
+    "description": "Möchten Sie, dass Ihr Unternehmen in unserer Navigations-App sichtbar ist? Dies ist eine großartige Gelegenheit, neue Kunden zu erreichen. Kontaktieren Sie uns, indem Sie eine E-Mail senden an",
+    "details": "Als Antwort erhalten Sie alle Details zur Zusammenarbeit. Schließen Sie sich den Unternehmen an, die bereits mit uns zusammenarbeiten, und verschaffen Sie sich einen Wettbewerbsvorteil auf dem Markt!",
+    "emailLabel": "Email",
+    "email": "Email"
   }
 }
