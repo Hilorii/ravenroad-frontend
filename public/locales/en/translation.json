@@ -3,5 +3,196 @@
     "home": "Home",
     "contact": "Contact",
     "collaboration": "Collaboration"
+  },
+  "header": {
+    "title": "Plan your amazing journey with Raven Road",
+    "description": "Join the amazing Raven Road community for free today!",
+    "emailPlaceholder": "Your email address",
+    "button": "Let's go",
+    "alert": "Please provide an email address",
+    "success": "Thank you!",
+    "emailExists": "This email has already been registered.",
+    "error": "An error occurred. Please try again later.",
+    "submitError": "An error occurred while saving the email:",
+    "bannerAlt": "Raven Road banner"
+  },
+  "rotatingIcons": {
+    "title": "Explore the world with Raven Road",
+    "subheader": "AI navigation that guides you wherever you are",
+    "features": {
+      "intelligentPlanning": "Intelligent Planning",
+      "trafficNotifications": "Traffic Notifications",
+      "localAttractions": "Local Attractions",
+      "groupRoutes": "Group Routes"
+    },
+    "ctaButton": "Check it now",
+    "demoButton": "See it in action"
+  },
+  "infoContainer2": {
+    "header": "Raven Road – Your New Favorite Navigation App",
+    "description": "Raven Road is a modern navigation app that takes route planning to the next level. With innovative use of artificial intelligence, you can forget about tedious manual planning of your trips. Just describe what your route should look like, and our AI will generate it for you. You can overlay the ready route on the map and use it in navigation immediately.",
+    "featuresTitle": "Features You'll Love:",
+    "features": {
+      "aiRoutes": "💡 AI-generated intelligent routes – Create unique journeys tailored to your preferences.",
+      "groupsEvents": "👥 Create groups and events – Connect with other users, plan joint trips, and share your routes.",
+      "gpxImportExport": "🔄 Import and export routes – Use GPX-format routes or share your journeys with others.",
+      "osmIndependence": "🌍 Independence from corporations – We use OpenStreetMap data, providing independence and up-to-date information.",
+      "directContact": "💬 Direct contact with users – Your opinion matters! The app includes a chat where you can share ideas, report bugs, and provide feedback."
+    },
+    "roadmapTitle": "Always Up-to-Date – Development Roadmap:",
+    "roadmap": {
+      "facebookLogin": "🔜 Facebook Login – Simplified and fast login.",
+      "facebookSharing": "🔜 Sharing events on Facebook – Share your plans with friends.",
+      "iosVersion": "🔜 iOS Version – Raven Road available on Apple devices.",
+      "voiceCommands": "🔜 Professional voice command assistant – Even more enjoyable navigation.",
+      "customAlerts": "🔜 Personalized alerts about route difficulties."
+    },
+    "footer": "Shaping the Future of Navigation Together. Raven Road is more than just an app – it's a community of users who have a real impact on its development. Join our journey and help us create the perfect navigation tool."
+  },
+  "whatRR": {
+    "feature1": {
+      "title": "What is Raven Road",
+      "text": "Welcome to Raven Road, a versatile platform for motorcycle enthusiasts! Whether you're planning an adventurous journey, tracking your routes, or connecting with fellow riders, Raven Road has everything you need. Our interactive maps and GPS navigation help you discover and share exciting routes, while real-time tracking keeps you connected with friends. Join challenges, explore popular trails, and become part of a vibrant community. Raven Road - your journey begins here, and every ride turns into an adventure!"
+    },
+    "heading": "Raven Road - Your indispensable travel companion",
+    "learnMore": "Learn more",
+    "feature2": {
+      "title": "Interactive Maps and GPS Navigation",
+      "text": "Create, save, and share motorcycle routes using advanced maps. Use GPS navigation with voice instructions to reach your destination safely."
+    },
+    "feature3": {
+      "title": "Tracking and Ride Analysis",
+      "text": "Record your rides, analyze statistics, and share your achievements. Track your location in real-time and see where your friends are."
+    },
+    "feature4": {
+      "title": "Community and Challenges",
+      "text": "Join challenges and compete with other riders. Discover popular routes, share your adventures, and be part of a dynamic motorcycle community."
+    }
+  },
+  "ad": {
+    "title": "Advertising in the Raven Road app",
+    "text": "If you're thinking about promoting your business in the Raven Road app, write to us at:",
+    "contact": "We will be happy to answer any questions!",
+    "button": "MAIL US"
+  },
+  "title": {
+    "freeFlight": "Free Flight",
+    "silverWing": "Silver Wing",
+    "blackFeather": "Black Feather",
+    "shadowRaven": "Shadow Raven"
+  },
+  "description": {
+    "freeFlight": {
+      "line1": "You get FOR FREE:",
+      "line2": "- Basic navigation",
+      "line3": "- Route creation",
+      "line4": "- Rating routes",
+      "line5": "- Joining events",
+      "line6": "- Joining trips",
+      "line7": "- And more..."
+    },
+    "silverWing": {
+      "line1": "You get FOR A MONTH:",
+      "line2": "- Everything from Free Flight",
+      "line3": "- Route generation with AI",
+      "line4": "- Offline maps",
+      "line5": "- Route recording with measurements",
+      "line6": "- And more..."
+    },
+    "blackFeather": {
+      "line1": "You get FOR A YEAR:",
+      "line2": "- Everything from Silver Wing",
+      "line3": "- Route planning for a specific day",
+      "line4": "- Creating events",
+      "line5": "- Creating groups",
+      "line6": "- And more..."
+    },
+    "shadowRaven": {
+      "line1": "You get FOR A YEAR:",
+      "line2": "- Everything from Black Feather",
+      "line3": "- Priority support",
+      "line4": "- Exclusive routes and events",
+      "line5": "- Unlimited offline route saving",
+      "line6": "- And more..."
+    }
+  },
+  "button": {
+    "moreInApp": "More in the app!"
+  },
+  "features": {
+    "heading": "Step into the future with Raven Road!",
+    "aiRouteCreation": {
+      "title": "AI Route Creation",
+      "text": "In the Raven Road app, AI will help you create personalized motorcycle routes."
+    },
+    "socialMediaIntegration": {
+      "title": "Social Media Integration",
+      "text": "Easily share your rides, photos, and stats on social media platforms to inspire others and build your motorcycle community."
+    },
+    "safetyAlerts": {
+      "title": "Safety and Alerts",
+      "text": "Use alert features and notifications about hazardous conditions on the route to ride more safely and avoid potential dangers."
+    },
+    "offlineMode": {
+      "title": "Offline Mode",
+      "text": "Navigate and track your routes even without Internet access, thanks to the ability to download maps and routes to your device."
+    }
+  },
+  "info": {
+    "header": "Raven Road – Your AI Guide",
+    "tagline": "Explore the world with cutting-edge AI navigation technology",
+    "description": "Raven Road is more than just navigation. Thanks to advanced artificial intelligence technology, our app customizes routes to your preferences, suggests local attractions, and reacts to changing road conditions. Wherever you're headed, Raven Road will get you there with confidence and comfort.",
+    "benefitsTitle": "Why choose Raven Road?",
+    "benefits": {
+      "intelligentRoutes": {
+        "title": "Intelligent Routes",
+        "text": "Optimize routes based on your preferences and driving style."
+      },
+      "realtimeNotifications": {
+        "title": "Real-Time Notifications",
+        "text": "Instant updates about traffic jams and disruptions."
+      },
+      "exploreSurroundings": {
+        "title": "Explore Surroundings",
+        "text": "Discover attractions, restaurants, and other places of interest."
+      },
+      "groupRoutes": {
+        "title": "Group Routes",
+        "text": "Invite friends and travel together!"
+      }
+    },
+    "getStartedTitle": "How to get started?",
+    "getStarted": {
+      "step1": "Download the app to your phone and create an account.",
+      "step2": "Set your travel preferences, such as route type and notifications.",
+      "step3": "Start planning your route and discover new places!"
+    },
+    "startButton": "Start your journey with Raven Road"
+  },
+  "possibility": {
+    "alt": "possibility",
+    "title": "The possibilities are endless",
+    "description": "Discover the capabilities of Raven Road and plan a route like never before"
+  },
+  "footer": {
+    "heading": "Are you ready for your journey into the future?",
+    "earlyAccess": "Request early access!",
+    "companyDetails": "Raven Road LLC, All rights reserved",
+    "links": "Links",
+    "stories": "Stories",
+    "faq": "FAQ",
+    "help": "Help",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "ravenPro": "Raven PRO",
+    "team": "Team",
+    "contact": "Contact",
+    "contactUs": "Get in Touch",
+    "discord": "Discord: Coming soon!",
+    "facebook": "Facebook",
+    "email": "Email",
+    "copyright": "@2024 Raven Road. All rights reserved."
   }
 }

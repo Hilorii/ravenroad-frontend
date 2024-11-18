@@ -3,5 +3,197 @@
     "home": "Strona główna",
     "contact": "Kontakt",
     "collaboration": "Współpraca"
+  },
+  "header": {
+    "title": "Zaplanuj swoją wspaniałą podróż z Raven Road",
+    "description": "Dołącz do wspaniałego community Raven Road już dziś za free!",
+    "emailPlaceholder": "Twój adres email",
+    "button": "W drogę",
+    "alert": "Proszę podać adres email",
+    "success": "Dziękujemy!",
+    "emailExists": "Ten email został już zapisany.",
+    "error": "Wystąpił błąd. Spróbuj ponownie później.",
+    "submitError": "Wystąpił błąd podczas zapisywania e-maila:",
+    "bannerAlt": "Baner Raven Road"
+  },
+  "rotatingIcons": {
+    "title": "Odkrywaj świat z Raven Road",
+    "subheader": "Nawigacja AI, która prowadzi Cię, gdziekolwiek jesteś",
+    "features": {
+      "intelligentPlanning": "Inteligentne planowanie",
+      "trafficNotifications": "Powiadomienia o ruchu",
+      "localAttractions": "Lokalne atrakcje",
+      "groupRoutes": "Trasy grupowe"
+    },
+    "ctaButton": "Sprawdź teraz",
+    "demoButton": "Zobacz w akcji"
+  },
+  "infoContainer2": {
+    "header": "Raven Road – Twoja Nowa Ulubiona Aplikacja Nawigacyjna",
+    "description": "Raven Road to nowoczesna aplikacja nawigacyjna, która przenosi planowanie tras na nowy poziom. Dzięki innowacyjnemu wykorzystaniu sztucznej inteligencji możesz zapomnieć o żmudnym ręcznym planowaniu swoich wypraw. Wystarczy, że opiszesz, jak powinna wyglądać Twoja trasa, a nasza AI wygeneruje ją za Ciebie. Gotową trasę możesz nałożyć na mapę i od razu korzystać z niej w nawigacji.",
+    "featuresTitle": "Funkcje, które Pokochasz:",
+    "features": {
+      "aiRoutes": "💡 Inteligentne trasy generowane przez AI – Twórz unikalne podróże dostosowane do swoich preferencji.",
+      "groupsEvents": "👥 Tworzenie grup i wydarzeń – Łącz się z innymi użytkownikami, planuj wspólne wypady i dziel się swoimi trasami.",
+      "gpxImportExport": "🔄 Importuj i eksportuj trasy – Wykorzystuj trasy zapisane w formacie GPX lub dziel się swoimi wyprawami z innymi.",
+      "osmIndependence": "🌍 Niezależność od korporacji – Korzystamy z danych OpenStreetMap, oferując niezależność i aktualność informacji.",
+      "directContact": "💬 Bezpośredni kontakt z użytkownikami – Twoje zdanie ma znaczenie! W aplikacji znajdziesz czat, gdzie możesz zgłaszać swoje pomysły, raportować błędy i dzielić się opiniami."
+    },
+    "roadmapTitle": "Zawsze na Bieżąco – Roadmap Rozwoju:",
+    "roadmap": {
+      "facebookLogin": "🔜 Logowanie przez Facebooka – Ułatwione i szybkie logowanie.",
+      "facebookSharing": "🔜 Udostępnianie wydarzeń na Facebooku – Dziel się swoimi planami z przyjaciółmi.",
+      "iosVersion": "🔜 Wersja na iOS – Raven Road dostępny także na urządzeniach Apple.",
+      "voiceCommands": "🔜 Profesjonalny lektor do komend głosowych – Jeszcze bardziej przyjemna nawigacja.",
+      "customAlerts": "🔜 Personalizowane alerty o utrudnieniach na trasie."
+    },
+    "footer": "Wspólnie Tworzymy Przyszłość Nawigacji. Raven Road to coś więcej niż tylko aplikacja – to społeczność użytkowników, którzy mają realny wpływ na jej rozwój. Zapisz się na naszą trasę rozwoju i pomóż nam stworzyć idealne narzędzie nawigacyjne."
+  },
+  "whatRR": {
+    "feature1": {
+      "title": "Czym jest Raven Road",
+      "text": "Witamy w Raven Road, wszechstronnej platformie dla entuzjastów motocykli! Niezależnie od tego, czy planujesz pełną przygód podróż, śledzisz swoje trasy, czy łączysz się z innymi motocyklistami, Raven Road ma wszystko, czego potrzebujesz. Nasze interaktywne mapy i nawigacja GPS pomogą Ci odkrywać i dzielić się ekscytującymi trasami, a śledzenie w czasie rzeczywistym utrzyma Cię w kontakcie ze znajomymi. Dołącz do wyzwań, eksploruj popularne szlaki i stań się częścią tętniącej życiem społeczności. Raven Road - tu zaczyna się Twoja podróż, a każda jazda staje się przygodą!"
+    },
+    "heading": "Raven Road - Twój niezastąpiony towarzysz w podróży",
+    "learnMore": "Dowiedz się więcej",
+    "feature2": {
+      "title": "Interaktywne Mapy i Nawigacja GPS",
+      "text": "Twórz, zapisuj i udostępniaj trasy motocyklowe z pomocą zaawansowanych map. Korzystaj z nawigacji GPS z instrukcjami głosowymi, aby bezpiecznie dotrzeć do celu."
+    },
+    "feature3": {
+      "title": "Śledzenie i Analiza Jazdy",
+      "text": "Rejestruj swoje przejażdżki, analizuj statystyki i udostępniaj swoje osiągnięcia. Śledź swoją pozycję w czasie rzeczywistym i zobacz, gdzie są Twoi znajomi."
+    },
+    "feature4": {
+      "title": "Społeczność i Wyzwania",
+      "text": "Dołącz do wyzwań i rywalizuj z innymi motocyklistami. Odkrywaj popularne trasy, dziel się swoimi przygodami i bądź częścią dynamicznej społeczności motocyklowej."
+    }
+  },
+  "ad": {
+    "title": "Reklama w aplikacji Raven Road",
+    "text": "Jeśli myślisz o promowaniu swojej firmy w aplikacji Raven Road, napisz do nas na:",
+    "contact": "Chętnie odpowiemy na wszelkie pytania!",
+    "button": "NAPISZ"
+  },
+  "title": {
+    "freeFlight": "Free Flight",
+    "silverWing": "Silver Wing",
+    "blackFeather": "Black Feather",
+    "shadowRaven": "Shadow Raven"
+  },
+  "description": {
+    "freeFlight": {
+      "line1": "Otrzymasz za DARMO:",
+      "line2": "- Podstawowa nawigacja",
+      "line3": "- Tworzenie tras",
+      "line4": "- Ocenianie tras",
+      "line5": "- Zapisywanie się do eventów",
+      "line6": "- Zapisywanie się na wyjazdy",
+      "line7": "- I nie tylko..."
+    },
+    "silverWing": {
+      "line1": "Otrzymasz na MIESIĄC:",
+      "line2": "- Wszystko z Free Flight",
+      "line3": "- Generowanie tras z pomocą AI",
+      "line4": "- Mapy offline",
+      "line5": "- Nagrywanie tras z pomiarami",
+      "line6": "- I nie tylko..."
+    },
+    "blackFeather": {
+      "line1": "Otrzymasz na ROK:",
+      "line2": "- Wszystko z Silver Wing",
+      "line3": "- Planowanie tras na określony dzień",
+      "line4": "- Tworzenie wydarzeń",
+      "line5": "- Tworzenie grup",
+      "line6": "- I nie tylko..."
+    },
+    "shadowRaven": {
+      "line1": "Otrzymasz na ROK:",
+      "line2": "- Wszystko z Black Feather",
+      "line3": "- Priorytetowe wsparcie",
+      "line4": "- Ekskluzywne trasy i wydarzenia",
+      "line5": "- Nielimitowane zapisywanie tras offline",
+      "line6": "- I nie tylko..."
+    }
+  },
+  "button": {
+    "moreInApp": "Więcej w aplikacji!"
+  },
+  "features": {
+    "heading": "Wkrocz w przyszłość z Raven Road!",
+    "aiRouteCreation": {
+      "title": "Tworzenie Tras Dzięki Sztucznej Inteligencji",
+      "text": "W aplikacji Raven Road, sztuczna inteligencja pomoże Ci stworzyć spersonalizowane trasy motocyklowe."
+    },
+    "socialMediaIntegration": {
+      "title": "Integracja z Mediami Społecznościowymi",
+      "text": "Łatwo udostępniaj swoje przejażdżki, zdjęcia i statystyki na platformach społecznościowych, aby inspirować innych i budować swoją motocyklową społeczność."
+    },
+    "safetyAlerts": {
+      "title": "Bezpieczeństwo i Alarmy",
+      "text": "Korzystaj z funkcji alarmów i powiadomień o niebezpiecznych warunkach na trasie, aby jeździć bezpieczniej i unikać potencjalnych zagrożeń."
+    },
+    "offlineMode": {
+      "title": "Tryb Offline",
+      "text": "Nawiguj i śledź swoje trasy nawet bez dostępu do Internetu, dzięki możliwości pobierania map i tras na swoje urządzenie."
+    }
+  },
+  "info": {
+    "header": "Raven Road – Twój AI przewodnik",
+    "tagline": "Eksploruj świat z najnowszą technologią nawigacji AI",
+    "description": "Raven Road to więcej niż zwykła nawigacja. Dzięki zaawansowanej technologii sztucznej inteligencji, nasza aplikacja dostosowuje trasy do Twoich preferencji, proponuje atrakcje w okolicy i reaguje na zmieniające się warunki drogowe. Bez względu na to, dokąd zmierzasz – Raven Road dostarczy Cię na miejsce z pewnością i wygodą.",
+    "benefitsTitle": "Dlaczego warto wybrać Raven Road?",
+    "benefits": {
+      "intelligentRoutes": {
+        "title": "Inteligentne trasy",
+        "text": "Optymalizacja tras na podstawie Twoich preferencji i stylu jazdy."
+      },
+      "realtimeNotifications": {
+        "title": "Powiadomienia w czasie rzeczywistym",
+        "text": "Błyskawiczne informacje o korkach i utrudnieniach."
+      },
+      "exploreSurroundings": {
+        "title": "Odkrywanie okolicy",
+        "text": "Znajdź atrakcje, restauracje i inne miejsca, które mogą Cię zainteresować."
+      },
+      "groupRoutes": {
+        "title": "Trasy grupowe",
+        "text": "Zapraszaj znajomych i podróżujcie razem!"
+      }
+    },
+    "getStartedTitle": "Jak zacząć?",
+    "getStarted": {
+      "step1": "Pobierz aplikację na telefon i załóż konto.",
+      "step2": "Ustaw swoje preferencje podróży, np. typ trasy i powiadomienia.",
+      "step3": "Zacznij planować trasę i odkrywaj nowe miejsca!"
+    },
+    "startButton": "Rozpocznij podróż z Raven Road"
+  },
+  "possibility": {
+    "alt": "możliwości",
+    "title": "Możliwości są nieograniczone",
+    "description": "Poznaj możliwości Raven Road i zaplanuj trasę jakiej nigdy wcześniej nie znałeś"
+  },
+  "footer": {
+    "heading": "Jesteś gotowy na swoją podróż do przyszłości?",
+    "earlyAccess": "Poproś o wczesny dostęp!",
+    "companyDetails": "Raven Road sp z o.o., Wszelkie prawa zastrzeżone",
+    "links": "Linki",
+    "stories": "Historie",
+    "faq": "FAQ",
+    "help": "Pomoc",
+    "termsOfUse": "Warunki użytkowania",
+    "privacyPolicy": "Polityka prywatności",
+    "company": "Firma",
+    "aboutUs": "O nas",
+    "ravenPro": "Raven PRO",
+    "team": "Zespół",
+    "contact": "Kontakt",
+    "contactUs": "Zapraszamy do kontaktu",
+    "discord": "Discord: już wkrótce!",
+    "facebook": "Facebook",
+    "email": "Email",
+    "copyright": "@2024 Raven Road. Wszelkie prawa zastrzeżone."
   }
+
 }

@@ -1,20 +1,16 @@
 import React from 'react';
 import './header.css';
-import people from "../../assets/people.png"
-import banner from "../../assets/banner.jpg"
+import people from "../../assets/people.png";
+import banner from "../../assets/banner.jpg";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; // Import hook for i18n
 
 const Header = () => {
-
+    const { t } = useTranslation(); // Hook for translations
     const [email, setEmail] = useState('');
-    const navigate = useNavigate();
-
-    //TMP
-    const [suggestion, setSuggestion] = useState('');
     const [message, setMessage] = useState('');
-
-
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -24,11 +20,10 @@ const Header = () => {
         if (email) {
             navigate('/signup', { state: { email } });
         } else {
-            alert('Proszę podać adres email');
+            alert(t('header.alert'));
         }
     };
 
-    //TMP
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -37,50 +32,45 @@ const Header = () => {
             formData.append('email', email);
 
             const response = await fetch(scriptURL, { method: 'POST', body: formData });
-            const resultText = await response.text(); // Odczytaj odpowiedź jako tekst
+            const resultText = await response.text();
 
             if (resultText === "Success") {
-                setMessage('Dziękujemy!');
-                setEmail('');  // Reset email field
-                setSuggestion(''); // Reset suggestion field
+                setMessage(t('header.success'));
+                setEmail('');
             } else if (resultText === "Email already exists") {
-                setMessage('Ten email został już zapisany.');
+                setMessage(t('header.emailExists'));
             } else {
-                setMessage('Wystąpił błąd. Spróbuj ponownie później.');
+                setMessage(t('header.error'));
             }
         } catch (error) {
-            console.error('Wystąpił błąd podczas zapisywania e-maila:', error);
-            setMessage('Wystąpił błąd. Spróbuj ponownie później.');
+            console.error(t('header.submitError'), error);
+            setMessage(t('header.error'));
         }
     };
-
 
     return (
         <div className="rr__header section__padding" id="Home">
             <div className="rr__header-content">
-                <h1 className="gradient__text">
-                    Zaplanuj swoją wspaniałą podróż z Raven Road
-                </h1>
-                <p>
-                    Dołącz do wspaniałego community Raven Road już dziś za free!
-                </p>
+                <h1 className="gradient__text">{t('header.title')}</h1>
+                <p>{t('header.description')}</p>
 
                 <form className="rr__header-content__input" onSubmit={handleSubmit}>
-                        <input
-                            type="email"
-                            placeholder="Twój adres email"
-                            value={email}
-                            onChange={handleEmailChange}
-                            required
-                        />
-                        <button role="button" type="submit">W drogę</button>
+                    <input
+                        type="email"
+                        placeholder={t('header.emailPlaceholder')}
+                        value={email}
+                        onChange={handleEmailChange}
+                        required
+                    />
+                    <button role="button" type="submit">{t('header.button')}</button>
                 </form>
                 {message && <p className="message gradient__text">{message}</p>}
             </div>
             <div className="rr__header-image">
-            <img src={banner} alt="banner"/>
+                <img src={banner} alt={t('header.bannerAlt')} />
             </div>
         </div>
-    )
-}
-export default Header
+    );
+};
+
+export default Header;
