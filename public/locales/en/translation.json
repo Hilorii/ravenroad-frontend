@@ -225,5 +225,25 @@
     "details": "In response, you will receive all the details about the collaboration. Join the companies already working with us and gain an edge in the market!",
     "emailLabel": "Email",
     "email": "Email"
+  },
+  "construction": {
+    "heading": "Page under construction...",
+    "description": "Sign up to test our app! Get 7 days of free access to all features and then 20% off the premium version. Enter your email and join the testers!",
+    "placeholder": {
+      "email": "Your email",
+      "suggestion": "Your suggestion for the app"
+    },
+    "button": {
+      "submit": "Sign up!"
+    },
+    "message": {
+      "success": "Thank you! We will notify you when the app is ready. You'll also receive a 20% discount.",
+      "emailExists": "This email has already been registered.",
+      "error": "An error occurred. Please try again later."
+    },
+    "links": {
+      "terms": "Terms of Use",
+      "deleteData": "Delete Data"
+    }
   }
 }

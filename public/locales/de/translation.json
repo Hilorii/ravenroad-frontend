@@ -225,5 +225,25 @@
     "details": "Als Antwort erhalten Sie alle Details zur Zusammenarbeit. Schließen Sie sich den Unternehmen an, die bereits mit uns zusammenarbeiten, und verschaffen Sie sich einen Wettbewerbsvorteil auf dem Markt!",
     "emailLabel": "Email",
     "email": "Email"
+  },
+  "construction": {
+    "heading": "Seite im Aufbau...",
+    "description": "Melden Sie sich für unsere Testanwendung an! Erhalten Sie 7 Tage kostenlosen Zugriff auf alle Funktionen und anschließend 20% Rabatt auf die Premium-Version. Geben Sie Ihre E-Mail-Adresse ein und schließen Sie sich den Testern an!",
+    "placeholder": {
+      "email": "Ihre E-Mail",
+      "suggestion": "Ihre Vorschläge für die App"
+    },
+    "button": {
+      "submit": "Anmelden!"
+    },
+    "message": {
+      "success": "Danke! Wir benachrichtigen Sie, wenn die App fertig ist. Sie erhalten außerdem 20% Rabatt.",
+      "emailExists": "Diese E-Mail wurde bereits registriert.",
+      "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal."
+    },
+    "links": {
+      "terms": "Nutzungsbedingungen",
+      "deleteData": "Daten löschen"
+    }
   }
 }

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './underConstruction.css';
 import logo from '../../assets/RRlogo.png';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function UnderConstruction() {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [suggestion, setSuggestion] = useState('');
     const [message, setMessage] = useState('');
@@ -25,59 +27,57 @@ function UnderConstruction() {
             formData.append('suggestion', suggestion);
 
             const response = await fetch(scriptURL, { method: 'POST', body: formData });
-            const resultText = await response.text(); // Odczytaj odpowiedź jako tekst
+            const resultText = await response.text();
 
             if (resultText === "Success") {
-                setMessage('Dziękujemy! Powiadomimy Cię, gdy aplikacja będzie gotowa. Otrzymasz również 20% zniżki.');
-                setEmail('');  // Reset email field
-                setSuggestion(''); // Reset suggestion field
+                setMessage(t('construction.message.success'));
+                setEmail('');
+                setSuggestion('');
             } else if (resultText === "Email already exists") {
-                setMessage('Ten email został już zapisany.');
+                setMessage(t('construction.message.emailExists'));
             } else {
-                setMessage('Wystąpił błąd. Spróbuj ponownie później.');
+                setMessage(t('construction.message.error'));
             }
         } catch (error) {
-            console.error('Wystąpił błąd podczas zapisywania e-maila:', error);
-            setMessage('Wystąpił błąd. Spróbuj ponownie później.');
+            console.error(t('construction.message.error'), error);
+            setMessage(t('construction.message.error'));
         }
     };
 
     return (
         <div className="gradient__bg">
             <div className="under-construction-container">
-                <img src={logo} alt="Logo" className="notify-logo"/>
+                <img src={logo} alt="Logo" className="notify-logo" />
                 <div className="gradient__text">
-                    <h1 className="h1-notify">Strona w budowie...</h1>
+                    <h1 className="h1-notify">{t('construction.heading')}</h1>
                     <p className="p-notify">
-                        Zapisz się na testy naszej aplikacji już 14 października! Otrzymaj 7 dni darmowego dostępu do
-                        wszystkich funkcji, a potem <strong className="notify-strong">20%</strong> zniżki na wersję
-                        premium. Podaj swój e-mail i dołącz do grona testerów!
+                        {t('construction.description')}
                     </p>
                 </div>
                 <form onSubmit={handleSubmit} className="email-form">
                     <input
                         type="email"
-                        placeholder="Twój e-maill"
+                        placeholder={t('construction.placeholder.email')}
                         value={email}
                         onChange={handleEmailChange}
                         required
                     />
                     <textarea
-                        placeholder="Twoja sugestia dotycząca aplikacji"
+                        placeholder={t('construction.placeholder.suggestion')}
                         value={suggestion}
                         onChange={handleSuggestionChange}
                         minLength={10}
                     />
                     <button className="edit bt-notify" role="button" type="submit">
-                        <span className="text">Zapisz się!</span>
+                        <span className="text">{t('construction.button.submit')}</span>
                     </button>
                 </form>
 
                 {message && <p className="message gradient__text">{message}</p>}
 
                 <div className="quick-links">
-                    <Link to="/termsofusepl" className="quick-link-button">Terms of Use</Link>
-                    <Link to="/deleteData" className="quick-link-button">Delete Data</Link>
+                    <Link to="/termsofusepl" className="quick-link-button">{t('construction.links.terms')}</Link>
+                    <Link to="/deleteData" className="quick-link-button">{t('construction.links.deleteData')}</Link>
                 </div>
             </div>
         </div>

@@ -225,5 +225,25 @@
     "details": "W odpowiedzi otrzymasz wszystkie szczegóły dotyczące współpracy. Dołącz do grona firm, które już z nami współpracują i zyskaj przewagę na rynku!",
     "emailLabel": "Email",
     "email": "Email"
+  },
+  "construction": {
+    "heading": "Strona w budowie...",
+    "description": "Zapisz się na testy naszej aplikacji! Otrzymaj 7 dni darmowego dostępu do wszystkich funkcji, a potem 20% zniżki na wersję premium. Podaj swój e-mail i dołącz do grona testerów!",
+    "placeholder": {
+      "email": "Twój e-mail",
+      "suggestion": "Twoja sugestia dotycząca aplikacji"
+    },
+    "button": {
+      "submit": "Zapisz się!"
+    },
+    "message": {
+      "success": "Dziękujemy! Powiadomimy Cię, gdy aplikacja będzie gotowa. Otrzymasz również 20% zniżki.",
+      "emailExists": "Ten email został już zapisany.",
+      "error": "Wystąpił błąd. Spróbuj ponownie później."
+    },
+    "links": {
+      "terms": "Regulamin",
+      "deleteData": "Usuń dane"
+    }
   }
 }
