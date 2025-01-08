@@ -14,6 +14,9 @@ const CenteredTextWithLogo = () => {
             <div className="cutout-text">
                 RAVEN ROAD
             </div>
+            <div className="text">
+                RAVEN ROAD
+            </div>
         </div>
     );
 };
