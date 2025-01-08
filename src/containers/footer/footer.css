@@ -3,14 +3,31 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    padding-top: 10px; /* Miejsce na górną linię/gradient, jeśli używasz before */
+}
 
-    background: var(--color-footer);
+.rr__footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
+}
+
+
+.rr__footer a {
+    font-family: var(--font-family);
+    font-size: 16px;
+    text-decoration: none; /* Usuń podkreślenie linków (opcjonalnie) */
+    color: #fff;
 }
 
 .rr__footer-heading {
     width: 100%;
     text-align: center;
-
     margin-bottom: 3rem;
 }
 
@@ -48,7 +65,6 @@
     align-items: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-
     width: 100%;
     text-align: left;
 }
@@ -58,6 +74,7 @@
     margin: 1rem;
 }
 
+/* Logo firmy (pierwsza kolumna) */
 .rr__footer-links_logo {
     display: flex;
     flex-direction: column;
@@ -66,7 +83,6 @@
 .rr__footer-links_logo img {
     width: 118px;
     height: 118px;
-
     margin-bottom: 1rem;
 }
 
@@ -84,24 +100,45 @@
 }
 
 .rr__footer-links_div h4 {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 17px;
     font-family: var(--font-family);
     color: #fff;
-
     margin-bottom: 0.9rem;
 }
 
 .rr__footer-links_div p {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 15px;
     font-family: var(--font-family);
     color: #fff;
-
     margin: 0.5rem 0;
     cursor: pointer;
 }
 
+/* Nowe style dla ikonek z gradientem i tekstu obok */
+.rr__footer-link-item {
+    display: flex;
+    align-items: center; /* Ikona i tekst w jednej linii */
+    margin: 0.5rem 0;   /* Odstęp między wierszami */
+}
+
+/* Ikona z gradientem, zmieniającym się przy hoverze */
+.rr__footer-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
+    transition: background 0.3s ease;
+}
+
+.rr__footer-icon:hover {
+    background: linear-gradient(103.22deg, #F49867 -13.86%, #AE67FA 99.55%);
+}
+
+/* Sekcja copyright */
 .rr__footer-copyright {
     margin-top: 2rem;
     text-align: center;
@@ -115,6 +152,7 @@
     color: #fff;
 }
 
+/* MEDIA QUERIES */
 @media screen and (max-width: 850px) {
     .rr__footer-heading h1 {
         font-size: 44px;
@@ -127,11 +165,9 @@
         font-size: 34px;
         line-height: 42px;
     }
-
     .rr__footer-links div {
         margin: 1rem 0;
     }
-
     .rr__footer-btn p {
         font-size: 14px;
         line-height: 20px;
