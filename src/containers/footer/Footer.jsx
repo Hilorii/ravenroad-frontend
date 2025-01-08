@@ -4,6 +4,11 @@ import './footer.css';
 import { contactMail } from '../../components/info';
 import { useTranslation } from 'react-i18next';
 
+// 1) Importy z Font Awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDiscord, faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
 const Footer = () => {
     const { t, i18n } = useTranslation();
     const currentLanguage = i18n.language;
@@ -48,13 +53,17 @@ const Footer = () => {
 
                     {/* Discord */}
                     <div className="rr__footer-link-item">
-                        <span className="rr__footer-icon"></span>
+            <span className="rr__footer-icon">
+              <FontAwesomeIcon icon={faDiscord} className="icon-inside" />
+            </span>
                         <p>Discord: {t('footer.comingSoon')}</p>
                     </div>
 
                     {/* Facebook */}
                     <div className="rr__footer-link-item">
-                        <span className="rr__footer-icon"></span>
+            <span className="rr__footer-icon">
+              <FontAwesomeIcon icon={faFacebookF} className="icon-inside" />
+            </span>
                         <p>
                             <a href="https://www.facebook.com/profile.php?id=61564039045420">
                                 Facebook
@@ -62,15 +71,17 @@ const Footer = () => {
                         </p>
                     </div>
 
-                    {/* Email */}
+                    {/* E-mail */}
                     <div className="rr__footer-link-item">
-                        <span className="rr__footer-icon"></span>
+            <span className="rr__footer-icon">
+              <FontAwesomeIcon icon={faEnvelope} className="icon-inside" />
+            </span>
                         <p>Email: {contactMail}</p>
                     </div>
                 </div>
             </div>
 
-            {/* Stopka kopiuj/prawo */}
+            {/* Sekcja copyright */}
             <div className="rr__footer-copyright">
                 <p>@2024 Raven Road. {t('footer.allRightsReserved')}</p>
             </div>

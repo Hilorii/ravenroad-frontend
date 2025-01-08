@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    padding-top: 10px; /* Miejsce na górną linię/gradient, jeśli używasz before */
+    padding-top: 10px;
 }
 
 .rr__footer::before {
@@ -21,8 +21,8 @@
 .rr__footer a {
     font-family: var(--font-family);
     font-size: 16px;
-    text-decoration: none; /* Usuń podkreślenie linków (opcjonalnie) */
-    color: #fff;
+    text-decoration: none; /* Usuń podkreślenie linków */
+    color: #fff;          /* Domyślny kolor */
 }
 
 .rr__footer-heading {
@@ -42,11 +42,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 1rem;
     border: 1px solid #fff;
     text-align: center;
-
     margin-bottom: 10rem;
     cursor: pointer;
 }
@@ -74,7 +72,7 @@
     margin: 1rem;
 }
 
-/* Logo firmy (pierwsza kolumna) */
+/* Logo firmy */
 .rr__footer-links_logo {
     display: flex;
     flex-direction: column;
@@ -116,29 +114,37 @@
     cursor: pointer;
 }
 
-/* Nowe style dla ikonek z gradientem i tekstu obok */
+/* Kontener wiersza dla ikony i tekstu */
 .rr__footer-link-item {
     display: flex;
-    align-items: center; /* Ikona i tekst w jednej linii */
-    margin: 0.5rem 0;   /* Odstęp między wierszami */
+    align-items: center;
+    margin: 0.5rem 0;
 }
 
-/* Ikona z gradientem, zmieniającym się przy hoverze */
+/* Okrąg z gradientem, w którym widnieje ikona FontAwesome */
 .rr__footer-icon {
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
     transition: background 0.3s ease;
+    margin-right: 8px;
 }
 
 .rr__footer-icon:hover {
     background: linear-gradient(103.22deg, #F49867 -13.86%, #AE67FA 99.55%);
 }
 
-/* Sekcja copyright */
+/* Sama ikonka wewnątrz kółka */
+.icon-inside {
+    color: #fff;
+    font-size: 16px; /* Rozmiar czcionki FontAwesome */
+}
+
+/* Copyright */
 .rr__footer-copyright {
     margin-top: 2rem;
     text-align: center;
