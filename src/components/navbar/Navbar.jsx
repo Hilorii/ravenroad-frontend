@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 import { useUser } from '../../contexts/UserContext';
 import { PopoverDemo } from '../../components/tamagui/avatar-popover';
+import TopBar from './TopBar';
 
 const Menu = () => {
     const { user, setUser } = useUser();
@@ -141,6 +142,8 @@ const Navbar = () => {
     }, [user]);
 
     return (
+        <>
+        <TopBar />
         <div className="rr__navbar">
             <div className="rr__navbar-links">
                 <div className="rr__navbar-links_logo">
@@ -217,6 +220,7 @@ const Navbar = () => {
                 )}
             </div>
         </div>
+        </>
     );
 };
 

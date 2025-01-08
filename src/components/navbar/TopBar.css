@@ -1,0 +1,44 @@
+/* Pasek u góry, wypełniony gradientem */
+.top-bar {
+    width: 100%;
+    background: linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    font-family: var(--font-family);
+    font-size: 14px;
+}
+
+/* Lewa część: tekst "Email: ..." */
+.top-bar-left {
+    /* Możesz dodać inne style w razie potrzeby */
+}
+
+/* Link do e-maila */
+.top-bar-email {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.top-bar-email:hover {
+    color: #000; /* Kolor tekstu po najechaniu */
+}
+
+/* Prawa część: ikony społecznościowe */
+.top-bar-right {
+    display: flex;
+    gap: 1rem; /* Odstęp między ikonami */
+}
+
+.top-bar-icon {
+    color: #fff;
+    font-size: 18px; /* Rozmiar ikon */
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.top-bar-icon:hover {
+    color: #000; /* Zmiana koloru ikony przy najechaniu */
+}
