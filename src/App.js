@@ -6,6 +6,8 @@ import {CTA, Brand, Navbar, Ad, Cookies} from './components'
 import "./App.css"
 import AnimatedBackground from './assets/AnimatedBackground/AnimatedBackground'
 
+import CenteredTextWithLogo from './components/textWithLogo/CenteredTextWithLogo';
+
 import { ProCard } from './components/tamagui/pro-card';
 import { SpinnerLoading } from './components/tamagui/spinner';
 
@@ -53,7 +55,8 @@ const App = () => {
                     <Footer/>
                 </div>
                 ) : (
-                <div>
+                    <div>
+                    <CenteredTextWithLogo/>
                     <Header/>
                     <Brand/> {/* ZMIENIĆ MARKI*/}
                     <Ad/>
