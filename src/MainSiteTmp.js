@@ -8,7 +8,6 @@ import InfoContainer from './components/infoContainer/InfoContainer';
 import InfoContainer2 from './components/infoContainer2/InfoContainer2';
 import { ProCard } from './components/tamagui/pro-card';
 import './App.css';
-import './Main.css';
 
 const MainSite = () => {
     const navigate = useNavigate();
