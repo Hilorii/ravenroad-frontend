@@ -1,0 +1,94 @@
+/* Główny kontener sekcji */
+.service-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    margin: 40px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+    font-family: var(--font-family);
+}
+
+/* Pojedynczy box z usługą/cechą */
+.service-item {
+    flex: 1;
+    background-color: transparent;
+    border: 2px solid #AE67FA;
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+
+    /* Ustawiamy elementy (ikona + tekst) w wierszu */
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Wyśrodkowanie ikonki i tekstu w pionie */
+}
+
+/* Ikona wewnątrz boxa */
+.service-icon {
+    width: 60px;
+    height: auto;
+    margin-right: 15px; /* Ikona oddzielona od tekstu */
+    margin-bottom: 0;   /* Usuwamy zbędny odstęp pionowy */
+}
+
+/* Kontener dla nagłówka i opisu */
+.service-text {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Nagłówek i opis */
+.service-text h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffffff;
+    transition: color 0.3s
+}
+
+.service-text p {
+    font-size: 0.95rem;
+    color: #cccccc;
+    line-height: 1.4;
+}
+
+/* Efekt po najechaniu */
+.service-item:hover {
+    transform: translateY(-5px);
+    border-color: #F49867; /* Zmiana koloru obramowania na inny */
+}
+.service-text h3:hover {
+    color: #AE67FA;
+}
+
+/* MEDIA QUERIES --------------------------------------- */
+
+/* Tablet i w dół (np. <992px) */
+@media (max-width: 992px) {
+    .service-container {
+        gap: 20px;
+    }
+
+    .service-text h3 {
+        font-size: 1.1rem;
+    }
+
+    .service-text p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Telefony i małe ekrany (<768px) - ustawiamy boxy jeden pod drugim (kolumna) */
+@media (max-width: 768px) {
+    .service-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .service-item {
+        margin: 0 auto;
+        width: 100%;
+    }
+}
