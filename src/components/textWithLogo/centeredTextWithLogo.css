@@ -66,7 +66,8 @@
     }
 }
 
-.text {
+
+.text-ctwl {
     font-family: var(--font-family);
     font-size: 80px;
     font-weight: bold;
@@ -84,6 +85,22 @@
 
     animation: subtleGlow 3s infinite alternate;
 }
+/* Animacja tekstu "Nawigacja przyszłości" */
+.animated-text-ctwl {
+    opacity: 0;
+    animation: fadeIn 2s ease-in forwards;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 
 /* Kontener przycisków */
 .button-container {
@@ -95,6 +112,21 @@
 }
 
 /* Przyciski */
+.gradient-button, .white-button {
+    transform: scale(0);
+    animation: growIn 1s ease-out forwards;
+    animation-delay: 1s;
+}
+
+@keyframes growIn {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .gradient-button {
     padding: 15px 30px;
     font-size: 16px;
@@ -110,7 +142,7 @@
 }
 
 .gradient-button:hover {
-    background: linear-gradient(45deg, #F49867 , #AE67FA );
+    background: linear-gradient(45deg, #F49867, #AE67FA);
 }
 
 .white-button {
@@ -128,6 +160,6 @@
 }
 
 .white-button:hover {
-    background: linear-gradient(45deg, #F49867 , #AE67FA );
+    background: linear-gradient(45deg, #F49867, #AE67FA);
     color: #fff;
 }
