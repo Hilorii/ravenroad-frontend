@@ -55,7 +55,6 @@ const SatisfactionContainer = () => {
                             </div>
                         </div>
 
-
                         <div className="gradient-and-text">
                             <div className="gradient-bar"></div>
                             <p className="description">
@@ -66,12 +65,13 @@ const SatisfactionContainer = () => {
                                 z Raven Road.
                             </p>
                         </div>
-                        <button className="cta-button">POZNAJ WIĘCEJ</button>
+
+                        <button className="cta-buttonn">POZNAJ WIĘCEJ</button>
                     </div>
                 </div>
 
                 <div className="image-box">
-                    <img src={example2} alt="example2"/>
+                    <img src={example2} alt="example2" />
                 </div>
             </section>
         </div>

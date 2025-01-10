@@ -7,9 +7,9 @@
 
 .container-section {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: space-between;
-    background-color: #000;
+    background-color: transparent;
     color: #fff;
     gap: 1rem;
     width: 100%;
@@ -19,7 +19,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .image-box img {
@@ -32,30 +32,15 @@
     flex: 2;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-}
-
-.gradient-bar {
-    width: 10px;
-    height: 100%;
-    background: linear-gradient(180deg, #AE67FA 0%, #F49867 100%);
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    gap: 1.5rem;
 }
 
 .text-box {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     gap: 1rem;
-    flex: 1;
 }
 
-.gradient-and-text {
-    display: flex;
-    align-items: stretch;
-    gap: 1rem;
-}
 .subtitle {
     font-size: 1rem;
     color: #AE67FA;
@@ -116,7 +101,7 @@
     top: -25px;
     right: 0;
     transform: translateX(50%);
-    background-color: #000;
+    background-color: transparent;
     padding: 2px 5px;
     border-radius: 3px;
     color: #fff;
@@ -145,15 +130,26 @@
     }
 }
 
+.gradient-and-text {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+.gradient-bar {
+    width: 10px;
+    background: linear-gradient(180deg, #AE67FA 0%, #F49867 100%);
+    border-radius: 4px;
+}
+
 .description {
     line-height: 1.5;
     font-size: 0.95rem;
     margin: 0;
-    margin: 0;
 }
 
-.cta-button {
-    background-color: #F49867;
+.cta-buttonn {
+    background: linear-gradient(45deg, #AE67FA, #F49867);
     color: #000;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -164,21 +160,20 @@
     text-transform: uppercase;
 }
 
-.cta-button:hover {
-    background-color: #AE67FA;
+.cta-buttonn:hover {
+    background: linear-gradient(45deg, #F49867, #AE67FA);
     color: #fff;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1440px) {
     .container-section {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
 
     .image-box {
+        width: 70%;
         margin: 1rem 0;
-        align-items: flex-start;
-        height: auto;
     }
 
     .image-box img {
@@ -187,23 +182,31 @@
     }
 
     .text-and-bar-container {
+        width: 100%;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .gradient-and-text {
         flex-direction: row;
         align-items: flex-start;
-        margin-bottom: 1rem;
-    }
-
-    .gradient-bar {
-        width: 4px;
-        height: auto;
-    }
-
-    .text-box {
-        max-width: 100%;
-        text-align: center;
-        align-items: center;
     }
 
     .cta-button {
         align-self: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .gradient-bar {
+        width: 6px;
     }
 }
