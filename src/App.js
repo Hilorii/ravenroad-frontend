@@ -12,6 +12,7 @@ import CenteredTextWithLogo from './components/textWithLogo/CenteredTextWithLogo
 import { ProCard } from './components/tamagui/pro-card';
 import { SpinnerLoading } from './components/tamagui/spinner';
 import ServiceContainer from './components/serviceContainer/ServiceContainer';
+import SatisfactionContainer from './components/satisfationContainer/SatisfactionContainer';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -60,6 +61,7 @@ const App = () => {
                     <div>
                     <CenteredTextWithLogo/>
                         <ServiceContainer/>
+                        <SatisfactionContainer/>
                     <Header/>
                     <Brand/> {/* ZMIENIĆ MARKI*/}
                     <Ad/>
