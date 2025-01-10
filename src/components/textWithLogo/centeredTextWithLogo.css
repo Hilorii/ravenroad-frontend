@@ -2,12 +2,16 @@
 .centered-container {
     position: relative;
     width: 100%;
-    height: 50vh;
+    /* Zamiast height: 50vh, ustalamy min-height, aby kontener mógł się rozszerzać w razie potrzeby */
+    min-height: 50vh;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+
+    /* Zmieniamy overflow na visible, by obraz nie "ucinał się" przy mniejszych ekranach */
+    overflow: visible;
 }
 
 /* Logo w tle */
@@ -17,7 +21,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0.1;
-    width: 25%;
+    width: 25%; /* szerokość w % ekranu; na mniejszych ekranach zadziałają media queries */
     height: auto;
     z-index: 1;
 }
@@ -66,7 +70,7 @@
     }
 }
 
-
+/* Tekst "Nawigacja przyszłości" */
 .text-ctwl {
     font-family: var(--font-family);
     font-size: 80px;
@@ -85,12 +89,12 @@
 
     animation: subtleGlow 3s infinite alternate;
 }
+
 /* Animacja tekstu "Nawigacja przyszłości" */
 .animated-text-ctwl {
     opacity: 0;
     animation: fadeIn 2s ease-in forwards;
 }
-
 
 @keyframes fadeIn {
     0% {
@@ -100,7 +104,6 @@
         opacity: 1;
     }
 }
-
 
 /* Kontener przycisków */
 .button-container {
@@ -162,4 +165,56 @@
 .white-button:hover {
     background: linear-gradient(45deg, #F49867, #AE67FA);
     color: #fff;
+}
+
+/* --- MEDIA QUERIES --- */
+/* Dla ekranów mniejszych niż 992px (np. tablety i telefony w poziomie) */
+@media (max-width: 992px) {
+    .cutout-text {
+        font-size: 90px;
+    }
+
+    .text-ctwl {
+        font-size: 60px;
+    }
+
+    .logo-background {
+        width: 35%;
+    }
+}
+
+/* Dla ekranów mniejszych niż 768px (typowe tablety/pion) */
+@media (max-width: 768px) {
+    .cutout-text {
+        font-size: 70px;
+    }
+
+    .text-ctwl {
+        font-size: 40px;
+    }
+
+    .logo-background {
+        width: 45%;
+    }
+}
+
+/* Dla ekranów mniejszych niż 576px (smartfony) */
+@media (max-width: 576px) {
+    .cutout-text {
+        font-size: 50px;
+    }
+
+    .text-ctwl {
+        font-size: 30px;
+    }
+
+    .logo-background {
+        width: 60%;
+    }
+
+    /* Przykładowo zmniejszamy padding przycisków, żeby lepiej mieściły się na ekranie */
+    .gradient-button, .white-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }
