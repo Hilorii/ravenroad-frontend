@@ -14,6 +14,7 @@ import { SpinnerLoading } from './components/tamagui/spinner';
 import ServiceContainer from './components/serviceContainer/ServiceContainer';
 import SatisfactionContainer from './components/satisfationContainer/SatisfactionContainer';
 
+
 const App = () => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();

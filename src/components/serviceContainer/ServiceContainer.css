@@ -4,10 +4,11 @@
     justify-content: center;
     align-items: stretch;
     gap: 30px;
-    margin: 40px auto;
+    margin: 100px auto;
     max-width: 1200px;
     padding: 0 20px;
     font-family: var(--font-family);
+
 }
 
 /* Pojedynczy box z usługą/cechą */
