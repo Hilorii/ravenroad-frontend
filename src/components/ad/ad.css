@@ -1,14 +1,81 @@
 .ad-container {
+    position: relative;
     text-align: center;
     padding: 20px;
     background-color: transparent;
     color: white;
-    border-style: groove;
+    border-radius: 10px;
+    z-index: 1;
+    overflow: hidden; /* Ukrywanie elementów poza kontenerem */
+    font-family: var(--font-family);
     width: 60%;
-    margin: 30px;
-    border-radius: 25px;
-    box-shadow: 0 0 1000px rgba(255, 255, 255, 0.1);
+    margin: 30px auto; /* Wycentrowanie kontenera */
 }
+
+.ad-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #AE67FA, #F49867, #AE67FA); /* Gradient tła */
+    z-index: -1; /* Umieszczenie tła za kontenerem */
+    border-radius: 10px;
+    padding: 4px; /* Grubość obramowania */
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    background-size: 300% 300%;
+    animation: gradient-scroll 5s infinite linear;
+}
+
+.ad-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1; /* Umieszczenie obramowania między ::before a zawartością */
+    pointer-events: none; /* Zapewnienie, że obramowanie nie blokuje interakcji */
+    background:
+        /* Lewy border z przerwą */
+            linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%) left,
+                /* Prawy border z przerwą */
+            linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%) right;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 5px 100%, 5px 100%;
+}
+
+@keyframes gradient-scroll {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+
+
+
+.ad-rr {
+    font-size: 28px;
+    transition: font-size 0.3s ease;
+}
+.ad-rr:hover {
+    font-size: 32px;
+}
+
+
+/*--gradient-text: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);*/
+
 
 .ad-title {
     font-size: 24px;

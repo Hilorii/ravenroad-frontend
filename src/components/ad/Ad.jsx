@@ -9,7 +9,10 @@ const Ad = () => {
     return (
         <div className="middle">
             <div className="ad-container">
-                <h2 className="ad-title">{t('ad.title')}</h2>
+                <h2 className="ad-title">
+                    {t('ad.title').replace('Raven Road', '')}
+                    <span className="ad-rr gradient__text"> Raven Road </span>
+                </h2>
                 <p className="ad-text">
                     {t('ad.text')}<br/>
                     <a href={`mailto:${collaborationMail}`}>{collaborationMail}</a>

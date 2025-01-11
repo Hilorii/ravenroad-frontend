@@ -26,7 +26,8 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 28px;
-    color: var(--color-text);
+
+    color: white;
 
     margin-top: 1.5rem;
 }
@@ -65,15 +66,21 @@
     font-weight: bold;
     font-size: 20px;
     line-height: 28px;
-    background: #FF4820;
+    background: #ffffff;
     border: none;
     padding: 0 1rem;
-    color: #fff;
+    color: #000000;
     cursor: pointer;
     outline: none;
 
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+.rr__header-content__input button:hover {
+    background: linear-gradient(180deg, #AE67FA 0%, #F49867 100%);
+    color: #ffffff;
 }
 
 .rr__header-content__people {
