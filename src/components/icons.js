@@ -9,6 +9,7 @@ import { MdEdit } from "react-icons/md";
 import { MdOutlineQuestionMark } from "react-icons/md";
 import { LuDoorOpen } from "react-icons/lu";
 
+
 //Ikonka X
 const X = BsXLg;
 export { X } ;
