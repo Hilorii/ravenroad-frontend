@@ -13,7 +13,7 @@ import { ProCard } from './components/tamagui/pro-card';
 import { SpinnerLoading } from './components/tamagui/spinner';
 import ServiceContainer from './components/serviceContainer/ServiceContainer';
 import SatisfactionContainer from './components/satisfationContainer/SatisfactionContainer';
-
+import PricingCards from './components/pricingCards/PricingCards';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -54,10 +54,7 @@ const App = () => {
                     <Header/>
                     {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
                     <Ad/>
-                    <WhatRR/>
-                    <div className="middle yes" id="pro">
-                        <ProCard/>
-                    </div>
+                    {/*<WhatRR/>*/}
                     <Features/>
                     {/*<Possibility/>*/}
                     <CTA/>
@@ -72,11 +69,9 @@ const App = () => {
                     <Header/>
                     {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
                     <Ad/>
-                    <WhatRR/>
-                    <div className="middle yes" id="pro">
-                        <ProCard/>
-                    </div>
+                    {/*<WhatRR/>*/}
                     <Features/>
+                    <PricingCards/>
                     {/*<Possibility/>*/}
                     <CTA/>
                     {/*<Blog/>*/}

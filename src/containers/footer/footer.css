@@ -184,5 +184,11 @@
     .rr__footer-heading h1 {
         font-size: 27px;
         line-height: 38px;
+        overflow: hidden;
+    }
+    .rr__footer-links div {
+        width: 100%;
     }
 }
+
+

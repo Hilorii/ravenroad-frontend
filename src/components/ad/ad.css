@@ -10,6 +10,8 @@
     font-family: var(--font-family);
     width: 60%;
     margin: 30px auto; /* Wycentrowanie kontenera */
+    margin-bottom: 60px;
+    margin-top: 60px;
 
     /* Dodanie płynnego przejścia dla transformacji */
     transition: transform 0.5s ease; /* Czas trwania animacji: 0.5s, rodzaj animacji: ease */

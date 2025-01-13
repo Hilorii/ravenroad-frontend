@@ -76,7 +76,7 @@ const Footer = () => {
             <span className="rr__footer-icon">
               <FontAwesomeIcon icon={faEnvelope} className="icon-inside" />
             </span>
-                        <p>Email: {contactMail}</p>
+                        <p className="rr__footer-email">Email: {contactMail}</p>
                     </div>
                 </div>
             </div>
