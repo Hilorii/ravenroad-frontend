@@ -1,10 +1,26 @@
 .rr__navbar {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 2rem 2rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 10;
 }
+.nav-p {
+    transition: background 0.5s ease, color 0.5s ease;
+    background: transparent;
+    background-size: 100%;
+}
+
+.nav-p:hover {
+    background: linear-gradient(90deg, #AE67FA, #F49867);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
 
 .avatar-button {
     background-color: transparent;
@@ -32,6 +48,10 @@
 .rr__navbar-links_logo img{
     width: 120px;
     height: 120px;
+    transition: 0.5s;
+}
+.rr__navbar-links_logo img:hover{
+    scale: 1.1;
 }
 
 .rr__navbar-links_container {

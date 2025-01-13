@@ -64,13 +64,13 @@ const App = () => {
                         <ServiceContainer/>
                         <SatisfactionContainer/>
                     <Header/>
-                    <Brand/> {/* ZMIENIĆ MARKI*/}
+                    {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
                     <Ad/>
                     <WhatRR/>
                     <div className="middle yes" id="pro">
                         <ProCard/>
                     </div>
-                    {/*<Features/>*/}
+                    <Features/>
                     {/*<Possibility/>*/}
                     <CTA/>
                     {/*<Blog/>*/}

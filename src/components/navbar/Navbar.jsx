@@ -8,6 +8,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { useUser } from '../../contexts/UserContext';
 import { PopoverDemo } from '../../components/tamagui/avatar-popover';
 import TopBar from './TopBar';
+import ScrollToTopBtn from './ScrollToTopBtn';
 
 const Menu = () => {
     const { user, setUser } = useUser();
@@ -15,11 +16,11 @@ const Menu = () => {
     if (!user && window.location.pathname === "/") {
         return (
             <>
-                <p><a href="#pro">Pro</a></p>
-                <p><a href="/Signup">Zaplanuj podróż</a></p>
-                <p><a href="/Signup">Gotowe trasy</a></p>
-                <p><a href="/contact">Kontakt</a></p>
-                <p><a href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a href="#pro">Pro</a></p>
+                <p className="nav-p"><a href="/Signup">Zaplanuj podróż</a></p>
+                <p className="nav-p"><a href="/Signup">Gotowe trasy</a></p>
+                <p className="nav-p"><a href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
             </>
         );
     } else if (user && window.location.pathname === "/") {
@@ -220,7 +221,9 @@ const Navbar = () => {
                 )}
             </div>
         </div>
+            <ScrollToTopBtn/>
         </>
+
     );
 };
 
