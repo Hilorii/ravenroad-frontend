@@ -38,10 +38,6 @@ const App = () => {
             });
     }, [navigate]);
 
-    if (isLoading) {
-        return <SpinnerLoading/>;
-    }
-
     return (
         <div className="">
             <AnimatedBackground />

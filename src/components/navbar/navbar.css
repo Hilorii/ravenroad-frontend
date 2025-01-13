@@ -8,7 +8,7 @@
     z-index: 10;
 }
 .nav-p {
-    transition: background 0.5s ease, color 0.5s ease;
+    transition: background 5s ease, color 0.1s ease;
     background: transparent;
     background-size: 100%;
 }
@@ -20,7 +20,6 @@
     -webkit-text-fill-color: transparent;
     color: transparent;
 }
-
 
 .avatar-button {
     background-color: transparent;
@@ -91,6 +90,11 @@
     border: 0;
     outline: none;
     cursor: pointer;
+    transition: 1s;
+}
+.signup:hover {
+    scale: 0.9;
+    background: #bc3518;
 }
 
 

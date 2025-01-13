@@ -173,8 +173,6 @@ const Navbar = () => {
                                             <p>{notification.content}</p>
                                             <p>Data wysłania: {new Date(notification.created_at).toLocaleDateString()}</p>
                                             <p>Data ważności: {new Date(new Date(notification.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</p>
-
-
                                         </div>
                                     ))
                                 ) : (
@@ -185,7 +183,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <>
-                        <p><Link to="login">Login</Link></p>
+                        <p className="nav-p"><Link to="login">Login</Link></p>
                         <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
                     </>
                 )}
