@@ -26,32 +26,32 @@ const Menu = () => {
     } else if (user && window.location.pathname === "/") {
         return (
             <>
-                <p><a href="#pro">Pro</a></p>
-                <p><a href="/contact">Kontakt</a></p>
-                <p><a href="#niewiem">Zaplanuj podróż</a></p>
-                <p><a href="/readyRoutes">Gotowe trasy</a></p>
-                <p><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
-                <p><a href="/collaboration">Współpraca</a></p>
-                <p><a href={`/profile/${user.username}`}>Profil</a></p>
+                <p className="nav-p"><a href="#pro">Pro</a></p>
+                <p className="nav-p"><a href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a href="#niewiem">Zaplanuj podróż</a></p>
+                <p className="nav-p"><a href="/readyRoutes">Gotowe trasy</a></p>
+                <p className="nav-p"><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
+                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a href={`/profile/${user.username}`}>Profil</a></p>
             </>
         );
     } else if (user) {
         return (
             <>
-                <p><a href="/">Strona główna</a></p>
-                <p><a href="/contact">Kontakt</a></p>
-                <p><a href="/readyRoutes">Gotowe trasy</a></p>
-                <p><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
-                <p><a href="/collaboration">Współpraca</a></p>
-                <p><a href={`/profile/${user.username}`}>Profil</a></p>
+                <p className="nav-p"><a href="/">Strona główna</a></p>
+                <p className="nav-p"><a href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a href="/readyRoutes">Gotowe trasy</a></p>
+                <p className="nav-p"><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
+                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a href={`/profile/${user.username}`}>Profil</a></p>
             </>
         );
     } else {
         return (
             <>
-                <p><a href="/">Strona główna</a></p>
-                <p><a href="/contact">Kontakt</a></p>
-                <p><a href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a href="/">Strona główna</a></p>
+                <p className="nav-p"><a href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
             </>
         );
     }
