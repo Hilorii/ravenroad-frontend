@@ -13,6 +13,14 @@
     background-size: 100%;
 }
 
+.nav-a{
+    text-transform: uppercase;
+}
+
+.avatar-notify{
+    display: flex;
+}
+
 .nav-p:hover {
     background: linear-gradient(90deg, #AE67FA, #F49867);
     -webkit-background-clip: text;
@@ -114,9 +122,8 @@
     justify-content: flex-end;
     align-items: flex-end;
     flex-direction: column;
-
     text-align: end;
-    background: var(--color-footer);
+    background: rgba(0, 0, 0, 0.8);
     padding: 2rem;
     position: absolute;
     top: 40rem;
@@ -124,7 +131,7 @@
     margin-top: 1rem;
     min-width: 210px;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0,0, 0,0.2);
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
 }
 
 .rr__navbar-menu_container p {
@@ -135,7 +142,6 @@
     display: none;
 }
 
-/*NOTIFICATIONS BOX*/
 .notify-icon{
     position: sticky;
     right: 35px;
@@ -194,8 +200,9 @@
     opacity: 1;
     pointer-events: auto;
     animation: fadeIn 0.5s forwards;
-
+    box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.8);
 }
+
 
 .notifications-popup.hide {
     opacity: 0;
@@ -203,26 +210,25 @@
     animation: fadeOut 0.5s forwards;
 }
 .notification-container {
-    background-color: rgba(19, 19, 19, 0.9);
-    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ffffff;
     padding: 8px;
     margin: 5px 0;
     border-radius: 15px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
     color: red;
 }
 
 .popup-arrow {
     position: absolute;
     top: -10px;
-    right: 108px;
+    right: 114px;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid white;
 }
-@media screen and (max-width: 1120px) {
+@media screen and (max-width: 1400px) {
     .rr__navbar-sign {
         display: none;
     }

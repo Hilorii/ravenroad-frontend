@@ -48,17 +48,9 @@ const App = () => {
             </div>
             {user ? (
                 <div>
-                    <Ad/>
-                    <div className="middle yes">
-                        <ProCard/>
-                    </div>
-                    <Footer/>
-                </div>
-                ) : (
-                    <div>
                     <CenteredTextWithLogo/>
-                        <ServiceContainer/>
-                        <SatisfactionContainer/>
+                    <ServiceContainer/>
+                    <SatisfactionContainer/>
                     <Header/>
                     {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
                     <Ad/>
@@ -71,7 +63,24 @@ const App = () => {
                     <CTA/>
                     {/*<Blog/>*/}
                     <Footer/>
-
+                </div>
+            ) : (
+                <div>
+                    <CenteredTextWithLogo/>
+                    <ServiceContainer/>
+                    <SatisfactionContainer/>
+                    <Header/>
+                    {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
+                    <Ad/>
+                    <WhatRR/>
+                    <div className="middle yes" id="pro">
+                        <ProCard/>
+                    </div>
+                    <Features/>
+                    {/*<Possibility/>*/}
+                    <CTA/>
+                    {/*<Blog/>*/}
+                    <Footer/>
                 </div>
             )}
 

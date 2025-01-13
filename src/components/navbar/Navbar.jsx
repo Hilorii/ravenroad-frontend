@@ -9,6 +9,7 @@ import { useUser } from '../../contexts/UserContext';
 import { PopoverDemo } from '../../components/tamagui/avatar-popover';
 import TopBar from './TopBar';
 import ScrollToTopBtn from './ScrollToTopBtn';
+import AvatarMenu from '../avatarMenu/AvatarMenu';
 
 const Menu = () => {
     const { user, setUser } = useUser();
@@ -16,42 +17,42 @@ const Menu = () => {
     if (!user && window.location.pathname === "/") {
         return (
             <>
-                <p className="nav-p"><a href="#pro">Pro</a></p>
-                <p className="nav-p"><a href="/Signup">Zaplanuj podróż</a></p>
-                <p className="nav-p"><a href="/Signup">Gotowe trasy</a></p>
-                <p className="nav-p"><a href="/contact">Kontakt</a></p>
-                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a className="nav-a" href="#pro">Pro</a></p>
+                <p className="nav-p"><a className="nav-a" href="/Signup">Zaplanuj podróż</a></p>
+                <p className="nav-p"><a className="nav-a" href="/Signup">Gotowe trasy</a></p>
+                <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a className="nav-a" href="/collaboration">Współpraca</a></p>
             </>
         );
     } else if (user && window.location.pathname === "/") {
         return (
             <>
-                <p className="nav-p"><a href="#pro">Pro</a></p>
-                <p className="nav-p"><a href="/contact">Kontakt</a></p>
-                <p className="nav-p"><a href="#niewiem">Zaplanuj podróż</a></p>
-                <p className="nav-p"><a href="/readyRoutes">Gotowe trasy</a></p>
-                <p className="nav-p"><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
-                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
-                <p className="nav-p"><a href={`/profile/${user.username}`}>Profil</a></p>
+                <p className="nav-p"><a className="nav-a" href="#pro">Pro</a></p>
+                <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a className="nav-a" href="#niewiem">Zaplanuj podróż</a></p>
+                <p className="nav-p"><a className="nav-a" href="/readyRoutes">Gotowe trasy</a></p>
+                <p className="nav-p"><a className="nav-a" href="/joinEvents">Nadchodzące wydarzenia</a></p>
+                <p className="nav-p"><a className="nav-a" href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a className="nav-a" href={`/profile/${user.username}`}>Profil</a></p>
             </>
         );
     } else if (user) {
         return (
             <>
-                <p className="nav-p"><a href="/">Strona główna</a></p>
-                <p className="nav-p"><a href="/contact">Kontakt</a></p>
-                <p className="nav-p"><a href="/readyRoutes">Gotowe trasy</a></p>
-                <p className="nav-p"><a href="/joinEvents">Nadchodzące wydarzenia</a></p>
-                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
-                <p className="nav-p"><a href={`/profile/${user.username}`}>Profil</a></p>
+                <p className="nav-p"><a className="nav-a" href="/">Strona główna</a></p>
+                <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a className="nav-a" href="/readyRoutes">Gotowe trasy</a></p>
+                <p className="nav-p"><a className="nav-a" href="/joinEvents">Nadchodzące wydarzenia</a></p>
+                <p className="nav-p"><a className="nav-a" href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a className="nav-a" href={`/profile/${user.username}`}>Profil</a></p>
             </>
         );
     } else {
         return (
             <>
-                <p className="nav-p"><a href="/">Strona główna</a></p>
-                <p className="nav-p"><a href="/contact">Kontakt</a></p>
-                <p className="nav-p"><a href="/collaboration">Współpraca</a></p>
+                <p className="nav-p"><a className="nav-a" href="/">Strona główna</a></p>
+                <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
+                <p className="nav-p"><a className="nav-a" href="/collaboration">Współpraca</a></p>
             </>
         );
     }
@@ -157,13 +158,15 @@ const Navbar = () => {
             <div className="rr__navbar-sign">
                 {user ? (
                     <div className="navbar-user">
-                        <div className="notify-icon" onClick={toggleNotifications} style={{ position: 'relative', cursor: 'pointer' }}>
-                            <FaInbox color={hasNewNotifications ? 'orange' : 'white'} size={20} />
-                            {hasNewNotifications && (
-                                <span className="notification-alert">!</span>
-                            )}
+                        <div className="avatar-notify">
+                            <div className="notify-icon" onClick={toggleNotifications} style={{ position: 'relative', cursor: 'pointer' }}>
+                                <FaInbox color={hasNewNotifications ? 'orange' : 'white'} size={20} />
+                                {hasNewNotifications && (
+                                    <span className="notification-alert">!</span>
+                                )}
+                            </div>
+                            <AvatarMenu/>
                         </div>
-                        <PopoverDemo />
                         {showNotifications && (
                             <div className={`notifications-popup ${showNotifications ? 'show' : ''}`}>
                                 <div className="popup-arrow"></div>
@@ -211,7 +214,7 @@ const Navbar = () => {
                                 </div>
                             ) : (
                                 <div className="rr__navbar-menu_container-links-sign">
-                                    <p><a onClick={handleLogout}>Wyloguj</a></p>
+                                    <p><a className="nav-p" onClick={handleLogout}>Wyloguj</a></p>
                                 </div>
                             )}
                         </div>
