@@ -70,8 +70,8 @@ root.render(
                             {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
                             <Route path="/" element={<App />} />
                             <Route path="/main" element={<MainSite />} />
-                            <Route path="/login" element={<LoginPage />} />
-                            <Route path="/login1" element={<LoginPage1 />} />
+                            <Route path="/login" element={<LoginPage1 />} />
+                            {/*<Route path="/login1" element={<LoginPage1 />} />*/}
                             <Route path="/register" element={<RegisterPage />} />
                             <Route path="/passwordForgot" element={<PasswordForgotPage />} />
                             <Route path="/signup" element={<SignupPage />} />

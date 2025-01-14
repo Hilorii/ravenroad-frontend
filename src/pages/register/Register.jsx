@@ -29,7 +29,7 @@ const Register = () => {
                     <button className="social-btn facebook-btn">Continue with Facebook</button>
                 </div>
                 <div className='link2'>
-                    <a href='/login1'>Zaloguj się!</a>
+                    <a href='/login'>Zaloguj się!</a>
                 </div>
             </div>
         </div>
