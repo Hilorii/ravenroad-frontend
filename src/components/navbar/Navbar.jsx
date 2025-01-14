@@ -18,8 +18,8 @@ const Menu = () => {
         return (
             <>
                 <p className="nav-p"><a className="nav-a" href="#pro">Pro</a></p>
-                <p className="nav-p"><a className="nav-a" href="/Signup">Zaplanuj podróż</a></p>
-                <p className="nav-p"><a className="nav-a" href="/Signup">Gotowe trasy</a></p>
+                <p className="nav-p"><a className="nav-a" href="/register">Zaplanuj podróż</a></p>
+                <p className="nav-p"><a className="nav-a" href="/register">Gotowe trasy</a></p>
                 <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
                 <p className="nav-p"><a className="nav-a" href="/collaboration">Współpraca</a></p>
             </>
@@ -187,7 +187,7 @@ const Navbar = () => {
                 ) : (
                     <>
                         <p className="nav-p"><Link to="login">Login</Link></p>
-                        <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
+                        <button className="signup" onClick={() => navigate('/register')} type="button">Zarejestruj</button>
                     </>
                 )}
             </div>
@@ -206,7 +206,7 @@ const Navbar = () => {
                                     </p>
                                     <button
                                         className="signup"
-                                        onClick={() => navigate('/Signup')}
+                                        onClick={() => navigate('/register')}
                                         type="button"
                                     >
                                         Zarejestruj
