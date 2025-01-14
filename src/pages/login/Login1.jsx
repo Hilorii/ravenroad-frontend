@@ -14,6 +14,9 @@ const Login1 = () => {
         password: ''
     });
 
+    const [errorMessage, setErrorMessage] = useState(""); // Stan dla błędu
+    const [showPassword, setShowPassword] = useState(false);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -36,22 +39,21 @@ const Login1 = () => {
                     setUser(userResponse.data);
                     navigate('/');
                 } else {
-                    alert('Unexpected response format');
+                    setErrorMessage('Unexpected response format');
                 }
             } else {
-                alert('Unexpected response format');
+                setErrorMessage('Unexpected response format');
             }
         } catch (error) {
             console.error('There was an error logging in!', error);
             if (error.response && error.response.data) {
-                // alert('Login failed: ' + error.response.data.message);
+                setErrorMessage('Login failed: ' + error.response.data.message);
             } else {
-                // alert('Login failed: An unexpected error occurred');
+                setErrorMessage('Login failed: An unexpected error occurred');
             }
         }
     };
 
-    const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -68,7 +70,6 @@ const Login1 = () => {
     };
 
     useEffect(() => {
-        // Odczytaj token z URL
         const params = new URLSearchParams(window.location.search);
         const token = params.get('token');
 
@@ -117,6 +118,7 @@ const Login1 = () => {
                     <button type='button' id='togglePassword' onClick={togglePasswordVisibility}>
                         {showPassword ? 'Ukryj' : 'Pokaż'}
                     </button>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <button type="submit" className="login-btn">
                         Log In
                     </button>
@@ -129,10 +131,10 @@ const Login1 = () => {
                     <button className="social-btn facebook-btn" onClick={handleFacebookLogin}>Continue with Facebook</button>
                 </div>
                 <div className='link1'>
-                    <a><Link to="../password-reset">Zapomniałeś hasła?</Link></a>
+                    <Link to="../password-reset">Zapomniałeś hasła?</Link>
                 </div>
                 <div className='link2'>
-                    <a href='/register'>Zarejestruj się!</a>
+                    <Link to="/register">Zarejestruj się!</Link>
                 </div>
             </div>
         </div>

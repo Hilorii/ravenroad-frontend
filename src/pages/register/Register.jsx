@@ -111,7 +111,7 @@ const Register = () => {
                            value={formData.confirmPassword}
                            onChange={handleChange}
                     />
-                    {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <button type="submit" className="login-btn">
                         Sign Up
                     </button>
