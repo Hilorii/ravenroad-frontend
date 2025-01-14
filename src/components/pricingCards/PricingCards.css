@@ -130,6 +130,14 @@
     width: 70%;
     height: 11%;
 }
+.features-list li:first-child {
+    background: linear-gradient(90deg, #AE67FA, #F49867);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    scale: 1.1;
+}
+
 
 /* Hover efekt: lekkie rozjaśnienie */
 .purchase-btn:hover {
@@ -137,10 +145,32 @@
     color: #000;
 }
 
-@media(max-width: 350px) {
+@media(max-width: 400px) {
     .features-list li {
         font-size: 0.9rem;
         margin: 10px 0;
+    }
+}
+@media(max-width: 315px) {
+    .purchase-btn{
+        position: relative;
+        scale: 0.8;
+        bottom: 20px;
+    }
+}
+@media(max-width: 299px) {
+    .features-list li {
+        margin: 8px 0;
+        font-size: 0.8rem;
+    }
+}
+@media(max-width: 282px) {
+    .features-list li {
+        margin: 7px 0;
+        font-size: 0.8rem;
+    }
+    .plan-title {
+        font-size: 1.2rem;
     }
 }
 

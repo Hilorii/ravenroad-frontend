@@ -4,41 +4,44 @@ import "./PricingCards.css";
 const plansData = [
     {
         id: 1,
-        price: 70,
-        title: "BASIC",
+        price: 25,
+        title: "SILVER WING",
+        span: "Miesięcznie",
         features: [
-            "Social Media Integration",
-            "Hardware Protection",
-            "500 Malware Removal",
-            "30 Days Product Testing",
-            "10 Hour Of Support",
-            "30 Days Product Testing",
+            "Generowanie tras za pomocą AI",
+            "Do 5 wygenerowanych tras w miesiącu!",
+            "Mapy offline",
+            "Nagrywanie tras z pomiarami",
+            "Publikowanie nagranych tras",
+            "Wszystko co w wersji darmowej",
         ],
     },
     {
         id: 2,
-        price: 80,
-        title: "STANDARD",
+        price: 160,
+        title: "BLACK FEATHER",
+        span: "Rocznie",
         features: [
-            "Social Media Integration",
-            "Hardware Protection",
-            "500 Malware Removal",
-            "30 Days Product Testing",
-            "10 Hour Of Support",
-            "30 Days Product Testing",
+            "Generowanie tras za pomocą AI",
+            "Do 10 wygenerowanych tras w miesiącu!",
+            "Planowanie tras",
+            "Tworzenie grup",
+            "Tworzenie wydarzeń",
+            "Wszystko co w Silver Wing",
         ],
     },
     {
         id: 3,
-        price: 90,
-        title: "PREMIUM",
+        price: 180,
+        title: "SHADOW RAVEN",
+        span: "Rocznie",
         features: [
-            "Social Media Integration",
-            "Hardware Protection",
-            "500 Malware Removal",
-            "30 Days Product Testing",
-            "10 Hour Of Support",
-            "30 Days Product Testing",
+            "Generowanie tras za pomocą AI",
+            "Do 20 wygenerowanych tras w miesiącu !",
+            "Ekskluzywne trasy i wydarzenia",
+            "Nielimitowane zapisywanie tras offline",
+            "Priorytetowe wsparcie",
+            "Wszystko co w Black Feather",
         ],
     },
 ];
@@ -99,8 +102,8 @@ const PricingCards = () => {
                 {plansData.map((plan) => (
                     <div key={plan.id} className="pricing-card">
                         <div className="pricing-header">
-                            <span className="price">${plan.price}</span>{" "}
-                            <span className="monthly">Monthly</span>
+                            <span className="price">{plan.price} PLN</span>{" "}
+                            <span className="monthly">{plan.span}</span>
                         </div>
                         <div className="plan-title">{plan.title}</div>
                         <ul className="features-list">
