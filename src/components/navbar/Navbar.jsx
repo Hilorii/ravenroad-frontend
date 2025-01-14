@@ -186,7 +186,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <>
-                        <p className="nav-p"><Link to="login">Login</Link></p>
+                        <p className="nav-p"><Link to="login1">Login</Link></p>
                         <button className="signup" onClick={() => navigate('/Signup')} type="button">Zarejestruj</button>
                     </>
                 )}
@@ -202,7 +202,7 @@ const Navbar = () => {
                             {!user ? (
                                 <div className="rr__navbar-menu_container-links-sign">
                                     <p>
-                                        <Link to="/login">Login</Link>
+                                        <Link to="/login1">Login</Link>
                                     </p>
                                     <button
                                         className="signup"

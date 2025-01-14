@@ -1,0 +1,213 @@
+/* General container for the login */
+.login-container1 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to top, #000000, #2e2e2e);
+    width: 100%;
+    padding: 20px; /* Utrzymuje odstęp wewnętrzny */
+    overflow-y: auto; /* Pozwala na przewijanie */
+    box-sizing: border-box;
+}
+
+
+/* Card styling */
+.login-card {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0px 0px 24px rgba(255, 255, 255, 1);
+    text-align: center;
+    width: 350px;
+    max-width: 90%;
+    margin: 20px 10px; /* Zapewnia odstępy w pionie i poziomie */
+    transition: 0.5s;
+    position: relative; /* Zapobiega wpływowi innych elementów */
+}
+
+
+.login-card:hover {
+    box-shadow: 0px 0px 50px rgba(255, 255, 255, 1);
+    transform: scale(1.008);
+}
+
+/* Obraz logo */
+.login-logo {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    transition: 1s;
+}
+.login-logo:hover {
+    scale: 1.05;
+}
+
+/* Title and subtitle */
+.login-title {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    font-size: 1rem;
+    color: #bbb;
+    margin-bottom: 20px;
+}
+
+/* Form inputs and button */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-input {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.login-btn {
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(90deg, #feb47b, #ff7e5f);
+}
+
+/* Divider */
+.login-divider {
+    margin: 20px 0;
+    color: #bbb;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.login-divider span {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.login-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #555;
+    z-index: 0;
+}
+
+/* Social buttons */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social-btn {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.google-btn {
+    background: #db4437;
+    color: #fff;
+}
+
+.google-btn:hover {
+    transform: scale(1.05);
+}
+
+.facebook-btn {
+    background: #4267b2;
+    color: #fff;
+}
+
+.facebook-btn:hover {
+    transform: scale(1.05);
+}
+
+.link1 {
+    padding-top: 20px;
+    color: #fff;
+}
+
+.link2 {
+    padding-top: 10px;
+    color: #fff;
+}
+
+@media (max-width: 300px) {
+    .login-card {
+        width: 100%;
+        scale: 0.9;
+    }
+}
+@media (max-height: 810px) {
+    .login-card {
+        top: 5vh;
+    }
+}
+@media (max-height: 730px) {
+    .login-card {
+        top: 10vh;
+    }
+}
+@media (max-height: 674px) {
+    .login-card {
+        top: 15vh;
+    }
+}
+@media (max-height: 620px) {
+    .login-card {
+        top: 25vh;
+    }
+}
+@media (max-height: 540px) {
+    .login-card {
+        top: 35vh;
+    }
+}
+@media (max-height: 480px) {
+    .login-card {
+        top: 45vh;
+    }
+}
+@media (max-height: 425px) {
+    .login-card {
+        top: 60vh;
+    }
+}
+@media (max-height: 310px) {
+    .login-card {
+        top: 80vh;
+    }
+}
+@media (max-height: 275px) {
+    .login-card {
+        top: 100vh;
+    }
+}

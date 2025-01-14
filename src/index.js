@@ -16,6 +16,8 @@ import { TamaguiProvider, createTamagui} from '@tamagui/core';
 import App from './App';
 import MainSite from './MainSiteTmp';
 import LoginPage from './pages/login/Login';
+import LoginPage1 from './pages/login/Login1';
+import RegisterPage from './pages/register/Register';
 import SignupPage from './pages/signup/Signup';
 import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 import ProfilePage from './pages/profile/Profile';
@@ -50,6 +52,7 @@ import AddEventPage from './pages/addEvent/AddEvent';
 import JoinEventPage from './pages/joinEvents/JoinEvents';
 import JoinEventDetailsPage from './pages/joinEvents/JoinEventDetails';
 import DeleteDataPage from './pages/deleteData/DeleteData';
+import ForgotPasswordPage from './pages/resetPassword/ForgotPassword';
 
 
 const tamaguiConfig = createTamagui(config);
@@ -68,6 +71,8 @@ root.render(
                             <Route path="/" element={<App />} />
                             <Route path="/main" element={<MainSite />} />
                             <Route path="/login" element={<LoginPage />} />
+                            <Route path="/login1" element={<LoginPage1 />} />
+                            <Route path="/register" element={<RegisterPage />} />
                             <Route path="/passwordForgot" element={<PasswordForgotPage />} />
                             <Route path="/signup" element={<SignupPage />} />
                             <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
@@ -102,6 +107,7 @@ root.render(
                             <Route path="/createEvent" element={<AddEventPage/>} />
                             <Route path="/joinEvents" element={<JoinEventPage/>} />
                             <Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />
+                            <Route path="/password-reset" element={<ForgotPasswordPage/>} />
                             <Route path="*" element={<PageNotFoundPage/>} />
 
 
