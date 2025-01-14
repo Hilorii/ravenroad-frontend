@@ -44,6 +44,17 @@
     scale: 1.05;
 }
 
+#togglePassword {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(550%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
 /* Title and subtitle */
 .login-title {
     font-size: 1.8rem;
