@@ -84,7 +84,7 @@ const PricingCards = () => {
     };
 
     return (
-        <section className="pricing-section">
+        <section className="pricing-section" id="pro">
             {/* Napis nad kartami */}
             <h3
                 className={`pricing-subtitle ${isSubtitleVisible ? "active" : ""}`}
