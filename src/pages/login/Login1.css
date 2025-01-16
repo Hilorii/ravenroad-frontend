@@ -1,3 +1,7 @@
+/* ---------------------- */
+/* Podstawowe style       */
+/* ---------------------- */
+
 /* General container for the login */
 .login-container1 {
     min-height: 100vh;
@@ -11,7 +15,6 @@
     overflow-y: auto; /* Pozwala na przewijanie */
     box-sizing: border-box;
 }
-
 
 /* Card styling */
 .login-card {
@@ -27,7 +30,6 @@
     position: relative; /* Zapobiega wpływowi innych elementów */
 }
 
-
 .login-card:hover {
     box-shadow: 0px 0px 50px rgba(255, 255, 255, 1);
     transform: scale(1.008);
@@ -40,10 +42,12 @@
     margin-bottom: 20px;
     transition: 1s;
 }
+
 .login-logo:hover {
     scale: 1.05;
 }
 
+/* Przycisk do pokazywania/ukrywania hasła */
 #togglePassword {
     display: none;
     position: absolute;
@@ -57,8 +61,9 @@
     font-size: 0.9rem; /* Dostosowanie rozmiaru czcionki */
 }
 
+/* Komunikat błędu */
 .error-message {
-    font-family: var(--font-family);
+    font-family: var(--font-family, sans-serif);
     color: #ff4d4d;
     background: rgba(255, 0, 0, 0.1);
     border: 1px solid #ff4d4d;
@@ -69,7 +74,7 @@
     text-align: center;
 }
 
-/* Title and subtitle */
+/* Tytuł i podtytuł */
 .login-title {
     font-size: 1.8rem;
     color: #fff;
@@ -82,7 +87,7 @@
     margin-bottom: 20px;
 }
 
-/* Form inputs and button */
+/* Formularz: pola i przycisk */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -175,6 +180,7 @@
     transform: scale(1.05);
 }
 
+/* Linki dodatkowe */
 .link1 {
     padding-top: 20px;
     color: #fff;
@@ -185,54 +191,62 @@
     color: #fff;
 }
 
-@media (max-width: 300px) {
+/* ---------------------- */
+/*  Media queries         */
+/* ---------------------- */
+
+/* Dla mniejszych szerokości (np. telefony w pionie) */
+@media (max-width: 480px) {
     .login-card {
         width: 100%;
+        padding: 1.5rem;
+        margin: 15px 0;
+    }
+
+    .login-title {
+        font-size: 1.4rem;
+    }
+
+    .login-subtitle {
+        font-size: 0.9rem;
+    }
+
+    #togglePassword {
+        top: 392px; /* Dopasuj w razie potrzeby do nowego rozmiaru formularza */
+        font-size: 0.8rem;
+    }
+}
+
+/* Dla mniejszych wysokości ekranów (np. telefony w poziomie lub małe laptopy) */
+@media (max-height: 850px) {
+    .login-container1 {
+        justify-content: flex-start;
+        padding-top: 0;
+        padding-bottom: 30px;
+    }
+
+    .login-card {
+        margin: 10px 0;
+        padding: 1.5rem;
         scale: 0.9;
     }
 }
-@media (max-height: 810px) {
+@media (max-height: 780px) {
     .login-card {
-        top: 5vh;
+        scale: 0.8;
+        top: -50px;
     }
 }
-@media (max-height: 730px) {
+@media (max-height: 695px) {
     .login-card {
-        top: 10vh;
+        scale: 0.7;
+        top: -80px;
     }
 }
-@media (max-height: 674px) {
+/* Opcjonalnie dla tabletów i średnich ekranów */
+@media (max-width: 768px) and (min-width: 481px) {
     .login-card {
-        top: 15vh;
-    }
-}
-@media (max-height: 620px) {
-    .login-card {
-        top: 25vh;
-    }
-}
-@media (max-height: 540px) {
-    .login-card {
-        top: 35vh;
-    }
-}
-@media (max-height: 480px) {
-    .login-card {
-        top: 45vh;
-    }
-}
-@media (max-height: 425px) {
-    .login-card {
-        top: 60vh;
-    }
-}
-@media (max-height: 310px) {
-    .login-card {
-        top: 80vh;
-    }
-}
-@media (max-height: 275px) {
-    .login-card {
-        top: 100vh;
+        width: 70%;
+        margin: 20px auto;
     }
 }
