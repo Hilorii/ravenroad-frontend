@@ -8,7 +8,7 @@ const CTA = () => (
             <h3>Zarejestruj się już dziś i zacznij odkrywać nieskończone możliwości.</h3>
         </div>
         <div className="rr__cta-btn">
-            <a href="/signup"><button type="button">Zaczynam</button></a>
+            <a href="/register"><button type="button">Zaczynam</button></a>
         </div>
     </div>
 );

@@ -1,54 +1,80 @@
-import { YStack, XStack } from 'tamagui';
-import Navbar from "../../components/navbar/Navbar";
+// import { YStack, XStack } from 'tamagui';
+// import './contact.css';
+// import { FB, DC, MAIL } from '../../components/icons';
+// import { contactMail } from '../../components/info';
+
+import Navbar from '../../components/navbar/Navbar';
+import { Footer } from '../../containers/index';
+import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground'
+
+//POPRAW Z STAREGO TLUMACZENIA
+// import { useTranslation } from 'react-i18next'; // Import i18n
+
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './contact.css';
-import { FB, DC, MAIL } from '../../components/icons';
-import { contactMail } from '../../components/info';
-import NavbarTmp from '../../components/navbar/NavbarTmp';
-import { useTranslation } from 'react-i18next'; // Import i18n
 
-export default function ContactPage() {
-    const { t } = useTranslation();
-
+const Contact = () => {
     return (
-        <div className="App">
-            <div className="gradient__bg">
-                {/*<Navbar />*/}
-                <NavbarTmp />
-                <YStack padding="$4" space>
-                    <h1 className="gradient__text title">{t('contactPage.title')}</h1>
+        <div className="contact-container">
+            <AnimatedBackground/>
+            <Navbar/>
 
-                    {/* Sekcja z e-mailem i numerem telefonu */}
-                    <YStack padding="$10" space alignItems="center">
-                        <p className="contact-info">
-                            {t('contactPage.email')}:{' '}
-                            <a href={`mailto:${contactMail}`}>{contactMail}</a>
-                        </p>
-                        {/*<p className="contact-info">{t('contactPage.phone')}: +48 123 456 789</p>*/}
-                        <p className="contact-info">{t('contactPage.discord')}: {t('contactPage.comingSoon')}</p>
-                    </YStack>
-
-                    <XStack space justifyContent="center" flexWrap="wrap">
-                        <div className="contact-item">
-                            <FB size={40} color="#ffffff" />
-                            <p>
-                                <a href="https://www.facebook.com/profile.php?id=61564039045420" target="_blank" rel="noopener noreferrer">
-                                    {t('contactPage.facebook')}
-                                </a>
-                            </p>
-                        </div>
-                        <div className="contact-item">
-                            <MAIL size={40} color="#ffffff" />
-                            <p>
-                                <a href={`mailto:${contactMail}`}>{t('contactPage.email')}</a>
-                            </p>
-                        </div>
-                        <div className="contact-item">
-                            <DC size={40} color="#ffffff" />
-                            <p>{t('contactPage.discord')}: {t('contactPage.comingSoon')}</p>
-                        </div>
-                    </XStack>
-                </YStack>
+            {/* Sekcja bannera */}
+            <div className="banner">
+                <div className="banner-content">
+                    <h1>Contact</h1>
+                    <p className="breadcrumb">
+                        You Here! &gt; <Link to="/">Home</Link> &gt; Contact
+                    </p>
+                </div>
             </div>
+
+            {/* Sekcja z danymi kontaktowymi */}
+            <div className="contact-details">
+                {/* Kolumna 1: Email */}
+                <div className="contact-box">
+                    <div className="icon-container email-icon">
+                        {/* Możesz zamienić na własną ikonę/obrazek */}
+                    </div>
+                    <div className="info">
+                        <h3>Our Email</h3>
+                        <p>demo@example.com</p>
+                    </div>
+                </div>
+
+                {/* Kolumna 2: Telefon */}
+                <div className="contact-box">
+                    <div className="icon-container phone-icon">
+                        {/* Możesz zamienić na własną ikonę/obrazek */}
+                    </div>
+                    <div className="info">
+                        <h3>Our Phone</h3>
+                        <p>+880 563856 6485</p>
+                    </div>
+                </div>
+
+                {/* Kolumna 3: Facebook */}
+                <div className="contact-box">
+                    <div className="icon-container facebook-icon">
+                        {/* Możesz zamienić na własną ikonę/obrazek */}
+                    </div>
+                    <div className="info">
+                        <h3>Facebook</h3>
+                        <a
+                            href="https://www.facebook.com/TwojProfil"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            facebook.com/TwojProfil
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <Footer/>
         </div>
     );
-}
+};
+
+export default Contact;
+

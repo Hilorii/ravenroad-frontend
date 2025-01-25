@@ -8,7 +8,7 @@ const Ad = () => {
     const { t } = useTranslation();
 
     return (
-        <div className="middle">
+        <div className="middle" id="ad">
             <div className="ad-container">
                 <img src={adIcon} alt="Ad Icon" className="ad-icon"/>
                 <h2 className="ad-title">
