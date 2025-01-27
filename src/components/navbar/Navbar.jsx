@@ -29,9 +29,9 @@ const Menu = () => {
             <>
                 <p className="nav-p"><a className="nav-a" href="#pro">Pro</a></p>
                 <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
-                <p className="nav-p"><a className="nav-a" href="#niewiem">Zaplanuj podróż</a></p>
-                <p className="nav-p"><a className="nav-a" href="/readyRoutes">Gotowe trasy</a></p>
-                <p className="nav-p"><a className="nav-a" href="/joinEvents">Nadchodzące wydarzenia</a></p>
+                {/*<p className="nav-p"><a className="nav-a" href="#niewiem">Zaplanuj podróż</a></p>*/}
+                {/*<p className="nav-p"><a className="nav-a" href="/readyRoutes">Gotowe trasy</a></p>*/}
+                {/*<p className="nav-p"><a className="nav-a" href="/joinEvents">Nadchodzące wydarzenia</a></p>*/}
                 <p className="nav-p"><a className="nav-a" href="#ad">Współpraca</a></p>
                 <p className="nav-p"><a className="nav-a" href={`/profile/${user.username}`}>Profil</a></p>
             </>
@@ -41,9 +41,9 @@ const Menu = () => {
             <>
                 <p className="nav-p"><a className="nav-a" href="/">Strona główna</a></p>
                 <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
-                <p className="nav-p"><a className="nav-a" href="/readyRoutes">Gotowe trasy</a></p>
-                <p className="nav-p"><a className="nav-a" href="/joinEvents">Nadchodzące wydarzenia</a></p>
-                <p className="nav-p"><a className="nav-a" href="#ad">Współpraca</a></p>
+                {/*<p className="nav-p"><a className="nav-a" href="/readyRoutes">Gotowe trasy</a></p>*/}
+                {/*<p className="nav-p"><a className="nav-a" href="/joinEvents">Nadchodzące wydarzenia</a></p>*/}
+                {/*<p className="nav-p"><a className="nav-a" href="#ad">Współpraca</a></p>*/}
                 <p className="nav-p"><a className="nav-a" href={`/profile/${user.username}`}>Profil</a></p>
             </>
         );
@@ -52,7 +52,6 @@ const Menu = () => {
             <>
                 <p className="nav-p"><a className="nav-a" href="/">Strona główna</a></p>
                 <p className="nav-p"><a className="nav-a" href="/contact">Kontakt</a></p>
-                <p className="nav-p"><a className="nav-a" href="#ad">Współpraca</a></p>
             </>
         );
     }

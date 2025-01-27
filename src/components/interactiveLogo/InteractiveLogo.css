@@ -1,0 +1,37 @@
+.interactive-logo-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Możesz dostosować */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Logo przesuwa się delikatnie za kursorem */
+.rr-logo {
+    width: 200px;
+    height: auto;
+    pointer-events: none; /* Dzięki temu mysz „przechodzi” przez obrazek */
+    transition: transform 0.1s ease-out;
+    margin-bottom: 20px;
+}
+
+/* Grafika Google Play */
+.google-play-badge {
+    width: 150px; /* Dostosuj wg potrzeb */
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* Tekst z animacją pojawiania się (fade-in) */
+.fade-in-text {
+    opacity: 0;
+    transition: opacity 2s ease-in; /* Czas trwania i rodzaj animacji */
+}
+
+.fade-in-text.visible {
+    opacity: 1;
+}

@@ -119,7 +119,7 @@ const PricingCards = () => {
                             }`}
                             onClick={() => handlePurchase(plan.id)}
                         >
-                            PURCHASE NOW
+                            WIĘCEJ W APLIKACJI
                         </button>
                     </div>
                 ))}

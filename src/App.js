@@ -56,6 +56,7 @@ const App = () => {
                     <Ad/>
                     {/*<WhatRR/>*/}
                     <Features/>
+                    <PricingCards/>
                     {/*<Possibility/>*/}
                     <CTA/>
                     {/*<Blog/>*/}
