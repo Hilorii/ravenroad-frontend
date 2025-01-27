@@ -1,18 +1,19 @@
 /**********************
-  PROFILE PAGE
+  PROFILE CONTAINER
 ***********************/
 
 /* Główny kontener profilu */
 .profile-container {
     width: 100%;
     max-width: 1100px;
-    margin: 80px auto 0; /* odstęp od navbar */
+    margin: 80px auto 0;
+    margin-bottom: 100px;
     border-radius: 25px;
     overflow: hidden;
     background-color: transparent;
     box-shadow: 0 2px 20px rgba(255, 255, 255, 0.9);
     position: relative;
-
+    padding-bottom: 50px;
 }
 
 /* Sekcja z bannerem */
@@ -69,10 +70,10 @@
     margin: 0 0 10px 0;
     padding-left: 160px;
     color: white;
-    /* 160px, żeby tekst nie nakładał się na avatar z lewej */
     font-size: 1.5rem;
     font-weight: bold;
 }
+
 
 /**********************
   RESPONSYWNOŚĆ
