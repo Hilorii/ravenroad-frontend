@@ -7,22 +7,31 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
 
     // Pola formularza
     const [username, setUsername] = useState(initialUsername || '');
+    const [email, setEmail] = useState(initialEmail || '');
+    // Hasła (tylko do nowego endpointu)
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [email, setEmail] = useState(initialEmail || '');
 
-    // Preferencje pojazdów
+    // Preferencje pojazdów (do starego endpointu PUT /user/:id)
     const [car, setCar] = useState(false);
     const [truck, setTruck] = useState(false);
     const [motorcycle, setMotorcycle] = useState(false);
     const [bike, setBike] = useState(false);
 
+    // Obsługa komunikatów błędów
+    const [formError, setFormError] = useState('');
+    // Obsługa komunikatu sukcesu
+    const [successMessage, setSuccessMessage] = useState('');
+
     const toggleOpen = () => {
         setIsOpen(!isOpen);
+        if (!isOpen) {
+            setFormError('');
+            setSuccessMessage('');
+        }
     };
 
-    // Zmiana stanu (np. car = !car)
     const handleCarToggle = () => setCar(!car);
     const handleTruckToggle = () => setTruck(!truck);
     const handleMotorcycleToggle = () => setMotorcycle(!motorcycle);
@@ -31,54 +40,89 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
     // Obsługa wysłania formularza
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Walidacja prostych przypadków na froncie
-        if (newPassword && newPassword !== confirmPassword) {
-            alert('Nowe hasło i potwierdzenie hasła nie są takie same!');
-            return;
-        }
+        setFormError('');
+        setSuccessMessage('');
 
         try {
-            const response = await fetch(`http://localhost:5000/user/${userId}`, {
+            // 1. Najpierw zaktualizujmy dane profilu (username, email, preferencje) starym endpointem
+            const profileUpdateBody = {
+                username,
+                email,
+                car: car ? 1 : 0,
+                truck: truck ? 1 : 0,
+                motorcycle: motorcycle ? 1 : 0,
+                bike: bike ? 1 : 0,
+            };
+
+            const profileRes = await fetch(`http://localhost:5000/user/${userId}`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    username,
-                    oldPassword,
-                    newPassword,
-                    email,
-                    car: car ? 1 : 0,
-                    truck: truck ? 1 : 0,
-                    motorcycle: motorcycle ? 1 : 0,
-                    bike: bike ? 1 : 0,
-                }),
+                body: JSON.stringify(profileUpdateBody),
             });
 
-            if (!response.ok) {
-                throw new Error('Błąd przy zapisie zmian profilu.');
+            if (!profileRes.ok) {
+                const errorData = await profileRes.json();
+                setFormError(errorData?.message || 'Błąd przy zapisie danych profilu.');
+                return;
             }
 
-            const data = await response.json();
+            // 2. Jeśli użytkownik wypełnił pola hasła, zróbmy odrębny fetch do /user/:id/password
+            if (oldPassword || newPassword || confirmPassword) {
+                // Walidacja front-endowa
+                if (!oldPassword || !newPassword || !confirmPassword) {
+                    setFormError('Aby zmienić hasło, wypełnij wszystkie pola!');
+                    return;
+                }
+                if (newPassword !== confirmPassword) {
+                    setFormError('Hasła nie są takie same!');
+                    return;
+                }
 
-            // Możesz odświeżyć dane profilowe w nadrzędnym komponencie (np. ProfilePage)
+                const passwordBody = {
+                    oldPassword,
+                    newPassword,
+                    confirmPassword
+                };
+
+                const passRes = await fetch(`http://localhost:5000/user/${userId}/password`, {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(passwordBody),
+                });
+
+                if (!passRes.ok) {
+                    const passError = await passRes.json();
+                    setFormError(passError?.message || 'Błąd przy zmianie hasła.');
+                    return;
+                }
+            }
+
+            // Jeśli obie operacje się udały:
+            const data = await profileRes.json();
+            setSuccessMessage('Zmiany zostały zapisane!');
+
+            // Wywołaj callback do odświeżenia w rodzicu, jeśli jest
             if (onProfileUpdated) {
                 onProfileUpdated(data.user);
             }
-
-            // Opcjonalnie zamknij formularz
-            setIsOpen(false);
 
             // Wyczyść pola haseł
             setOldPassword('');
             setNewPassword('');
             setConfirmPassword('');
+
+            // W tym miejscu przeładowujemy stronę (aby np. Navbar też się odświeżył)
             window.location.reload();
+
         } catch (err) {
             console.error('Error:', err);
-            alert('Wystąpił błąd podczas zapisywania zmian.');
+            setFormError('Wystąpił nieoczekiwany błąd podczas zapisywania zmian.');
         }
     };
 
@@ -87,17 +131,19 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
             {/* Pasek nagłówka do rozwijania */}
             <div className="edit-profile-header" onClick={toggleOpen}>
                 <div className="edit-profile-title">Edytuj profil</div>
-                <FaChevronDown
-                    className={`edit-profile-arrow ${isOpen ? 'open' : ''}`}
-                />
+                <FaChevronDown className={`edit-profile-arrow ${isOpen ? 'open' : ''}`} />
             </div>
 
             {/* Sekcja formularza (rozwijana) */}
             <div
                 className="edit-profile-form-wrapper"
-                style={{ maxHeight: isOpen ? '500px' : '0px' }}
+                style={{ maxHeight: isOpen ? '650px' : '0px' }}
             >
                 <form className="edit-profile-form" onSubmit={handleSubmit}>
+                    {/* Błąd lub sukces nad formularzem */}
+                    {formError && <div className="form-error">{formError}</div>}
+                    {successMessage && <div className="form-success">{successMessage}</div>}
+
                     <div className="field">
                         <label>Nazwa użytkownika</label>
                         <input
@@ -108,6 +154,17 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
                         />
                     </div>
 
+                    <div className="field">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Nowy adres email"
+                        />
+                    </div>
+
+                    {/* Zmiana hasła */}
                     <div className="field">
                         <label>Aktualne hasło</label>
                         <input
@@ -134,7 +191,7 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
                             type="password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            placeholder="Powtórz nowe hasło"
+                            placeholder="Potwierdź nowe hasło"
                         />
                     </div>
 

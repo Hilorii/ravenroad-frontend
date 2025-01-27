@@ -10,7 +10,7 @@
     border-radius: 8px;
     overflow: hidden;
     font-family: var(--font-family);
-    scale: 1.2;
+    scale: 1.2; /* Skalowanie dla dużych ekranów */
 }
 
 /* Pasek nagłówka (edycja profilu) */
@@ -114,4 +114,43 @@
 
 .save-button:hover {
     background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Komunikaty błędów i sukcesów */
+.form-error {
+    color: red;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.form-success {
+    color: green;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+/* =========================================
+   MEDIA QUERIES
+   ========================================= */
+
+
+/* Dla telefonów i bardzo wąskich ekranów (poniżej ~480px) */
+@media (max-width: 1330px) {
+    .edit-profile-container {
+        scale: 1.0; /* Jeszcze mniejsza skala – standardowa */
+        margin-bottom: 40px; /* Jeszcze mniejszy margines */
+    }
+
+    .edit-profile-title {
+        font-size: 1rem;
+    }
+
+    .field input {
+        font-size: 0.95rem; /* Odrobinę mniejszy tekst w inputach */
+    }
+
+    .pref-icon {
+        font-size: 1.2rem;
+        padding: 6px;
+    }
 }

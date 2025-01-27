@@ -6,22 +6,23 @@ import { FaCamera } from 'react-icons/fa';
 import { useUser } from '../../contexts/UserContext';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import { Footer } from "../../containers";
-import EditProfile from './EditProfile';
+import EditProfile from './EditProfile'; // Upewnij się, że ścieżka jest poprawna
 
 const ProfilePage = () => {
     const { username } = useParams();
-    const { user } = useUser();
+    const { user } = useUser(); // Zakładamy, że z kontekstu otrzymujesz obiekt {id, username, email, ...}
 
-    // Jeżeli user istnieje (z kontekstu) to bierzemy user.username; w innym przypadku param z URL-a:
+    // Wyświetlana nazwa: jeśli w kontekście brak usera, użyj param z URL (lub 'Username')
     const displayName = user?.username || username || 'Username';
 
     const [avatarUrl, setAvatarUrl] = useState('');
     const [bannerUrl, setBannerUrl] = useState('');
 
-    // Referencje do inputów pliku (aby ukryć input i wywołać kliknięcie)
+    // Referencje do <input type="file"> (ukrytych)
     const avatarInputRef = useRef(null);
     const bannerInputRef = useRef(null);
 
+    // Funkcja, która pobiera aktualne dane użytkownika (avatar, banner) z back-endu
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -34,7 +35,7 @@ const ProfilePage = () => {
                 }
                 const data = await response.json();
 
-                // Jeżeli w bazie przechowujesz tylko nazwę pliku, to budujemy pełny URL do /uploads/...
+                // Jeżeli w bazie przechowujesz tylko nazwę pliku, budujemy pełne URL-e do /uploads/...
                 if (data.avatar) {
                     setAvatarUrl(`http://localhost:5000/uploads/${data.avatar}`);
                 }
@@ -60,7 +61,7 @@ const ProfilePage = () => {
 
         try {
             const response = await fetch(`http://localhost:5000/user/${user.id}/avatar`, {
-                method: 'PUT',                // Zmieniamy na PUT
+                method: 'PUT', // PUT, bo aktualizujemy istniejący zasób
                 credentials: 'include',
                 body: formData,
             });
@@ -70,11 +71,14 @@ const ProfilePage = () => {
             }
 
             const data = await response.json();
-            // data.user.avatar - nazwa pliku z bazy
+            // data.user.avatar to nazwa pliku z bazy
             if (data?.user?.avatar) {
                 setAvatarUrl(`http://localhost:5000/uploads/${data.user.avatar}`);
             }
+
+            // Jeśli chcesz natychmiast odświeżyć całą stronę (np. by zaktualizować także Navbar):
             window.location.reload();
+
         } catch (err) {
             console.error(err);
         }
@@ -92,7 +96,7 @@ const ProfilePage = () => {
 
         try {
             const response = await fetch(`http://localhost:5000/user/${user.id}/banner`, {
-                method: 'PUT',               // Zmieniamy na PUT
+                method: 'PUT',
                 credentials: 'include',
                 body: formData,
             });
@@ -102,13 +106,30 @@ const ProfilePage = () => {
             }
 
             const data = await response.json();
-            // data.user.banner - nazwa pliku z bazy
+            // data.user.banner to nazwa pliku z bazy
             if (data?.user?.banner) {
                 setBannerUrl(`http://localhost:5000/uploads/${data.user.banner}`);
             }
+
         } catch (err) {
             console.error(err);
         }
+    };
+
+    /**
+     * Funkcja wywoływana po pomyślnym zapisie profilu w komponencie EditProfile.
+     * Możesz tutaj np. ponownie pobrać usera z back-endu albo zrobić inny update.
+     */
+    const handleProfileUpdated = (updatedUser) => {
+        // Prosty przykład: jeżeli chcesz natychmiast pokazać zmiany w Username
+        // (o ile w "user" z kontekstu jest "username"), możesz zrobić:
+        // 1) odświeżyć usera z kontekstu (jeśli w UserContext masz np. refreshUser()) lub
+        // 2) zmienić local state w tym komponencie
+
+        // Przykład minimalny (ponowne wczytanie całej strony):
+        // window.location.reload();
+
+        console.log('Zaktualizowany użytkownik:', updatedUser);
     };
 
     return (
@@ -171,7 +192,15 @@ const ProfilePage = () => {
                 </div>
             </div>
 
-            <EditProfile/>
+            {/* Komponent do edycji profilu */}
+            {user && (
+                <EditProfile
+                    userId={user.id}
+                    initialUsername={user.username}
+                    initialEmail={user.email}
+                    onProfileUpdated={handleProfileUpdated}
+                />
+            )}
 
             <Footer />
         </div>
