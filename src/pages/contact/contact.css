@@ -62,31 +62,37 @@
     gap: 1rem;
     flex-wrap: wrap; /* By kolumny zawijały się przy małych ekranach */
 }
-
+/*--gradient-text: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);*/
 .contact-box {
     display: flex;
     align-items: center;
-    background-color: #000;
-    border: 1px solid #17a43b; /* Zielona ramka */
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-    width: 300px; /* Szerokość kolumny na dużych ekranach */
-    margin: 0.5rem;
+    background-color: transparent;
+    border: 1px solid #AE67FA;
+    transition: border-color 0.6s ease, background-color 0.6s ease;
+    width: 300px;
+    margin: 4rem;
+    scale: 1.4;
 }
 
 .contact-box:hover {
-    background-color: #111; /* Delikatnie jaśniejszy/ciemniejszy odcień */
-    border-color: #2aff73; /* Zmiana odcienia zieleni przy najechaniu */
+    background-color: transparent;
+    border-color: #F49867;
+}
+
+.contact-box:hover .icon-container {
+    background-color: #F49867;
 }
 
 /* Ikona z lewej strony – kwadrat z zielonym tłem */
 .icon-container {
     width: 60px;
     height: 60px;
-    background-color: #17a43b; /* Zielony kwadrat */
+    background-color: #AE67FA; /* Zielony kwadrat */
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
+    transition: background-color 0.6s ease;
 }
 
 .email-icon::before {
@@ -116,22 +122,21 @@
 .info h3 {
     margin-bottom: 0.25rem;
     font-size: 1.1rem;
-    color: #17a43b; /* Zielony napis "Our Email", "Our Phone", "Facebook" */
+    color: white;
 }
 
 .info p, .info a {
     color: #fff;
     text-decoration: none;
-    word-wrap: break-word; /* By link się nie 'wylał' poza obszar na małych ekranach */
+    word-wrap: break-word;
 }
 
 /* -----------------------
    Responsywność
 ------------------------ */
-/* Przykładowy media query - dostosuj wartości wg potrzeb */
 @media (max-width: 768px) {
     .banner {
-        height: 400px; /* mniejsza wysokość bannera */
+        height: 400px;
     }
 
     .banner h1 {
@@ -139,7 +144,7 @@
     }
 
     .contact-box {
-        width: 100%; /* kolumny zajmują całą szerokość na węższych ekranach */
+        width: 100%;
         max-width: 500px;
     }
 }
