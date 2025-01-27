@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import './profile.css';
 import { Navbar } from '../../components/index';
-import { FaCamera } from 'react-icons/fa';
+import { FaCamera, FaCar, FaTruck, FaMotorcycle, FaBicycle } from 'react-icons/fa';
 import { useUser } from '../../contexts/UserContext';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import { Footer } from "../../containers";
@@ -10,19 +10,26 @@ import EditProfile from './EditProfile'; // Upewnij się, że ścieżka jest pop
 
 const ProfilePage = () => {
     const { username } = useParams();
-    const { user } = useUser(); // Zakładamy, że z kontekstu otrzymujesz obiekt {id, username, email, ...}
+    const { user } = useUser(); // Zakładamy, że z kontekstu otrzymujesz obiekt { id, username, email, ...}
 
     // Wyświetlana nazwa: jeśli w kontekście brak usera, użyj param z URL (lub 'Username')
     const displayName = user?.username || username || 'Username';
 
+    // Avatar / Banner
     const [avatarUrl, setAvatarUrl] = useState('');
     const [bannerUrl, setBannerUrl] = useState('');
+
+    // Preferencje pojazdów
+    const [car, setCar] = useState(false);
+    const [truck, setTruck] = useState(false);
+    const [motorcycle, setMotorcycle] = useState(false);
+    const [bike, setBike] = useState(false);
 
     // Referencje do <input type="file"> (ukrytych)
     const avatarInputRef = useRef(null);
     const bannerInputRef = useRef(null);
 
-    // Funkcja, która pobiera aktualne dane użytkownika (avatar, banner) z back-endu
+    // Pobieranie danych o użytkowniku (avatar, banner)
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -35,7 +42,6 @@ const ProfilePage = () => {
                 }
                 const data = await response.json();
 
-                // Jeżeli w bazie przechowujesz tylko nazwę pliku, budujemy pełne URL-e do /uploads/...
                 if (data.avatar) {
                     setAvatarUrl(`http://localhost:5000/uploads/${data.avatar}`);
                 }
@@ -49,19 +55,47 @@ const ProfilePage = () => {
         fetchUserData();
     }, []);
 
+    // Pobieranie preferencji pojazdów
+    useEffect(() => {
+        if (!user?.id) return;
+
+        const fetchPreferences = async () => {
+            try {
+                const res = await fetch(`http://localhost:5000/user/${user.id}/preferences`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                if (!res.ok) {
+                    console.error('Failed to fetch user preferences');
+                    return;
+                }
+                const prefs = await res.json();
+                // prefs ma np. { car: 1, truck: 0, motorcycle: 1, bike: 0 }
+                setCar(prefs.car === 1);
+                setTruck(prefs.truck === 1);
+                setMotorcycle(prefs.motorcycle === 1);
+                setBike(prefs.bike === 1);
+            } catch (err) {
+                console.error('Error fetching preferences:', err);
+            }
+        };
+
+        fetchPreferences();
+    }, [user?.id]);
+
     /**
      * Obsługa zmiany avatara
      */
     const handleAvatarChange = async (e) => {
         const file = e.target.files[0];
-        if (!file || !user?.id) return; // Brak pliku lub brak danych użytkownika
+        if (!file || !user?.id) return;
 
         const formData = new FormData();
         formData.append('avatar', file);
 
         try {
             const response = await fetch(`http://localhost:5000/user/${user.id}/avatar`, {
-                method: 'PUT', // PUT, bo aktualizujemy istniejący zasób
+                method: 'PUT',
                 credentials: 'include',
                 body: formData,
             });
@@ -71,12 +105,11 @@ const ProfilePage = () => {
             }
 
             const data = await response.json();
-            // data.user.avatar to nazwa pliku z bazy
             if (data?.user?.avatar) {
                 setAvatarUrl(`http://localhost:5000/uploads/${data.user.avatar}`);
             }
 
-            // Jeśli chcesz natychmiast odświeżyć całą stronę (np. by zaktualizować także Navbar):
+            // Odśwież całą stronę (np. by zaktualizować Navbar):
             window.location.reload();
 
         } catch (err) {
@@ -106,7 +139,6 @@ const ProfilePage = () => {
             }
 
             const data = await response.json();
-            // data.user.banner to nazwa pliku z bazy
             if (data?.user?.banner) {
                 setBannerUrl(`http://localhost:5000/uploads/${data.user.banner}`);
             }
@@ -118,18 +150,11 @@ const ProfilePage = () => {
 
     /**
      * Funkcja wywoływana po pomyślnym zapisie profilu w komponencie EditProfile.
-     * Możesz tutaj np. ponownie pobrać usera z back-endu albo zrobić inny update.
      */
     const handleProfileUpdated = (updatedUser) => {
-        // Prosty przykład: jeżeli chcesz natychmiast pokazać zmiany w Username
-        // (o ile w "user" z kontekstu jest "username"), możesz zrobić:
-        // 1) odświeżyć usera z kontekstu (jeśli w UserContext masz np. refreshUser()) lub
-        // 2) zmienić local state w tym komponencie
-
-        // Przykład minimalny (ponowne wczytanie całej strony):
-        // window.location.reload();
-
         console.log('Zaktualizowany użytkownik:', updatedUser);
+        // Możesz np. ponownie pobrać usera z back-endu lub
+        // zrobić window.location.reload();
     };
 
     return (
@@ -188,7 +213,19 @@ const ProfilePage = () => {
                             accept="image/*"
                         />
                     </div>
-                    <h1 className="profile-username">{displayName}</h1>
+
+                    {/* Nazwa użytkownika i IKONKI preferencji */}
+                    <h1 className="profile-username">
+                        {displayName}
+
+                        {/* Sekcja ikonek pojazdów obok nazwy użytkownika */}
+                        <div className="profile-preferences">
+                            {car && <FaCar className="vehicle-icon active" />}
+                            {truck && <FaTruck className="vehicle-icon active" />}
+                            {motorcycle && <FaMotorcycle className="vehicle-icon active" />}
+                            {bike && <FaBicycle className="vehicle-icon active" />}
+                        </div>
+                    </h1>
                 </div>
             </div>
 

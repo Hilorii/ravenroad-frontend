@@ -101,6 +101,33 @@
     font-weight: bold;
 }
 
+/* Kontener na ikonki pojazdów obok nazwy */
+.profile-preferences {
+    display: inline-flex;  /* Ikonki w jednej linii za username */
+    margin-left: 10px;     /* mały odstęp od nazwy użytkownika */
+}
+
+/* Podstawowy styl ikonek pojazdów */
+.vehicle-icon {
+    margin: 0 4px;
+    font-size: 1.2rem; /* dostosuj wielkość */
+    color: #fff;       /* białe ikony */
+    opacity: 0.7;      /* lekka przezroczystość w stanie bazowym */
+    transition: opacity 0.3s, filter 0.3s, transform 0.3s;
+}
+
+/* Gdy ikona jest aktywna (tj. user ma 1 w preferencjach) */
+.vehicle-icon.active {
+    opacity: 1;                        /* Ikona mniej przezroczysta */
+    filter: drop-shadow(0 0 6px #fff); /* lekkie świecenie */
+}
+
+/* Powiększony efekt przy najechaniu */
+.vehicle-icon.active:hover {
+    filter: drop-shadow(0 0 12px #fff); /* intensywniejsze świecenie */
+    transform: scale(1.15);             /* lekkie powiększenie */
+}
+
 /**********************
   RESPONSYWNOŚĆ
 ***********************/
