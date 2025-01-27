@@ -73,6 +73,7 @@ const ProfilePage = () => {
             if (data?.user?.avatar) {
                 setAvatarUrl(`http://localhost:5000/uploads/${data.user.avatar}`);
             }
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
