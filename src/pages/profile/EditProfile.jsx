@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaChevronDown, FaCar, FaTruck, FaMotorcycle, FaBicycle } from 'react-icons/fa';
 import "./EditProfile.css";
 
@@ -13,7 +13,7 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    // Preferencje pojazdów (do starego endpointu PUT /user/:id)
+    // Preferencje pojazdów
     const [car, setCar] = useState(false);
     const [truck, setTruck] = useState(false);
     const [motorcycle, setMotorcycle] = useState(false);
@@ -23,6 +23,38 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
     const [formError, setFormError] = useState('');
     // Obsługa komunikatu sukcesu
     const [successMessage, setSuccessMessage] = useState('');
+
+    // --------------------------
+    // 1) Pobierz preferencje z bazy
+    // --------------------------
+    useEffect(() => {
+        const fetchPreferences = async () => {
+            if (!userId) return;
+
+            try {
+                const res = await fetch(`http://localhost:5000/user/${userId}/preferences`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                if (!res.ok) {
+                    console.error('Failed to fetch user preferences');
+                    return;
+                }
+
+                const data = await res.json();
+                // data ma postać { car: 0, truck: 1, motorcycle: 0, bike: 0 } itp.
+                setCar(data.car === 1);
+                setTruck(data.truck === 1);
+                setMotorcycle(data.motorcycle === 1);
+                setBike(data.bike === 1);
+            } catch (err) {
+                console.error('Error fetching preferences:', err);
+            }
+        };
+
+        fetchPreferences();
+    }, [userId]);
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -37,21 +69,25 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
     const handleMotorcycleToggle = () => setMotorcycle(!motorcycle);
     const handleBikeToggle = () => setBike(!bike);
 
-    // Obsługa wysłania formularza
+    // --------------------------
+    // 2) Zapisywanie całego profilu
+    // --------------------------
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormError('');
         setSuccessMessage('');
 
+        // Walidacja prosta
+        if (!userId) {
+            setFormError('Brak userId - nie można zapisać zmian.');
+            return;
+        }
+
         try {
-            // 1. Najpierw zaktualizujmy dane profilu (username, email, preferencje) starym endpointem
+            // a) Najpierw aktualizujemy dane profilu
             const profileUpdateBody = {
                 username,
                 email,
-                car: car ? 1 : 0,
-                truck: truck ? 1 : 0,
-                motorcycle: motorcycle ? 1 : 0,
-                bike: bike ? 1 : 0,
             };
 
             const profileRes = await fetch(`http://localhost:5000/user/${userId}`, {
@@ -69,9 +105,8 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
                 return;
             }
 
-            // 2. Jeśli użytkownik wypełnił pola hasła, zróbmy odrębny fetch do /user/:id/password
+            // b) Jeśli hasła wypełnione, zmieniamy hasło w endpointcie PUT /user/:id/password
             if (oldPassword || newPassword || confirmPassword) {
-                // Walidacja front-endowa
                 if (!oldPassword || !newPassword || !confirmPassword) {
                     setFormError('Aby zmienić hasło, wypełnij wszystkie pola!');
                     return;
@@ -103,13 +138,36 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
                 }
             }
 
-            // Jeśli obie operacje się udały:
-            const data = await profileRes.json();
+            // c) Na koniec aktualizujemy preferencje w /user/:id/preferences
+            const preferencesBody = {
+                car: car ? 1 : 0,
+                truck: truck ? 1 : 0,
+                motorcycle: motorcycle ? 1 : 0,
+                bike: bike ? 1 : 0
+            };
+
+            const prefRes = await fetch(`http://localhost:5000/user/${userId}/preferences`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(preferencesBody),
+            });
+
+            if (!prefRes.ok) {
+                const prefError = await prefRes.json();
+                setFormError(prefError?.message || 'Błąd przy zapisie preferencji.');
+                return;
+            }
+
+            // Jeśli wszystkie operacje się udały:
+            const updatedProfile = await profileRes.json();
             setSuccessMessage('Zmiany zostały zapisane!');
 
             // Wywołaj callback do odświeżenia w rodzicu, jeśli jest
             if (onProfileUpdated) {
-                onProfileUpdated(data.user);
+                onProfileUpdated(updatedProfile.user);
             }
 
             // Wyczyść pola haseł
@@ -117,7 +175,7 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
             setNewPassword('');
             setConfirmPassword('');
 
-            // W tym miejscu przeładowujemy stronę (aby np. Navbar też się odświeżył)
+            // Opcjonalnie odśwież stronę, by zaktualizować np. Navbar:
             window.location.reload();
 
         } catch (err) {
@@ -195,6 +253,7 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
                         />
                     </div>
 
+                    {/* Preferencje pojazdów */}
                     <div className="preferences">
                         <label>Preferencje pojazdów:</label>
                         <div className="preferences-row">

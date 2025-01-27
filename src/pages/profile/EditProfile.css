@@ -10,7 +10,8 @@
     border-radius: 8px;
     overflow: hidden;
     font-family: var(--font-family);
-    scale: 1.2; /* Skalowanie dla dużych ekranów */
+    scale: 1.2;
+    box-shadow: 0 2px 20px rgba(255, 255, 255, 0.9);
 }
 
 /* Pasek nagłówka (edycja profilu) */
