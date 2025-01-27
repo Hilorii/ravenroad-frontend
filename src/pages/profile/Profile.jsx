@@ -22,12 +22,12 @@ const ProfilePage = () => {
     const { user, setUser } = useUser();
 
     return (
-            <div className="">
+            <div>
                 <AnimatedBackground />
                 <Navbar />
+                <div>
 
-                <NeonMotorcycle/>
-
+                </div>
                 <Footer/>
             </div>
     );
