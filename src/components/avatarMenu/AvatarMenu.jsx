@@ -95,9 +95,13 @@ const AvatarMenu = () => {
             <div
                 className="avatar"
                 onClick={toggleMenu}
-                style={{ backgroundImage: `url(${avatarUrl})` }}
             >
-                {/* Biała strzałka w prawym dolnym rogu */}
+                <img
+                    src={avatarUrl}
+                    alt="User avatar"
+                    className="profile-avatar"
+                />
+                {/* Gradientowy border w CSS */}
                 <div className="avatar-arrow"></div>
             </div>
 
