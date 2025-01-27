@@ -6,6 +6,7 @@ import { FaCamera } from 'react-icons/fa';
 import { useUser } from '../../contexts/UserContext';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import { Footer } from "../../containers";
+import EditProfile from './EditProfile';
 
 const ProfilePage = () => {
     const { username } = useParams();
@@ -169,6 +170,8 @@ const ProfilePage = () => {
                     <h1 className="profile-username">{displayName}</h1>
                 </div>
             </div>
+
+            <EditProfile/>
 
             <Footer />
         </div>

@@ -1,0 +1,117 @@
+/* Kontener główny */
+.edit-profile-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--font-family);
+    scale: 1.2;
+}
+
+/* Pasek nagłówka (edycja profilu) */
+.edit-profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+}
+
+.edit-profile-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.edit-profile-arrow {
+    transition: transform 0.3s ease;
+}
+
+.edit-profile-arrow.open {
+    transform: rotate(180deg); /* Obróć strzałkę do góry */
+}
+
+/* Kontener na formularz (rozwijany) */
+.edit-profile-form-wrapper {
+    transition: max-height 0.4s ease;
+    overflow: hidden; /* ukrywa zawartość przy zwinieciu */
+}
+
+/* Formularz */
+.edit-profile-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+.field label {
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.field input {
+    padding: 8px;
+    border: 1px solid white;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+/* Sekcja preferencji pojazdów */
+.preferences {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preferences label {
+    font-weight: bold;
+}
+
+.preferences-row {
+    display: flex;
+    gap: 16px;
+}
+
+.pref-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    padding: 8px;
+    border: 2px solid white;
+    border-radius: 8px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+/* Gdy ikonka jest aktywna (zaznaczona) */
+.pref-icon.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.6);
+}
+
+/* Przycisk Zapisz zmiany */
+.save-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px 16px;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
