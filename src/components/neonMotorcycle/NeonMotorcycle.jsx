@@ -1,34 +1,52 @@
-import React, { useState } from "react";
-import "./NeonMotorcycle.css";
+import React, { useRef, useEffect } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, Points, PointMaterial } from '@react-three/drei';
+import * as THREE from 'three';
 
-const NeonMotorcycle = () => {
-    const [isActive, setIsActive] = useState(false);
+const MotorModel = () => {
+    const { scene } = useGLTF('/motor.glb'); // Załaduj model motoru
+    const pointsRef = useRef();
 
-    // Funkcja obsługująca kliknięcia w motor
-    const handleClick = () => {
-        setIsActive(!isActive);
-    };
+    // Przekształć geometrię modelu w cząsteczki
+    useEffect(() => {
+        const vertices = [];
+        scene.traverse((child) => {
+            if (child.isMesh) {
+                const positions = child.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    vertices.push(positions[i], positions[i + 1], positions[i + 2]);
+                }
+            }
+        });
+
+        const particles = new THREE.BufferGeometry();
+        particles.setAttribute('position', new THREE.BufferAttribute(new Float32Array(vertices), 3));
+        pointsRef.current.geometry = particles;
+    }, [scene]);
+
+    useFrame(() => {
+        if (pointsRef.current) {
+            pointsRef.current.rotation.z += 0.005; // Obrót wokół osi Z
+        }
+    });
 
     return (
-        <div className="neon-motorcycle-container">
-            <svg
-                onClick={handleClick}
-                className={`motorcycle-svg ${isActive ? "active" : ""}`}
-                viewBox="0 0 200 100"
-            >
-                {/* Przykładowa ścieżka motoru – można podmienić na dowolną inną  */}
-                <path
-                    d="M29.5 41.9c2-11.5 13.7-20.1 25.5-20.1 6.7 0 12.6 2.4 17.1 6.4h38.8c1.1-2.6 3.7-4.4 6.7-4.4h5
-             c4 0 7.3 3.2 7.3 7.2v7c0 4-3.3 7.2-7.3 7.2h-12.2c-2.4 0-4.5-1.1-6-2.9l-2.3-3.1h-20c-2.8 2.8-6.7 4.5-11 4.5
-             -8.6 0-15.6-7-15.6-15.5l-2 1c-2 1-3 3.2-2.4 5.4l3.1 12.8h-9.3l-2.4-12.2c-0.3-1.8-1.4-3.3-2.9-4.2l-2.8-1.5z"
-                    fill="currentColor"
-                />
-                <circle cx="55" cy="60" r="15" fill="currentColor" />
-                <circle cx="135" cy="60" r="15" fill="currentColor" />
-            </svg>
-            <p className="motorcycle-text">Neonowy Motor</p>
+        <points ref={pointsRef} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <PointMaterial color="white" size={0.05} transparent />
+        </points>
+    );
+};
+
+const Motor = () => {
+    return (
+        <div style={{ width: '60vw', height: '30vw', margin: '0 auto' }}>
+            <Canvas camera={{ position: [0, 0, 5], fov: 30 }}>
+                <ambientLight intensity={0.5} />
+                <pointLight position={[10, 10, 10]} intensity={0.5} />
+                <MotorModel />
+            </Canvas>
         </div>
     );
 };
 
-export default NeonMotorcycle;
+export default Motor;

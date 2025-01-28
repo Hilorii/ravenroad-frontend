@@ -14,6 +14,7 @@ import { SpinnerLoading } from './components/tamagui/spinner';
 import ServiceContainer from './components/serviceContainer/ServiceContainer';
 import SatisfactionContainer from './components/satisfationContainer/SatisfactionContainer';
 import PricingCards from './components/pricingCards/PricingCards';
+import Motor from './components/neonMotorcycle/NeonMotorcycle';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -50,6 +51,7 @@ const App = () => {
                 <div>
                     <CenteredTextWithLogo/>
                     <ServiceContainer/>
+                    {/*<Motor/>*/}
                     <SatisfactionContainer/>
                     <Header/>
                     {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
