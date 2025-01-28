@@ -34,25 +34,33 @@ import TeamPage from './pages/team/Team';
 import PurchasePage from './pages/purchase/Purchase';
 import FAQPage from './pages/FAQ/FAQ';
 import PageNotFoundPage from './pages/pageNotFound/PageNotFound';
-import RoutesPage from './pages/routes/Routes';
-import AddRoutePage from './pages/addRoute/AddRoute';
-import RouteDetailsPage from './pages/routeDetails/RouteDetails';
-import GroupDetailsPage from './pages/groupDetails/GroupDetails';
-import EventDetailsPage from './pages/eventDetails/EventDetails';
+// import RoutesPage from './pages/routes/Routes';
+// import AddRoutePage from './pages/addRoute/AddRoute';
+// import RouteDetailsPage from './pages/routeDetails/RouteDetails';
+// import GroupDetailsPage from './pages/groupDetails/GroupDetails';
+// import EventDetailsPage from './pages/eventDetails/EventDetails';
 import CollaborationPage from './pages/collaboration/Collaboration';
-import ReadyRoutesPage from './pages/readyRoutes/ReadyRoutes';
-import EditRoutePage from './pages/editRoute/EditRoute';
-import AddGroupPage from './pages/addGroup/AddGroup';
-import EditGroupPage from './pages/editGroup/EditGroup';
-import EditEventPage from './pages/editEvent/EditEvent';
-import SearchGroupsPage from './pages/searchGroups/SearchGroups';
-import SearchedGroupDetailsPage from './pages/searchGroups/SearchedGroupDetails';
-import ReadyRoutesDetailsPage from './pages/readyRoutes/ReadyRoutesDetails';
-import AddEventPage from './pages/addEvent/AddEvent';
-import JoinEventPage from './pages/joinEvents/JoinEvents';
-import JoinEventDetailsPage from './pages/joinEvents/JoinEventDetails';
+// import ReadyRoutesPage from './pages/readyRoutes/ReadyRoutes';
+// import EditRoutePage from './pages/editRoute/EditRoute';
+// import AddGroupPage from './pages/addGroup/AddGroup';
+// import EditGroupPage from './pages/editGroup/EditGroup';
+// import EditEventPage from './pages/editEvent/EditEvent';
+// import SearchGroupsPage from './pages/searchGroups/SearchGroups';
+// import SearchedGroupDetailsPage from './pages/searchGroups/SearchedGroupDetails';
+// import ReadyRoutesDetailsPage from './pages/readyRoutes/ReadyRoutesDetails';
+// import AddEventPage from './pages/addEvent/AddEvent';
+// import JoinEventPage from './pages/joinEvents/JoinEvents';
+// import JoinEventDetailsPage from './pages/joinEvents/JoinEventDetails';
 import DeleteDataPage from './pages/deleteData/DeleteData';
 import ForgotPasswordPage from './pages/resetPassword/ForgotPassword';
+
+
+//GROUPS
+import Groups from './pages/groups/Groups';
+
+//ROUTES
+
+//EVENTS
 
 
 const tamaguiConfig = createTamagui(config);
@@ -71,7 +79,6 @@ root.render(
                             <Route path="/" element={<App />} />
                             <Route path="/main" element={<MainSite />} />
                             <Route path="/login" element={<LoginPage1 />} />
-                            {/*<Route path="/login1" element={<LoginPage1 />} />*/}
                             <Route path="/register" element={<RegisterPage />} />
                             <Route path="/passwordForgot" element={<PasswordForgotPage />} />
                             <Route path="/signup" element={<SignupPage />} />
@@ -89,26 +96,33 @@ root.render(
                             <Route path="/team" element={<TeamPage/>} />
                             <Route path="/pricing/purchase" element={<PurchasePage/>} />
                             <Route path="/FAQ" element={<FAQPage/>} />
-                            <Route path="/routes" element={<RoutesPage/>} />
-                            <Route path="/addRoute" element={<AddRoutePage/>} />
-                            <Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />
-                            <Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />
+                            {/*<Route path="/routes" element={<RoutesPage/>} />*/}
+                            {/*<Route path="/addRoute" element={<AddRoutePage/>} />*/}
+                            {/*<Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />*/}
+                            {/*<Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />*/}
                             <Route path="/collaboration" element={<CollaborationPage/>} />
-                            <Route path="/readyRoutes" element={<ReadyRoutesPage/>} />
-                            <Route path="/editRoute/:id" element={<EditRoutePage/>} />
-                            <Route path="/addGroup" element={<AddGroupPage/>} />
-                            <Route path="/editGroup/:id" element={<EditGroupPage/>} />
-                            <Route path="/editEvent/:id" element={<EditEventPage/>} />
-                            <Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />
-                            <Route path="/eventDetails/:id" element={<EventDetailsPage/>} />
-                            <Route path="/searchGroups" element={<SearchGroupsPage/>} />
-                            <Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />
-                            <Route path="/readyRouteDetails/:id" element={<ReadyRoutesDetailsPage/>} />
-                            <Route path="/createEvent" element={<AddEventPage/>} />
-                            <Route path="/joinEvents" element={<JoinEventPage/>} />
-                            <Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />
+                            {/*<Route path="/readyRoutes" element={<ReadyRoutesPage/>} />*/}
+                            {/*<Route path="/editRoute/:id" element={<EditRoutePage/>} />*/}
+                            {/*<Route path="/addGroup" element={<AddGroupPage/>} />*/}
+                            {/*<Route path="/editGroup/:id" element={<EditGroupPage/>} />*/}
+                            {/*<Route path="/editEvent/:id" element={<EditEventPage/>} />*/}
+                            {/*<Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />*/}
+                            {/*<Route path="/eventDetails/:id" element={<EventDetailsPage/>} />*/}
+                            {/*<Route path="/searchGroups" element={<SearchGroupsPage/>} />*/}
+                            {/*<Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />*/}
+                            {/*<Route path="/readyRouteDetails/:id" element={<ReadyRoutesDetailsPage/>} />*/}
+                            {/*<Route path="/createEvent" element={<AddEventPage/>} />*/}
+                            {/*<Route path="/joinEvents" element={<JoinEventPage/>} />*/}
+                            {/*<Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />*/}
                             <Route path="/password-reset" element={<ForgotPasswordPage/>} />
                             <Route path="*" element={<PageNotFoundPage/>} />
+
+                            {/*GROUPS*/}
+                            <Route path="/groups" element={<Groups/>} />
+
+                            {/*ROUTES*/}
+
+                            {/*EVENTS*/}
 
 
                             {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}

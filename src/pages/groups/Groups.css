@@ -1,0 +1,91 @@
+/* Kontener otaczający obie sekcje */
+.groups-wrapper {
+    /* Ustawiamy elementy obok siebie */
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 50px auto; /* odstęp od góry/dół i wycentrowanie */
+    padding: 0 1rem;
+}
+
+/* Każdy z prostokątów */
+.groups-box {
+    flex: 1;
+    margin: 1rem;
+    border: 2px solid #fff; /* biały border */
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: transparent; /* brak tła */
+    /* Efekt lekkiego „poświaty” dla białego obramowania */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Tytuł w każdym prostokącie */
+.groups-box-title {
+    text-align: center;
+    color: #fff; /* zakładam ciemne tło animacji - dopasuj kolor */
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Lista grup */
+.groups-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Pojedyncza "kafelkowa" grupa */
+.group-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1); /* lekkie tło, można usunąć lub zmienić */
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+/* Avatar grupy */
+.group-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+/* Nazwa grupy */
+.group-name {
+    flex: 1;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* Ikonki akcji */
+.group-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.group-icon {
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.group-icon:hover {
+    transform: scale(1.2);
+    color: #ffea00; /* dowolny kolor po najechaniu */
+}
+
+/* Obsługa responsywności: poniżej 768px prostokąty ustawiają się pionowo */
+@media (max-width: 768px) {
+    .groups-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
