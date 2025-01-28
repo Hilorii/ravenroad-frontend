@@ -6,7 +6,8 @@ import { FaCamera, FaCar, FaTruck, FaMotorcycle, FaBicycle } from 'react-icons/f
 import { useUser } from '../../contexts/UserContext';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import { Footer } from "../../containers";
-import EditProfile from './EditProfile'; // Upewnij się, że ścieżka jest poprawna
+import EditProfile from './EditProfile';
+import Squares from '../../components/linkSquares/LinkSquares'
 
 const ProfilePage = () => {
     const { username } = useParams();
@@ -238,6 +239,8 @@ const ProfilePage = () => {
                     onProfileUpdated={handleProfileUpdated}
                 />
             )}
+
+            <Squares/>
 
             <Footer />
         </div>
