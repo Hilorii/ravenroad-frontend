@@ -169,23 +169,23 @@ export default function EditGroup() {
                     />
 
                     <div className="checkbox-wrapper">
-                        <label htmlFor="private-checkbox">Prywatna:</label>
                         <input
                             id="private-checkbox"
                             type="checkbox"
                             checked={isPrivate}
                             onChange={(e) => setIsPrivate(e.target.checked)}
                         />
+                        <label htmlFor="private-checkbox">Prywatna:</label>
                     </div>
 
                     <div className="checkbox-wrapper">
-                        <label htmlFor="visible-checkbox">Widoczna:</label>
                         <input
                             id="visible-checkbox"
                             type="checkbox"
                             checked={isVisible}
                             onChange={(e) => setIsVisible(e.target.checked)}
                         />
+                        <label htmlFor="visible-checkbox">Widoczna:</label>
                     </div>
 
                     <label htmlFor="group-image">Avatar grupy (zmień, jeśli chcesz):</label>
