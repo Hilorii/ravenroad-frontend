@@ -87,7 +87,7 @@ export default function EditGroup() {
             }
 
             // Powrót do strony szczegółów po pomyślnej aktualizacji
-            navigate(`/groups/${id}`);
+            navigate(`/groupDetails/${id}`);
         } catch (err) {
             setError(err.message);
         }
