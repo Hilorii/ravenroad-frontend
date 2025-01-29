@@ -17,14 +17,21 @@ export default function EditGroup() {
     const [description, setDescription] = useState('');
     const [isPrivate, setIsPrivate] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
+
+    // Obsługa avatara grupy
     const [imageFile, setImageFile] = useState(null);
     const [oldImage, setOldImage] = useState(null);
+
+    // Obsługa bannera grupy
+    const [bannerFile, setBannerFile] = useState(null);
+    const [oldBanner, setOldBanner] = useState(null);
 
     useEffect(() => {
         fetchGroupDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Pobiera aktualne dane grupy z backendu
     const fetchGroupDetails = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -47,12 +54,20 @@ export default function EditGroup() {
             setDescription(data.description || '');
             setIsPrivate(!!data.private);
             setIsVisible(!!data.visible);
-            setOldImage(data.image || null);
+
+            // Zapamiętujemy stare pliki (by usunąć je na serwerze, jeśli uploadujemy nowe)
+            if (data.image) {
+                setOldImage(data.image);
+            }
+            if (data.banner) {
+                setOldBanner(data.banner);
+            }
         } catch (err) {
             setError(err.message);
         }
     };
 
+    // Obsługa zatwierdzenia formularza
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -65,12 +80,20 @@ export default function EditGroup() {
             formData.append('private', isPrivate ? 1 : 0);
             formData.append('visible', isVisible ? 1 : 0);
 
+            // Avatar grupy
             if (imageFile) {
                 formData.append('image', imageFile);
             }
             if (oldImage) {
-                // przekazujemy starą nazwę pliku, by serwer mógł ją ew. usunąć
                 formData.append('oldImage', oldImage);
+            }
+
+            // Banner grupy
+            if (bannerFile) {
+                formData.append('banner', bannerFile);
+            }
+            if (oldBanner) {
+                formData.append('oldBanner', oldBanner);
             }
 
             const response = await fetch(`http://localhost:3000/groups/${id}`, {
@@ -86,7 +109,7 @@ export default function EditGroup() {
                 throw new Error(errData.message || 'Błąd podczas aktualizacji grupy');
             }
 
-            // Powrót do strony szczegółów po pomyślnej aktualizacji
+            // Powrót do strony szczegółów (zakładamy, że masz ścieżkę /groupDetails/:id)
             navigate(`/groupDetails/${id}`);
         } catch (err) {
             setError(err.message);
@@ -165,12 +188,20 @@ export default function EditGroup() {
                         />
                     </div>
 
-                    <label htmlFor="group-image">Avatar grupy (zmień jeśli chcesz):</label>
+                    <label htmlFor="group-image">Avatar grupy (zmień, jeśli chcesz):</label>
                     <input
                         id="group-image"
                         type="file"
                         accept="image/*"
                         onChange={(e) => setImageFile(e.target.files[0])}
+                    />
+
+                    <label htmlFor="group-banner">Banner grupy (zmień, jeśli chcesz):</label>
+                    <input
+                        id="group-banner"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setBannerFile(e.target.files[0])}
                     />
 
                     <button type="submit" className="submit-button">
