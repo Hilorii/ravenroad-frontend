@@ -109,7 +109,6 @@ export default function EditGroup() {
                 throw new Error(errData.message || 'Błąd podczas aktualizacji grupy');
             }
 
-            // Powrót do strony szczegółów (zakładamy, że masz ścieżkę /groupDetails/:id)
             navigate(`/groupDetails/${id}`);
         } catch (err) {
             setError(err.message);
@@ -188,7 +187,7 @@ export default function EditGroup() {
                         <label htmlFor="visible-checkbox">Widoczna:</label>
                     </div>
 
-                    <label htmlFor="group-image">Avatar grupy (zmień, jeśli chcesz):</label>
+                    <label htmlFor="group-image">Avatar grupy:</label>
                     <input
                         id="group-image"
                         type="file"
@@ -196,7 +195,7 @@ export default function EditGroup() {
                         onChange={(e) => setImageFile(e.target.files[0])}
                     />
 
-                    <label htmlFor="group-banner">Banner grupy (zmień, jeśli chcesz):</label>
+                    <label htmlFor="group-banner">Banner grupy:</label>
                     <input
                         id="group-banner"
                         type="file"
