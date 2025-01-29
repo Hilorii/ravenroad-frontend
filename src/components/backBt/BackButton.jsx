@@ -8,7 +8,7 @@ const BackButton = () => {
 
     // Funkcja do nawigacji wstecz
     const goBack = () => {
-        navigate(-1); // Przekierowuje do poprzedniej strony
+        navigate(-1);
     };
 
     return (

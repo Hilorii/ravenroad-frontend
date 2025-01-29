@@ -6,6 +6,7 @@ import Footer from '../../containers/footer/Footer';
 import { useUser } from '../../contexts/UserContext';
 import { FaCrown } from 'react-icons/fa';
 import './GroupDetails.css';
+import BackButton from '../../components/backBt/BackButton';
 
 export default function GroupDetails() {
     const { id } = useParams();
@@ -109,6 +110,7 @@ export default function GroupDetails() {
         <>
             <AnimatedBackground />
             <Navbar />
+            <BackButton/>
 
             <div className="group-details-container">
                 {/* BANNER GRUPY */}

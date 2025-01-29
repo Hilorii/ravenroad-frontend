@@ -1,14 +1,28 @@
 .back-button {
     position: absolute;
-    top: 150px; /* Dostosuj w zależności od wysokości navbaru */
-    left: 5px;
-    padding: 10px 15px;
+    top: 240px;
+    left: 40px;
     background-color: transparent;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
-    scale: 1.5;
+
+    /* Wielkość ikony */
+    font-size: 2.2rem;
+
+    /* Animacje płynnych przejść */
+    transition: transform 0.2s ease, filter 0.3s ease;
+    z-index: 1000;
 }
 
+/* Efekt przy najechaniu kursorem – świecenie */
+.back-button:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+}
+
+/* Efekt po kliknięciu */
+.back-button:active {
+    transform: scale(0.9);
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+}
