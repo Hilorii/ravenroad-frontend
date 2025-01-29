@@ -57,6 +57,8 @@ import ForgotPasswordPage from './pages/resetPassword/ForgotPassword';
 
 //GROUPS
 import Groups from './pages/groups/Groups';
+import GroupDetails from './pages/groups/GroupDetails';
+import EditGroup from './pages/groups/EditGroup';
 
 //ROUTES
 
@@ -119,6 +121,8 @@ root.render(
 
                             {/*GROUPS*/}
                             <Route path="/groups" element={<Groups/>} />
+                            <Route path="/groupDetails/:id" element={<GroupDetails />} />
+                            <Route path="/editGroup/:id" element={<EditGroup />} />
 
                             {/*ROUTES*/}
 

@@ -1,0 +1,170 @@
+.group-details-container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 80px auto 100px;
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: transparent;
+    box-shadow: 0 2px 20px rgba(255, 255, 255, 0.9);
+    position: relative;
+    font-family: var(--font-family);
+}
+
+/* BANNER */
+.group-banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.group-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* GŁÓWNA SEKCJA ZAWARTOŚCI */
+.group-content {
+    position: relative;
+    padding: 60px 20px 20px;
+}
+
+/* AVATAR GRUPY */
+.group-avatar-wrapper {
+    position: absolute;
+    top: -60px;
+    left: 20px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(#AE67FA, #F49867);
+    padding: 3px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.d-group-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 200%;
+    display: block;
+}
+
+/* NAZWA GRUPY */
+.group-title {
+    margin: 0 0 10px 0;
+    padding-left: 160px;
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* odstęp między tekstem a koroną */
+}
+
+/* Korona właściciela */
+.owner-crown {
+    color: gold;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.owner-crown:hover {
+    transform: scale(1.3);
+}
+
+/* OPIS GRUPY */
+.group-description {
+    margin: 0 0 20px 0;
+    padding-left: 160px;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+/* DODATKOWE INFORMACJE */
+.group-info {
+    padding-left: 160px;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.group-info p {
+    margin: 4px 0;
+}
+
+/* LISTA CZŁONKÓW */
+.members-list {
+    margin-top: 30px;
+    padding-left: 160px;
+    color: #fff;
+}
+
+.members-list-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* Kontener na kafelki członków */
+.members-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Pojedynczy kafelek członka */
+.member-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-width: 120px;
+}
+
+/* Avatar członka */
+.member-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+/* Nazwa użytkownika członka */
+.member-username {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* RESPONSYWNOŚĆ */
+@media (max-width: 768px) {
+    .group-content {
+        padding-top: 80px;
+    }
+
+    .group-avatar-wrapper {
+        top: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .group-title,
+    .group-description,
+    .group-info,
+    .members-list {
+        padding-left: 0;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+    .members-grid {
+        justify-content: center;
+    }
+}
