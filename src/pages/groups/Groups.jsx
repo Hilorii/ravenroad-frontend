@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';        // do nawigacji między stronami
 import { useUser } from '../../contexts/UserContext';
 import Navbar from "../../components/navbar/Navbar";
 import './Groups.css';
-import { Link } from 'react-router-dom';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
 
 // Ikony z react-icons
-import { FaEdit, FaInfoCircle, FaSignOutAlt, FaPlus, FaCrown } from 'react-icons/fa';
+import {
+    FaEdit,
+    FaInfoCircle,
+    FaSignOutAlt,
+    FaPlus,
+    FaCrown,
+    FaTrash  // Dodajemy ikonę kosza, jeśli chcesz obsługiwać usuwanie grupy
+} from 'react-icons/fa';
 
 export default function Groups() {
     const { user } = useUser(); // Pobieramy obiekt `user` z kontekstu
+    const navigate = useNavigate();
     const [userGroups, setUserGroups] = useState([]);
     const [proposedGroups, setProposedGroups] = useState([]);
     const [error, setError] = useState(null);
@@ -62,22 +70,90 @@ export default function Groups() {
         }
     };
 
-    // Przykładowe metody do obsługi akcji
+    // --------------------- OBSŁUGA PRZYCISKÓW / IKON ---------------------
+
+    // 1. Przekierowanie do strony edycji grupy
     const handleEditGroup = (groupId) => {
-        console.log("Edycja grupy ID:", groupId);
+        // Zakładamy, że masz zdefiniowaną trasę np. /editGroup/:groupId
+        navigate(`/editGroup/${groupId}`);
     };
 
+    // 2. Przekierowanie do strony detali grupy
     const handleViewDetails = (groupId) => {
-        console.log("Detale grupy ID:", groupId);
+        navigate(`/groupDetails/${groupId}`);
     };
 
-    const handleLeaveGroup = (groupId) => {
-        console.log("Opuszczenie grupy ID:", groupId);
+    // 3. Opuszczenie grupy (POST /leaveGroup/:groupId)
+    const handleLeaveGroup = async (groupId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://localhost:3000/leaveGroup/${groupId}`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || 'Błąd podczas opuszczania grupy');
+            }
+
+            // Po opuszczeniu grupy — np. odśwież listę grup
+            setUserGroups(prev => prev.filter(group => group.id !== groupId));
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
-    const handleJoinGroup = (groupId) => {
-        console.log("Dołączanie do grupy ID:", groupId);
+    // 4. Dołączenie do grupy (POST /joinGroup/:groupId)
+    const handleJoinGroup = async (groupId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://localhost:3000/joinGroup/${groupId}`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || 'Błąd podczas dołączania do grupy');
+            }
+
+            // Po dołączeniu — np. odśwież listę Twoich grup i/lub proponowanych
+            fetchUserGroups();
+            fetchProposedGroups();
+        } catch (err) {
+            setError(err.message);
+        }
     };
+
+    // 5. Usuwanie grupy (DELETE /deleteGroup/:groupId) — tylko dla właściciela
+    const handleDeleteGroup = async (groupId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://localhost:3000/deleteGroup/${groupId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || 'Błąd podczas usuwania grupy');
+            }
+
+            // Po usunięciu usuwamy ją z listy userGroups
+            setUserGroups(prev => prev.filter(group => group.id !== groupId));
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    // --------------------- RENDER KOMPONENTU ---------------------
 
     return (
         <div>
@@ -85,6 +161,7 @@ export default function Groups() {
             <Navbar />
             {/* Napis "Grupy" */}
             <h1 className="groups-title">Grupy</h1>
+
             <div className="groups-wrapper">
                 {/* PIERWSZY PROSTOKĄT: TWOJE GRUPY */}
                 <div className="groups-box">
@@ -103,20 +180,30 @@ export default function Groups() {
                                     className="group-avatar"
                                 />
                                 <span className="group-name">{group.name}</span>
+
                                 <div className="group-actions">
                                     {/* Ikona edycji widoczna tylko dla właściciela */}
                                     {user && group.created_by === user.id && (
-                                        <FaEdit
-                                            className="group-icon"
-                                            title="Edytuj grupę"
-                                            onClick={() => handleEditGroup(group.id)}
-                                        />
+                                        <>
+                                            <FaEdit
+                                                className="group-icon"
+                                                title="Edytuj grupę"
+                                                onClick={() => handleEditGroup(group.id)}
+                                            />
+                                            <FaTrash
+                                                className="group-icon"
+                                                title="Usuń grupę"
+                                                onClick={() => handleDeleteGroup(group.id)}
+                                            />
+                                        </>
                                     )}
+
                                     <FaInfoCircle
                                         className="group-icon"
                                         title="Detale grupy"
                                         onClick={() => handleViewDetails(group.id)}
                                     />
+
                                     <FaSignOutAlt
                                         className="group-icon"
                                         title="Opuść grupę"
@@ -159,6 +246,7 @@ export default function Groups() {
                     </div>
                 </div>
             </div>
+
             <Footer />
         </div>
     );
