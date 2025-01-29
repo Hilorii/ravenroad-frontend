@@ -20,7 +20,7 @@ export default function Groups() {
     const fetchUserGroups = async () => {
         try {
             const token = localStorage.getItem('token'); // lub skąd pobierasz token
-            const response = await fetch('http://localhost:3001/groups', {
+            const response = await fetch('http://localhost:3000/groups', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -40,7 +40,7 @@ export default function Groups() {
     const fetchProposedGroups = async () => {
         try {
             const token = localStorage.getItem('token'); // lub skąd pobierasz token
-            const response = await fetch('http://localhost:3001/searchGroups', {
+            const response = await fetch('http://localhost:3000/searchGroups', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -75,8 +75,9 @@ export default function Groups() {
         <div>
             <AnimatedBackground/>
             <Navbar/>
+            {/* Dodaj napis "Grupy" */}
+            <h1 className="groups-title">Grupy</h1>
             <div className="groups-wrapper">
-
                 {/* PIERWSZY PROSTOKĄT: TWOJE GRUPY */}
                 <div className="groups-box">
                     <h2 className="groups-box-title">TWOJE GRUPY</h2>
@@ -85,11 +86,11 @@ export default function Groups() {
                         {userGroups.map((group) => (
                             <div key={group.id} className="group-item">
                                 <img
-                                    src={group.image}
-                                    alt={group.nazwa}
+                                    src={`http://localhost:5000/uploads/${group.image}`}
+                                    alt={group.name}
                                     className="group-avatar"
                                 />
-                                <span className="group-name">{group.nazwa}</span>
+                                <span className="group-name">{group.name}</span>
                                 <div className="group-actions">
                                     <FaEdit
                                         className="group-icon"
@@ -120,17 +121,12 @@ export default function Groups() {
                         {proposedGroups.map((group) => (
                             <div key={group.id} className="group-item">
                                 <img
-                                    src={group.image}
-                                    alt={group.nazwa}
+                                    src={`http://localhost:5000/uploads/${group.image}`}
+                                    alt={group.name}
                                     className="group-avatar"
                                 />
-                                <span className="group-name">{group.nazwa}</span>
+                                <span className="group-name">{group.name}</span>
                                 <div className="group-actions">
-                                    <FaEdit
-                                        className="group-icon"
-                                        title="Edytuj grupę"
-                                        onClick={() => handleEditGroup(group.id)}
-                                    />
                                     <FaInfoCircle
                                         className="group-icon"
                                         title="Detale grupy"

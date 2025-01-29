@@ -1,31 +1,30 @@
 /* Kontener otaczający obie sekcje */
 .groups-wrapper {
-    /* Ustawiamy elementy obok siebie */
     display: flex;
     gap: 2rem;
     justify-content: center;
     align-items: flex-start;
     max-width: 1200px;
-    margin: 50px auto; /* odstęp od góry/dół i wycentrowanie */
+    margin: 50px auto;
     padding: 0 1rem;
+    font-family: var(--font-family);
 }
 
 /* Każdy z prostokątów */
 .groups-box {
     flex: 1;
     margin: 1rem;
-    border: 2px solid #fff; /* biały border */
+    border: 2px solid #fff;
     border-radius: 8px;
     padding: 1rem;
-    background-color: transparent; /* brak tła */
-    /* Efekt lekkiego „poświaty” dla białego obramowania */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    background-color: transparent;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
 /* Tytuł w każdym prostokącie */
 .groups-box-title {
     text-align: center;
-    color: #fff; /* zakładam ciemne tło animacji - dopasuj kolor */
+    color: #fff;
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -42,7 +41,7 @@
 .group-item {
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.1); /* lekkie tło, można usunąć lub zmienić */
+    background-color: rgba(255, 255, 255, 0.1);
     padding: 0.5rem;
     border-radius: 8px;
 }
@@ -79,7 +78,27 @@
 
 .group-icon:hover {
     transform: scale(1.2);
-    color: #ffea00; /* dowolny kolor po najechaniu */
+    color: #AE67FA;
+}
+
+.groups-title {
+    text-align: center;
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 600;
+    margin: 2rem 0;
+    animation: glow 2s infinite alternate;
+    font-family: var(--font-family);
+    text-transform: uppercase;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 30px #AE67FA, 0 0 40px #F49867;
+    }
+    100% {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 30px #AE67FA, 0 0 40px #F49867;
+    }
 }
 
 /* Obsługa responsywności: poniżej 768px prostokąty ustawiają się pionowo */
