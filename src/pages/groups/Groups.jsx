@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';        // do nawigacji między stronami
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 import Navbar from "../../components/navbar/Navbar";
 import './Groups.css';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
 
-// Ikony z react-icons
 import {
     FaEdit,
     FaInfoCircle,
     FaSignOutAlt,
     FaPlus,
     FaCrown,
-    FaTrash  // Dodajemy ikonę kosza, jeśli chcesz obsługiwać usuwanie grupy
+    FaTrash
 } from 'react-icons/fa';
 
 export default function Groups() {
-    const { user } = useUser(); // Pobieramy obiekt `user` z kontekstu
+    const { user } = useUser();
     const navigate = useNavigate();
     const [userGroups, setUserGroups] = useState([]);
     const [proposedGroups, setProposedGroups] = useState([]);
@@ -28,7 +27,6 @@ export default function Groups() {
         fetchProposedGroups();
     }, []);
 
-    // Funkcja pobierania "Twoich grup"
     const fetchUserGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -49,7 +47,6 @@ export default function Groups() {
         }
     };
 
-    // Funkcja pobierania "Proponowanych grup"
     const fetchProposedGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -70,20 +67,14 @@ export default function Groups() {
         }
     };
 
-    // --------------------- OBSŁUGA PRZYCISKÓW / IKON ---------------------
-
-    // 1. Przekierowanie do strony edycji grupy
     const handleEditGroup = (groupId) => {
-        // Zakładamy, że masz zdefiniowaną trasę np. /editGroup/:groupId
         navigate(`/editGroup/${groupId}`);
     };
 
-    // 2. Przekierowanie do strony detali grupy
     const handleViewDetails = (groupId) => {
         navigate(`/groupDetails/${groupId}`);
     };
 
-    // 3. Opuszczenie grupy (POST /leaveGroup/:groupId)
     const handleLeaveGroup = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
@@ -99,14 +90,12 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas opuszczania grupy');
             }
 
-            // Po opuszczeniu grupy — np. odśwież listę grup
             setUserGroups(prev => prev.filter(group => group.id !== groupId));
         } catch (err) {
             setError(err.message);
         }
     };
 
-    // 4. Dołączenie do grupy (POST /joinGroup/:groupId)
     const handleJoinGroup = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
@@ -122,7 +111,6 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas dołączania do grupy');
             }
 
-            // Po dołączeniu — np. odśwież listę Twoich grup i/lub proponowanych
             fetchUserGroups();
             fetchProposedGroups();
         } catch (err) {
@@ -130,7 +118,6 @@ export default function Groups() {
         }
     };
 
-    // 5. Usuwanie grupy (DELETE /deleteGroup/:groupId) — tylko dla właściciela
     const handleDeleteGroup = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
@@ -146,31 +133,45 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas usuwania grupy');
             }
 
-            // Po usunięciu usuwamy ją z listy userGroups
             setUserGroups(prev => prev.filter(group => group.id !== groupId));
         } catch (err) {
             setError(err.message);
         }
     };
 
-    // --------------------- RENDER KOMPONENTU ---------------------
+    // Handlers for navigating to /routes and /events
+    const handleNavigateToRoutes = () => {
+        navigate('/routes');
+    };
+
+    const handleNavigateToEvents = () => {
+        navigate('/events');
+    };
 
     return (
         <div>
             <AnimatedBackground />
             <Navbar />
-            {/* Napis "Grupy" */}
-            <h1 className="groups-title">Grupy</h1>
+
+            {/* Title Section with TRASY - GRUPY - EVENTY */}
+            <div className="title-container">
+                <h2 className="title-item no-glow" onClick={handleNavigateToRoutes}>
+                    TRASY
+                </h2>
+                <h1 className="groups-title">GRUPY</h1>
+                <h2 className="title-item no-glow" onClick={handleNavigateToEvents}>
+                    EVENTS
+                </h2>
+            </div>
 
             <div className="groups-wrapper">
-                {/* PIERWSZY PROSTOKĄT: TWOJE GRUPY */}
+                {/* TWOJE GRUPY */}
                 <div className="groups-box">
                     <h2 className="groups-box-title">TWOJE GRUPY</h2>
                     <div className="groups-list">
                         {error && <p className="error-message">{error}</p>}
                         {userGroups.map((group) => (
                             <div key={group.id} className="group-item">
-                                {/* Złota koronka dla właściciela grupy */}
                                 {user && group.created_by === user.id && (
                                     <FaCrown className="group-crown" />
                                 )}
@@ -180,9 +181,7 @@ export default function Groups() {
                                     className="group-avatar"
                                 />
                                 <span className="group-name">{group.name}</span>
-
                                 <div className="group-actions">
-                                    {/* Ikona edycji widoczna tylko dla właściciela */}
                                     {user && group.created_by === user.id && (
                                         <>
                                             <FaEdit
@@ -197,13 +196,11 @@ export default function Groups() {
                                             />
                                         </>
                                     )}
-
                                     <FaInfoCircle
                                         className="group-icon"
                                         title="Detale grupy"
                                         onClick={() => handleViewDetails(group.id)}
                                     />
-
                                     <FaSignOutAlt
                                         className="group-icon"
                                         title="Opuść grupę"
@@ -215,7 +212,7 @@ export default function Groups() {
                     </div>
                 </div>
 
-                {/* DRUGI PROSTOKĄT: PROPONOWANE GRUPY */}
+                {/* PROPONOWANE GRUPY */}
                 <div className="groups-box">
                     <h2 className="groups-box-title">PROPONOWANE GRUPY</h2>
                     <div className="groups-list">
@@ -234,7 +231,6 @@ export default function Groups() {
                                         title="Detale grupy"
                                         onClick={() => handleViewDetails(group.id)}
                                     />
-                                    {/* Zmieniona ikona na dołączanie */}
                                     <FaPlus
                                         className="group-icon"
                                         title="Dołącz do grupy"

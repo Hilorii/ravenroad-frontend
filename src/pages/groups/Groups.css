@@ -1,4 +1,67 @@
-/* Kontener otaczający obie sekcje */
+/* Container for the title (TRASY - GRUPY - EVENTY) */
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Common style for TRASY and EVENTY (no glow) */
+.title-item {
+    cursor: pointer;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #fff;
+    font-family: var(--font-family);
+    margin: 0;
+}
+
+.no-glow {
+    text-transform: none;
+    animation: none;
+    transition-duration: .5s;
+}
+.no-glow:hover {
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 600;
+    margin: 0;
+    animation: glow 2s infinite alternate;
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Glowing style for GRUPY */
+.groups-title {
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 600;
+    margin: 0;
+    animation: glow 2s infinite alternate;
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 30px #AE67FA,
+        0 0 40px #F49867;
+    }
+    100% {
+        text-shadow: 0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 30px #AE67FA,
+        0 0 40px #F49867;
+    }
+}
+
+/* Container for the groups sections */
 .groups-wrapper {
     display: flex;
     gap: 2rem;
@@ -10,7 +73,6 @@
     font-family: var(--font-family);
 }
 
-/* Każdy z prostokątów */
 .groups-box {
     flex: 1;
     margin: 1rem;
@@ -21,7 +83,6 @@
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
-/* Tytuł w każdym prostokącie */
 .groups-box-title {
     text-align: center;
     color: #fff;
@@ -30,24 +91,21 @@
     font-weight: 600;
 }
 
-/* Lista grup */
 .groups-list {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-/* Pojedyncza "kafelkowa" grupa */
 .group-item {
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.1);
     padding: 0.5rem;
     border-radius: 8px;
-    position: relative; /* Potrzebne dla pozycjonowania koronki */
+    position: relative;
 }
 
-/* Avatar grupy */
 .group-avatar {
     width: 40px;
     height: 40px;
@@ -56,7 +114,6 @@
     margin-right: 1rem;
 }
 
-/* Złota koronka dla właściciela grupy */
 .group-crown {
     position: absolute;
     top: -9px;
@@ -65,7 +122,6 @@
     font-size: 1.2rem;
 }
 
-/* Nazwa grupy */
 .group-name {
     flex: 1;
     color: #fff;
@@ -73,7 +129,6 @@
     font-size: 1rem;
 }
 
-/* Ikonki akcji */
 .group-actions {
     display: flex;
     gap: 0.5rem;
@@ -91,30 +146,27 @@
     color: #AE67FA;
 }
 
-.groups-title {
-    text-align: center;
-    font-size: 4rem;
-    color: #fff;
-    font-weight: 600;
-    margin: 2rem 0;
-    animation: glow 2s infinite alternate;
-    font-family: var(--font-family);
-    text-transform: uppercase;
+/* Error message styling */
+.error-message {
+    color: red;
+    font-weight: bold;
 }
 
-@keyframes glow {
-    0% {
-        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 30px #AE67FA, 0 0 40px #F49867;
-    }
-    100% {
-        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 30px #AE67FA, 0 0 40px #F49867;
-    }
-}
-
-/* Obsługa responsywności: poniżej 768px prostokąty ustawiają się pionowo */
+/* Responsive: below 768px stack the boxes vertically */
 @media (max-width: 768px) {
     .groups-wrapper {
         flex-direction: column;
         align-items: center;
+    }
+
+    .title-container {
+        flex-direction: column;
+        gap: 1rem;
+        max-width: 300px;
+    }
+
+    .title-item,
+    .groups-title {
+        font-size: 2rem;
     }
 }
