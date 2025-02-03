@@ -20,7 +20,12 @@ export default function Groups() {
     const navigate = useNavigate();
     const [userGroups, setUserGroups] = useState([]);
     const [proposedGroups, setProposedGroups] = useState([]);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(null); // Błędy przy pobieraniu grup
+
+    // Stany dla wyszukiwarki
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState(null);
+    const [searchError, setSearchError] = useState(null); // Błędy wyłącznie dla wyszukiwania
 
     useEffect(() => {
         fetchUserGroups();
@@ -111,6 +116,7 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas dołączania do grupy');
             }
 
+            // Po dołączeniu odświeżamy listy
             fetchUserGroups();
             fetchProposedGroups();
         } catch (err) {
@@ -139,13 +145,47 @@ export default function Groups() {
         }
     };
 
-    // Handlers for navigating to /routes and /events
+    // Nawigacja do tras i eventów
     const handleNavigateToRoutes = () => {
         navigate('/routes');
     };
 
     const handleNavigateToEvents = () => {
         navigate('/events');
+    };
+
+    // Handler wyszukiwania – komunikaty błędów tutaj trafiają do searchError
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (!searchQuery.trim()) {
+            return;
+        }
+        try {
+            const token = localStorage.getItem('token');
+            setSearchError(null);
+            const response = await fetch(`http://localhost:3000/searchGroupss?query=${encodeURIComponent(searchQuery)}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || 'Błąd podczas wyszukiwania grup');
+            }
+
+            const data = await response.json();
+            setSearchResults(data);
+        } catch (err) {
+            setSearchError(err.message);
+            setSearchResults([]); // Ustawiamy pustą tablicę, aby pokazać komunikat "Brak wyników wyszukiwania."
+        }
+    };
+
+    const clearSearch = () => {
+        setSearchQuery('');
+        setSearchResults(null);
+        setSearchError(null);
     };
 
     return (
@@ -163,6 +203,66 @@ export default function Groups() {
                     EVENTS
                 </h2>
             </div>
+
+            {/* Pasek wyszukiwania */}
+            <div className="search-container">
+                <form onSubmit={handleSearch}>
+                    <input
+                        type="text"
+                        placeholder="Wyszukaj grupę..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="search-input"
+                    />
+                    <button type="submit" className="search-button">
+                        Szukaj
+                    </button>
+                </form>
+            </div>
+
+            {/* Sekcja wyników wyszukiwania */}
+            {searchResults !== null && (
+                <div className="groups-wrapper">
+                    <div className="groups-box search-results-box">
+                        <div className="search-results-header">
+                            <h2 className="groups-box-title">WYNIKI WYSZUKIWANIA</h2>
+                            <button className="clear-search-button" onClick={clearSearch}>
+                                Wyczyść wyszukiwanie
+                            </button>
+                        </div>
+                        <div className="groups-list">
+                            {searchError ? (
+                                <p className="error-message">{searchError}</p>
+                            ) : searchResults.length > 0 ? (
+                                searchResults.map((group) => (
+                                    <div key={group.id} className="group-item">
+                                        <img
+                                            src={`http://localhost:5000/uploads/${group.image}`}
+                                            alt={group.name}
+                                            className="group-avatar"
+                                        />
+                                        <span className="group-name">{group.name}</span>
+                                        <div className="group-actions">
+                                            <FaInfoCircle
+                                                className="group-icon"
+                                                title="Detale grupy"
+                                                onClick={() => handleViewDetails(group.id)}
+                                            />
+                                            <FaPlus
+                                                className="group-icon"
+                                                title="Dołącz do grupy"
+                                                onClick={() => handleJoinGroup(group.id)}
+                                            />
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="error-message">Brak wyników wyszukiwania.</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className="groups-wrapper">
                 {/* TWOJE GRUPY */}
