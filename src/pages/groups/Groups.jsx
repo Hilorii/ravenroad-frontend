@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/Navbar";
 import './Groups.css';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
+import SquaresGroup from '../../components/linkSquares/LinkSquaresGroups';
 
 import {
     FaEdit,
@@ -361,7 +362,7 @@ export default function Groups() {
                     </div>
                 </div>
             </div>
-
+            <SquaresGroup/>
             <Footer />
         </div>
     );

@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
 import './EditGroup.css';
+import BackButton from '../../components/backBt/BackButton';
 
 export default function EditGroup() {
     const { id } = useParams();
@@ -145,7 +146,7 @@ export default function EditGroup() {
         <>
             <AnimatedBackground />
             <Navbar />
-
+            <BackButton/>
             <div className="edit-group-container">
                 <h2 className="edit-group-title">Edytuj grupę</h2>
 
