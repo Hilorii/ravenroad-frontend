@@ -164,9 +164,17 @@
         gap: 1rem;
         max-width: 300px;
     }
+    .groups-box {
+        min-width: 90%;
+    }
 
     .title-item,
     .groups-title {
         font-size: 2rem;
+    }
+}
+@media (max-width: 284px) {
+    .groups-box {
+        scale: 0.8;
     }
 }
