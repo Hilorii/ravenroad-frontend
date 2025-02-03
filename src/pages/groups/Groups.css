@@ -73,6 +73,7 @@
     font-family: var(--font-family);
 }
 
+/* Ustawiamy stałą wysokość boxa i dzielimy go na kolumny (tytuł + lista) */
 .groups-box {
     flex: 1;
     margin: 1rem;
@@ -81,22 +82,67 @@
     padding: 1rem;
     background-color: transparent;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    height: 600px; /* Ustaw dowolną wartość zgodnie z potrzebami */
+    overflow-y: auto; /* Włączamy przewijanie tylko w pionie */
+    scrollbar-width: thin; /* Dla Firefox - wąski pasek */
+    scrollbar-color: white transparent; /* Kolor paska: biały, bez tła */
 }
+
+/* Stylizacja paska przewijania dla WebKit (Chrome, Safari, Edge Chromium) */
+.groups-box::-webkit-scrollbar {
+    width: 5px; /* Wąski pasek */
+}
+
+.groups-box::-webkit-scrollbar-track {
+    background: transparent; /* Ukrycie tła paska przewijania */
+}
+
+.groups-box::-webkit-scrollbar-thumb {
+    background: white; /* Biała kreska jako pasek przewijania */
+    border-radius: 4px;
+    margin-left: -5px; /* Przesunięcie lekko w lewo */
+}
+
+/* Opcjonalnie, jeśli chcesz, aby pasek był widoczny tylko podczas przewijania */
+.groups-box::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
 
 .groups-box-title {
     text-align: center;
     color: #fff;
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     font-weight: 600;
 }
 
+/* Dzięki flex: 1 i overflow-y: auto elementy w środku się przewijają */
 .groups-list {
+    flex: 1;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    overflow-y: auto;
 }
 
+/* Dla upiększenia pasków przewijania w przeglądarkach opartych na WebKit */
+.groups-list::-webkit-scrollbar {
+    width: 8px;
+}
+.groups-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+.groups-list::-webkit-scrollbar-thumb {
+    background-color: #AE67FA;
+    border-radius: 4px;
+}
+
+/* Element pojedynczej grupy */
 .group-item {
     display: flex;
     align-items: center;
@@ -152,7 +198,7 @@
     font-weight: bold;
 }
 
-/* Responsive: below 768px stack the boxes vertically */
+/* Responsive: poniżej 768px stackujemy boksy jeden pod drugim */
 @media (max-width: 768px) {
     .groups-wrapper {
         flex-direction: column;
@@ -166,6 +212,7 @@
     }
     .groups-box {
         min-width: 90%;
+        max-height: 400px; /* Możesz również tu dostosować wysokość na mniejszych ekranach */
     }
 
     .title-item,
@@ -173,6 +220,7 @@
         font-size: 2rem;
     }
 }
+
 @media (max-width: 284px) {
     .groups-box {
         scale: 0.8;
