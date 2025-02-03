@@ -32,6 +32,25 @@ export default function Groups() {
         fetchProposedGroups();
     }, []);
 
+    // Auto reset alertów - usuwamy komunikat o błędzie po 5 sekundach
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError(null);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (searchError) {
+            const timer = setTimeout(() => {
+                setSearchError(null);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [searchError]);
+
     const fetchUserGroups = async () => {
         try {
             const token = localStorage.getItem('token');
