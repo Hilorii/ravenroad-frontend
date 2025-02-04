@@ -1,0 +1,289 @@
+/* Container for the title (TRASY - EVENTY - GRUPY) */
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Common style for TRASY and GRUPY (no glow) */
+.title-item {
+    cursor: pointer;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #fff;
+    font-family: var(--font-family);
+    margin: 0;
+}
+
+.no-glow {
+    text-transform: none;
+    animation: none;
+    transition-duration: .5s;
+}
+.no-glow:hover {
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 600;
+    margin: 0;
+    animation: glow 2s infinite alternate;
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* Glowing style for EVENTY */
+.events-title {
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 600;
+    margin: 0;
+    animation: glow 2s infinite alternate;
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 30px #AE67FA,
+        0 0 40px #F49867;
+    }
+    100% {
+        text-shadow: 0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 30px #AE67FA,
+        0 0 40px #F49867;
+    }
+}
+
+/* Container for the events sections */
+.events-wrapper {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 1rem;
+    font-family: var(--font-family);
+}
+
+/* Ustawiamy stałą wysokość boxa i dzielimy go na kolumny (tytuł + lista) */
+.events-box {
+    flex: 1;
+    margin: 1rem;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: transparent;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    height: 600px; /* Ustaw dowolną wartość zgodnie z potrzebami */
+    overflow-y: auto; /* Włączamy przewijanie tylko w pionie */
+    scrollbar-width: thin; /* Dla Firefox - wąski pasek */
+    scrollbar-color: white transparent; /* Kolor paska: biały, bez tła */
+}
+
+/* Stylizacja paska przewijania dla WebKit (Chrome, Safari, Edge Chromium) */
+.events-box::-webkit-scrollbar {
+    width: 5px; /* Wąski pasek */
+}
+
+.events-box::-webkit-scrollbar-track {
+    background: transparent; /* Ukrycie tła paska przewijania */
+}
+
+.events-box::-webkit-scrollbar-thumb {
+    background: white; /* Biała kreska jako pasek przewijania */
+    border-radius: 4px;
+    margin-left: -5px; /* Przesunięcie lekko w lewo */
+}
+
+/* Opcjonalnie, jeśli chcesz, aby pasek był widoczny tylko podczas przewijania */
+.events-box::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.events-box-title {
+    text-align: center;
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* Dzięki flex: 1 i overflow-y: auto elementy w środku się przewijają */
+.events-list {
+    flex: 1;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+/* Dla upiększenia pasków przewijania w przeglądarkach opartych na WebKit */
+.events-list::-webkit-scrollbar {
+    width: 8px;
+}
+.events-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+.events-list::-webkit-scrollbar-thumb {
+    background-color: #AE67FA;
+    border-radius: 4px;
+}
+
+/* Element pojedynczego wydarzenia */
+.event-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+    border-radius: 8px;
+    position: relative;
+}
+
+.event-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.event-crown {
+    position: absolute;
+    top: -9px;
+    left: 19px;
+    color: gold;
+    font-size: 1.2rem;
+}
+
+.event-name {
+    flex: 1;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.event-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.event-icon {
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.event-icon:hover {
+    transform: scale(1.2);
+    color: #AE67FA;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+/* Responsive: poniżej 768px stackujemy boksy jeden pod drugim */
+@media (max-width: 768px) {
+    .events-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title-container {
+        flex-direction: column;
+        gap: 1rem;
+        max-width: 300px;
+    }
+    .events-box {
+        min-width: 90%;
+        max-height: 400px; /* Możesz również tu dostosować wysokość na mniejszych ekranach */
+    }
+
+    .title-item,
+    .events-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 284px) {
+    .events-box {
+        scale: 0.8;
+    }
+}
+
+/* Styles for Search Container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.search-container form {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    font-family: var(--font-family);
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #AE67FA;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    font-family: var(--font-family);
+}
+
+.search-button:hover {
+    background-color: #F49867;
+}
+
+/* Styles for Search Results Box Header */
+.search-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-family);
+}
+
+.clear-search-button {
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: var(--font-family);
+}
+
+.clear-search-button:hover {
+    background-color: #AE67FA;
+}

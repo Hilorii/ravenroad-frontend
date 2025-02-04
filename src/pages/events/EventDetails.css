@@ -1,0 +1,170 @@
+.event-details-container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 80px auto 100px;
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: transparent;
+    box-shadow: 0 2px 20px rgba(255, 255, 255, 0.9);
+    position: relative;
+    font-family: var(--font-family);
+}
+
+/* BANNER */
+.event-banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.event-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* GŁÓWNA SEKCJA ZAWARTOŚCI */
+.event-content {
+    position: relative;
+    padding: 60px 20px 20px;
+}
+
+/* AVATAR WYDARZENIA */
+.event-avatar-wrapper {
+    position: absolute;
+    top: -60px;
+    left: 20px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(#AE67FA, #F49867);
+    padding: 3px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.d-event-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 200%;
+    display: block;
+}
+
+/* NAZWA WYDARZENIA */
+.event-title {
+    margin: 0 0 10px 0;
+    padding-left: 160px;
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* odstęp między tekstem a koroną */
+}
+
+/* Korona twórcy */
+.creator-crown {
+    color: gold;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.creator-crown:hover {
+    transform: scale(1.3);
+}
+
+/* OPIS WYDARZENIA */
+.event-description {
+    margin: 0 0 20px 0;
+    padding-left: 160px;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+/* DODATKOWE INFORMACJE */
+.event-info {
+    padding-left: 160px;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.event-info p {
+    margin: 4px 0;
+}
+
+/* LISTA UCZESTNIKÓW */
+.participants-list {
+    margin-top: 30px;
+    padding-left: 160px;
+    color: #fff;
+}
+
+.participants-list-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* Kontener na kafelki uczestników */
+.participants-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Pojedynczy kafelek uczestnika */
+.participant-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-width: 120px;
+}
+
+/* Avatar uczestnika */
+.participant-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+/* Nazwa użytkownika uczestnika */
+.participant-username {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* RESPONSYWNOŚĆ */
+@media (max-width: 768px) {
+    .event-content {
+        padding-top: 80px;
+    }
+
+    .event-avatar-wrapper {
+        top: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .event-title,
+    .event-description,
+    .event-info,
+    .participants-list {
+        padding-left: 0;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+    .participants-grid {
+        justify-content: center;
+    }
+}
