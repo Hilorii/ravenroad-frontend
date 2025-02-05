@@ -8,14 +8,43 @@ import { FaCrown } from 'react-icons/fa';
 import './EventDetails.css';
 import BackButton from '../../components/backBt/BackButton';
 
+/**
+ * Funkcja formatuje ciąg ISO daty (np. "2029-11-15T23:00:00.000Z")
+ * do postaci "DD-MM-RRRR HH:MM" (bez sekund).
+ * Przykład:
+ *   "2029-11-15T23:00:00.000Z" -> "16-11-2029 00:00" (zależnie od strefy)
+ */
+function formatISODate(isoString) {
+    if (!isoString) {
+        return 'Brak daty';
+    }
+
+    // Parsujemy ciąg ISO na obiekt Date
+    const dateObj = new Date(isoString);
+    // Sprawdzamy, czy parsowanie się udało (dateObj jest "Invalid Date"?)
+    if (isNaN(dateObj)) {
+        return 'Brak daty';
+    }
+
+    // Wyciągamy składniki daty/godziny
+    const dd = String(dateObj.getDate()).padStart(2, '0');
+    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const yyyy = dateObj.getFullYear();
+
+    const hh = String(dateObj.getHours()).padStart(2, '0');
+    const min = String(dateObj.getMinutes()).padStart(2, '0');
+
+    return `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+}
+
 export default function EventDetails() {
     const { id } = useParams();
-    const { user } = useUser(); // informacje o zalogowanym użytkowniku
+    const { user } = useUser(); // dane zalogowanego użytkownika
 
     const [event, setEvent] = useState(null);
     const [error, setError] = useState(null);
 
-    // Lista uczestników pobierana z innego endpointu
+    // Lista uczestników
     const [participants, setParticipants] = useState([]);
 
     useEffect(() => {
@@ -24,7 +53,7 @@ export default function EventDetails() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Pobieranie szczegółów wydarzenia
+    // Pobiera szczegóły wydarzenia z /events/:id
     const fetchEventDetails = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -46,7 +75,7 @@ export default function EventDetails() {
         }
     };
 
-    // Pobieranie listy uczestników z endpointu /event/:eventId/participants
+    // Pobiera listę uczestników z /event/:eventId/participants
     const fetchEventParticipants = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -94,7 +123,7 @@ export default function EventDetails() {
         );
     }
 
-    // Fallbacki dla banera i avatara, jeśli nie ma w bazie
+    // Baner i avatar (jeśli brak -> fallback)
     const bannerUrl = event.banner
         ? `http://localhost:5000/uploads/${event.banner}`
         : '/images/default-event-banner.jpg';
@@ -103,8 +132,13 @@ export default function EventDetails() {
         ? `http://localhost:5000/uploads/${event.image}`
         : '/images/default-event-avatar.jpg';
 
-    // Liczba uczestników -> bierzemy z participants
+    // Liczba uczestników
     const participantsCount = participants.length;
+
+    // Formatujemy "start_date" i "end_date" jako ISO string
+    // (jeśli w bazie jest "2029-11-15T23:00:00.000Z", zobaczysz w local time)
+    const startDateTime = formatISODate(event.start_date);
+    const endDateTime = formatISODate(event.end_date);
 
     return (
         <>
@@ -113,7 +147,7 @@ export default function EventDetails() {
             <BackButton />
 
             <div className="event-details-container">
-                {/* BANNER WYDARZENIA */}
+                {/* Banner wydarzenia */}
                 <div className="event-banner">
                     <img
                         src={bannerUrl}
@@ -123,7 +157,7 @@ export default function EventDetails() {
                 </div>
 
                 <div className="event-content">
-                    {/* AVATAR WYDARZENIA */}
+                    {/* Avatar wydarzenia */}
                     <div className="event-avatar-wrapper">
                         <img
                             src={avatarUrl}
@@ -132,10 +166,9 @@ export default function EventDetails() {
                         />
                     </div>
 
-                    {/* NAZWA WYDARZENIA + (opcjonalna) korona organizatora */}
+                    {/* Nazwa wydarzenia + korona (jeśli user jest twórcą) */}
                     <h1 className="event-title">
                         {event.name}
-                        {/* Jeśli zalogowany user jest twórcą => pokazujemy koronę */}
                         {user && event.created_by === user.id && (
                             <FaCrown
                                 className="creator-crown"
@@ -144,28 +177,43 @@ export default function EventDetails() {
                         )}
                     </h1>
 
-                    {/* OPIS WYDARZENIA */}
+                    {/* Opis wydarzenia */}
                     <p className="event-description">
                         {event.description || 'Brak opisu...'}
                     </p>
 
-                    {/* DODATKOWE INFORMACJE */}
+                    {/* Dodatkowe informacje */}
                     <div className="event-info">
                         <p>
                             <strong>Organizator:</strong>{' '}
                             {event.creator_username || '(nieznany)'}
                         </p>
-                        <p><strong>Data:</strong> {event.date || 'Brak daty'}</p>
-                        <p><strong>Miejsce:</strong> {event.location || 'Brak lokalizacji'}</p>
-                        <p><strong>Liczba uczestników:</strong> {participantsCount}</p>
+                        <p>
+                            <strong>Data rozpoczęcia:</strong>{' '}
+                            {startDateTime}
+                        </p>
+                        <p>
+                            <strong>Data zakończenia:</strong>{' '}
+                            {endDateTime}
+                        </p>
+                        <p>
+                            <strong>Miejsce wydarzenia:</strong>{' '}
+                            {event.location || 'Brak lokalizacji'}
+                        </p>
+                        <p>
+                            <strong>Liczba uczestników:</strong>{' '}
+                            {participantsCount}
+                        </p>
                     </div>
 
-                    {/* LISTA UCZESTNIKÓW */}
+                    {/* Lista uczestników */}
                     <div className="participants-list">
                         <h2 className="participants-list-title">Uczestnicy wydarzenia</h2>
                         <div className="participants-grid">
                             {participantsCount === 0 && (
-                                <p style={{ color: '#fff' }}>Brak uczestników lub brak wyników.</p>
+                                <p style={{ color: '#fff' }}>
+                                    Brak uczestników lub brak wyników.
+                                </p>
                             )}
                             {participants.map((participant, index) => {
                                 const participantAvatarUrl = participant.avatar
