@@ -75,7 +75,7 @@ export default function Groups() {
     const fetchProposedGroups = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/searchGroups', {
+            const response = await fetch('http://localhost:3000/proposedGroups', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -183,7 +183,7 @@ export default function Groups() {
         try {
             const token = localStorage.getItem('token');
             setSearchError(null);
-            const response = await fetch(`http://localhost:3000/searchGroupss?query=${encodeURIComponent(searchQuery)}`, {
+            const response = await fetch(`http://localhost:3000/searchGroups?query=${encodeURIComponent(searchQuery)}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -75,14 +75,14 @@ export default function Events() {
     const fetchProposedEvents = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/events', {
+            const response = await fetch('http://localhost:3000/proposedEvents', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
             if (!response.ok) {
-                throw new Error('Błąd podczas pobierania proponowanych wydarzeń.');
+                throw new Error('Błąd podczas pobierania wydarzeń.');
             }
 
             const data = await response.json();
