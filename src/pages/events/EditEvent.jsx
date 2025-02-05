@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
-import './EditEvent.css';
 import BackButton from '../../components/backBt/BackButton';
+import './EditEvent.css';
 
 export default function EditEvent() {
     const { id } = useParams();
@@ -13,17 +13,22 @@ export default function EditEvent() {
     const [event, setEvent] = useState(null);
     const [error, setError] = useState(null);
 
-    // Pola formularza
+    // Pola formularza:
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+
+    const [startDate, setStartDate] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [endTime, setEndTime] = useState('');
+
     const [isPrivate, setIsPrivate] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
 
-    // Obsługa avatara
+    // Obsługa plików
     const [imageFile, setImageFile] = useState(null);
     const [oldImage, setOldImage] = useState(null);
 
-    // Obsługa banera
     const [bannerFile, setBannerFile] = useState(null);
     const [oldBanner, setOldBanner] = useState(null);
 
@@ -32,7 +37,6 @@ export default function EditEvent() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Pobiera aktualne dane wydarzenia z backendu
     const fetchEventDetails = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -50,13 +54,36 @@ export default function EditEvent() {
             const data = await response.json();
             setEvent(data);
 
-            // Uzupełniamy formularz danymi z bazy
+            // Przykładowo, jeśli backend zwraca klucze:
+            // name, description, start_date, start_time, end_date, end_time, private, visible, image, banner
             setName(data.name || '');
             setDescription(data.description || '');
+
+            // Formatowanie daty/godziny jeśli trzeba (np. "2023-10-05T22:00:00.000Z" -> "2023-10-05")
+            const start_date_formatted = data.start_date
+                ? data.start_date.substring(0, 10)
+                : '';
+            const end_date_formatted = data.end_date
+                ? data.end_date.substring(0, 10)
+                : '';
+
+            const start_time_formatted = data.start_time
+                ? data.start_time.substring(0, 5) // "HH:MM"
+                : '';
+            const end_time_formatted = data.end_time
+                ? data.end_time.substring(0, 5)
+                : '';
+
+            setStartDate(start_date_formatted);
+            setStartTime(start_time_formatted);
+            setEndDate(end_date_formatted);
+            setEndTime(end_time_formatted);
+
+            // Pola prywatne i widoczne
             setIsPrivate(!!data.private);
             setIsVisible(!!data.visible);
 
-            // Zapamiętujemy stare pliki (by usunąć je na serwerze, jeśli uploadujemy nowe)
+            // Zapamiętujemy stare pliki
             if (data.image) {
                 setOldImage(data.image);
             }
@@ -68,7 +95,6 @@ export default function EditEvent() {
         }
     };
 
-    // Obsługa zatwierdzenia formularza
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -76,12 +102,19 @@ export default function EditEvent() {
             const token = localStorage.getItem('token');
             const formData = new FormData();
 
+            // Uzupełniamy FormData zgodnie z tym, co przyjmuje Twój endpoint PUT
             formData.append('name', name);
             formData.append('description', description);
+
+            formData.append('startDate', startDate);
+            formData.append('startTime', startTime);
+            formData.append('endDate', endDate);
+            formData.append('endTime', endTime);
+
             formData.append('private', isPrivate ? 1 : 0);
             formData.append('visible', isVisible ? 1 : 0);
 
-            // Avatar
+            // Pliki
             if (imageFile) {
                 formData.append('image', imageFile);
             }
@@ -89,7 +122,6 @@ export default function EditEvent() {
                 formData.append('oldImage', oldImage);
             }
 
-            // Banner
             if (bannerFile) {
                 formData.append('banner', bannerFile);
             }
@@ -101,6 +133,8 @@ export default function EditEvent() {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`
+                    // UWAGA: NIE ustawiamy tu Content-Type na multipart/form-data.
+                    // fetch + FormData zrobi to automatycznie.
                 },
                 body: formData
             });
@@ -110,7 +144,7 @@ export default function EditEvent() {
                 throw new Error(errData.message || 'Błąd podczas aktualizacji wydarzenia');
             }
 
-            // Po zapisie wracamy do widoku szczegółów wydarzenia
+            // Po zapisaniu wracamy do widoku szczegółów wydarzenia
             navigate(`/eventDetails/${id}`);
         } catch (err) {
             setError(err.message);
@@ -147,10 +181,9 @@ export default function EditEvent() {
         <>
             <AnimatedBackground />
             <Navbar />
-            <BackButton/>
+            <BackButton />
             <div className="edit-event-container">
                 <h2 className="edit-event-title">Edytuj wydarzenie</h2>
-
                 <form onSubmit={handleSubmit} className="edit-event-form">
                     <label htmlFor="event-name">Nazwa wydarzenia:</label>
                     <input
@@ -167,6 +200,38 @@ export default function EditEvent() {
                         rows="4"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                    />
+
+                    <label htmlFor="startDate">Data rozpoczęcia:</label>
+                    <input
+                        id="startDate"
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                    />
+
+                    <label htmlFor="startTime">Godzina rozpoczęcia:</label>
+                    <input
+                        id="startTime"
+                        type="time"
+                        value={startTime}
+                        onChange={(e) => setStartTime(e.target.value)}
+                    />
+
+                    <label htmlFor="endDate">Data zakończenia:</label>
+                    <input
+                        id="endDate"
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                    />
+
+                    <label htmlFor="endTime">Godzina zakończenia:</label>
+                    <input
+                        id="endTime"
+                        type="time"
+                        value={endTime}
+                        onChange={(e) => setEndTime(e.target.value)}
                     />
 
                     <div className="checkbox-wrapper">
@@ -210,7 +275,6 @@ export default function EditEvent() {
                     </button>
                 </form>
             </div>
-
             <Footer />
         </>
     );

@@ -26,10 +26,14 @@
     font-weight: 500;
 }
 
-/* -----------------------
-   Pola tekstowe / textarea
-   ----------------------- */
+/*
+   =======================
+   Pola tekstowe / textarea / date / time
+   =======================
+*/
 .edit-event-form input[type="text"],
+.edit-event-form input[type="date"],
+.edit-event-form input[type="time"],
 .edit-event-form textarea {
     padding: 0.5rem;
     border-radius: 4px;
@@ -42,23 +46,29 @@
 }
 
 .edit-event-form input[type="text"]:hover,
+.edit-event-form input[type="date"]:hover,
+.edit-event-form input[type="time"]:hover,
 .edit-event-form textarea:hover {
     background: rgba(255, 255, 255, 0.4);
 }
 
 .edit-event-form input[type="text"]:focus,
+.edit-event-form input[type="date"]:focus,
+.edit-event-form input[type="time"]:focus,
 .edit-event-form textarea:focus {
     background: rgba(255, 255, 255, 0.71);
 }
 
-/* Bez resize przez użytkownika w pionie */
+/* Bez resize w poziomie */
 .edit-event-form textarea {
     resize: vertical;
 }
 
-/* -----------------------
+/*
+   =======================
    Pole pliku
-   ----------------------- */
+   =======================
+*/
 .edit-event-form input[type="file"] {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.2);
@@ -76,9 +86,11 @@
     transform: scale(1.02);
 }
 
-/* -----------------------
+/*
+   =======================
    Checkboxy customowe
-   ----------------------- */
+   =======================
+*/
 .checkbox-wrapper {
     display: inline-flex;
     align-items: center;
@@ -148,9 +160,11 @@
     opacity: 1;
 }
 
-/* -----------------------
+/*
+   =======================
    Przycisk zapisu
-   ----------------------- */
+   =======================
+*/
 .submit-button {
     font-family: var(--font-family);
     background-color: #AE67FA;
@@ -168,9 +182,11 @@
     background-color: #9556d3; /* nieco ciemniejszy fiolet */
 }
 
-/* -----------------------
+/*
+   =======================
    Responsywność
-   ----------------------- */
+   =======================
+*/
 @media (max-width: 768px) {
     .edit-event-container {
         margin: 40px auto;
