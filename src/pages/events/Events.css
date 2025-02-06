@@ -84,28 +84,24 @@
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
     display: flex;
     flex-direction: column;
-    height: 600px; /* Ustaw dowolną wartość zgodnie z potrzebami */
+    height: 600px; /* Wysokość boksu */
     overflow-y: auto; /* Włączamy przewijanie tylko w pionie */
-    scrollbar-width: thin; /* Dla Firefox - wąski pasek */
-    scrollbar-color: white transparent; /* Kolor paska: biały, bez tła */
+    scrollbar-width: thin; /* Dla Firefox */
+    scrollbar-color: white transparent;
 }
 
-/* Stylizacja paska przewijania dla WebKit (Chrome, Safari, Edge Chromium) */
+/* Stylizacja paska przewijania (WebKit) */
 .events-box::-webkit-scrollbar {
-    width: 5px; /* Wąski pasek */
+    width: 5px;
 }
-
 .events-box::-webkit-scrollbar-track {
-    background: transparent; /* Ukrycie tła paska przewijania */
+    background: transparent;
 }
-
 .events-box::-webkit-scrollbar-thumb {
-    background: white; /* Biała kreska jako pasek przewijania */
+    background: white;
     border-radius: 4px;
-    margin-left: -5px; /* Przesunięcie lekko w lewo */
+    margin-left: -5px;
 }
-
-/* Opcjonalnie, jeśli chcesz, aby pasek był widoczny tylko podczas przewijania */
 .events-box::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.8);
 }
@@ -128,7 +124,7 @@
     overflow-y: auto;
 }
 
-/* Dla upiększenia pasków przewijania w przeglądarkach opartych na WebKit */
+/* Pasek scrolla wewnątrz .events-list (WebKit) */
 .events-list::-webkit-scrollbar {
     width: 8px;
 }
@@ -195,6 +191,7 @@
 .error-message {
     color: red;
     font-weight: bold;
+    margin: 0.5rem 0;
 }
 
 /* Responsive: poniżej 768px stackujemy boksy jeden pod drugim */
@@ -211,7 +208,7 @@
     }
     .events-box {
         min-width: 90%;
-        max-height: 400px; /* Możesz również tu dostosować wysokość na mniejszych ekranach */
+        max-height: 400px; /* Możesz też dostosować na mniejszych ekranach */
     }
 
     .title-item,
@@ -286,4 +283,48 @@
 
 .clear-search-button:hover {
     background-color: #AE67FA;
+}
+
+/* ---------------------------------------------------
+   NOWE KLASY: ZIELONE GLOW (AKTYWNE) I CZERWONE GLOW (ZAKOŃCZONE)
+   --------------------------------------------------- */
+
+/* Aktywne */
+.active-events-box {
+    /* Dodajemy animację zielonej poświaty */
+    animation: greenGlow 2s infinite alternate;
+}
+
+@keyframes greenGlow {
+    0% {
+        box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+    }
+    100% {
+        box-shadow: 0 0 5px #00ff00, 0 0 15px #00ff00, 0 0 30px #00ff00;
+    }
+}
+
+/* Zmieniamy tytuł (można też zmienić sam box) */
+.active-events-title {
+    color: #00ff00;
+}
+
+/* Zakończone */
+.ended-events-box {
+    /* Dodajemy animację czerwonej poświaty */
+    animation: redGlow 2s infinite alternate;
+}
+
+@keyframes redGlow {
+    0% {
+        box-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
+    }
+    100% {
+        box-shadow: 0 0 5px #ff0000, 0 0 15px #ff0000, 0 0 30px #ff0000;
+    }
+}
+
+/* Zmieniamy tytuł (można też zmienić sam box) */
+.ended-events-title {
+    color: #ff0000;
 }
