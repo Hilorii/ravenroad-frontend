@@ -9,42 +9,35 @@ import './EventDetails.css';
 import BackButton from '../../components/backBt/BackButton';
 
 /**
- * Funkcja formatuje ciąg ISO daty (np. "2029-11-15T23:00:00.000Z")
- * do postaci "DD-MM-RRRR HH:MM" (bez sekund).
- * Przykład:
- *   "2029-11-15T23:00:00.000Z" -> "16-11-2029 00:00" (zależnie od strefy)
+ * Formatuje datę z klasycznego ISO 8601, np. "2031-02-16T23:00:00.000Z"
+ * do postaci "DD-MM-YYYY HH:MM" (UTC).
  */
-function formatISODate(isoString) {
+function formatIsoNoTZ(isoString) {
     if (!isoString) {
         return 'Brak daty';
     }
 
-    // Parsujemy ciąg ISO na obiekt Date
+    // Parsujemy do obiektu Date
     const dateObj = new Date(isoString);
-    // Sprawdzamy, czy parsowanie się udało (dateObj jest "Invalid Date"?)
-    if (isNaN(dateObj)) {
-        return 'Brak daty';
-    }
 
-    // Wyciągamy składniki daty/godziny
-    const dd = String(dateObj.getDate()).padStart(2, '0');
-    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const yyyy = dateObj.getFullYear();
+    // Elementy daty/godziny (UTC). Jeśli chcesz czas lokalny, usuń "UTC" z metod.
+    const dd = String(dateObj.getUTCDate()).padStart(2, '0');
+    const mm = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+    const yyyy = dateObj.getUTCFullYear();
+    const hh = String(dateObj.getUTCHours()).padStart(2, '0');
+    const min = String(dateObj.getUTCMinutes()).padStart(2, '0');
 
-    const hh = String(dateObj.getHours()).padStart(2, '0');
-    const min = String(dateObj.getMinutes()).padStart(2, '0');
-
-    return `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+    // godzina nie działa potem naprawię..
+    // return `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+    return `${dd}-${mm}-${yyyy}`;
 }
 
 export default function EventDetails() {
     const { id } = useParams();
-    const { user } = useUser(); // dane zalogowanego użytkownika
+    const { user } = useUser();
 
     const [event, setEvent] = useState(null);
     const [error, setError] = useState(null);
-
-    // Lista uczestników
     const [participants, setParticipants] = useState([]);
 
     useEffect(() => {
@@ -53,7 +46,6 @@ export default function EventDetails() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Pobiera szczegóły wydarzenia z /events/:id
     const fetchEventDetails = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -75,7 +67,6 @@ export default function EventDetails() {
         }
     };
 
-    // Pobiera listę uczestników z /event/:eventId/participants
     const fetchEventParticipants = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -123,7 +114,7 @@ export default function EventDetails() {
         );
     }
 
-    // Baner i avatar (jeśli brak -> fallback)
+    // Ścieżki do obrazków
     const bannerUrl = event.banner
         ? `http://localhost:5000/uploads/${event.banner}`
         : '/images/default-event-banner.jpg';
@@ -132,13 +123,11 @@ export default function EventDetails() {
         ? `http://localhost:5000/uploads/${event.image}`
         : '/images/default-event-avatar.jpg';
 
-    // Liczba uczestników
-    const participantsCount = participants.length;
+    // Formatowanie dat (zakładamy że event.start_date i event.end_date to ISO stringi)
+    const startDateTime = formatIsoNoTZ(event.start_date);
+    const endDateTime = formatIsoNoTZ(event.end_date);
 
-    // Formatujemy "start_date" i "end_date" jako ISO string
-    // (jeśli w bazie jest "2029-11-15T23:00:00.000Z", zobaczysz w local time)
-    const startDateTime = formatISODate(event.start_date);
-    const endDateTime = formatISODate(event.end_date);
+    const participantsCount = participants.length;
 
     return (
         <>
@@ -147,26 +136,15 @@ export default function EventDetails() {
             <BackButton />
 
             <div className="event-details-container">
-                {/* Banner wydarzenia */}
                 <div className="event-banner">
-                    <img
-                        src={bannerUrl}
-                        alt="Event Banner"
-                        className="event-banner-img"
-                    />
+                    <img src={bannerUrl} alt="Event Banner" className="event-banner-img" />
                 </div>
 
                 <div className="event-content">
-                    {/* Avatar wydarzenia */}
                     <div className="event-avatar-wrapper">
-                        <img
-                            src={avatarUrl}
-                            alt="Event Avatar"
-                            className="d-event-avatar"
-                        />
+                        <img src={avatarUrl} alt="Event Avatar" className="d-event-avatar" />
                     </div>
 
-                    {/* Nazwa wydarzenia + korona (jeśli user jest twórcą) */}
                     <h1 className="event-title">
                         {event.name}
                         {user && event.created_by === user.id && (
@@ -177,36 +155,28 @@ export default function EventDetails() {
                         )}
                     </h1>
 
-                    {/* Opis wydarzenia */}
                     <p className="event-description">
                         {event.description || 'Brak opisu...'}
                     </p>
 
-                    {/* Dodatkowe informacje */}
                     <div className="event-info">
                         <p>
-                            <strong>Organizator:</strong>{' '}
-                            {event.creator_username || '(nieznany)'}
+                            <strong>Organizator:</strong> {event.creator_username || '(nieznany)'}
                         </p>
                         <p>
-                            <strong>Data rozpoczęcia:</strong>{' '}
-                            {startDateTime}
+                            <strong>Data rozpoczęcia:</strong> {startDateTime}
                         </p>
                         <p>
-                            <strong>Data zakończenia:</strong>{' '}
-                            {endDateTime}
+                            <strong>Data zakończenia:</strong> {endDateTime}
                         </p>
                         <p>
-                            <strong>Miejsce wydarzenia:</strong>{' '}
-                            {event.location || 'Brak lokalizacji'}
+                            <strong>Miejsce wydarzenia:</strong> {event.location || 'Brak lokalizacji'}
                         </p>
                         <p>
-                            <strong>Liczba uczestników:</strong>{' '}
-                            {participantsCount}
+                            <strong>Liczba uczestników:</strong> {participantsCount}
                         </p>
                     </div>
 
-                    {/* Lista uczestników */}
                     <div className="participants-list">
                         <h2 className="participants-list-title">Uczestnicy wydarzenia</h2>
                         <div className="participants-grid">
