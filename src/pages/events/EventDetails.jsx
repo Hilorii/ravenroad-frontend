@@ -24,8 +24,8 @@ function formatIsoNoTZ(isoString) {
     const dd = String(dateObj.getUTCDate()).padStart(2, '0');
     const mm = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
     const yyyy = dateObj.getUTCFullYear();
-    const hh = String(dateObj.getUTCHours()).padStart(2, '0');
-    const min = String(dateObj.getUTCMinutes()).padStart(2, '0');
+    // const hh = String(dateObj.getUTCHours()).padStart(2, '0');
+    // const min = String(dateObj.getUTCMinutes()).padStart(2, '0');
 
     // godzina nie działa potem naprawię..
     // return `${dd}-${mm}-${yyyy} ${hh}:${min}`;
