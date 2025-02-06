@@ -10,7 +10,7 @@ const SquaresEvents = () => {
             <SquareLink
                 icon={faUsers}
                 label="STWÓRZ EVENT"
-                link="/createGroup"
+                link="/create-event"
             />
         </div>
     );

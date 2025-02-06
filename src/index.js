@@ -66,6 +66,7 @@ import EditGroup from './pages/groups/EditGroup';
 import Events from './pages/events/Events';
 import EventDetails from './pages/events/EventDetails';
 import EditEvent from './pages/events/EditEvent';
+import CreateEvent from './pages/events/CreateEvent';
 
 const tamaguiConfig = createTamagui(config);
 const container = document.getElementById('root');
@@ -132,6 +133,7 @@ root.render(
                             <Route path="/events" element={<Events/>} />
                             <Route path="/eventDetails/:id" element={<EventDetails />} />
                             <Route path="/editEvent/:id" element={<EditEvent />} />
+                            <Route path="/create-event" element={<CreateEvent />} />
 
                             {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
                             {/*<Route path="/" element={<Navigate to="/construction" replace />} />*/}
