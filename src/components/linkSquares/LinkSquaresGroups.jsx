@@ -10,7 +10,7 @@ const SquaresGroup = () => {
             <SquareLink
                 icon={faUsers}
                 label="STWÓRZ GRUPĘ"
-                link="/createGroup"
+                link="/create-group"
             />
         </div>
     );
