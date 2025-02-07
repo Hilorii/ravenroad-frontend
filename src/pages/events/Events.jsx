@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
 import Navbar from "../../components/navbar/Navbar";
@@ -20,57 +20,119 @@ export default function Events() {
     const { user } = useUser();
     const navigate = useNavigate();
 
-    const [userEvents, setUserEvents] = useState([]);        // Wszystkie eventy, w których user uczestniczy
-    const [proposedEvents, setProposedEvents] = useState([]); // Proponowane eventy
-    const [error, setError] = useState(null);                 // Błędy przy pobieraniu eventów
-
-    // Stany dla wyszukiwarki
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState(null);
-    const [searchError, setSearchError] = useState(null); // Błędy wyłącznie dla wyszukiwania
-
-    // Nowe tablice – Twoje aktywne i zakończone eventy (po filtracji)
+    // Eventy użytkownika (pobrane z /events)
+    const [userEvents, setUserEvents] = useState([]);
+    // Proponowane eventy (pobrane z /proposedEvents)
+    const [proposedEvents, setProposedEvents] = useState([]);
+    // Aktywne eventy (pobrane z /activeEvents)
     const [myActiveEvents, setMyActiveEvents] = useState([]);
+    // Zakończone eventy (pobrane z /inactiveEvents)
     const [myEndedEvents, setMyEndedEvents] = useState([]);
 
-    // Pobranie eventów
+    // Błędy globalne
+    const [error, setError] = useState(null);
+
+    // Wyszukiwarka
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState(null);
+    const [searchError, setSearchError] = useState(null);
+
+    // ----------------------------------
+    // Funkcje fetchujące (useCallback)
+    // ----------------------------------
+    const fetchUserEvents = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:3000/events', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Błąd podczas pobierania Twoich eventów.');
+            }
+
+            const data = await response.json();
+            setUserEvents(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    }, []);
+
+    const fetchProposedEvents = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:3000/proposedEvents', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Błąd podczas pobierania proponowanych eventów.');
+            }
+
+            const data = await response.json();
+            setProposedEvents(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    }, []);
+
+    const fetchActiveEvents = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:3000/activeEvents', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Błąd podczas pobierania aktywnych eventów.');
+            }
+
+            const data = await response.json();
+            setMyActiveEvents(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    }, []);
+
+    const fetchInactiveEvents = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:3000/inactiveEvents', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Błąd podczas pobierania zakończonych eventów.');
+            }
+
+            const data = await response.json();
+            setMyEndedEvents(data);
+        } catch (err) {
+            setError(err.message);
+        }
+    }, []);
+
+    // ----------------------------------
+    // useEffect: Pobierz wszystkie eventy po załadowaniu
+    // ----------------------------------
     useEffect(() => {
         fetchUserEvents();
         fetchProposedEvents();
-    }, []);
+        fetchActiveEvents();
+        fetchInactiveEvents();
+    }, [fetchUserEvents, fetchProposedEvents, fetchActiveEvents, fetchInactiveEvents]);
 
-    // Filtracja eventów “Aktywne / Zakończone” – za każdym razem, gdy userEvents się zmienią
-    useEffect(() => {
-        if (user && userEvents.length > 0) {
-            const now = new Date();
-
-            // Filtrujemy tylko te, które user stworzył
-            const createdByMe = userEvents.filter(ev => ev.created_by === user.id);
-
-            const active = createdByMe.filter(ev => {
-                // Konwertujemy daty na obiekt Date
-                // ev.start_date + 'T' + ev.start_time => "YYYY-MM-DDTHH:mm"
-                const start = new Date(`${ev.start_date}T${ev.start_time}`);
-                const end = new Date(`${ev.end_date}T${ev.end_time}`);
-                // Event aktywny: teraz >= start AND teraz <= end
-                return now >= start && now <= end;
-            });
-
-            const ended = createdByMe.filter(ev => {
-                const end = new Date(`${ev.end_date}T${ev.end_time}`);
-                // Event zakończony: teraz > end
-                return now > end;
-            });
-
-            setMyActiveEvents(active);
-            setMyEndedEvents(ended);
-        } else {
-            setMyActiveEvents([]);
-            setMyEndedEvents([]);
-        }
-    }, [userEvents, user]);
-
-    // Auto-reset błędów (5s)
+    // ----------------------------------
+    // useEffect: Auto-reset błędów
+    // ----------------------------------
     useEffect(() => {
         if (error) {
             const timer = setTimeout(() => {
@@ -89,49 +151,10 @@ export default function Events() {
         }
     }, [searchError]);
 
-    // Pobieranie eventów
-    const fetchUserEvents = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/events', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+    // ----------------------------------
+    //  Akcje: edycja, detale, dołącz, opuść, usuń
+    // ----------------------------------
 
-            if (!response.ok) {
-                throw new Error('Błąd podczas pobierania Twoich wydarzeń.');
-            }
-
-            const data = await response.json();
-            setUserEvents(data);
-        } catch (err) {
-            setError(err.message);
-        }
-    };
-
-    // Pobieranie proponowanych eventów
-    const fetchProposedEvents = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/proposedEvents', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error('Błąd podczas pobierania wydarzeń.');
-            }
-
-            const data = await response.json();
-            setProposedEvents(data);
-        } catch (err) {
-            setError(err.message);
-        }
-    };
-
-    // Akcje
     const handleEditEvent = (eventId) => {
         navigate(`/editEvent/${eventId}`);
     };
@@ -155,8 +178,10 @@ export default function Events() {
                 throw new Error(data.error || 'Błąd podczas opuszczania wydarzenia.');
             }
 
-            // Usuwamy event z local state
-            setUserEvents(prev => prev.filter(ev => ev.id !== eventId));
+            // Po opuszczeniu - odśwież listę
+            fetchUserEvents();
+            fetchActiveEvents();
+            fetchInactiveEvents();
         } catch (err) {
             setError(err.message);
         }
@@ -177,9 +202,11 @@ export default function Events() {
                 throw new Error(data.error || 'Błąd podczas dołączania do wydarzenia.');
             }
 
-            // Po dołączeniu odświeżamy listy
+            // Odśwież eventy
             fetchUserEvents();
             fetchProposedEvents();
+            fetchActiveEvents();
+            fetchInactiveEvents();
         } catch (err) {
             setError(err.message);
         }
@@ -200,13 +227,18 @@ export default function Events() {
                 throw new Error(data.error || 'Błąd podczas usuwania wydarzenia.');
             }
 
-            setUserEvents(prev => prev.filter(ev => ev.id !== eventId));
+            // Odśwież eventy
+            fetchUserEvents();
+            fetchActiveEvents();
+            fetchInactiveEvents();
         } catch (err) {
             setError(err.message);
         }
     };
 
+    // ----------------------------------
     // Nawigacja
+    // ----------------------------------
     const handleNavigateToRoutes = () => {
         navigate('/routes');
     };
@@ -215,7 +247,9 @@ export default function Events() {
         navigate('/groups');
     };
 
+    // ----------------------------------
     // Wyszukiwanie
+    // ----------------------------------
     const handleSearch = async (e) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
@@ -252,12 +286,15 @@ export default function Events() {
         setSearchError(null);
     };
 
+    // ----------------------------------
+    // Render
+    // ----------------------------------
     return (
         <div>
             <AnimatedBackground />
             <Navbar />
 
-            {/* Title Section with TRASY - EVENTY - GRUPY */}
+            {/* Title Section: TRASY - EVENTY - GRUPY */}
             <div className="title-container">
                 <h2 className="title-item no-glow" onClick={handleNavigateToRoutes}>
                     TRASY
@@ -278,7 +315,9 @@ export default function Events() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="search-input"
                     />
-                    <button type="submit" className="search-button">Szukaj</button>
+                    <button type="submit" className="search-button">
+                        Szukaj
+                    </button>
                 </form>
             </div>
 
@@ -289,7 +328,7 @@ export default function Events() {
                         <div className="search-results-header">
                             <h2 className="events-box-title">WYNIKI WYSZUKIWANIA</h2>
                             <button className="clear-search-button" onClick={clearSearch}>
-                                Wyczyść wyszukiwanie
+                                Wyczyść
                             </button>
                         </div>
                         <div className="events-list">
@@ -346,6 +385,7 @@ export default function Events() {
                                 />
                                 <span className="event-name">{event.name}</span>
                                 <div className="event-actions">
+                                    {/* Edycja i usuwanie tylko dla twórcy */}
                                     {user && event.created_by === user.id && (
                                         <>
                                             <FaEdit
@@ -407,15 +447,20 @@ export default function Events() {
                 </div>
             </div>
 
-            {/* NOWE SEKCJE: TWOJE AKTYWNE EVENTY (ZIELONE) & TWOJE ZAKOŃCZONE EVENTY (CZERWONE) */}
+            {/* TWOJE AKTYWNE EVENTY & TWOJE ZAKOŃCZONE EVENTY */}
             <div className="events-wrapper">
-                {/* Twoje AKTYWNE (NIEZAKOŃCZONE) */}
+                {/* AKTYWNE */}
                 <div className="events-box active-events-box">
-                    <h2 className="events-box-title active-events-title">TWOJE AKTYWNE EVENTY</h2>
+                    <h2 className="events-box-title active-events-title">
+                        TWOJE AKTYWNE EVENTY
+                    </h2>
                     <div className="events-list">
                         {myActiveEvents.map((event) => (
                             <div key={event.id} className="event-item">
-                                <FaCrown className="event-crown" />
+                                {/* Ikona korony, jeśli user jest twórcą */}
+                                {user && event.created_by === user.id && (
+                                    <FaCrown className="event-crown" />
+                                )}
                                 <img
                                     src={`http://localhost:5000/uploads/${event.image}`}
                                     alt={event.name}
@@ -423,16 +468,20 @@ export default function Events() {
                                 />
                                 <span className="event-name">{event.name}</span>
                                 <div className="event-actions">
-                                    <FaEdit
-                                        className="event-icon"
-                                        title="Edytuj wydarzenie"
-                                        onClick={() => handleEditEvent(event.id)}
-                                    />
-                                    <FaTrash
-                                        className="event-icon"
-                                        title="Usuń wydarzenie"
-                                        onClick={() => handleDeleteEvent(event.id)}
-                                    />
+                                    {user && event.created_by === user.id && (
+                                        <>
+                                            <FaEdit
+                                                className="event-icon"
+                                                title="Edytuj wydarzenie"
+                                                onClick={() => handleEditEvent(event.id)}
+                                            />
+                                            <FaTrash
+                                                className="event-icon"
+                                                title="Usuń wydarzenie"
+                                                onClick={() => handleDeleteEvent(event.id)}
+                                            />
+                                        </>
+                                    )}
                                     <FaInfoCircle
                                         className="event-icon"
                                         title="Detale wydarzenia"
@@ -447,18 +496,22 @@ export default function Events() {
                             </div>
                         ))}
                         {myActiveEvents.length === 0 && (
-                            <p className="error-message">Nie masz aktywnych eventów.</p>
+                            <p className="error-message">Brak aktywnych eventów.</p>
                         )}
                     </div>
                 </div>
 
-                {/* Twoje ZAKOŃCZONE */}
+                {/* ZAKOŃCZONE */}
                 <div className="events-box ended-events-box">
-                    <h2 className="events-box-title ended-events-title">TWOJE ZAKOŃCZONE EVENTY</h2>
+                    <h2 className="events-box-title ended-events-title">
+                        TWOJE ZAKOŃCZONE EVENTY
+                    </h2>
                     <div className="events-list">
                         {myEndedEvents.map((event) => (
                             <div key={event.id} className="event-item">
-                                <FaCrown className="event-crown" />
+                                {user && event.created_by === user.id && (
+                                    <FaCrown className="event-crown" />
+                                )}
                                 <img
                                     src={`http://localhost:5000/uploads/${event.image}`}
                                     alt={event.name}
@@ -466,22 +519,25 @@ export default function Events() {
                                 />
                                 <span className="event-name">{event.name}</span>
                                 <div className="event-actions">
-                                    <FaEdit
-                                        className="event-icon"
-                                        title="Edytuj wydarzenie"
-                                        onClick={() => handleEditEvent(event.id)}
-                                    />
-                                    <FaTrash
-                                        className="event-icon"
-                                        title="Usuń wydarzenie"
-                                        onClick={() => handleDeleteEvent(event.id)}
-                                    />
+                                    {user && event.created_by === user.id && (
+                                        <>
+                                            <FaEdit
+                                                className="event-icon"
+                                                title="Edytuj wydarzenie"
+                                                onClick={() => handleEditEvent(event.id)}
+                                            />
+                                            <FaTrash
+                                                className="event-icon"
+                                                title="Usuń wydarzenie"
+                                                onClick={() => handleDeleteEvent(event.id)}
+                                            />
+                                        </>
+                                    )}
                                     <FaInfoCircle
                                         className="event-icon"
                                         title="Detale wydarzenia"
                                         onClick={() => handleViewDetails(event.id)}
                                     />
-                                    {/* Opuścić raczej nie ma sensu, ale zostawiamy przykład */}
                                     <FaSignOutAlt
                                         className="event-icon"
                                         title="Opuść wydarzenie"
@@ -491,7 +547,7 @@ export default function Events() {
                             </div>
                         ))}
                         {myEndedEvents.length === 0 && (
-                            <p className="error-message">Nie masz zakończonych eventów.</p>
+                            <p className="error-message">Brak zakończonych eventów.</p>
                         )}
                     </div>
                 </div>
