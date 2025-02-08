@@ -151,7 +151,7 @@
 /* -----------------------
    Przycisk zapisu
    ----------------------- */
-.submit-button {
+.group-submit-button {
     font-family: var(--font-family);
     background-color: #AE67FA;
     color: #fff;
@@ -163,9 +163,63 @@
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.submit-button:hover {
+.group-submit-button:hover {
     transform: scale(1.05);
     background-color: #9556d3; /* nieco ciemniejszy fiolet */
+}
+
+/* -----------------------
+   Preferencje pojazdów
+   ----------------------- */
+.group-vehicle-preferences {
+    margin-top: 1rem;
+}
+
+.group-vehicle-preferences-label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.group-vehicle-icons-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.group-vehicle-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255,255,255,0.2);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.group-vehicle-icon{
+    width: 40px;
+    height: 40px;
+}
+
+.group-vehicle-icon:hover {
+    border-color: #fff;
+    box-shadow: 0 0 6px #fff;
+    transform: scale(1.05);
+}
+
+.group-vehicle-icon.selected {
+    background-color: #AE67FA;
+    border-color: #AE67FA;
+    box-shadow: 0 0 8px #AE67FA;
+}
+
+.group-pref-icon {
+    color: white;
+    scale: 1.4;
 }
 
 /* -----------------------
@@ -186,7 +240,7 @@
         gap: 0.75rem;
     }
 
-    .submit-button {
+    .group-submit-button {
         width: 100%;
         padding: 0.6rem;
         font-size: 1rem;
