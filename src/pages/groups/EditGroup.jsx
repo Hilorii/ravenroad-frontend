@@ -222,6 +222,7 @@ export default function EditGroup() {
                         rows="4"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        maxLength={1000}
                     />
 
                     {/* Prywatna */}

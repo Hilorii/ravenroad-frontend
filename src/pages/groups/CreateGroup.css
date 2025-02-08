@@ -26,11 +26,9 @@
     font-weight: 500;
 }
 
-/*
-   =======================
+/* -----------------------
    Pola tekstowe / textarea
-   =======================
-*/
+   ----------------------- */
 .create-group-form input[type="text"],
 .create-group-form textarea {
     padding: 0.5rem;
@@ -58,11 +56,9 @@
     resize: vertical;
 }
 
-/*
-   =======================
+/* -----------------------
    Pole pliku
-   =======================
-*/
+   ----------------------- */
 .create-group-form input[type="file"] {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.2);
@@ -80,11 +76,9 @@
     transform: scale(1.02);
 }
 
-/*
-   =======================
+/* -----------------------
    Checkboxy customowe
-   =======================
-*/
+   ----------------------- */
 .checkbox-wrapper {
     display: inline-flex;
     align-items: center;
@@ -154,11 +148,9 @@
     opacity: 1;
 }
 
-/*
-   =======================
+/* -----------------------
    Przycisk zapisu
-   =======================
-*/
+   ----------------------- */
 .submit-button {
     font-family: var(--font-family);
     background-color: #AE67FA;
@@ -170,17 +162,64 @@
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
-
 .submit-button:hover {
     transform: scale(1.05);
     background-color: #9556d3; /* nieco ciemniejszy fiolet */
 }
 
-/*
-   =======================
+/* -----------------------
+   Preferencje pojazdów
+   ----------------------- */
+.group-vehicle-preferences {
+    margin-top: 1rem;
+}
+
+.group-vehicle-preferences-label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.group-vehicle-icons-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.group-vehicle-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255,255,255,0.2);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.group-vehicle-icon:hover {
+    border-color: #fff;
+    box-shadow: 0 0 6px #fff;
+    transform: scale(1.05);
+}
+
+.group-vehicle-icon.selected {
+    background-color: #AE67FA;
+    border-color: #AE67FA;
+    box-shadow: 0 0 8px #AE67FA;
+}
+
+.group-pref-icon {
+    color: white;
+    scale: 1.4;
+}
+
+/* -----------------------
    Responsywność
-   =======================
-*/
+   ----------------------- */
 @media (max-width: 768px) {
     .create-group-container {
         margin: 40px auto;

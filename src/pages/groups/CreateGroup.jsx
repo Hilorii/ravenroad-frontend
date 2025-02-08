@@ -6,9 +6,16 @@ import Footer from '../../containers/footer/Footer';
 import BackButton from '../../components/backBt/BackButton';
 import './CreateGroup.css';
 
+// Ikony do preferencji pojazdów
+import {
+    FaCar,
+    FaTruck,
+    FaMotorcycle,
+    FaBicycle
+} from 'react-icons/fa';
+
 export default function CreateGroup() {
     const navigate = useNavigate();
-
     const [error, setError] = useState(null);
 
     // Pola formularza
@@ -22,6 +29,22 @@ export default function CreateGroup() {
 
     // Obsługa bannera grupy
     const [bannerFile, setBannerFile] = useState(null);
+
+    // Preferencje pojazdów – stan lokalny
+    const [vehiclePreferences, setVehiclePreferences] = useState({
+        car: false,
+        truck: false,
+        motorcycle: false,
+        bike: false
+    });
+
+    // Funkcja do przełączania stanu preferencji
+    const togglePreference = (prefKey) => {
+        setVehiclePreferences((prev) => ({
+            ...prev,
+            [prefKey]: !prev[prefKey],
+        }));
+    };
 
     // Obsługa zatwierdzenia formularza
     const handleSubmit = async (e) => {
@@ -48,12 +71,18 @@ export default function CreateGroup() {
                 formData.append('banner', bannerFile);
             }
 
-            // Wysyłamy żądanie POST do createGroup (endpoint przykładowy)
+            // Preferencje pojazdów
+            formData.append('car', vehiclePreferences.car ? 1 : 0);
+            formData.append('truck', vehiclePreferences.truck ? 1 : 0);
+            formData.append('motorcycle', vehiclePreferences.motorcycle ? 1 : 0);
+            formData.append('bike', vehiclePreferences.bike ? 1 : 0);
+
+            // Wysyłamy żądanie POST do createGroup
             const response = await fetch('http://localhost:3000/createGroup', {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}`
-                    // Uwaga: nie ustawiamy "Content-Type", bo używamy FormData
+                    Authorization: `Bearer ${token}`,
+                    // Nie ustawiamy "Content-Type", bo używamy FormData
                 },
                 body: formData
             });
@@ -63,9 +92,7 @@ export default function CreateGroup() {
                 throw new Error(errData.error || 'Błąd podczas tworzenia grupy');
             }
 
-            const data = await response.json();
-            // Zakładamy, że serwer zwraca np. ID nowo utworzonej grupy w polu 'groupId'
-            // Przekierowanie do szczegółów grupy
+            // Jeśli wszystko OK, przenosimy użytkownika np. na listę grup:
             navigate(`/groups`);
 
         } catch (err) {
@@ -83,7 +110,13 @@ export default function CreateGroup() {
                 <h2 className="create-group-title">Utwórz nową grupę</h2>
 
                 {error && (
-                    <div style={{ color: '#ff4d4d', textAlign: 'center', marginBottom: '1rem' }}>
+                    <div
+                        style={{
+                            color: '#ff4d4d',
+                            textAlign: 'center',
+                            marginBottom: '1rem'
+                        }}
+                    >
                         {error}
                     </div>
                 )}
@@ -104,6 +137,7 @@ export default function CreateGroup() {
                         rows="4"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        maxLength={1000}
                     />
 
                     <div className="checkbox-wrapper">
@@ -141,6 +175,54 @@ export default function CreateGroup() {
                         accept="image/*"
                         onChange={(e) => setBannerFile(e.target.files[0])}
                     />
+
+                    {/* Preferencje pojazdów */}
+                    <div className="group-vehicle-preferences">
+            <span className="group-vehicle-preferences-label">
+              Preferencje pojazdów:
+            </span>
+                        <div className="group-vehicle-icons-row">
+                            {/* Samochód */}
+                            <div
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.car ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('car')}
+                            >
+                                <FaCar className="group-pref-icon" />
+                            </div>
+
+                            {/* Ciężarówka */}
+                            <div
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.truck ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('truck')}
+                            >
+                                <FaTruck className="group-pref-icon" />
+                            </div>
+
+                            {/* Motocykl */}
+                            <div
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.motorcycle ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('motorcycle')}
+                            >
+                                <FaMotorcycle className="group-pref-icon" />
+                            </div>
+
+                            {/* Rower */}
+                            <div
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.bike ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('bike')}
+                            >
+                                <FaBicycle className="group-pref-icon" />
+                            </div>
+                        </div>
+                    </div>
 
                     <button type="submit" className="submit-button">
                         Utwórz grupę
