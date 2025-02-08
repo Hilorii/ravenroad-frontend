@@ -144,8 +144,7 @@ export default function EditEvent() {
                 throw new Error(errData.message || 'Błąd podczas aktualizacji wydarzenia');
             }
 
-            // Po zapisaniu wracamy do widoku szczegółów wydarzenia
-            navigate(`/eventDetails/${id}`);
+            navigate(`/events}`);
         } catch (err) {
             setError(err.message);
         }
