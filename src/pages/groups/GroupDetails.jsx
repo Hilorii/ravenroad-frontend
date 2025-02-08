@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
 import { useUser } from '../../contexts/UserContext';
-import { FaCrown } from 'react-icons/fa';
+import { FaCrown, FaCar, FaTruck, FaMotorcycle, FaBicycle } from 'react-icons/fa';
 import './GroupDetails.css';
 import BackButton from '../../components/backBt/BackButton';
 
@@ -24,7 +24,7 @@ export default function GroupDetails() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Pobieranie szczegółów grupy (z informacją o właścicielu, np. owner_username)
+    // Pobieranie szczegółów grupy (z informacją o właścicielu, np. owner_username i preferencjach pojazdów)
     const fetchGroupDetails = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -132,15 +132,34 @@ export default function GroupDetails() {
                         />
                     </div>
 
-                    {/* NAZWA GRUPY + (opcjonalna) korona */}
+                    {/* NAZWA GRUPY + (opcjonalna) korona + IKONY POJAZDÓW */}
                     <h1 className="group-title">
                         {group.name}
+
                         {/* Jeśli zalogowany user jest właścicielem => pokazujemy koronę */}
                         {user && group.created_by === user.id && (
                             <FaCrown
                                 className="owner-crown"
                                 title="Jesteś właścicielem grupy"
                             />
+                        )}
+
+                        {/* Ikony pojazdów na wzór profilu */}
+                        {group.vehiclePreferences && (
+                            <div className="group-details-vehicle-preferences-icons">
+                                {group.vehiclePreferences.car == 1 && (
+                                    <FaCar className="group-details-vehicle-icon active" />
+                                )}
+                                {group.vehiclePreferences.truck == 1 && (
+                                    <FaTruck className="group-details-vehicle-icon active" />
+                                )}
+                                {group.vehiclePreferences.motorcycle == 1 && (
+                                    <FaMotorcycle className="group-details-vehicle-icon active" />
+                                )}
+                                {group.vehiclePreferences.bike == 1 && (
+                                    <FaBicycle className="group-details-vehicle-icon active" />
+                                )}
+                            </div>
                         )}
                     </h1>
 
