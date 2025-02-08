@@ -19,30 +19,25 @@ import {
 export default function Groups() {
     const { user } = useUser();
     const navigate = useNavigate();
+
+    // Stany związane z grupami
     const [userGroups, setUserGroups] = useState([]);
     const [proposedGroups, setProposedGroups] = useState([]);
-    const [error, setError] = useState(null); // Błędy przy pobieraniu grup
 
-    // Stany dla wyszukiwarki
+    // Stany związane z wyszukiwarką
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
-    const [searchError, setSearchError] = useState(null); // Błędy wyłącznie dla wyszukiwania
+    const [searchError, setSearchError] = useState(null);
+
+    // Stan modala do potwierdzenia usunięcia
+    const [groupIdToDelete, setGroupIdToDelete] = useState(null);
 
     useEffect(() => {
         fetchUserGroups();
         fetchProposedGroups();
     }, []);
 
-    // Auto reset alertów - usuwamy komunikat o błędzie po 5 sekundach
-    useEffect(() => {
-        if (error) {
-            const timer = setTimeout(() => {
-                setError(null);
-            }, 5000);
-            return () => clearTimeout(timer);
-        }
-    }, [error]);
-
+    // Reset komunikatu o błędzie wyszukiwania po 5 sekundach
     useEffect(() => {
         if (searchError) {
             const timer = setTimeout(() => {
@@ -52,6 +47,7 @@ export default function Groups() {
         }
     }, [searchError]);
 
+    // Pobieranie grup użytkownika
     const fetchUserGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -61,17 +57,27 @@ export default function Groups() {
                 },
             });
 
+            // Jeżeli nie ma grup, API może zwrócić pustą tablicę lub status 404
             if (!response.ok) {
+                if (response.status === 404) {
+                    // Jeśli serwer zwraca 404, uznajemy, że brak grup
+                    setUserGroups([]);
+                    return;
+                }
                 throw new Error('Błąd podczas pobierania Twoich grup');
             }
 
             const data = await response.json();
             setUserGroups(data);
         } catch (err) {
-            setError(err.message);
+            console.error(err.message);
+            // Nie ustawiamy komunikatu o błędzie — zamiast tego po prostu konsola
+            // i wyświetlamy pustą listę, jeśli faktycznie się nie uda
+            setUserGroups([]);
         }
     };
 
+    // Pobieranie proponowanych grup
     const fetchProposedGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -82,24 +88,32 @@ export default function Groups() {
             });
 
             if (!response.ok) {
+                if (response.status === 404) {
+                    setProposedGroups([]);
+                    return;
+                }
                 throw new Error('Błąd podczas pobierania proponowanych grup.');
             }
 
             const data = await response.json();
             setProposedGroups(data);
         } catch (err) {
-            setError(err.message);
+            console.error(err.message);
+            setProposedGroups([]);
         }
     };
 
+    // Edycja grupy
     const handleEditGroup = (groupId) => {
         navigate(`/editGroup/${groupId}`);
     };
 
+    // Detale grupy
     const handleViewDetails = (groupId) => {
         navigate(`/groupDetails/${groupId}`);
     };
 
+    // Opuszczanie grupy
     const handleLeaveGroup = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
@@ -115,12 +129,13 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas opuszczania grupy');
             }
 
-            setUserGroups(prev => prev.filter(group => group.id !== groupId));
+            setUserGroups((prev) => prev.filter(group => group.id !== groupId));
         } catch (err) {
-            setError(err.message);
+            console.error(err.message);
         }
     };
 
+    // Dołączanie do grupy
     const handleJoinGroup = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
@@ -140,14 +155,21 @@ export default function Groups() {
             fetchUserGroups();
             fetchProposedGroups();
         } catch (err) {
-            setError(err.message);
+            console.error(err.message);
         }
     };
 
-    const handleDeleteGroup = async (groupId) => {
+    // Ustawienie groupIdToDelete, aby wyświetlić modal potwierdzający
+    const confirmDeleteGroup = (groupId) => {
+        setGroupIdToDelete(groupId);
+    };
+
+    // Potwierdzenie usunięcia grupy
+    const handleConfirmDelete = async () => {
+        if (!groupIdToDelete) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/deleteGroup/${groupId}`, {
+            const response = await fetch(`http://localhost:3000/deleteGroup/${groupIdToDelete}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -159,22 +181,32 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas usuwania grupy');
             }
 
-            setUserGroups(prev => prev.filter(group => group.id !== groupId));
+            // Usuwamy grupę z listy
+            setUserGroups((prev) => prev.filter(group => group.id !== groupIdToDelete));
         } catch (err) {
-            setError(err.message);
+            console.error(err.message);
+        } finally {
+            // Niezależnie od wyniku zamykamy modal
+            setGroupIdToDelete(null);
         }
     };
 
-    // Nawigacja do tras i eventów
+    // Anulowanie usunięcia
+    const handleCancelDelete = () => {
+        setGroupIdToDelete(null);
+    };
+
+    // Nawigacja do tras
     const handleNavigateToRoutes = () => {
         navigate('/routes');
     };
 
+    // Nawigacja do events
     const handleNavigateToEvents = () => {
         navigate('/events');
     };
 
-    // Handler wyszukiwania – komunikaty błędów tutaj trafiają do searchError
+    // Wyszukiwanie grup
     const handleSearch = async (e) => {
         e.preventDefault();
         if (!searchQuery.trim()) {
@@ -183,11 +215,15 @@ export default function Groups() {
         try {
             const token = localStorage.getItem('token');
             setSearchError(null);
-            const response = await fetch(`http://localhost:3000/searchGroups?query=${encodeURIComponent(searchQuery)}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+
+            const response = await fetch(
+                `http://localhost:3000/searchGroups?query=${encodeURIComponent(searchQuery)}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
             if (!response.ok) {
                 const data = await response.json();
@@ -198,10 +234,11 @@ export default function Groups() {
             setSearchResults(data);
         } catch (err) {
             setSearchError(err.message);
-            setSearchResults([]); // Ustawiamy pustą tablicę, aby pokazać komunikat "Brak wyników wyszukiwania."
+            setSearchResults([]);
         }
     };
 
+    // Wyczyść wyszukiwanie
     const clearSearch = () => {
         setSearchQuery('');
         setSearchResults(null);
@@ -246,7 +283,10 @@ export default function Groups() {
                     <div className="groups-box search-results-box">
                         <div className="search-results-header">
                             <h2 className="groups-box-title">WYNIKI WYSZUKIWANIA</h2>
-                            <button className="clear-search-button" onClick={clearSearch}>
+                            <button
+                                className="clear-search-button"
+                                onClick={clearSearch}
+                            >
                                 Wyczyść wyszukiwanie
                             </button>
                         </div>
@@ -289,46 +329,49 @@ export default function Groups() {
                 <div className="groups-box">
                     <h2 className="groups-box-title">TWOJE GRUPY</h2>
                     <div className="groups-list">
-                        {error && <p className="error-message">{error}</p>}
-                        {userGroups.map((group) => (
-                            <div key={group.id} className="group-item">
-                                {user && group.created_by === user.id && (
-                                    <FaCrown className="group-crown" />
-                                )}
-                                <img
-                                    src={`http://localhost:5000/uploads/${group.image}`}
-                                    alt={group.name}
-                                    className="group-avatar"
-                                />
-                                <span className="group-name">{group.name}</span>
-                                <div className="group-actions">
+                        {userGroups.length === 0 ? (
+                            <p className="no-groups-message">Brak Twoich grup.</p>
+                        ) : (
+                            userGroups.map((group) => (
+                                <div key={group.id} className="group-item">
                                     {user && group.created_by === user.id && (
-                                        <>
-                                            <FaEdit
-                                                className="group-icon"
-                                                title="Edytuj grupę"
-                                                onClick={() => handleEditGroup(group.id)}
-                                            />
-                                            <FaTrash
-                                                className="group-icon"
-                                                title="Usuń grupę"
-                                                onClick={() => handleDeleteGroup(group.id)}
-                                            />
-                                        </>
+                                        <FaCrown className="group-crown" />
                                     )}
-                                    <FaInfoCircle
-                                        className="group-icon"
-                                        title="Detale grupy"
-                                        onClick={() => handleViewDetails(group.id)}
+                                    <img
+                                        src={`http://localhost:5000/uploads/${group.image}`}
+                                        alt={group.name}
+                                        className="group-avatar"
                                     />
-                                    <FaSignOutAlt
-                                        className="group-icon"
-                                        title="Opuść grupę"
-                                        onClick={() => handleLeaveGroup(group.id)}
-                                    />
+                                    <span className="group-name">{group.name}</span>
+                                    <div className="group-actions">
+                                        {user && group.created_by === user.id && (
+                                            <>
+                                                <FaEdit
+                                                    className="group-icon"
+                                                    title="Edytuj grupę"
+                                                    onClick={() => handleEditGroup(group.id)}
+                                                />
+                                                <FaTrash
+                                                    className="group-icon"
+                                                    title="Usuń grupę"
+                                                    onClick={() => confirmDeleteGroup(group.id)}
+                                                />
+                                            </>
+                                        )}
+                                        <FaInfoCircle
+                                            className="group-icon"
+                                            title="Detale grupy"
+                                            onClick={() => handleViewDetails(group.id)}
+                                        />
+                                        <FaSignOutAlt
+                                            className="group-icon"
+                                            title="Opuść grupę"
+                                            onClick={() => handleLeaveGroup(group.id)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </div>
 
@@ -336,33 +379,60 @@ export default function Groups() {
                 <div className="groups-box">
                     <h2 className="groups-box-title">PROPONOWANE GRUPY</h2>
                     <div className="groups-list">
-                        {error && <p className="error-message">{error}</p>}
-                        {proposedGroups.map((group) => (
-                            <div key={group.id} className="group-item">
-                                <img
-                                    src={`http://localhost:5000/uploads/${group.image}`}
-                                    alt={group.name}
-                                    className="group-avatar"
-                                />
-                                <span className="group-name">{group.name}</span>
-                                <div className="group-actions">
-                                    <FaInfoCircle
-                                        className="group-icon"
-                                        title="Detale grupy"
-                                        onClick={() => handleViewDetails(group.id)}
+                        {proposedGroups.length === 0 ? (
+                            <p className="no-groups-message">Brak proponowanych grup.</p>
+                        ) : (
+                            proposedGroups.map((group) => (
+                                <div key={group.id} className="group-item">
+                                    <img
+                                        src={`http://localhost:5000/uploads/${group.image}`}
+                                        alt={group.name}
+                                        className="group-avatar"
                                     />
-                                    <FaPlus
-                                        className="group-icon"
-                                        title="Dołącz do grupy"
-                                        onClick={() => handleJoinGroup(group.id)}
-                                    />
+                                    <span className="group-name">{group.name}</span>
+                                    <div className="group-actions">
+                                        <FaInfoCircle
+                                            className="group-icon"
+                                            title="Detale grupy"
+                                            onClick={() => handleViewDetails(group.id)}
+                                        />
+                                        <FaPlus
+                                            className="group-icon"
+                                            title="Dołącz do grupy"
+                                            onClick={() => handleJoinGroup(group.id)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
-            <SquaresGroup/>
+
+            {/* Modal potwierdzenia usunięcia */}
+            {groupIdToDelete && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2>Czy na pewno chcesz usunąć tę grupę?</h2>
+                        <div className="modal-buttons">
+                            <button
+                                className="confirm-button"
+                                onClick={handleConfirmDelete}
+                            >
+                                Tak, usuń
+                            </button>
+                            <button
+                                className="cancel-button"
+                                onClick={handleCancelDelete}
+                            >
+                                Anuluj
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <SquaresGroup />
             <Footer />
         </div>
     );
