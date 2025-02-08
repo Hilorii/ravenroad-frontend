@@ -29,8 +29,11 @@ export default function Groups() {
     const [searchResults, setSearchResults] = useState(null);
     const [searchError, setSearchError] = useState(null);
 
-    // Stan modala do potwierdzenia usunięcia
+    // **Stan do modala usuwania grupy**
     const [groupIdToDelete, setGroupIdToDelete] = useState(null);
+
+    // **Stan do modala opuszczania grupy**
+    const [groupIdToLeave, setGroupIdToLeave] = useState(null);
 
     useEffect(() => {
         fetchUserGroups();
@@ -47,7 +50,9 @@ export default function Groups() {
         }
     }, [searchError]);
 
-    // Pobieranie grup użytkownika
+    // --------------------------------------------------------------------------
+    //                            POBIERANIE GRUP
+    // --------------------------------------------------------------------------
     const fetchUserGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -60,7 +65,6 @@ export default function Groups() {
             // Jeżeli nie ma grup, API może zwrócić pustą tablicę lub status 404
             if (!response.ok) {
                 if (response.status === 404) {
-                    // Jeśli serwer zwraca 404, uznajemy, że brak grup
                     setUserGroups([]);
                     return;
                 }
@@ -71,13 +75,11 @@ export default function Groups() {
             setUserGroups(data);
         } catch (err) {
             console.error(err.message);
-            // Nie ustawiamy komunikatu o błędzie — zamiast tego po prostu konsola
-            // i wyświetlamy pustą listę, jeśli faktycznie się nie uda
+            // Jeśli błąd, po prostu ustawiamy pustą listę
             setUserGroups([]);
         }
     };
 
-    // Pobieranie proponowanych grup
     const fetchProposedGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -103,6 +105,9 @@ export default function Groups() {
         }
     };
 
+    // --------------------------------------------------------------------------
+    //                           OBŁUGA GRUP (CRUD)
+    // --------------------------------------------------------------------------
     // Edycja grupy
     const handleEditGroup = (groupId) => {
         navigate(`/editGroup/${groupId}`);
@@ -113,11 +118,21 @@ export default function Groups() {
         navigate(`/groupDetails/${groupId}`);
     };
 
-    // Opuszczanie grupy
-    const handleLeaveGroup = async (groupId) => {
+    // ----------------------------------------------------------------------------
+    //        OPUSZCZANIE GRUPY (z modalem potwierdzenia, analogicznie do usuwania)
+    // ----------------------------------------------------------------------------
+
+    // Najpierw ustawiamy groupIdToLeave (otwiera modal)
+    const confirmLeaveGroup = (groupId) => {
+        setGroupIdToLeave(groupId);
+    };
+
+    // Gdy użytkownik potwierdzi opuszczenie
+    const handleConfirmLeave = async () => {
+        if (!groupIdToLeave) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/leaveGroup/${groupId}`, {
+            const response = await fetch(`http://localhost:3000/leaveGroup/${groupIdToLeave}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -129,13 +144,24 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas opuszczania grupy');
             }
 
-            setUserGroups((prev) => prev.filter(group => group.id !== groupId));
+            // Usuwamy grupę z listy userGroups
+            setUserGroups((prev) => prev.filter((group) => group.id !== groupIdToLeave));
         } catch (err) {
             console.error(err.message);
+        } finally {
+            // Zamykamy modal
+            setGroupIdToLeave(null);
         }
     };
 
-    // Dołączanie do grupy
+    // Gdy użytkownik anuluje opuszczenie
+    const handleCancelLeave = () => {
+        setGroupIdToLeave(null);
+    };
+
+    // ----------------------------------------------------------------------------
+    //        DOŁĄCZANIE GRUPY
+    // ----------------------------------------------------------------------------
     const handleJoinGroup = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
@@ -159,12 +185,13 @@ export default function Groups() {
         }
     };
 
-    // Ustawienie groupIdToDelete, aby wyświetlić modal potwierdzający
+    // ----------------------------------------------------------------------------
+    //        USUWANIE GRUPY (z modalem potwierdzenia)
+    // ----------------------------------------------------------------------------
     const confirmDeleteGroup = (groupId) => {
         setGroupIdToDelete(groupId);
     };
 
-    // Potwierdzenie usunięcia grupy
     const handleConfirmDelete = async () => {
         if (!groupIdToDelete) return;
         try {
@@ -181,32 +208,33 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas usuwania grupy');
             }
 
-            // Usuwamy grupę z listy
-            setUserGroups((prev) => prev.filter(group => group.id !== groupIdToDelete));
+            // Usuwamy grupę z listy userGroups
+            setUserGroups((prev) => prev.filter((group) => group.id !== groupIdToDelete));
         } catch (err) {
             console.error(err.message);
         } finally {
-            // Niezależnie od wyniku zamykamy modal
             setGroupIdToDelete(null);
         }
     };
 
-    // Anulowanie usunięcia
     const handleCancelDelete = () => {
         setGroupIdToDelete(null);
     };
 
-    // Nawigacja do tras
+    // ----------------------------------------------------------------------------
+    //        NAWIGACJA
+    // ----------------------------------------------------------------------------
     const handleNavigateToRoutes = () => {
         navigate('/routes');
     };
 
-    // Nawigacja do events
     const handleNavigateToEvents = () => {
         navigate('/events');
     };
 
-    // Wyszukiwanie grup
+    // ----------------------------------------------------------------------------
+    //        WYSZUKIWANIE GRUP
+    // ----------------------------------------------------------------------------
     const handleSearch = async (e) => {
         e.preventDefault();
         if (!searchQuery.trim()) {
@@ -238,13 +266,15 @@ export default function Groups() {
         }
     };
 
-    // Wyczyść wyszukiwanie
     const clearSearch = () => {
         setSearchQuery('');
         setSearchResults(null);
         setSearchError(null);
     };
 
+    // ----------------------------------------------------------------------------
+    //        RENDER
+    // ----------------------------------------------------------------------------
     return (
         <div>
             <AnimatedBackground />
@@ -366,7 +396,7 @@ export default function Groups() {
                                         <FaSignOutAlt
                                             className="group-icon"
                                             title="Opuść grupę"
-                                            onClick={() => handleLeaveGroup(group.id)}
+                                            onClick={() => confirmLeaveGroup(group.id)}
                                         />
                                     </div>
                                 </div>
@@ -424,6 +454,29 @@ export default function Groups() {
                             <button
                                 className="cancel-button"
                                 onClick={handleCancelDelete}
+                            >
+                                Anuluj
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal potwierdzenia opuszczenia grupy */}
+            {groupIdToLeave && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2>Czy na pewno chcesz opuścić tę grupę?</h2>
+                        <div className="modal-buttons">
+                            <button
+                                className="confirm-button"
+                                onClick={handleConfirmLeave}
+                            >
+                                Tak, opuść
+                            </button>
+                            <button
+                                className="cancel-button"
+                                onClick={handleCancelLeave}
                             >
                                 Anuluj
                             </button>
