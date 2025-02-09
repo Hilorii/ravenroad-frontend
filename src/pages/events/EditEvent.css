@@ -59,7 +59,6 @@
     background: rgba(255, 255, 255, 0.71);
 }
 
-/* Bez resize w poziomie */
 .edit-event-form textarea {
     resize: vertical;
 }
@@ -162,10 +161,62 @@
 
 /*
    =======================
+   Preferencje pojazdów
+   =======================
+*/
+.edit-event-vehicle-preferences {
+    margin-top: 1rem;
+}
+
+.edit-event-vehicle-preferences-label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.edit-event-vehicle-icons-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.edit-event-vehicle-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.edit-event-vehicle-icon:hover {
+    border-color: #fff;
+    box-shadow: 0 0 6px #fff;
+    transform: scale(1.05);
+}
+
+.edit-event-vehicle-icon.selected {
+    background-color: #AE67FA;
+    border-color: #AE67FA;
+    box-shadow: 0 0 8px #AE67FA;
+}
+
+.edit-event-pref-icon {
+    color: #fff;
+    scale: 1.4;
+}
+
+/*
+   =======================
    Przycisk zapisu
    =======================
 */
-.submit-button {
+.edit-event-submit-button {
     font-family: var(--font-family);
     background-color: #AE67FA;
     color: #fff;
@@ -177,7 +228,7 @@
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.submit-button:hover {
+.edit-event-submit-button:hover {
     transform: scale(1.05);
     background-color: #9556d3; /* nieco ciemniejszy fiolet */
 }
@@ -202,9 +253,13 @@
         gap: 0.75rem;
     }
 
-    .submit-button {
+    .edit-event-submit-button {
         width: 100%;
         padding: 0.6rem;
         font-size: 1rem;
+    }
+
+    .edit-event-vehicle-icons-row {
+        gap: 0.75rem;
     }
 }

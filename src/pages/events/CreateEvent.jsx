@@ -4,6 +4,13 @@ import Navbar from '../../components/navbar/Navbar';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
 import BackButton from '../../components/backBt/BackButton';
+import {
+    FaCar,
+    FaTruck,
+    FaMotorcycle,
+    FaBicycle
+} from 'react-icons/fa'; // Ikony do preferencji pojazdów
+
 import './CreateEvent.css';
 
 export default function CreateEvent() {
@@ -13,18 +20,32 @@ export default function CreateEvent() {
     // Pola formularza:
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-
     const [startDate, setStartDate] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endDate, setEndDate] = useState('');
     const [endTime, setEndTime] = useState('');
-
     const [isPrivate, setIsPrivate] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
 
     // Obsługa plików (avatar, banner)
     const [imageFile, setImageFile] = useState(null);
     const [bannerFile, setBannerFile] = useState(null);
+
+    // Preferencje pojazdów – stan lokalny (tak samo jak w CreateGroup, ale z innymi klasami)
+    const [vehiclePreferences, setVehiclePreferences] = useState({
+        car: false,
+        truck: false,
+        motorcycle: false,
+        bike: false
+    });
+
+    // Funkcja do przełączania stanu preferencji pojazdów
+    const togglePreference = (prefKey) => {
+        setVehiclePreferences((prev) => ({
+            ...prev,
+            [prefKey]: !prev[prefKey],
+        }));
+    };
 
     // Obsługa wysyłania formularza
     const handleSubmit = async (e) => {
@@ -55,6 +76,12 @@ export default function CreateEvent() {
                 formData.append('banner', bannerFile);
             }
 
+            // Preferencje pojazdów (dodajemy je do formData tak jak w CreateGroup)
+            formData.append('car', vehiclePreferences.car ? 1 : 0);
+            formData.append('truck', vehiclePreferences.truck ? 1 : 0);
+            formData.append('motorcycle', vehiclePreferences.motorcycle ? 1 : 0);
+            formData.append('bike', vehiclePreferences.bike ? 1 : 0);
+
             // Wywołanie endpointu POST /createEvent
             const response = await fetch('http://localhost:3000/createEvent', {
                 method: 'POST',
@@ -70,10 +97,10 @@ export default function CreateEvent() {
                 throw new Error(errData.error || 'Błąd podczas tworzenia wydarzenia');
             }
 
-            // Zakładamy, że serwer zwraca utworzony obiekt wydarzenia (w tym np. jego ID).
-            const createdEvent = await response.json();
+            // (Opcjonalnie) Odbieramy odpowiedź serwera (np. ID wydarzenia)
+            // const createdEvent = await response.json();
 
-            // Po pomyślnym utworzeniu wydarzenia możemy przekierować np. do szczegółów tego wydarzenia:
+            // Po pomyślnym utworzeniu wydarzenia przekierowujemy np. do listy eventów:
             navigate(`/events`);
         } catch (err) {
             setError(err.message);
@@ -86,16 +113,16 @@ export default function CreateEvent() {
             <Navbar />
             <BackButton />
 
-            <div className="create-event-container">
-                <h2 className="create-event-title">Utwórz nowe wydarzenie</h2>
+            <div className="event-create-container">
+                <h2 className="event-create-title">Utwórz nowe wydarzenie</h2>
 
                 {error && (
-                    <div className="create-event-error">
+                    <div className="event-create-error">
                         {error}
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="create-event-form">
+                <form onSubmit={handleSubmit} className="event-create-form">
                     <label htmlFor="event-name">Nazwa wydarzenia:</label>
                     <input
                         id="event-name"
@@ -145,7 +172,7 @@ export default function CreateEvent() {
                         onChange={(e) => setEndTime(e.target.value)}
                     />
 
-                    <div className="checkbox-wrapper">
+                    <div className="event-create-checkbox-wrapper">
                         <input
                             id="private-checkbox"
                             type="checkbox"
@@ -155,7 +182,7 @@ export default function CreateEvent() {
                         <label htmlFor="private-checkbox">Prywatne:</label>
                     </div>
 
-                    <div className="checkbox-wrapper">
+                    <div className="event-create-checkbox-wrapper">
                         <input
                             id="visible-checkbox"
                             type="checkbox"
@@ -181,7 +208,56 @@ export default function CreateEvent() {
                         onChange={(e) => setBannerFile(e.target.files[0])}
                     />
 
-                    <button type="submit" className="submit-button">
+                    {/* Preferencje pojazdów – w tym samym stylu co w CreateGroup, ale z klasami event-create-... */}
+                    <div className="event-create-vehicle-preferences">
+            <span className="event-create-vehicle-preferences-label">
+              Preferencje pojazdów:
+            </span>
+                        <div className="event-create-vehicle-icons-row">
+
+                            {/* Samochód */}
+                            <div
+                                className={`event-create-vehicle-icon ${
+                                    vehiclePreferences.car ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('car')}
+                            >
+                                <FaCar className="event-create-pref-icon" />
+                            </div>
+
+                            {/* Ciężarówka */}
+                            <div
+                                className={`event-create-vehicle-icon ${
+                                    vehiclePreferences.truck ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('truck')}
+                            >
+                                <FaTruck className="event-create-pref-icon" />
+                            </div>
+
+                            {/* Motocykl */}
+                            <div
+                                className={`event-create-vehicle-icon ${
+                                    vehiclePreferences.motorcycle ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('motorcycle')}
+                            >
+                                <FaMotorcycle className="event-create-pref-icon" />
+                            </div>
+
+                            {/* Rower */}
+                            <div
+                                className={`event-create-vehicle-icon ${
+                                    vehiclePreferences.bike ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('bike')}
+                            >
+                                <FaBicycle className="event-create-pref-icon" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" className="event-create-submit-button">
                         Utwórz wydarzenie
                     </button>
                 </form>

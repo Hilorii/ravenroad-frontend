@@ -1,4 +1,4 @@
-.create-event-container {
+.event-create-container {
     max-width: 600px;
     margin: 80px auto;
     background-color: rgba(255, 255, 255, 0.1);
@@ -8,27 +8,27 @@
     font-family: var(--font-family);
 }
 
-.create-event-title {
+.event-create-title {
     text-align: center;
     color: #fff;
     font-size: 2rem;
     margin-bottom: 1.5rem;
 }
 
-.create-event-error {
+.event-create-error {
     text-align: center;
     color: #ff4d4d;
     font-weight: bold;
     margin-bottom: 1rem;
 }
 
-.create-event-form {
+.event-create-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.create-event-form label {
+.event-create-form label {
     color: #fff;
     font-weight: 500;
 }
@@ -38,10 +38,10 @@
    Pola tekstowe / textarea / date / time
    =======================
 */
-.create-event-form input[type="text"],
-.create-event-form input[type="date"],
-.create-event-form input[type="time"],
-.create-event-form textarea {
+.event-create-form input[type="text"],
+.event-create-form input[type="date"],
+.event-create-form input[type="time"],
+.event-create-form textarea {
     padding: 0.5rem;
     border-radius: 4px;
     border: none;
@@ -52,22 +52,21 @@
     transition: background 0.3s ease;
 }
 
-.create-event-form input[type="text"]:hover,
-.create-event-form input[type="date"]:hover,
-.create-event-form input[type="time"]:hover,
-.create-event-form textarea:hover {
+.event-create-form input[type="text"]:hover,
+.event-create-form input[type="date"]:hover,
+.event-create-form input[type="time"]:hover,
+.event-create-form textarea:hover {
     background: rgba(255, 255, 255, 0.4);
 }
 
-.create-event-form input[type="text"]:focus,
-.create-event-form input[type="date"]:focus,
-.create-event-form input[type="time"]:focus,
-.create-event-form textarea:focus {
+.event-create-form input[type="text"]:focus,
+.event-create-form input[type="date"]:focus,
+.event-create-form input[type="time"]:focus,
+.event-create-form textarea:focus {
     background: rgba(255, 255, 255, 0.71);
 }
 
-/* Bez resize w poziomie */
-.create-event-form textarea {
+.event-create-form textarea {
     resize: vertical;
 }
 
@@ -76,7 +75,7 @@
    Pole pliku
    =======================
 */
-.create-event-form input[type="file"] {
+.event-create-form input[type="file"] {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
@@ -87,7 +86,7 @@
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
-.create-event-form input[type="file"]:hover {
+.event-create-form input[type="file"]:hover {
     background: rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 6px #fff;
     transform: scale(1.02);
@@ -98,7 +97,7 @@
    Checkboxy customowe
    =======================
 */
-.checkbox-wrapper {
+.event-create-checkbox-wrapper {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -109,14 +108,14 @@
 }
 
 /* Ukrycie natywnego checkboxa */
-.checkbox-wrapper input[type="checkbox"] {
+.event-create-checkbox-wrapper input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
 
 /* Label i "opakowanie" checkmarka */
-.checkbox-wrapper label {
+.event-create-checkbox-wrapper label {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -125,7 +124,7 @@
 }
 
 /* Kwadracik checkboxa */
-.checkbox-wrapper label::before {
+.event-create-checkbox-wrapper label::before {
     content: "";
     display: inline-block;
     width: 20px;
@@ -137,7 +136,7 @@
 }
 
 /* Ptaszek wewnątrz checkboxa (domyślnie niewidoczny) */
-.checkbox-wrapper label::after {
+.event-create-checkbox-wrapper label::after {
     content: "";
     display: inline-block;
     width: 6px;
@@ -153,18 +152,70 @@
 }
 
 /* Efekt hover na checkboxie */
-.checkbox-wrapper:hover label::before {
+.event-create-checkbox-wrapper:hover label::before {
     box-shadow: 0 0 8px #fff;
 }
 
 /* Gdy checkbox jest zaznaczony – wypełnij tło i pokaż ptaszek */
-.checkbox-wrapper input[type="checkbox"]:checked + label::before {
+.event-create-checkbox-wrapper input[type="checkbox"]:checked + label::before {
     background-color: #AE67FA;
     border-color: #AE67FA;
 }
 
-.checkbox-wrapper input[type="checkbox"]:checked + label::after {
+.event-create-checkbox-wrapper input[type="checkbox"]:checked + label::after {
     opacity: 1;
+}
+
+/*
+   =======================
+   Preferencje pojazdów
+   =======================
+*/
+.event-create-vehicle-preferences {
+    margin-top: 1rem;
+}
+
+.event-create-vehicle-preferences-label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.event-create-vehicle-icons-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.event-create-vehicle-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.event-create-vehicle-icon:hover {
+    border-color: #fff;
+    box-shadow: 0 0 6px #fff;
+    transform: scale(1.05);
+}
+
+.event-create-vehicle-icon.selected {
+    background-color: #AE67FA;
+    border-color: #AE67FA;
+    box-shadow: 0 0 8px #AE67FA;
+}
+
+.event-create-pref-icon {
+    color: #fff;
+    scale: 1.4;
 }
 
 /*
@@ -172,7 +223,7 @@
    Przycisk zapisu
    =======================
 */
-.submit-button {
+.event-create-submit-button {
     font-family: var(--font-family);
     background-color: #AE67FA;
     color: #fff;
@@ -184,7 +235,7 @@
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.submit-button:hover {
+.event-create-submit-button:hover {
     transform: scale(1.05);
     background-color: #9556d3; /* nieco ciemniejszy fiolet */
 }
@@ -195,23 +246,27 @@
    =======================
 */
 @media (max-width: 768px) {
-    .create-event-container {
+    .event-create-container {
         margin: 40px auto;
         width: 90%;
         padding: 1rem;
     }
 
-    .create-event-title {
+    .event-create-title {
         font-size: 1.5rem;
     }
 
-    .create-event-form {
+    .event-create-form {
         gap: 0.75rem;
     }
 
-    .submit-button {
+    .event-create-submit-button {
         width: 100%;
         padding: 0.6rem;
         font-size: 1rem;
+    }
+
+    .event-create-vehicle-icons-row {
+        gap: 0.75rem;
     }
 }

@@ -4,6 +4,13 @@ import Navbar from '../../components/navbar/Navbar';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
 import BackButton from '../../components/backBt/BackButton';
+import {
+    FaCar,
+    FaTruck,
+    FaMotorcycle,
+    FaBicycle
+} from 'react-icons/fa';  // Ikony do preferencji pojazdów
+
 import './EditEvent.css';
 
 export default function EditEvent() {
@@ -32,6 +39,22 @@ export default function EditEvent() {
     const [bannerFile, setBannerFile] = useState(null);
     const [oldBanner, setOldBanner] = useState(null);
 
+    // Preferencje pojazdów – stan lokalny
+    const [vehiclePreferences, setVehiclePreferences] = useState({
+        car: false,
+        truck: false,
+        motorcycle: false,
+        bike: false
+    });
+
+    // Funkcja do przełączania stanu preferencji pojazdu
+    const togglePreference = (prefKey) => {
+        setVehiclePreferences((prev) => ({
+            ...prev,
+            [prefKey]: !prev[prefKey],
+        }));
+    };
+
     useEffect(() => {
         fetchEventDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,12 +77,11 @@ export default function EditEvent() {
             const data = await response.json();
             setEvent(data);
 
-            // Przykładowo, jeśli backend zwraca klucze:
-            // name, description, start_date, start_time, end_date, end_time, private, visible, image, banner
+            // Ustaw pola formularza
             setName(data.name || '');
             setDescription(data.description || '');
 
-            // Formatowanie daty/godziny jeśli trzeba (np. "2023-10-05T22:00:00.000Z" -> "2023-10-05")
+            // Formatowanie daty/godziny
             const start_date_formatted = data.start_date
                 ? data.start_date.substring(0, 10)
                 : '';
@@ -79,17 +101,24 @@ export default function EditEvent() {
             setEndDate(end_date_formatted);
             setEndTime(end_time_formatted);
 
-            // Pola prywatne i widoczne
             setIsPrivate(!!data.private);
             setIsVisible(!!data.visible);
 
-            // Zapamiętujemy stare pliki
             if (data.image) {
                 setOldImage(data.image);
             }
             if (data.banner) {
                 setOldBanner(data.banner);
             }
+
+            // Inicjalizacja preferencji pojazdów
+            setVehiclePreferences({
+                car: !!data.car,
+                truck: !!data.truck,
+                motorcycle: !!data.motorcycle,
+                bike: !!data.bike
+            });
+
         } catch (err) {
             setError(err.message);
         }
@@ -102,7 +131,7 @@ export default function EditEvent() {
             const token = localStorage.getItem('token');
             const formData = new FormData();
 
-            // Uzupełniamy FormData zgodnie z tym, co przyjmuje Twój endpoint PUT
+            // Uzupełniamy FormData
             formData.append('name', name);
             formData.append('description', description);
 
@@ -129,12 +158,17 @@ export default function EditEvent() {
                 formData.append('oldBanner', oldBanner);
             }
 
+            // Preferencje pojazdów
+            formData.append('car', vehiclePreferences.car ? 1 : 0);
+            formData.append('truck', vehiclePreferences.truck ? 1 : 0);
+            formData.append('motorcycle', vehiclePreferences.motorcycle ? 1 : 0);
+            formData.append('bike', vehiclePreferences.bike ? 1 : 0);
+
             const response = await fetch(`http://localhost:3000/events/${id}`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`
-                    // UWAGA: NIE ustawiamy tu Content-Type na multipart/form-data.
-                    // fetch + FormData zrobi to automatycznie.
+                    // Nie ustawiamy tu "Content-Type", bo używamy FormData
                 },
                 body: formData
             });
@@ -144,7 +178,8 @@ export default function EditEvent() {
                 throw new Error(errData.message || 'Błąd podczas aktualizacji wydarzenia');
             }
 
-            navigate(`/events}`);
+            // Po udanej aktualizacji wracamy np. na listę wydarzeń
+            navigate(`/events`);
         } catch (err) {
             setError(err.message);
         }
@@ -181,6 +216,7 @@ export default function EditEvent() {
             <AnimatedBackground />
             <Navbar />
             <BackButton />
+
             <div className="edit-event-container">
                 <h2 className="edit-event-title">Edytuj wydarzenie</h2>
                 <form onSubmit={handleSubmit} className="edit-event-form">
@@ -269,7 +305,56 @@ export default function EditEvent() {
                         onChange={(e) => setBannerFile(e.target.files[0])}
                     />
 
-                    <button type="submit" className="submit-button">
+                    {/* Preferencje pojazdów */}
+                    <div className="edit-event-vehicle-preferences">
+                        <span className="edit-event-vehicle-preferences-label">
+                            Preferencje pojazdów:
+                        </span>
+                        <div className="edit-event-vehicle-icons-row">
+
+                            {/* Samochód */}
+                            <div
+                                className={`edit-event-vehicle-icon ${
+                                    vehiclePreferences.car ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('car')}
+                            >
+                                <FaCar className="edit-event-pref-icon" />
+                            </div>
+
+                            {/* Ciężarówka */}
+                            <div
+                                className={`edit-event-vehicle-icon ${
+                                    vehiclePreferences.truck ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('truck')}
+                            >
+                                <FaTruck className="edit-event-pref-icon" />
+                            </div>
+
+                            {/* Motocykl */}
+                            <div
+                                className={`edit-event-vehicle-icon ${
+                                    vehiclePreferences.motorcycle ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('motorcycle')}
+                            >
+                                <FaMotorcycle className="edit-event-pref-icon" />
+                            </div>
+
+                            {/* Rower */}
+                            <div
+                                className={`edit-event-vehicle-icon ${
+                                    vehiclePreferences.bike ? 'selected' : ''
+                                }`}
+                                onClick={() => togglePreference('bike')}
+                            >
+                                <FaBicycle className="edit-event-pref-icon" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" className="edit-event-submit-button">
                         Zapisz zmiany
                     </button>
                 </form>
