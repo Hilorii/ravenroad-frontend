@@ -20,17 +20,31 @@ export default function Events() {
     const { user } = useUser();
     const navigate = useNavigate();
 
-    // 1. Tablice eventów
-    const [userEvents, setUserEvents] = useState([]);
-    const [proposedEvents, setProposedEvents] = useState([]);
-    const [myActiveEvents, setMyActiveEvents] = useState([]);
-    const [myEndedEvents, setMyEndedEvents] = useState([]);
+    // --------------------------
+    // Tablice eventów
+    // --------------------------
+    const [userEvents, setUserEvents] = useState([]);       // Wydarzenia użytkownika
+    const [proposedEvents, setProposedEvents] = useState([]); // Proponowane wydarzenia
+    const [myActiveEvents, setMyActiveEvents] = useState([]);  // Aktywne wydarzenia
+    const [myEndedEvents, setMyEndedEvents] = useState([]);    // Zakończone wydarzenia
 
-    // 2. Błędy / Wyszukiwanie
+    // --------------------------
+    // Błędy / Wyszukiwanie
+    // --------------------------
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [searchError, setSearchError] = useState(null);
+
+    // --------------------------
+    // Modal: USUWANIE wydarzenia
+    // --------------------------
+    const [eventIdToDelete, setEventIdToDelete] = useState(null);
+
+    // --------------------------
+    // Modal: OPUSZCZANIE wydarzenia
+    // --------------------------
+    const [eventIdToLeave, setEventIdToLeave] = useState(null);
 
     // --------------------------------------------------
     //  Pomocnicze funkcje do sprawdzania stanu wydarzeń
@@ -51,12 +65,20 @@ export default function Events() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (!response.ok) {
+                // Jeśli brak eventów (404), ustawiamy pustą listę
+                if (response.status === 404) {
+                    setUserEvents([]);
+                    return;
+                }
                 throw new Error('Błąd podczas pobierania Twoich eventów.');
             }
             const data = await response.json();
             setUserEvents(data);
         } catch (err) {
             setError(err.message);
+            // Jeżeli wystąpił błąd inny niż 404 (np. 500),
+            // zachowamy ewentualnie starą tablicę lub ustalimy pustą:
+            setUserEvents([]);
         }
     }, []);
 
@@ -67,12 +89,17 @@ export default function Events() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (!response.ok) {
+                if (response.status === 404) {
+                    setProposedEvents([]);
+                    return;
+                }
                 throw new Error('Błąd podczas pobierania proponowanych eventów.');
             }
             const data = await response.json();
             setProposedEvents(data);
         } catch (err) {
             setError(err.message);
+            setProposedEvents([]);
         }
     }, []);
 
@@ -83,12 +110,17 @@ export default function Events() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (!response.ok) {
+                if (response.status === 404) {
+                    setMyActiveEvents([]);
+                    return;
+                }
                 throw new Error('Błąd podczas pobierania aktywnych eventów.');
             }
             const data = await response.json();
             setMyActiveEvents(data);
         } catch (err) {
             setError(err.message);
+            setMyActiveEvents([]);
         }
     }, []);
 
@@ -99,12 +131,17 @@ export default function Events() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (!response.ok) {
+                if (response.status === 404) {
+                    setMyEndedEvents([]);
+                    return;
+                }
                 throw new Error('Błąd podczas pobierania zakończonych eventów.');
             }
             const data = await response.json();
             setMyEndedEvents(data);
         } catch (err) {
             setError(err.message);
+            setMyEndedEvents([]);
         }
     }, []);
 
@@ -116,7 +153,12 @@ export default function Events() {
         fetchProposedEvents();
         fetchActiveEvents();
         fetchInactiveEvents();
-    }, [fetchUserEvents, fetchProposedEvents, fetchActiveEvents, fetchInactiveEvents]);
+    }, [
+        fetchUserEvents,
+        fetchProposedEvents,
+        fetchActiveEvents,
+        fetchInactiveEvents
+    ]);
 
     // ------------------------------
     //  Resetowanie błędów
@@ -136,7 +178,7 @@ export default function Events() {
     }, [searchError]);
 
     // ---------------------------------------------------------
-    //  Akcje: edycja, detale, dołącz, opuść, usuń
+    //  Akcje: edycja, detale, dołącz, potwierdzanie modali itd.
     // ---------------------------------------------------------
     const handleEditEvent = (eventId) => {
         navigate(`/editEvent/${eventId}`);
@@ -146,10 +188,18 @@ export default function Events() {
         navigate(`/eventDetails/${eventId}`);
     };
 
-    const handleLeaveEvent = async (eventId) => {
+    // --------------------------------------
+    //  OPUSZCZANIE WYDARZENIA z potwierdzeniem
+    // --------------------------------------
+    const confirmLeaveEvent = (eventId) => {
+        setEventIdToLeave(eventId);
+    };
+
+    const handleConfirmLeaveEvent = async () => {
+        if (!eventIdToLeave) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/leaveEvent/${eventId}`, {
+            const response = await fetch(`http://localhost:3000/leaveEvent/${eventIdToLeave}`, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -159,15 +209,25 @@ export default function Events() {
                 throw new Error(data.error || 'Błąd podczas opuszczania wydarzenia.');
             }
 
-            // Po opuszczeniu - odśwież
+            // Po opuszczeniu odśwież
             fetchUserEvents();
             fetchActiveEvents();
             fetchInactiveEvents();
         } catch (err) {
             setError(err.message);
+        } finally {
+            // zamykamy modal
+            setEventIdToLeave(null);
         }
     };
 
+    const handleCancelLeaveEvent = () => {
+        setEventIdToLeave(null);
+    };
+
+    // ------------
+    //  DOŁĄCZANIE
+    // ------------
     const handleJoinEvent = async (eventId) => {
         try {
             const token = localStorage.getItem('token');
@@ -191,10 +251,18 @@ export default function Events() {
         }
     };
 
-    const handleDeleteEvent = async (eventId) => {
+    // ---------------------------------------------
+    //  USUWANIE WYDARZENIA z potwierdzeniem (modal)
+    // ---------------------------------------------
+    const confirmDeleteEvent = (eventId) => {
+        setEventIdToDelete(eventId);
+    };
+
+    const handleConfirmDeleteEvent = async () => {
+        if (!eventIdToDelete) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/deleteEvent/${eventId}`, {
+            const response = await fetch(`http://localhost:3000/deleteEvent/${eventIdToDelete}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -210,7 +278,13 @@ export default function Events() {
             fetchInactiveEvents();
         } catch (err) {
             setError(err.message);
+        } finally {
+            setEventIdToDelete(null);
         }
+    };
+
+    const handleCancelDeleteEvent = () => {
+        setEventIdToDelete(null);
     };
 
     // ----------------------------------
@@ -348,88 +422,87 @@ export default function Events() {
                 <div className="events-box">
                     <h2 className="events-box-title">TWOJE EVENTY</h2>
                     <div className="events-list">
-                        {error && <p className="error-message">{error}</p>}
+                        {userEvents.length === 0 ? (
+                            <p className="error-message">Brak Twoich eventów.</p>
+                        ) : (
+                            userEvents.map((event) => {
+                                const active = isActiveEvent(event.id);
+                                const ended = isEndedEvent(event.id);
 
-                        {userEvents.map((event) => {
-                            const active = isActiveEvent(event.id);
-                            const ended = isEndedEvent(event.id);
+                                return (
+                                    <div key={event.id} className="event-item">
+                                        {/* Korona, jeśli user jest twórcą */}
+                                        {user && event.created_by === user.id && (
+                                            <FaCrown className="event-crown" />
+                                        )}
 
-                            return (
-                                <div key={event.id} className="event-item">
-                                    {/* Korona, jeśli user jest twórcą */}
-                                    {user && event.created_by === user.id && (
-                                        <FaCrown className="event-crown" />
-                                    )}
+                                        <img
+                                            src={`http://localhost:5000/uploads/${event.image}`}
+                                            alt={event.name}
+                                            className="event-avatar"
+                                        />
+                                        <span className="event-name">{event.name}</span>
 
-                                    <img
-                                        src={`http://localhost:5000/uploads/${event.image}`}
-                                        alt={event.name}
-                                        className="event-avatar"
-                                    />
-                                    <span className="event-name">{event.name}</span>
-
-                                    <div className="event-actions">
-                                        {/*
-                                          1) Jeśli event jest aktywny -> tylko detale
-                                          2) Jeśli event jest zakończony -> detale + usuń
-                                          3) W innym przypadku -> stare ikony (np. edytuj, usuń, detale, opuść)
-                                        */}
-                                        {active ? (
-                                            <>
-                                                {/* Aktywny: tylko detale */}
-                                                <FaInfoCircle
-                                                    className="event-icon"
-                                                    title="Detale wydarzenia"
-                                                    onClick={() => handleViewDetails(event.id)}
-                                                />
-                                            </>
-                                        ) : ended ? (
-                                            <>
-                                                {/* Zakończony: detale + usuń */}
-                                                <FaInfoCircle
-                                                    className="event-icon"
-                                                    title="Detale wydarzenia"
-                                                    onClick={() => handleViewDetails(event.id)}
-                                                />
-                                                <FaTrash
-                                                    className="event-icon"
-                                                    title="Usuń wydarzenie"
-                                                    onClick={() => handleDeleteEvent(event.id)}
-                                                />
-                                            </>
-                                        ) : (
-                                            <>
-                                                {/* Ani aktywny, ani zakończony: stary zestaw ikon */}
-                                                {user && event.created_by === user.id && (
-                                                    <>
-                                                        <FaEdit
-                                                            className="event-icon"
-                                                            title="Edytuj wydarzenie"
-                                                            onClick={() => handleEditEvent(event.id)}
-                                                        />
+                                        <div className="event-actions">
+                                            {active ? (
+                                                <>
+                                                    {/* Aktywny: tylko detale */}
+                                                    <FaInfoCircle
+                                                        className="event-icon"
+                                                        title="Detale wydarzenia"
+                                                        onClick={() => handleViewDetails(event.id)}
+                                                    />
+                                                </>
+                                            ) : ended ? (
+                                                <>
+                                                    {/* Zakończony: detale + usuń (jeśli user jest twórcą) */}
+                                                    <FaInfoCircle
+                                                        className="event-icon"
+                                                        title="Detale wydarzenia"
+                                                        onClick={() => handleViewDetails(event.id)}
+                                                    />
+                                                    {user && event.created_by === user.id && (
                                                         <FaTrash
                                                             className="event-icon"
                                                             title="Usuń wydarzenie"
-                                                            onClick={() => handleDeleteEvent(event.id)}
+                                                            onClick={() => confirmDeleteEvent(event.id)}
                                                         />
-                                                    </>
-                                                )}
-                                                <FaInfoCircle
-                                                    className="event-icon"
-                                                    title="Detale wydarzenia"
-                                                    onClick={() => handleViewDetails(event.id)}
-                                                />
-                                                <FaSignOutAlt
-                                                    className="event-icon"
-                                                    title="Opuść wydarzenie"
-                                                    onClick={() => handleLeaveEvent(event.id)}
-                                                />
-                                            </>
-                                        )}
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {/* Ani aktywny, ani zakończony */}
+                                                    {user && event.created_by === user.id && (
+                                                        <>
+                                                            <FaEdit
+                                                                className="event-icon"
+                                                                title="Edytuj wydarzenie"
+                                                                onClick={() => handleEditEvent(event.id)}
+                                                            />
+                                                            <FaTrash
+                                                                className="event-icon"
+                                                                title="Usuń wydarzenie"
+                                                                onClick={() => confirmDeleteEvent(event.id)}
+                                                            />
+                                                        </>
+                                                    )}
+                                                    <FaInfoCircle
+                                                        className="event-icon"
+                                                        title="Detale wydarzenia"
+                                                        onClick={() => handleViewDetails(event.id)}
+                                                    />
+                                                    <FaSignOutAlt
+                                                        className="event-icon"
+                                                        title="Opuść wydarzenie"
+                                                        onClick={() => confirmLeaveEvent(event.id)}
+                                                    />
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })
+                        )}
                     </div>
                 </div>
 
@@ -437,29 +510,32 @@ export default function Events() {
                 <div className="events-box">
                     <h2 className="events-box-title">PROPONOWANE EVENTY</h2>
                     <div className="events-list">
-                        {error && <p className="error-message">{error}</p>}
-                        {proposedEvents.map((event) => (
-                            <div key={event.id} className="event-item">
-                                <img
-                                    src={`http://localhost:5000/uploads/${event.image}`}
-                                    alt={event.name}
-                                    className="event-avatar"
-                                />
-                                <span className="event-name">{event.name}</span>
-                                <div className="event-actions">
-                                    <FaInfoCircle
-                                        className="event-icon"
-                                        title="Detale wydarzenia"
-                                        onClick={() => handleViewDetails(event.id)}
+                        {proposedEvents.length === 0 ? (
+                            <p className="error-message">Brak proponowanych eventów.</p>
+                        ) : (
+                            proposedEvents.map((event) => (
+                                <div key={event.id} className="event-item">
+                                    <img
+                                        src={`http://localhost:5000/uploads/${event.image}`}
+                                        alt={event.name}
+                                        className="event-avatar"
                                     />
-                                    <FaPlus
-                                        className="event-icon"
-                                        title="Dołącz do wydarzenia"
-                                        onClick={() => handleJoinEvent(event.id)}
-                                    />
+                                    <span className="event-name">{event.name}</span>
+                                    <div className="event-actions">
+                                        <FaInfoCircle
+                                            className="event-icon"
+                                            title="Detale wydarzenia"
+                                            onClick={() => handleViewDetails(event.id)}
+                                        />
+                                        <FaPlus
+                                            className="event-icon"
+                                            title="Dołącz do wydarzenia"
+                                            onClick={() => handleJoinEvent(event.id)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
@@ -472,27 +548,27 @@ export default function Events() {
                         TWOJE AKTYWNE EVENTY
                     </h2>
                     <div className="events-list">
-                        {myActiveEvents.map((event) => (
-                            <div key={event.id} className="event-item">
-                                {/* Niezależnie od tego, czy user jest twórcą */}
-                                <img
-                                    src={`http://localhost:5000/uploads/${event.image}`}
-                                    alt={event.name}
-                                    className="event-avatar"
-                                />
-                                <span className="event-name">{event.name}</span>
-                                {/* Tylko ikona detali */}
-                                <div className="event-actions">
-                                    <FaInfoCircle
-                                        className="event-icon"
-                                        title="Detale wydarzenia"
-                                        onClick={() => handleViewDetails(event.id)}
-                                    />
-                                </div>
-                            </div>
-                        ))}
-                        {myActiveEvents.length === 0 && (
+                        {myActiveEvents.length === 0 ? (
                             <p className="error-message">Brak aktywnych eventów.</p>
+                        ) : (
+                            myActiveEvents.map((event) => (
+                                <div key={event.id} className="event-item">
+                                    <img
+                                        src={`http://localhost:5000/uploads/${event.image}`}
+                                        alt={event.name}
+                                        className="event-avatar"
+                                    />
+                                    <span className="event-name">{event.name}</span>
+                                    {/* Tylko detale */}
+                                    <div className="event-actions">
+                                        <FaInfoCircle
+                                            className="event-icon"
+                                            title="Detale wydarzenia"
+                                            onClick={() => handleViewDetails(event.id)}
+                                        />
+                                    </div>
+                                </div>
+                            ))
                         )}
                     </div>
                 </div>
@@ -503,36 +579,85 @@ export default function Events() {
                         TWOJE ZAKOŃCZONE EVENTY
                     </h2>
                     <div className="events-list">
-                        {myEndedEvents.map((event) => (
-                            <div key={event.id} className="event-item">
-                                <img
-                                    src={`http://localhost:5000/uploads/${event.image}`}
-                                    alt={event.name}
-                                    className="event-avatar"
-                                />
-                                <span className="event-name">{event.name}</span>
-
-                                {/* Tylko detale + usuń */}
-                                <div className="event-actions">
-                                    <FaInfoCircle
-                                        className="event-icon"
-                                        title="Detale wydarzenia"
-                                        onClick={() => handleViewDetails(event.id)}
-                                    />
-                                    <FaTrash
-                                        className="event-icon"
-                                        title="Usuń wydarzenie"
-                                        onClick={() => handleDeleteEvent(event.id)}
-                                    />
-                                </div>
-                            </div>
-                        ))}
-                        {myEndedEvents.length === 0 && (
+                        {myEndedEvents.length === 0 ? (
                             <p className="error-message">Brak zakończonych eventów.</p>
+                        ) : (
+                            myEndedEvents.map((event) => (
+                                <div key={event.id} className="event-item">
+                                    <img
+                                        src={`http://localhost:5000/uploads/${event.image}`}
+                                        alt={event.name}
+                                        className="event-avatar"
+                                    />
+                                    <span className="event-name">{event.name}</span>
+
+                                    {/* Tylko detale + (opcjonalnie usuń jeśli user jest twórcą) */}
+                                    <div className="event-actions">
+                                        <FaInfoCircle
+                                            className="event-icon"
+                                            title="Detale wydarzenia"
+                                            onClick={() => handleViewDetails(event.id)}
+                                        />
+                                        {user && event.created_by === user.id && (
+                                            <FaTrash
+                                                className="event-icon"
+                                                title="Usuń wydarzenie"
+                                                onClick={() => confirmDeleteEvent(event.id)}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+                            ))
                         )}
                     </div>
                 </div>
             </div>
+
+            {/* Modal potwierdzenia USUNIĘCIA wydarzenia */}
+            {eventIdToDelete && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2>Czy na pewno chcesz usunąć to wydarzenie?</h2>
+                        <div className="modal-buttons">
+                            <button
+                                className="confirm-button"
+                                onClick={handleConfirmDeleteEvent}
+                            >
+                                Tak, usuń
+                            </button>
+                            <button
+                                className="cancel-button"
+                                onClick={handleCancelDeleteEvent}
+                            >
+                                Anuluj
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal potwierdzenia OPUSZCZENIA wydarzenia */}
+            {eventIdToLeave && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2>Czy na pewno chcesz opuścić to wydarzenie?</h2>
+                        <div className="modal-buttons">
+                            <button
+                                className="confirm-button"
+                                onClick={handleConfirmLeaveEvent}
+                            >
+                                Tak, opuść
+                            </button>
+                            <button
+                                className="cancel-button"
+                                onClick={handleCancelLeaveEvent}
+                            >
+                                Anuluj
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <SquaresEvent />
             <Footer />
