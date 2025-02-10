@@ -196,7 +196,7 @@
     margin-top: 2rem;
 }
 
-/* Error message styling (w użyciu do wyszukiwarki) */
+/* Error message styling (w użyciu do wyszukiwarki grup) */
 .error-message {
     color: red;
     font-weight: bold;
@@ -231,7 +231,7 @@
     }
 }
 
-/* Styles for Search Container */
+/* Styles for Search Container (wyszukiwanie grup) */
 .search-container {
     display: flex;
     justify-content: center;
@@ -324,6 +324,7 @@
     display: flex;
     justify-content: space-around;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
 .confirm-button,
@@ -351,4 +352,53 @@
 }
 .cancel-button:hover {
     background-color: #999;
+}
+
+/* Specyficzne style dla modala opuszczania przez właściciela */
+.owner-leave-modal {
+    /* Możesz dopisać dodatkowe style, jeśli chcesz */
+}
+
+.member-search-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-family: var(--font-family);
+}
+
+.owner-members-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.owner-member-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+
+.owner-member-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.no-members-found {
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    font-family: var(--font-family);
+}
+
+.group-ownership-p{
+    font-family: var(--font-family);
+    margin: 1rem;
 }

@@ -423,7 +423,7 @@ export default function Events() {
                     <h2 className="events-box-title">TWOJE EVENTY</h2>
                     <div className="events-list">
                         {userEvents.length === 0 ? (
-                            <p className="error-message">Brak Twoich eventów.</p>
+                            <p className="no-groups-message">Brak Twoich eventów.</p>
                         ) : (
                             userEvents.map((event) => {
                                 const active = isActiveEvent(event.id);
@@ -511,7 +511,7 @@ export default function Events() {
                     <h2 className="events-box-title">PROPONOWANE EVENTY</h2>
                     <div className="events-list">
                         {proposedEvents.length === 0 ? (
-                            <p className="error-message">Brak proponowanych eventów.</p>
+                            <p className="no-groups-message">Brak proponowanych eventów.</p>
                         ) : (
                             proposedEvents.map((event) => (
                                 <div key={event.id} className="event-item">
@@ -549,7 +549,7 @@ export default function Events() {
                     </h2>
                     <div className="events-list">
                         {myActiveEvents.length === 0 ? (
-                            <p className="error-message">Brak aktywnych eventów.</p>
+                            <p className="no-groups-message">Brak aktywnych eventów.</p>
                         ) : (
                             myActiveEvents.map((event) => (
                                 <div key={event.id} className="event-item">
@@ -580,7 +580,7 @@ export default function Events() {
                     </h2>
                     <div className="events-list">
                         {myEndedEvents.length === 0 ? (
-                            <p className="error-message">Brak zakończonych eventów.</p>
+                            <p className="no-groups-message">Brak zakończonych eventów.</p>
                         ) : (
                             myEndedEvents.map((event) => (
                                 <div key={event.id} className="event-item">
