@@ -76,8 +76,6 @@ export default function Events() {
             setUserEvents(data);
         } catch (err) {
             setError(err.message);
-            // Jeżeli wystąpił błąd inny niż 404 (np. 500),
-            // zachowamy ewentualnie starą tablicę lub ustalimy pustą:
             setUserEvents([]);
         }
     }, []);
@@ -491,11 +489,15 @@ export default function Events() {
                                                         title="Detale wydarzenia"
                                                         onClick={() => handleViewDetails(event.id)}
                                                     />
-                                                    <FaSignOutAlt
-                                                        className="event-icon"
-                                                        title="Opuść wydarzenie"
-                                                        onClick={() => confirmLeaveEvent(event.id)}
-                                                    />
+
+                                                    {/* Ikona opuszczenia TYLKO jeśli nie jesteś właścicielem */}
+                                                    {user && event.created_by !== user.id && (
+                                                        <FaSignOutAlt
+                                                            className="event-icon"
+                                                            title="Opuść wydarzenie"
+                                                            onClick={() => confirmLeaveEvent(event.id)}
+                                                        />
+                                                    )}
                                                 </>
                                             )}
                                         </div>
@@ -584,25 +586,36 @@ export default function Events() {
                         ) : (
                             myEndedEvents.map((event) => (
                                 <div key={event.id} className="event-item">
+                                    {/* Korona, jeśli user jest właścicielem */}
+                                    {user && event.created_by === user.id && (
+                                        <FaCrown className="event-crown" />
+                                    )}
+
                                     <img
                                         src={`http://localhost:5000/uploads/${event.image}`}
                                         alt={event.name}
                                         className="event-avatar"
                                     />
                                     <span className="event-name">{event.name}</span>
-
-                                    {/* Tylko detale + (opcjonalnie usuń jeśli user jest twórcą) */}
                                     <div className="event-actions">
+                                        {/* Detale zawsze */}
                                         <FaInfoCircle
                                             className="event-icon"
                                             title="Detale wydarzenia"
                                             onClick={() => handleViewDetails(event.id)}
                                         />
-                                        {user && event.created_by === user.id && (
+                                        {/* Jeśli jestem właścicielem => usuń, w przeciwnym razie => opuść */}
+                                        {user && event.created_by === user.id ? (
                                             <FaTrash
                                                 className="event-icon"
                                                 title="Usuń wydarzenie"
                                                 onClick={() => confirmDeleteEvent(event.id)}
+                                            />
+                                        ) : (
+                                            <FaSignOutAlt
+                                                className="event-icon"
+                                                title="Opuść wydarzenie"
+                                                onClick={() => confirmLeaveEvent(event.id)}
                                             />
                                         )}
                                     </div>
