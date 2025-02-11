@@ -5,7 +5,8 @@
 
 import Navbar from '../../components/navbar/Navbar';
 import { Footer } from '../../containers/index';
-import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground'
+import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
+import ContactForm from '../../components/contactForm/ContactFrom';
 
 //POPRAW Z STAREGO TLUMACZENIA
 // import { useTranslation } from 'react-i18next'; // Import i18n
@@ -71,6 +72,7 @@ const Contact = () => {
                     </div>
                 </div>
             </div>
+            <ContactForm />
             <Footer/>
         </div>
     );

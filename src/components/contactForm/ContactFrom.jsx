@@ -1,103 +1,138 @@
-//SIĘ MOŻE PRZYDA NA PRZYSZŁOŚĆ <ContactForm> ZASTĄPI PRZYCISK "NAPISZ" W Ad.jsx. ale trzebaby dodać logike wysyłania maila
+import React, { useState } from "react";
+import "./ContactForm.css";
 
-import React, { useState } from 'react';
-import './contactForm.css';
-
-const ContactForm = () => {
-    const [showForm, setShowForm] = useState(false);
+function ContactForm() {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        message: '',
+        name: "",
+        phone: "",
+        email: "",
+        subject: "",
+        message: ""
     });
 
+    // Obsługa zmian w polach formularza
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    // Obsługa wysyłania formularza
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Tutaj można obsłużyć logikę wysyłania e-maila np. przez serwer backendowy lub zewnętrzne API.
-        alert('Wiadomość została wysłana!');
-        setShowForm(false);
+
+        try {
+            // Wywołujemy nasz endpoint (np. http://localhost:3001/send-email)
+            const response = await fetch("http://localhost:3001/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert("Wiadomość została pomyślnie wysłana!");
+                // Reset formularza
+                setFormData({
+                    name: "",
+                    phone: "",
+                    email: "",
+                    subject: "",
+                    message: ""
+                });
+            } else {
+                alert("Błąd przy wysyłaniu wiadomości. Spróbuj ponownie.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Błąd przy wysyłaniu wiadomości. Spróbuj ponownie.");
+        }
     };
 
     return (
-        <div className="contact-form-container">
-            <button className="open-form-button" onClick={() => setShowForm(true)}>
-                NAPISZ
-            </button>
+        <section className="contact-section">
+            {/* Lewa kolumna z tekstem i obrazkiem */}
+            <div className="contact-left">
+                <h1 className="contact-heading">
+                    The quality <span className="highlight">you expect</span>, <br />
+                    the service <span className="highlight">you deserve!</span>
+                </h1>
+                <p>
+                    Branding is one of the most important cornerstones of starting a handyman business,
+                    and sadly, one that is often overlooked. Memorable catchy handyman slogans will separate
+                    you from your competitors and ultimately, become etched on your customers' minds forever.
+                </p>
+                <p>
+                    Key elements of a catchy handyman slogan is keeping it short, memorable and in line with the
+                    handyman services you provide. An example of a great slogan is “Just do it” from Nike.
+                </p>
+                <img
+                    src="https://via.placeholder.com/600x300/2ecc71/ffffff?text=Your+Image+Here"
+                    alt="Handyman example"
+                    className="contact-image"
+                />
+            </div>
 
-            {showForm && (
-                <div className="form-modal">
+            {/* Prawa kolumna z formularzem */}
+            <div className="contact-right">
+                <div className="contact-form-container">
+                    <h2 className="contact-form-title">Skontaktuj się z nami</h2>
                     <form className="contact-form" onSubmit={handleSubmit}>
-                        <h2>Skontaktuj się z nami</h2>
-                        <label>
-                            Imię:
+                        <div className="contact-form-row">
                             <input
                                 type="text"
-                                name="firstName"
-                                value={formData.firstName}
+                                name="name"
+                                placeholder="Imię i nazwisko"
+                                value={formData.name}
                                 onChange={handleChange}
                                 required
                             />
-                        </label>
-                        <label>
-                            Nazwisko:
                             <input
                                 type="text"
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                required
-                            />
-                        </label>
-                        <label>
-                            Numer telefonu:
-                            <input
-                                type="tel"
                                 name="phone"
+                                placeholder="Telefon"
                                 value={formData.phone}
                                 onChange={handleChange}
                                 required
                             />
-                        </label>
-                        <label>
-                            Adres e-mail:
+                        </div>
+
+                        <div className="contact-form-row">
                             <input
                                 type="email"
                                 name="email"
+                                placeholder="Adres e-mail"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
                             />
-                        </label>
-                        <label>
-                            Treść wiadomości:
-                            <textarea
-                                name="message"
-                                value={formData.message}
+                            <input
+                                type="text"
+                                name="subject"
+                                placeholder="Temat"
+                                value={formData.subject}
                                 onChange={handleChange}
                                 required
-                            ></textarea>
-                        </label>
-                        <button type="submit" className="submit-button">
-                            Wyślij
-                        </button>
-                        <button
-                            type="button"
-                            className="close-button"
-                            onClick={() => setShowForm(false)}
-                        >
-                            Anuluj
+                            />
+                        </div>
+
+                        <div className="contact-form-row">
+              <textarea
+                  name="message"
+                  placeholder="Wiadomość..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+              />
+                        </div>
+
+                        <button type="submit" className="contact-form-submit">
+                            WYŚLIJ
                         </button>
                     </form>
                 </div>
-            )}
-        </div>
+            </div>
+        </section>
     );
-};
+}
 
 export default ContactForm;

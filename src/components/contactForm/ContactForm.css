@@ -1,0 +1,182 @@
+/* Podstawowy reset/ustawienia */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sekcja całego widoku (tekst + formularz) */
+.contact-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start; /* Góra tekstu i formularza jest wyrównana */
+    background: #000; /* Tło, możesz zmienić */
+    color: #fff;
+    font-family: var(--font-family);
+    padding: 1.5rem;
+    max-width: 1200px;  /* Ograniczona szerokość całej sekcji */
+    margin: 0 auto;     /* Wycentrowanie sekcji w poziomie */
+}
+
+/* Lewa część – tekst + grafika */
+.contact-left {
+    flex: 1;
+    margin-right: 1.5rem; /* odstęp od prawej kolumny */
+    opacity: 0; /* dla animacji */
+    animation: slideFromLeft 0.8s ease forwards;
+}
+
+.contact-heading {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.highlight {
+    color: #2ecc71; /* zielony akcent – można zmienić */
+}
+
+.contact-left p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.contact-image {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* Prawa część – formularz */
+.contact-right {
+    flex: 1;
+    opacity: 0; /* dla animacji */
+    animation: slideFromRight 0.8s ease forwards;
+}
+
+/* Kontener na formularz */
+.contact-form-container {
+    background: transparent;
+    padding: 1rem;
+    color: #fff;
+    font-family: var(--font-family);
+    max-width: 600px;
+    margin: 0 auto; /* wyśrodkowanie w swojej kolumnie */
+}
+
+.contact-form-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Formularz, który ustawia elementy w kolumnie + odstępy */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Rzędy formularza w układzie flex */
+.contact-form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Pola tekstowe mają wypełniać całą szerokość */
+.contact-form-row input,
+.contact-form-row textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    background: transparent;
+    color: #fff;
+    font-family: var(--font-family);
+    font-size: 1rem;
+}
+
+.contact-form-row input::placeholder,
+.contact-form-row textarea::placeholder {
+    color: #bbb;
+}
+
+/* Pole tekstowe (textarea) zajmuje całą szerokość i jest wyższe */
+.contact-form-row textarea {
+    min-height: 120px;
+}
+
+/* Styl przycisku */
+.contact-form-submit {
+    padding: 1rem 2rem;
+    background-color: #2ecc71; /* zielony odcień, można zmienić */
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.contact-form-submit:hover {
+    background-color: #27ae60; /* ciemniejszy zielony */
+}
+
+/* Animacje – slajdy z lewej i z prawej */
+@keyframes slideFromLeft {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideFromRight {
+    0% {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsywność – na mniejszych ekranach stosujemy układ pionowy */
+@media (max-width: 900px) {
+    .contact-section {
+        flex-direction: column;
+        padding: 1rem;
+        max-width: 100%; /* Na bardzo małych ekranach wypełni całą szerokość */
+    }
+
+    .contact-left {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        animation: slideFromLeft 0.8s ease forwards;
+    }
+
+    .contact-right {
+        animation: slideFromRight 0.8s ease forwards;
+    }
+
+    .contact-image {
+        max-width: 100%;
+    }
+
+    .contact-form-container {
+        max-width: 100%;
+    }
+
+    .contact-form-row {
+        flex-direction: column;
+    }
+}
