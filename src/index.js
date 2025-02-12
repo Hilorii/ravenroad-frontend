@@ -21,7 +21,6 @@ import RegisterPage from './pages/register/Register';
 import SignupPage from './pages/signup/Signup';
 import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 import ProfilePage from './pages/profile/Profile';
-import PrivacyPolicyPage from './pages/privacyPolicy/PrivacyPolicy';
 import TermsOfUsePage from './pages/termsOfUse/TermsOfUse';
 import TermsOfUsePageEN from './pages/termsOfUse/TermsOfUseEn';
 import TermsOfUsePageDE from './pages/termsOfUse/TermsOfUseDe';
@@ -54,7 +53,7 @@ import DeleteDataPage from './pages/deleteData/DeleteData';
 import ForgotPasswordPage from './pages/resetPassword/ForgotPassword';
 
 //POZOSTAŁE
-import FAQ from './pages/FAQ/FAQ1';
+import FAQ from './pages/FAQ/FAQ';
 
 //GROUPS
 import Groups from './pages/groups/Groups';
@@ -90,7 +89,6 @@ root.render(
                             <Route path="/passwordForgot" element={<PasswordForgotPage />} />
                             <Route path="/signup" element={<SignupPage />} />
                             <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
-                            <Route path="/privacypolicy" element={<PrivacyPolicyPage/>} />
                             <Route path="/pl/termsofuse" element={<TermsOfUsePage/>} />
                             <Route path="/en/termsofuse" element={<TermsOfUsePageEN/>} />
                             <Route path="/de/termsofuse" element={<TermsOfUsePageDE/>} />

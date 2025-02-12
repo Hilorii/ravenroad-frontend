@@ -32,9 +32,6 @@ const Footer = () => {
                         <a href="/FAQ">{t('footer.faq')}</a>
                     </p>
                     <p>
-                        <a href="/help">{t('footer.help')}</a>
-                    </p>
-                    <p>
                         <a href={`/${currentLanguage}/termsofuse`}>{t('footer.termsOfUse')}</a>
                     </p>
                 </div>
