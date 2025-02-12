@@ -1,3 +1,5 @@
+
+
 /* Podstawowy reset/ustawienia */
 * {
     box-sizing: border-box;
@@ -23,6 +25,7 @@
 .contact-left {
     flex: 1;
     margin-right: 1.5rem; /* odstęp od prawej kolumny */
+    margin-top: 20px;
     opacity: 0; /* dla animacji */
     animation: slideFromLeft 0.8s ease forwards;
 }
@@ -53,7 +56,7 @@
 /* Prawa część – formularz */
 .contact-right {
     flex: 1;
-    opacity: 0; /* dla animacji */
+    opacity: 0;
     animation: slideFromRight 0.8s ease forwards;
 }
 
@@ -64,7 +67,7 @@
     color: #fff;
     font-family: var(--font-family);
     max-width: 600px;
-    margin: 0 auto; /* wyśrodkowanie w swojej kolumnie */
+    margin: 0 auto;
 }
 
 .contact-form-title {
@@ -104,19 +107,17 @@
     color: #bbb;
 }
 
-/* Pole tekstowe (textarea) zajmuje całą szerokość i jest wyższe */
 .contact-form-row textarea {
     min-height: 120px;
 }
 
-/* Styl przycisku */
 .contact-form-submit {
     padding: 1rem 2rem;
-    background-color: #2ecc71; /* zielony odcień, można zmienić */
+    background-color: #AE67FA;
     border: none;
     color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, scale 0.3s ease;
     font-family: var(--font-family);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -124,7 +125,8 @@
 }
 
 .contact-form-submit:hover {
-    background-color: #27ae60; /* ciemniejszy zielony */
+    background-color: #F49867;
+    scale: 1.1;
 }
 
 /* Animacje – slajdy z lewej i z prawej */

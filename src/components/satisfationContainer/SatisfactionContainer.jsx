@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./SatisfactionContainer.css";
-import example1 from "../../assets/satisfy.png";
-import example2 from "../../assets/satisfy.png";
+import satisfyLeft from "../../assets/satisfyLeft.png";
+import satisfyRight from "../../assets/satisfyRight.png";
 
 const SatisfactionContainer = () => {
     const containerRef = useRef(null);
@@ -36,7 +36,7 @@ const SatisfactionContainer = () => {
         <div className="outer-wrapper" ref={containerRef}>
             <section className="container-section">
                 <div className="image-box">
-                    <img src={example1} alt="example1" />
+                    <img src={satisfyLeft} alt="example1" />
                 </div>
 
                 <div className="text-and-bar-container">
@@ -71,7 +71,7 @@ const SatisfactionContainer = () => {
                 </div>
 
                 <div className="image-box">
-                    <img src={example2} alt="example2" />
+                    <img src={satisfyRight} alt="example2" />
                 </div>
             </section>
         </div>

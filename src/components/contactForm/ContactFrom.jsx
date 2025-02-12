@@ -53,23 +53,21 @@ function ContactForm() {
             {/* Lewa kolumna z tekstem i obrazkiem */}
             <div className="contact-left">
                 <h1 className="contact-heading">
-                    The quality <span className="highlight">you expect</span>, <br />
-                    the service <span className="highlight">you deserve!</span>
+                    Nawigacja <span className="highlight">nowej generacji</span>, <br/>
+                    podróżowanie <span className="highlight">w najlepszym stylu!</span>
                 </h1>
                 <p>
-                    Branding is one of the most important cornerstones of starting a handyman business,
-                    and sadly, one that is often overlooked. Memorable catchy handyman slogans will separate
-                    you from your competitors and ultimately, become etched on your customers' minds forever.
+                    Raven Road to innowacyjna aplikacja nawigacyjna, która wykorzystuje sztuczną inteligencję do
+                    generowania
+                    optymalnych tras. Niezależnie od tego, czy planujesz samotną podróż, czy chcesz jechać w grupie,
+                    Raven Road
+                    zapewni Ci najlepsze trasy dopasowane do Twoich potrzeb.
                 </p>
                 <p>
-                    Key elements of a catchy handyman slogan is keeping it short, memorable and in line with the
-                    handyman services you provide. An example of a great slogan is “Just do it” from Nike.
+                    Twórz wydarzenia, dołączaj do grup podróżniczych i ciesz się wspólną jazdą z innymi użytkownikami.
+                    Dzięki inteligentnym algorytmom aplikacja pomoże Ci odkryć nowe, ekscytujące trasy i sprawi,
+                    że każda podróż stanie się niezapomnianą przygodą.
                 </p>
-                <img
-                    src="https://via.placeholder.com/600x300/2ecc71/ffffff?text=Your+Image+Here"
-                    alt="Handyman example"
-                    className="contact-image"
-                />
             </div>
 
             {/* Prawa kolumna z formularzem */}
