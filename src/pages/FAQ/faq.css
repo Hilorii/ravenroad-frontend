@@ -1,12 +1,25 @@
+.faq{
+    font-family: var(--font-family);
+    margin-top: -50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .faq-container {
     max-width: 800px;
     padding: 20px;
     border-radius: 8px;
-    margin-top: 20px;
+    margin: 20px auto;
+
 }
 
 .faq-container h1 {
     padding-bottom: 30px;
+    justify-content: center;
+    color: white;
 }
 
 .faq-item {

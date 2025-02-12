@@ -32,7 +32,6 @@ import HelpPage from './pages/help/Help';
 import AboutPage from './pages/aboutUs/AboutUs';
 import TeamPage from './pages/team/Team';
 import PurchasePage from './pages/purchase/Purchase';
-import FAQPage from './pages/FAQ/FAQ';
 import PageNotFoundPage from './pages/pageNotFound/PageNotFound';
 // import RoutesPage from './pages/routes/Routes';
 // import AddRoutePage from './pages/addRoute/AddRoute';
@@ -54,6 +53,8 @@ import CollaborationPage from './pages/collaboration/Collaboration';
 import DeleteDataPage from './pages/deleteData/DeleteData';
 import ForgotPasswordPage from './pages/resetPassword/ForgotPassword';
 
+//POZOSTAŁE
+import FAQ from './pages/FAQ/FAQ1';
 
 //GROUPS
 import Groups from './pages/groups/Groups';
@@ -101,7 +102,6 @@ root.render(
                             <Route path="/about" element={<AboutPage/>} />
                             <Route path="/team" element={<TeamPage/>} />
                             <Route path="/pricing/purchase" element={<PurchasePage/>} />
-                            <Route path="/FAQ" element={<FAQPage/>} />
                             {/*<Route path="/routes" element={<RoutesPage/>} />*/}
                             {/*<Route path="/addRoute" element={<AddRoutePage/>} />*/}
                             {/*<Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />*/}
@@ -122,6 +122,10 @@ root.render(
                             {/*<Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />*/}
                             <Route path="/password-reset" element={<ForgotPasswordPage/>} />
                             <Route path="*" element={<PageNotFoundPage/>} />
+
+                            {/*POZOSTAŁE*/}
+                            <Route path="/FAQ" element={<FAQ/>} />
+
 
                             {/*GROUPS*/}
                             <Route path="/groups" element={<Groups/>} />
