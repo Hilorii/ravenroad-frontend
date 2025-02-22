@@ -48,14 +48,19 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 28px;
-    background: var(--color-footer);
-    border: 2px solid var(--color-footer);
+    margin-right: -2px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(174, 103, 250, 0.58);
     padding: 0 1rem;
     outline: none;
     color: #fff;
-
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.rr__header-content__input input:focus {
+    border: 2px solid rgba(174, 103, 250, 1);
 }
 
 .rr__header-content__input button {
