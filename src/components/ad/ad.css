@@ -13,14 +13,49 @@
     margin-bottom: 60px;
     margin-top: 60px;
 
-    /* Dodanie płynnego przejścia dla transformacji */
-    transition: transform 0.5s ease; /* Czas trwania animacji: 0.5s, rodzaj animacji: ease */
+    /* Płynna transformacja (przygotowanie pod hover) */
+    transition: transform 0.5s ease;
 }
 
-/* Efekt przekręcenia po najechaniu */
-.ad-container:hover {
-    transform: rotate(-3deg); /* Przekręcenie o -3 stopnie w lewo */
+/* ────────────────────────────────────────────────────────────────────────── */
+/* ANIMACJA Z LEWEJ (fadeInLeft)                                            */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+/* 1) Początkowy stan (niewidoczny, przesunięty w lewo) */
+.hidden-element {
+    opacity: 0;
+    transform: translateX(-50px);
 }
+
+/* 2) Po wejściu w viewport klasa zmienia się na .animate-in-ad */
+.animate-in-ad {
+    animation: fadeInLeft 1s ease forwards;
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: none; /* Po animacji: brak transformacji */
+    }
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* WŁAŚCIWE OBRACANIE NA HOVER                                              */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+/* Stosujemy bardziej konkretny selektor (.ad-container.animate-in-ad:hover)
+   aby nadpisać finalny stan animacji (transform: none). */
+.ad-container.animate-in-ad:hover {
+    transform: rotate(-3deg);
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/*  POZOSTAŁE STYLE                                                         */
+/* ────────────────────────────────────────────────────────────────────────── */
 
 .ad-container::before {
     content: '';
@@ -29,10 +64,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, #AE67FA, #F49867, #AE67FA); /* Gradient tła */
-    z-index: -2; /* Umieszczenie tła za obramowaniem */
+    background: linear-gradient(45deg, #AE67FA, #F49867, #AE67FA);
+    z-index: -2;
     border-radius: 10px;
-    padding: 4px; /* Grubość obramowania */
+    padding: 4px;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
@@ -71,9 +106,6 @@
     }
 }
 
-
-
-
 .ad-icon {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg);
     width: 100px;
@@ -86,14 +118,12 @@
     transform: scale(1.1);
 }
 
-
 @media screen and (max-width: 1000px) {
     .ad-icon {
         width: 70px;
         height: 70px;
     }
 }
-
 
 .ad-rr {
     font-size: 28px;
@@ -102,10 +132,6 @@
 .ad-rr:hover {
     font-size: 32px;
 }
-
-
-/*--gradient-text: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);*/
-
 
 .ad-title {
     font-size: 24px;
@@ -137,19 +163,19 @@
 .ad-button {
     display: inline-block;
     padding: 10px 20px;
-    background: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%); /* Gradient */
-    color: #fff; /* Biały tekst */
+    background: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);
+    color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Płynne przejście */
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .ad-button:hover {
-    background: linear-gradient(89.97deg, #F49867 1.84%, #AE67FA 102.67%); /* Gradient odwrócony */
-    color: #333; /* Ciemny kolor tekstu */
-    transform: scale(0.95); /* Efekt pomniejszenia */
+    background: linear-gradient(89.97deg, #F49867 1.84%, #AE67FA 102.67%);
+    color: #333;
+    transform: scale(0.95);
 }
 
 @media screen and (max-width: 250px) {

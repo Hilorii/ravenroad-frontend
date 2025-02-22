@@ -120,6 +120,30 @@
     height: 100%;
 }
 
+/* Klasa, gdy element jeszcze jest poza ekranem i nie jest widoczny */
+.hidden-element {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+/* Klasa, która uruchamia animację gdy Intersection Observer uzna element za widoczny */
+.animate-in-header {
+    animation: fadeInUp 3s ease forwards;
+}
+
+/* Definicja kluczy animacji */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 @media screen and (max-width: 1050px) {
     .rr__header {
         flex-direction: column;

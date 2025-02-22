@@ -4,7 +4,6 @@
     justify-content: space-between;
     align-items: flex-start;
     flex-direction: row;
-
     margin: 1rem;
 }
 
@@ -42,7 +41,7 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 24px;
-    color: var(--color-text);
+    color: rgba(244, 152, 103, 0.84);
 }
 
 @media screen and (max-width: 550px) {
@@ -62,14 +61,33 @@
 }
 
 @media screen and (max-width: 350px) {
-    /*.rr__features-container__feature-title{*/
-    /*    max-width: 20%;*/
-    /*    word-break: break-word;*/
-    /*    overflow-wrap: break-word;*/
-    /*}*/
-    /*.rr__features-container__feature-title h1{*/
-    /*    font-size: 10px;*/
-    /*}*/
+    /* Ewentualne dodatkowe style dla małych ekranów */
+}
 
+/* ────────────────────────────────────────────────────────────── */
+/*      ANIMACJA POJAWIANIA SIĘ PRZY SCROLLOWANIU                */
+/* ────────────────────────────────────────────────────────────── */
 
+/* Stan początkowy: niewidoczny i lekko przesunięty w dół */
+.hidden-feature {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Po wejściu do viewportu klasa zmienia się na 'animated-in-feature',
+   co uruchamia animację 'slideUpFadeFeature' */
+.animated-in-feature {
+    animation: slideUpFadeFeature 0.8s ease-out forwards;
+}
+
+/* Klucze animacji: przesunięcie w górę i fade-in */
+@keyframes slideUpFadeFeature {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

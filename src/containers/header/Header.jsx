@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './header.css';
 import people from "../../assets/people.png";
 import banner from "../../assets/banner.jpg";
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'; // Import hook for i18n
 
@@ -11,6 +10,33 @@ const Header = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+
+    // -------- DODANE NA POTRZEBY ANIMACJI --------
+    const headerRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.unobserve(entry.target); // przestajemy obserwować (animacja tylko raz)
+                }
+            },
+            { threshold: 0.1 } // sekcja jest uznawana za widoczną, gdy 10% jest w viewport
+        );
+
+        if (headerRef.current) {
+            observer.observe(headerRef.current);
+        }
+
+        return () => {
+            if (headerRef.current) {
+                observer.unobserve(headerRef.current);
+            }
+        };
+    }, []);
+    // ---------------------------------------------
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -49,7 +75,12 @@ const Header = () => {
     };
 
     return (
-        <div className="rr__header section__padding" id="Home">
+        // Dodajemy dodatkowe klasy do kontenera, aby obsłużyć animację
+        <div
+            className={`rr__header section__padding ${isVisible ? 'animate-in-header' : 'hidden-element'}`}
+            id="Home"
+            ref={headerRef}
+        >
             <div className="rr__header-content">
                 <h1 className="gradient__text">{t('header.title')}</h1>
                 <p>{t('header.description')}</p>
