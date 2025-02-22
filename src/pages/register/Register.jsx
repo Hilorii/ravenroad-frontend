@@ -14,12 +14,14 @@ const Register = () => {
     });
 
     const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState(''); // Stan na sukces
+    const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Jeśli poprzednia strona przekazała e-mail w location.state,
+        // wypełnij tym adresem pole email.
         if (location.state && location.state.email) {
-            setFormData((prevFormData) => ({
+            setFormData(prevFormData => ({
                 ...prevFormData,
                 email: location.state.email
             }));
@@ -34,6 +36,7 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // Sprawdzenie, czy hasła się zgadzają
         if (formData.password !== formData.confirmPassword) {
             setErrorMessage('Hasła nie są zgodne.');
             setSuccessMessage('');
@@ -43,33 +46,35 @@ const Register = () => {
         setErrorMessage('');
         setSuccessMessage('');
 
-        axios.post('http://localhost:5000/Signup', formData)
+        axios.post('http://localhost:5000/signup', formData)
             .then(response => {
-                if (response && response.data) {
+                if ((response.status === 201 || response.status === 200) && response.data && !response.data.error) {
                     setSuccessMessage('Użytkownik został pomyślnie zarejestrowany.');
                     setTimeout(() => navigate('/login'), 2500);
                 } else {
-                    setErrorMessage('Nieoczekiwany format odpowiedzi');
+                    setErrorMessage(response.data.error || 'Nieoczekiwany format odpowiedzi');
                 }
             })
             .catch(error => {
                 console.error('Wystąpił błąd podczas rejestracji!', error);
-                if (error.response && error.response.data && error.response.data.error) {
+                if (!error.response) {
+                    setErrorMessage('Nie można połączyć z serwerem. Upewnij się, że serwer działa.');
+                } else if (error.response.data && error.response.data.error) {
                     setErrorMessage(error.response.data.error);
                 } else {
-                    setErrorMessage('Rejestracja nie powiodła się: konto z takim emailem już istnieje');
+                    setErrorMessage('Wystąpił nieoczekiwany błąd podczas rejestracji.');
                 }
             });
     };
 
     // Funkcja logowania przez Google
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:5000/auth/google'; // Przekierowanie do Google OAuth
+        window.location.href = 'http://localhost:5000/auth/google';
     };
 
     // Funkcja logowania przez Facebook
     const handleFacebookLogin = () => {
-        window.location.href = 'http://localhost:5000/auth/facebook'; // Przekierowanie do Facebook OAuth
+        window.location.href = 'http://localhost:5000/auth/facebook';
     };
 
     return (
@@ -79,9 +84,11 @@ const Register = () => {
                     <img src={logo} alt="Logo" className="login-logo" />
                 </Link>
                 <h2 className="login-title">Welcome Back!</h2>
-                <p className="login-subtitle">Log in to continue</p>
+                <p className="login-subtitle">Sign up to continue</p>
+
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 {successMessage && <p className="success-message">{successMessage}</p>}
+
                 <form className="login-form" onSubmit={handleSubmit}>
                     <input
                         type="email"
@@ -93,7 +100,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                     <input
-                        type="username"
+                        type="text"
                         placeholder="Username"
                         className="login-input"
                         id="username"
@@ -127,11 +134,15 @@ const Register = () => {
                     <span>OR</span>
                 </div>
                 <div className="social-login">
-                    <button className="social-btn google-btn" onClick={handleGoogleLogin}>Continue with Google</button>
-                    <button className="social-btn facebook-btn" onClick={handleFacebookLogin}>Continue with Facebook</button>
+                    <button className="social-btn google-btn" onClick={handleGoogleLogin}>
+                        Continue with Google
+                    </button>
+                    <button className="social-btn facebook-btn" onClick={handleFacebookLogin}>
+                        Continue with Facebook
+                    </button>
                 </div>
                 <div className="link2">
-                    <a href="/login">Zaloguj się!</a>
+                    <Link to="/login">Zaloguj się!</Link>
                 </div>
             </div>
         </div>

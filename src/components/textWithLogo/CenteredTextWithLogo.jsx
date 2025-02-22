@@ -23,11 +23,11 @@ const CenteredTextWithLogo = () => {
 
             {/* Przyciski */}
             <div className="button-container">
-                <a href="https://example.com" className="gradient-button animated-button">
-                    Przycisk 1
+                <a href="/register" className="gradient-button animated-button">
+                    DOŁĄCZ
                 </a>
-                <a href="https://example.com" className="white-button animated-button">
-                    Przycisk 2
+                <a href="#pro" className="white-button animated-button">
+                    PRO
                 </a>
             </div>
         </div>

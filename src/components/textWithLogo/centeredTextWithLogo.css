@@ -116,9 +116,18 @@
 
 /* Przyciski */
 .gradient-button, .white-button {
+    /* Animacja pojawiania się */
     transform: scale(0);
     animation: growIn 1s ease-out forwards;
     animation-delay: 1s;
+
+    /* Domyślna szerokość */
+    width: 160px;
+
+    /* Wyśrodkowanie tekstu */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @keyframes growIn {
@@ -196,6 +205,11 @@
     .logo-background {
         width: 45%;
     }
+
+    .gradient-button, .white-button {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
 }
 
 /* Dla ekranów mniejszych niż 576px (smartfony) */
@@ -212,9 +226,16 @@
         width: 60%;
     }
 
-    /* Przykładowo zmniejszamy padding przycisków, żeby lepiej mieściły się na ekranie */
+    /* Przyciski jeszcze bardziej się zmniejszają */
     .gradient-button, .white-button {
         padding: 10px 20px;
         font-size: 14px;
+    }
+}
+
+@media (max-width: 344px) {
+    .gradient-button, .white-button {
+        width: 100px;
+        font-size: 10px;
     }
 }

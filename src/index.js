@@ -14,11 +14,9 @@ import { config } from '@tamagui/config/v3';
 import { TamaguiProvider, createTamagui} from '@tamagui/core';
 //Pages
 import App from './App';
-import MainSite from './MainSiteTmp';
 import LoginPage from './pages/login/Login';
 import LoginPage1 from './pages/login/Login1';
 import RegisterPage from './pages/register/Register';
-import SignupPage from './pages/signup/Signup';
 import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 import ProfilePage from './pages/profile/Profile';
 import TermsOfUsePage from './pages/termsOfUse/TermsOfUse';
@@ -83,11 +81,9 @@ root.render(
                         <Routes>
                             {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
                             <Route path="/" element={<App />} />
-                            <Route path="/main" element={<MainSite />} />
                             <Route path="/login" element={<LoginPage1 />} />
                             <Route path="/register" element={<RegisterPage />} />
                             <Route path="/passwordForgot" element={<PasswordForgotPage />} />
-                            <Route path="/signup" element={<SignupPage />} />
                             <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
                             <Route path="/pl/termsofuse" element={<TermsOfUsePage/>} />
                             <Route path="/en/termsofuse" element={<TermsOfUsePageEN/>} />
