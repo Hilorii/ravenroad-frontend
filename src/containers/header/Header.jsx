@@ -3,7 +3,7 @@ import './header.css';
 import people from "../../assets/people.png";
 import banner from "../../assets/banner.jpg";
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; // Import hook for i18n
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
     const { t } = useTranslation(); // Hook for translations

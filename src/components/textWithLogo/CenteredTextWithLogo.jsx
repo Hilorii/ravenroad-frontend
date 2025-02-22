@@ -1,33 +1,30 @@
+// src/components/CenteredTextWithLogo.jsx
 import React, { useEffect } from 'react';
-import './centeredTextWithLogo.css';
+import { useTranslation } from 'react-i18next';
 import rrLogo from '../../assets/RRlogo.png';
+import './centeredTextWithLogo.css';
 
 const CenteredTextWithLogo = () => {
-    // Hook do debugowania, aby upewnić się, że komponent renderuje
+    const { t, i18n } = useTranslation();
+
     useEffect(() => {
         console.log('CenteredTextWithLogo rendered');
-    }, []);
+        console.log('Aktualny język to:', i18n.language);
+    }, [i18n.language]);
 
     return (
         <div className="centered-container">
-            {/* Logo w tle */}
             <div className="logo-background">
-                <img src={rrLogo} alt="Raven Road Logo" />
+                <img src={rrLogo} alt={t('textWithLogo.logoAlt')} />
             </div>
-
-            {/* Wcięty tekst */}
-            <div className="cutout-text">RAVEN ROAD</div>
-
-            {/* Tekst, który się pojawia */}
-            <div className="text-ctwl animated-text-ctwl">Nawigacja przyszłości</div>
-
-            {/* Przyciski */}
+            <div className="cutout-text">{t('textWithLogo.cutoutText')}</div>
+            <div className="text-ctwl animated-text-ctwl">{t('textWithLogo.description')}</div>
             <div className="button-container">
                 <a href="/register" className="gradient-button animated-button">
-                    DOŁĄCZ
+                    {t('textWithLogo.joinButton')}
                 </a>
                 <a href="#pro" className="white-button animated-button">
-                    PRO
+                    {t('textWithLogo.proButton')}
                 </a>
             </div>
         </div>

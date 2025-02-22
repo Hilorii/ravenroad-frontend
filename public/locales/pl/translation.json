@@ -245,6 +245,20 @@
     "links": {
       "terms": "Regulamin",
       "deleteData": "Usuń dane"
+    },
+
+
+
+
+
+    "textWithLogo": {
+      "logoAlt": "Logo Raven Road",
+      "cutoutText": "RAVEN ROAD",
+      "description": "Nawigacja przyszłości",
+      "joinButton": "DOŁĄCZ",
+      "proButton": "PRO"
     }
+
+
   }
 }

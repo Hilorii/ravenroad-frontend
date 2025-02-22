@@ -246,5 +246,12 @@
       "terms": "Terms of Use",
       "deleteData": "Delete Data"
     }
+  },
+  "textWithLogo": {
+    "logoAlt": "Raven Road Logo",
+    "cutoutText": "RAVEN ROAD",
+    "description": "Navigation of the future",
+    "joinButton": "JOIN",
+    "proButton": "PRO"
   }
 }

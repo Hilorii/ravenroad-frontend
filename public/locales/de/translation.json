@@ -246,5 +246,12 @@
       "terms": "Nutzungsbedingungen",
       "deleteData": "Daten löschen"
     }
+  },
+  "textWithLogo": {
+    "logoAlt": "Raven Road Logo",
+    "cutoutText": "RAVEN ROAD",
+    "description": "Navigation der Zukunft",
+    "joinButton": "BEITRETEN",
+    "proButton": "PRO"
   }
 }
