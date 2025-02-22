@@ -1,8 +1,22 @@
 {
   "navbar": {
-    "home": "Strona główna",
-    "contact": "Kontakt",
-    "collaboration": "Współpraca"
+    "menuItems": {
+      "pro": "Pro",
+      "planTrip": "Zaplanuj podróż",
+      "readyRoutes": "Gotowe trasy",
+      "contact": "Kontakt",
+      "collaboration": "Współpraca",
+      "profile": "Profil",
+      "home": "Strona główna",
+      "login": "Login",
+      "register": "Zarejestruj"
+    },
+    "notifications": {
+      "noNotifications": "Brak nowych powiadomień",
+      "sentDate": "Data wysłania",
+      "expireDate": "Data ważności"
+    },
+    "logout": "Wyloguj"
   },
   "header": {
     "title": "Zaplanuj swoją wspaniałą podróż z Raven Road",
@@ -245,20 +259,92 @@
     "links": {
       "terms": "Regulamin",
       "deleteData": "Usuń dane"
-    },
-
-
-
-
-
-    "textWithLogo": {
-      "logoAlt": "Logo Raven Road",
-      "cutoutText": "RAVEN ROAD",
-      "description": "Nawigacja przyszłości",
-      "joinButton": "DOŁĄCZ",
-      "proButton": "PRO"
     }
+  },
 
 
+
+  "textWithLogo": {
+    "logoAlt": "Logo Raven Road",
+    "cutoutText": "RAVEN ROAD",
+    "description": "Nawigacja przyszłości",
+    "joinButton": "DOŁĄCZ",
+    "proButton": "PRO"
+  },
+  "serviceContainer": {
+    "service1": {
+      "alt": "Inteligentne Planowanie Tras",
+      "title": "Inteligentne Planowanie Tras",
+      "description": "Twórz własne trasy za pomocą Ai!"
+    },
+    "service2": {
+      "alt": "Aktualizacje w Czasie Rzeczywistym",
+      "title": "O krok do przodu!",
+      "description": "Zawsze omijaj korki i inne przeszkody na drodze!"
+    },
+    "service3": {
+      "alt": "Zwiększone Bezpieczeństwo",
+      "title": "Bezpieczeństwo",
+      "description": "Bądź na bieżąco informowany o wydarzeniach na drodze!"
+    }
+  },
+  "satisfactionContainer": {
+    "subtitle": "COŚ O NAS",
+    "title": "ODKRYJ MOŻLIWOŚCI",
+    "highlight": "RAVEN ROAD",
+    "satisfactionLabel": "poziom satysfakcji użytkowników",
+    "satisfactionValue": "90%",
+    "description": "Raven Road to aplikacja nawigacyjna, która pozwoli Ci dotrzeć szybko i bezpiecznie do celu. Planuj swoje trasy ze sztuczną inteligencją, unikaj utrudnień na drodze i bądź zawsze o krok przed innymi. Dołącz do naszej społeczności i odkrywaj świat z Raven Road.",
+    "button": "POZNAJ WIĘCEJ",
+    "image1Alt": "example1",
+    "image2Alt": "example2"
+  },
+  "cta": {
+    "header": "Zarejestruj się już dziś i zacznij odkrywać nieskończone możliwości.",
+    "buttonText": "Zaczynam"
+  },
+  "pricingCards": {
+    "currency": "PLN",
+    "subtitle": "NASZA NAJLEPSZA",
+    "subtitleHighlight": "CENA",
+    "title": "NASZA NAJLEPSZA",
+    "titleHighlight": "OFERTA JUŻ JEST",
+    "moreInAppButton": "WIĘCEJ W APLIKACJI",
+    "silverWing": {
+      "title": "SILVER WING",
+      "span": "Miesięcznie",
+      "features": [
+        "Generowanie tras za pomocą AI",
+        "Do 5 wygenerowanych tras w miesiącu!",
+        "Mapy offline",
+        "Nagrywanie tras z pomiarami",
+        "Publikowanie nagranych tras",
+        "Wszystko co w wersji darmowej"
+      ]
+    },
+    "blackFeather": {
+      "title": "BLACK FEATHER",
+      "span": "Rocznie",
+      "features": [
+        "Generowanie tras za pomocą AI",
+        "Do 10 wygenerowanych tras w miesiącu!",
+        "Planowanie tras",
+        "Tworzenie grup",
+        "Tworzenie wydarzeń",
+        "Wszystko co w Silver Wing"
+      ]
+    },
+    "shadowRaven": {
+      "title": "SHADOW RAVEN",
+      "span": "Rocznie",
+      "features": [
+        "Generowanie tras za pomocą AI",
+        "Do 20 wygenerowanych tras w miesiącu!",
+        "Ekskluzywne trasy i wydarzenia",
+        "Nielimitowane zapisywanie tras offline",
+        "Priorytetowe wsparcie",
+        "Wszystko co w Black Feather"
+      ]
+    }
   }
 }

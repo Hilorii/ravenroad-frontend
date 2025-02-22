@@ -2,8 +2,10 @@ import React, { useRef, useState, useEffect } from "react";
 import "./SatisfactionContainer.css";
 import satisfyLeft from "../../assets/satisfyLeft.png";
 import satisfyRight from "../../assets/satisfyRight.png";
+import { useTranslation } from "react-i18next";
 
 const SatisfactionContainer = () => {
+    const { t } = useTranslation();
     const containerRef = useRef(null);
     const [isInView, setIsInView] = useState(false);
 
@@ -36,21 +38,33 @@ const SatisfactionContainer = () => {
         <div className="outer-wrapper" ref={containerRef}>
             <section className="container-section">
                 <div className="image-box">
-                    <img src={satisfyLeft} alt="example1" />
+                    <img
+                        src={satisfyLeft}
+                        alt={t('satisfactionContainer.image1Alt')}
+                    />
                 </div>
 
                 <div className="text-and-bar-container">
                     <div className="text-box">
-                        <h2 className="subtitle">COŚ O NAS</h2>
+                        <h2 className="subtitle">
+                            {t('satisfactionContainer.subtitle')}
+                        </h2>
                         <h1 className="title">
-                            ODKRYJ MOŻLIWOŚCI <span className="highlight">RAVEN ROAD</span>
+                            {t('satisfactionContainer.title')}{" "}
+                            <span className="highlight">
+                {t('satisfactionContainer.highlight')}
+              </span>
                         </h1>
 
                         <div className="satisfaction">
-                            <p className="label">poziom satysfakcji użytkowników</p>
+                            <p className="label">
+                                {t('satisfactionContainer.satisfactionLabel')}
+                            </p>
                             <div className="progress-bar">
                                 <div className={`progress ${isInView ? "animate" : ""}`}>
-                                    <span className="progress-value">90%</span>
+                  <span className="progress-value">
+                    {t('satisfactionContainer.satisfactionValue')}
+                  </span>
                                 </div>
                             </div>
                         </div>
@@ -58,20 +72,21 @@ const SatisfactionContainer = () => {
                         <div className="gradient-and-text">
                             <div className="gradient-bar"></div>
                             <p className="description">
-                                Raven Road to aplikacja nawigacyjna, która pozwoli Ci dotrzeć
-                                szybko i bezpiecznie do celu. Planuj swoje trasy ze sztuczną
-                                inteligencją, unikaj utrudnień na drodze i bądź zawsze o krok
-                                przed innymi. Dołącz do naszej społeczności i odkrywaj świat
-                                z Raven Road.
+                                {t('satisfactionContainer.description')}
                             </p>
                         </div>
 
-                        <button className="cta-buttonn">POZNAJ WIĘCEJ</button>
+                        <button className="cta-buttonn">
+                            {t('satisfactionContainer.button')}
+                        </button>
                     </div>
                 </div>
 
                 <div className="image-box">
-                    <img src={satisfyRight} alt="example2" />
+                    <img
+                        src={satisfyRight}
+                        alt={t('satisfactionContainer.image2Alt')}
+                    />
                 </div>
             </section>
         </div>

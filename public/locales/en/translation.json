@@ -1,8 +1,22 @@
 {
   "navbar": {
-    "home": "Home",
-    "contact": "Contact",
-    "collaboration": "Collaboration"
+    "menuItems": {
+      "pro": "Pro",
+      "planTrip": "Plan a trip",
+      "readyRoutes": "Ready routes",
+      "contact": "Contact",
+      "collaboration": "Collaboration",
+      "profile": "Profile",
+      "home": "Home",
+      "login": "Login",
+      "register": "Sign Up"
+    },
+    "notifications": {
+      "noNotifications": "No new notifications",
+      "sentDate": "Date sent",
+      "expireDate": "Expiry date"
+    },
+    "logout": "Logout"
   },
   "header": {
     "title": "Plan your amazing journey with Raven Road",
@@ -247,11 +261,91 @@
       "deleteData": "Delete Data"
     }
   },
+
+
+
+
   "textWithLogo": {
     "logoAlt": "Raven Road Logo",
     "cutoutText": "RAVEN ROAD",
     "description": "Navigation of the future",
     "joinButton": "JOIN",
     "proButton": "PRO"
+  },
+  "serviceContainer": {
+    "service1": {
+      "alt": "Intelligent Route Planning",
+      "title": "Intelligent Route Planning",
+      "description": "Create your own routes using AI!"
+    },
+    "service2": {
+      "alt": "Real-Time Updates",
+      "title": "Stay One Step Ahead!",
+      "description": "Always avoid traffic jams and other road obstacles!"
+    },
+    "service3": {
+      "alt": "Enhanced Safety",
+      "title": "Safety First",
+      "description": "Stay informed about road events in real time!"
+    }
+  },
+  "satisfactionContainer": {
+    "subtitle": "ABOUT US",
+    "title": "DISCOVER THE POSSIBILITIES",
+    "highlight": "RAVEN ROAD",
+    "satisfactionLabel": "user satisfaction level",
+    "satisfactionValue": "90%",
+    "description": "Raven Road is a navigation app that helps you reach your destination quickly and safely. Plan your routes with artificial intelligence, avoid road disruptions, and always stay ahead of others. Join our community and explore the world with Raven Road.",
+    "button": "LEARN MORE",
+    "image1Alt": "example1",
+    "image2Alt": "example2"
+  },
+  "cta": {
+    "header": "Register today and start exploring endless possibilities.",
+    "buttonText": "Get Started"
+  },
+  "pricingCards": {
+    "currency": "€",
+    "subtitle": "OUR BEST",
+    "subtitleHighlight": "PRICING",
+    "title": "OUR BEST",
+    "titleHighlight": "DEAL IS HERE",
+    "moreInAppButton": "MORE IN THE APP",
+    "silverWing": {
+      "title": "SILVER WING",
+      "span": "Monthly",
+      "features": [
+        "Generate routes using AI",
+        "Up to 5 generated routes per month",
+        "Offline maps",
+        "Route recording with measurements",
+        "Publishing recorded routes",
+        "Everything included in the free version"
+      ]
+    },
+    "blackFeather": {
+      "title": "BLACK FEATHER",
+      "span": "Yearly",
+      "features": [
+        "Generate routes using AI",
+        "Up to 10 generated routes per month",
+        "Route planning",
+        "Create groups",
+        "Create events",
+        "Everything included in Silver Wing"
+      ]
+    },
+    "shadowRaven": {
+      "title": "SHADOW RAVEN",
+      "span": "Yearly",
+      "features": [
+        "Generate routes using AI",
+        "Up to 20 generated routes per month",
+        "Exclusive routes and events",
+        "Unlimited offline route saving",
+        "Priority support",
+        "Everything included in Black Feather"
+      ]
+    }
   }
 }

@@ -1,8 +1,22 @@
 {
   "navbar": {
-    "home": "Startseite",
-    "contact": "Kontakt",
-    "collaboration": "Zusammenarbeit"
+    "menuItems": {
+      "pro": "Pro",
+      "planTrip": "Reise planen",
+      "readyRoutes": "Fertige Routen",
+      "contact": "Kontakt",
+      "collaboration": "Zusammenarbeit",
+      "profile": "Profil",
+      "home": "Startseite",
+      "login": "Login",
+      "register": "Registrieren"
+    },
+    "notifications": {
+      "noNotifications": "Keine neuen Benachrichtigungen",
+      "sentDate": "Sendedatum",
+      "expireDate": "Ablaufdatum"
+    },
+    "logout": "Abmelden"
   },
   "header": {
     "title": "Plane deine großartige Reise mit Raven Road",
@@ -247,11 +261,91 @@
       "deleteData": "Daten löschen"
     }
   },
+
+
+
+
   "textWithLogo": {
     "logoAlt": "Raven Road Logo",
     "cutoutText": "RAVEN ROAD",
     "description": "Navigation der Zukunft",
     "joinButton": "BEITRETEN",
     "proButton": "PRO"
+  },
+  "serviceContainer": {
+    "service1": {
+      "alt": "Intelligente Routenplanung",
+      "title": "Intelligente Routenplanung",
+      "description": "Erstelle deine eigenen Routen mit KI!"
+    },
+    "service2": {
+      "alt": "Echtzeit-Updates",
+      "title": "Einen Schritt voraus!",
+      "description": "Vermeide immer Staus und andere Hindernisse auf der Straße!"
+    },
+    "service3": {
+      "alt": "Erhöhte Sicherheit",
+      "title": "Sicherheit",
+      "description": "Sei stets über Ereignisse auf der Straße informiert!"
+    }
+  },
+  "satisfactionContainer": {
+    "subtitle": "ÜBER UNS",
+    "title": "ENTDECKE DIE MÖGLICHKEITEN",
+    "highlight": "RAVEN ROAD",
+    "satisfactionLabel": "Zufriedenheitsgrad der Nutzer",
+    "satisfactionValue": "90%",
+    "description": "Raven Road ist eine Navigations-App, mit der du schnell und sicher an dein Ziel gelangst. Plane deine Routen mit künstlicher Intelligenz, vermeide Verkehrsstörungen und sei immer einen Schritt voraus. Werde Teil unserer Community und entdecke die Welt mit Raven Road.",
+    "button": "MEHR ERFAHREN",
+    "image1Alt": "example1",
+    "image2Alt": "example2"
+  },
+  "cta": {
+    "header": "Registriere dich noch heute und entdecke endlose Möglichkeiten.",
+    "buttonText": "Los geht's"
+  },
+  "pricingCards": {
+    "currency": "€",
+    "subtitle": "UNSER BESTES",
+    "subtitleHighlight": "ANGEBOT",
+    "title": "UNSER BESTES",
+    "titleHighlight": "PREIS-ANGEBOT IST DA",
+    "moreInAppButton": "MEHR IN DER APP",
+    "silverWing": {
+      "title": "SILVER WING",
+      "span": "Monatlich",
+      "features": [
+        "Routen mit KI generieren",
+        "Bis zu 5 generierte Routen pro Monat",
+        "Offline-Karten",
+        "Routenaufzeichnung mit Messungen",
+        "Veröffentlichung aufgezeichneter Routen",
+        "Alles aus der kostenlosen Version"
+      ]
+    },
+    "blackFeather": {
+      "title": "BLACK FEATHER",
+      "span": "Jährlich",
+      "features": [
+        "Routen mit KI generieren",
+        "Bis zu 10 generierte Routen pro Monat",
+        "Routenplanung",
+        "Gruppen erstellen",
+        "Veranstaltungen erstellen",
+        "Alles aus Silver Wing"
+      ]
+    },
+    "shadowRaven": {
+      "title": "SHADOW RAVEN",
+      "span": "Jährlich",
+      "features": [
+        "Routen mit KI generieren",
+        "Bis zu 20 generierte Routen pro Monat",
+        "Exklusive Routen und Veranstaltungen",
+        "Unbegrenztes Speichern von Routen offline",
+        "Priorisierter Support",
+        "Alles aus Black Feather"
+      ]
+    }
   }
 }

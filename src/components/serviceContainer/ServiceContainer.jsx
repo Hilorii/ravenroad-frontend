@@ -1,44 +1,53 @@
 import React from 'react';
 import './ServiceContainer.css';
 // Przykładowe ikony - zastąp je swoimi obrazkami lub użyj React Icons
-import { default as icon1 } from '../../assets/planning.png';
-import { default as icon2 } from '../../assets/step.png';
-import { default as icon3 } from '../../assets/safety.png';
+import icon1 from '../../assets/planning.png';
+import icon2 from '../../assets/step.png';
+import icon3 from '../../assets/safety.png';
+
+import { useTranslation } from 'react-i18next';
 
 const ServiceContainer = () => {
+    const { t } = useTranslation();
+
     return (
         <section className="service-container">
             {/* 1. Box */}
             <div className="service-item">
-                <img className="service-icon" src={icon1} alt="Inteligentne Planowanie Tras" />
-                {/* Kontener na nagłówek i opis */}
+                <img
+                    className="service-icon"
+                    src={icon1}
+                    alt={t('serviceContainer.service1.alt')}
+                />
                 <div className="service-text">
-                    <h3>Inteligentne Planowanie Tras</h3>
-                    <p>
-                        Twórz własne trasy za pomocą Ai!
-                    </p>
+                    <h3>{t('serviceContainer.service1.title')}</h3>
+                    <p>{t('serviceContainer.service1.description')}</p>
                 </div>
             </div>
 
             {/* 2. Box */}
             <div className="service-item">
-                <img className="service-icon" src={icon2} alt="Aktualizacje w Czasie Rzeczywistym" />
+                <img
+                    className="service-icon"
+                    src={icon2}
+                    alt={t('serviceContainer.service2.alt')}
+                />
                 <div className="service-text">
-                    <h3>O krok do przodu!</h3>
-                    <p>
-                        Zawsze omijaj korki i inne przeszkody na drodze!
-                    </p>
+                    <h3>{t('serviceContainer.service2.title')}</h3>
+                    <p>{t('serviceContainer.service2.description')}</p>
                 </div>
             </div>
 
             {/* 3. Box */}
             <div className="service-item">
-                <img className="service-icon" src={icon3} alt="Zwiększone Bezpieczeństwo" />
+                <img
+                    className="service-icon"
+                    src={icon3}
+                    alt={t('serviceContainer.service3.alt')}
+                />
                 <div className="service-text">
-                    <h3>Bezpieczeństwo</h3>
-                    <p>
-                        Bądź na bieżąco informowany o wydarzeniach na drodze!
-                    </p>
+                    <h3>{t('serviceContainer.service3.title')}</h3>
+                    <p>{t('serviceContainer.service3.description')}</p>
                 </div>
             </div>
         </section>
