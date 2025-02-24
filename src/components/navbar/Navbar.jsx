@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
+import React, { useState, useContext, useEffect } from 'react';
 import { FaInbox } from 'react-icons/fa';
 import './navbar.css';
 import logo from '../../assets/RRlogo.png';
@@ -16,15 +15,16 @@ const Navbar = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const { logout } = useUser();
-    const [toggleMenu, setToggleMenu] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
-    const [notifications, setNotifications] = useState([{ id: 1, text: 'Nowe powiadomienie!' }]);
+    const [notifications, setNotifications] = useState([]);
     const { t } = useTranslation();
 
-    // Sprawdzamy, czy są jakieś nieprzeczytane powiadomienia
-    const hasNewNotifications = notifications.some(notification => notification.is_read === 0);
+    // Czy istnieją jakieś nieprzeczytane powiadomienia
+    const hasNewNotifications = notifications.some(
+        (notification) => notification.is_read === 0
+    );
 
-    // Wylogowanie użytkownika
+    // Wylogowanie
     const handleLogout = async () => {
         try {
             const response = await fetch('http://localhost:5000/logout', {
@@ -36,39 +36,44 @@ const Navbar = () => {
                 navigate('/');
                 window.location.reload();
             } else {
-                console.error("Logout failed:", response.status);
+                console.error('Logout failed:', response.status);
             }
         } catch (err) {
-            console.error("Logout error:", err);
+            console.error('Logout error:', err);
         }
     };
 
-    // Pokazywanie / chowanie powiadomień i oznaczanie jako przeczytane
+    // Kliknięcie w ikonę powiadomień
     const toggleNotifications = async () => {
-        setShowNotifications(prevState => !prevState);
+        setShowNotifications((prev) => !prev);
 
+        // Jeśli mamy nieprzeczytane powiadomienia -> oznacz je jako przeczytane
         if (hasNewNotifications) {
             try {
-                const response = await fetch(`http://localhost:5000/notifications/mark-as-read`, {
-                    method: 'PATCH',
-                    credentials: 'include',
-                });
+                const response = await fetch(
+                    'http://localhost:5000/notifications/mark-as-read',
+                    {
+                        method: 'PATCH',
+                        credentials: 'include',
+                    }
+                );
                 if (response.ok) {
-                    const updatedNotifications = notifications.map(notification => ({
+                    // Aktualizuj stan, żeby is_read było 1
+                    const updated = notifications.map((notification) => ({
                         ...notification,
                         is_read: 1,
                     }));
-                    setNotifications(updatedNotifications);
+                    setNotifications(updated);
                 } else {
-                    console.error("Failed to mark notifications as read");
+                    console.error('Failed to mark notifications as read');
                 }
             } catch (error) {
-                console.error("Error marking notifications as read:", error);
+                console.error('Error marking notifications as read:', error);
             }
         }
     };
 
-    // Kliknięcie poza popupem z powiadomieniami – zamyka je
+    // Kliknięcie poza popupem -> zamknięcie
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -85,33 +90,44 @@ const Navbar = () => {
         };
     }, [showNotifications]);
 
-    // Pobieramy powiadomienia z backendu
+    // Pobranie powiadomień z backendu
     useEffect(() => {
-        const fetchInvitations = async () => {
+        const fetchNotifications = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/notifications`, {
+                const response = await fetch('http://localhost:5000/notifications', {
                     credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
                     setNotifications(data);
-                    console.log("Fetched notifications:", data);
+                    console.log('Fetched notifications:', data);
                 } else {
-                    console.error("Failed to fetch invitations");
+                    console.error('Failed to fetch notifications');
                 }
             } catch (error) {
-                console.error("Error fetching invitations:", error);
+                console.error('Error fetching notifications:', error);
             }
         };
 
         if (user) {
-            fetchInvitations();
+            fetchNotifications();
         }
     }, [user]);
 
-    // Komponent Menu – różne linki w zależności od stanu usera i ścieżki
+    // Funkcje akceptacji/odrzucenia (placeholder)
+    const handleAccept = (notificationId) => {
+        console.log('Zaakceptuj powiadomienie ID:', notificationId);
+        // TODO: fetch / potwierdź w backendzie
+    };
+
+    const handleReject = (notificationId) => {
+        console.log('Odrzuć powiadomienie ID:', notificationId);
+        // TODO: fetch / odrzuć w backendzie
+    };
+
+    // Komponent Menu (tylko na duży ekran)
     const Menu = () => {
-        if (!user && window.location.pathname === "/") {
+        if (!user && window.location.pathname === '/') {
             return (
                 <>
                     <p className="nav-p">
@@ -141,7 +157,7 @@ const Navbar = () => {
                     </p>
                 </>
             );
-        } else if (user && window.location.pathname === "/") {
+        } else if (user && window.location.pathname === '/') {
             return (
                 <>
                     <p className="nav-p">
@@ -208,6 +224,7 @@ const Navbar = () => {
         <>
             <TopBar />
             <div className="rr__navbar">
+                {/* Logo i linki (tylko na dużych ekranach) */}
                 <div className="rr__navbar-links">
                     <div className="rr__navbar-links_logo">
                         <a href="/">
@@ -218,6 +235,8 @@ const Navbar = () => {
                         <Menu />
                     </div>
                 </div>
+
+                {/* Prawa strona: powiadomienia + avatar */}
                 <div className="rr__navbar-sign">
                     {user ? (
                         <div className="navbar-user">
@@ -235,8 +254,18 @@ const Navbar = () => {
                                         <span className="notification-alert">!</span>
                                     )}
                                 </div>
-                                <AvatarMenu />
+                                <AvatarMenu
+                                    handleLogout={handleLogout}
+                                    // Przekazujemy logikę menu i eventy do avatar menu
+                                    notifications={notifications}
+                                    showNotifications={showNotifications}
+                                    setShowNotifications={setShowNotifications}
+                                    handleAccept={handleAccept}
+                                    handleReject={handleReject}
+                                />
                             </div>
+
+                            {/* Okienko z powiadomieniami, wyświetlane TYLKO na klik w "kopertę" */}
                             {showNotifications && (
                                 <div
                                     className={`notifications-popup ${
@@ -244,29 +273,63 @@ const Navbar = () => {
                                     }`}
                                 >
                                     <div className="popup-arrow"></div>
-                                    {notifications.length > 0 ? (
-                                        notifications.map(notification => (
-                                            <div
-                                                key={notification.id}
-                                                className="notification-container"
-                                            >
-                                                <p>{notification.content}</p>
-                                                <p>
-                                                    {t('navbar.notifications.sentDate')}:{' '}
-                                                    {new Date(notification.created_at).toLocaleDateString()}
-                                                </p>
-                                                <p>
-                                                    {t('navbar.notifications.expireDate')}:{' '}
-                                                    {new Date(
-                                                        new Date(notification.created_at).getTime() +
-                                                        7 * 24 * 60 * 60 * 1000
-                                                    ).toLocaleDateString()}
-                                                </p>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>{t('navbar.notifications.noNotifications')}</p>
-                                    )}
+                                    <div className="notifications-list">
+                                        {notifications.length > 0 ? (
+                                            notifications.map((notification) => {
+                                                // Obliczamy date wygaśnięcia (1 tydzień)
+                                                const createdAt = new Date(notification.created_at);
+                                                const expireAt = new Date(
+                                                    createdAt.getTime() + 7 * 24 * 60 * 60 * 1000
+                                                );
+
+                                                return (
+                                                    <div
+                                                        key={notification.id}
+                                                        className="notification-container"
+                                                    >
+                                                        <p className="notification-content">
+                                                            {notification.content}
+                                                        </p>
+
+                                                        {/* Daty małym druczkiem */}
+                                                        <p className="notification-dates">
+                                                            {t('navbar.notifications.sentDate')}:{' '}
+                                                            {createdAt.toLocaleDateString()}
+                                                        </p>
+                                                        <p className="notification-dates">
+                                                            {t('navbar.notifications.expireDate')}:{' '}
+                                                            {expireAt.toLocaleDateString()}
+                                                        </p>
+
+                                                        {/* Jeśli type = group lub event -> pokazujemy przyciski */}
+                                                        {(notification.type === 'group' ||
+                                                            notification.type === 'event') && (
+                                                            <div className="notification-buttons">
+                                                                <button
+                                                                    className="btn-accept"
+                                                                    onClick={() =>
+                                                                        handleAccept(notification.id)
+                                                                    }
+                                                                >
+                                                                    ✓
+                                                                </button>
+                                                                <button
+                                                                    className="btn-reject"
+                                                                    onClick={() =>
+                                                                        handleReject(notification.id)
+                                                                    }
+                                                                >
+                                                                    X
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })
+                                        ) : (
+                                            <p>{t('navbar.notifications.noNotifications')}</p>
+                                        )}
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -283,50 +346,6 @@ const Navbar = () => {
                                 {t('navbar.menuItems.register')}
                             </button>
                         </>
-                    )}
-                </div>
-                <div className="rr__navbar-menu">
-                    {toggleMenu ? (
-                        <RiCloseLine
-                            color="#fff"
-                            size={27}
-                            onClick={() => setToggleMenu(false)}
-                        />
-                    ) : (
-                        <RiMenu3Line
-                            color="#fff"
-                            size={27}
-                            onClick={() => setToggleMenu(true)}
-                        />
-                    )}
-                    {toggleMenu && (
-                        <div className="rr__navbar-menu_container scale-up-center">
-                            <div className="rr__navbar-menu_container-links">
-                                <Menu />
-                                {!user ? (
-                                    <div className="rr__navbar-menu_container-links-sign">
-                                        <p>
-                                            <Link to="/login">{t('navbar.menuItems.login')}</Link>
-                                        </p>
-                                        <button
-                                            className="signup"
-                                            onClick={() => navigate('/register')}
-                                            type="button"
-                                        >
-                                            {t('navbar.menuItems.register')}
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className="rr__navbar-menu_container-links-sign">
-                                        <p>
-                                            <a className="nav-p" onClick={handleLogout}>
-                                                {t('navbar.logout')}
-                                            </a>
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
                     )}
                 </div>
             </div>

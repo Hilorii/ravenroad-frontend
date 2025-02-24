@@ -3,7 +3,30 @@ import { useUser } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import './AvatarMenu.css';
 
-const AvatarMenu = () => {
+// Funkcja, która zwraca listę linków (to, co było w <Menu />),
+function getMenuItems(user) {
+    // Prosta logika na wzór Navbar -> można rozszerzyć zależnie od stanu usera
+    const links = [];
+    if (!user) {
+        links.push({ label: 'Start', path: '/' });
+        links.push({ label: 'Kontakt', path: '/contact' });
+    } else {
+        // Zalogowany
+        links.push({ label: 'Start', path: '/' });
+        links.push({ label: 'Kontakt', path: '/contact' });
+        // links.push({ label: 'Profil', path: `/profile/${user.username}` });
+    }
+    return links;
+}
+
+const AvatarMenu = ({
+                        handleLogout,
+                        notifications,
+                        showNotifications,
+                        setShowNotifications,
+                        handleAccept,
+                        handleReject,
+                    }) => {
     const { user, logout } = useUser();
     const navigate = useNavigate();
 
@@ -11,6 +34,21 @@ const AvatarMenu = () => {
     const [error, setError] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
+
+    // Stan do wykrywania szerokości ekranu
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const isMobile = windowWidth < 1000; // breakpoint musi być zgodny z tym w navbar.css
 
     // Pobieranie awatara z serwera
     useEffect(() => {
@@ -42,26 +80,6 @@ const AvatarMenu = () => {
         fetchUserData();
     }, []);
 
-    // Funkcja wylogowania
-    const handleLogout = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/logout', {
-                method: 'POST',
-                credentials: 'include',
-            });
-
-            if (response.ok) {
-                logout();
-                navigate('/');
-                window.location.reload();
-            } else {
-                console.error("Logout failed:", response.status);
-            }
-        } catch (err) {
-            console.error("Logout error:", err);
-        }
-    };
-
     // Przejście do profilu
     const handleProfileClick = () => {
         if (user && user.username) {
@@ -80,7 +98,7 @@ const AvatarMenu = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setMenuOpen(false); // Zamknij menu
+                setMenuOpen(false);
             }
         };
 
@@ -90,25 +108,60 @@ const AvatarMenu = () => {
         };
     }, []);
 
+    // Kliknięcie "Wyloguj"
+    const handleLogoutClick = async () => {
+        if (handleLogout) {
+            await handleLogout();
+        }
+    };
+
+    // Gdy jest mały ekran -> w avatar menu pokażemy linki z getMenuItems
+    const menuItems = getMenuItems(user);
+
     return (
         <div className="avatar-container" ref={menuRef}>
-            <div
-                className="avatar"
-                onClick={toggleMenu}
-            >
-                <img
-                    src={avatarUrl}
-                    alt="User avatar"
-                    className="profile-avatar"
-                />
-                {/* Gradientowy border w CSS */}
+            <div className="avatar" onClick={toggleMenu}>
+                <img src={avatarUrl} alt="User avatar" className="profile-avatar" />
                 <div className="avatar-arrow"></div>
             </div>
 
             {menuOpen && (
                 <div className="avatar-menu">
-                    <button onClick={handleProfileClick}>Profil</button>
-                    <button onClick={handleLogout}>Wyloguj</button>
+                    {/* Jeśli jest mały ekran, pokaż także linki z "Menu" */}
+                    {isMobile && (
+                        <>
+                            {menuItems.map((item, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => {
+                                        navigate(item.path);
+                                        setMenuOpen(false);
+                                    }}
+                                >
+                                    {item.label}
+                                </button>
+                            ))}
+                            <hr />
+                        </>
+                    )}
+
+                    {/* Te przyciski zawsze: Profil + Wyloguj */}
+                    <button
+                        onClick={() => {
+                            handleProfileClick();
+                            setMenuOpen(false);
+                        }}
+                    >
+                        Profil
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleLogoutClick();
+                            setMenuOpen(false);
+                        }}
+                    >
+                        Wyloguj
+                    </button>
                 </div>
             )}
 
