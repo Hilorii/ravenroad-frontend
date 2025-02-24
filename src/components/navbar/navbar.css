@@ -151,11 +151,12 @@
 
 .notification-alert {
     position: absolute;
-    top: -7px;
-    right: 73px;
+    top: -10px;
+    right: 8.5px;
     color: orange;
     font-weight: bold;
     font-size: 10px;
+    scale: 1.2;
 }
 
 @keyframes fadeIn {
