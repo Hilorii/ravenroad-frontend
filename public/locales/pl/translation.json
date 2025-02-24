@@ -13,8 +13,8 @@
     },
     "notifications": {
       "noNotifications": "Brak nowych powiadomień",
-      "sentDate": "Data wysłania",
-      "expireDate": "Data ważności"
+      "sentDate": "Wysłane",
+      "expireDate": "Wygaśnie"
     },
     "logout": "Wyloguj"
   },

@@ -291,16 +291,6 @@ const Navbar = () => {
                                                             {notification.content}
                                                         </p>
 
-                                                        {/* Daty małym druczkiem */}
-                                                        <p className="notification-dates">
-                                                            {t('navbar.notifications.sentDate')}:{' '}
-                                                            {createdAt.toLocaleDateString()}
-                                                        </p>
-                                                        <p className="notification-dates">
-                                                            {t('navbar.notifications.expireDate')}:{' '}
-                                                            {expireAt.toLocaleDateString()}
-                                                        </p>
-
                                                         {/* Jeśli type = group lub event -> pokazujemy przyciski */}
                                                         {(notification.type === 'group' ||
                                                             notification.type === 'event') && (
@@ -323,6 +313,16 @@ const Navbar = () => {
                                                                 </button>
                                                             </div>
                                                         )}
+
+                                                        {/* Daty małym druczkiem */}
+                                                        <p className="notification-dates">
+                                                            {t('navbar.notifications.sentDate')}:{' '}
+                                                            {createdAt.toLocaleDateString()}
+                                                        </p>
+                                                        <p className="notification-dates">
+                                                            {t('navbar.notifications.expireDate')}:{' '}
+                                                            {expireAt.toLocaleDateString()}
+                                                        </p>
                                                     </div>
                                                 );
                                             })

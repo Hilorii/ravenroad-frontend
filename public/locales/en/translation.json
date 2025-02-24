@@ -13,8 +13,8 @@
     },
     "notifications": {
       "noNotifications": "No new notifications",
-      "sentDate": "Date sent",
-      "expireDate": "Expiry date"
+      "sentDate": "Sent",
+      "expireDate": "Expire"
     },
     "logout": "Logout"
   },

@@ -136,10 +136,10 @@
     position: absolute;
     top: 135px;
     right: 30px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: transparent;
     border: 1px solid rgba(255, 255, 255, 0.9);
     padding: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.8);*/
     border-radius: 10px;
     height: auto;
     z-index: 9999;
@@ -181,13 +181,13 @@
 
 /* Tekst powiadomienia */
 .notification-content {
-    font-size: 16px;
+    font-size: 16px !important;
     margin-bottom: 6px;
 }
 
 /* Daty małym druczkiem */
 .notification-dates {
-    font-size: 12px;
+    font-size: 12px !important;
     color: #ccc;
     margin: 0;
 }
@@ -215,7 +215,7 @@
     border-radius: 4px;
     padding: 4px 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 17px;
 }
 .btn-reject:hover {
     background-color: #B92534;
