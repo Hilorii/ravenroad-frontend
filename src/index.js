@@ -73,7 +73,7 @@ const root = createRoot(container);
 
 root.render(
     <React.StrictMode>
-        <TamaguiProvider config={tamaguiConfig}>
+        {/*<TamaguiProvider config={tamaguiConfig}>*/}
             <PortalProvider>
                 <UserProvider>
                     <Router>
@@ -143,6 +143,6 @@ root.render(
                     </Router>
                 </UserProvider>
             </PortalProvider>
-        </TamaguiProvider>
+        {/*</TamaguiProvider>*/}
     </React.StrictMode>
 );

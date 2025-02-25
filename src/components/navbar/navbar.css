@@ -139,7 +139,6 @@
     background-color: transparent;
     border: 1px solid rgba(255, 255, 255, 0.9);
     padding: 10px;
-    /*box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.8);*/
     border-radius: 10px;
     height: auto;
     z-index: 9999;
@@ -187,6 +186,21 @@
 .notification-container:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ✖ Mały czerwony X w prawym górnym rogu do usuwania powiadomienia */
+.close-notification {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+    color: #ff4b4b;
+    font-weight: bold;
+    font-size: 16px;
+    transition: transform 0.2s;
+}
+.close-notification:hover {
+    transform: scale(1.2);
 }
 
 /* 📝 Tekst powiadomienia */
@@ -263,7 +277,6 @@
     }
 }
 
-
 /* Strzałka u góry popupu */
 .popup-arrow {
     position: absolute;
@@ -319,21 +332,12 @@
    RESPONSYWNOŚĆ
    ================================= */
 
-/*
-   1) Na mniejszych ekranach chowamy duże menu (linki) –
-      zostaje tylko avatar i powiadomienia.
-*/
+/* 1) Na mniejszych ekranach chowamy duże menu (linki). */
 @media screen and (max-width: 1000px) {
     .rr__navbar-links_container {
         display: none; /* chowamy duże menu */
     }
 }
-
-/* 2) Kolejne stopnie 'zwężania' layoutu:
-   - Zmniejszamy padding
-   - Delikatnie zmniejszamy ikonę/avatara/logo
-   - Możemy też dostosować pozycję lub szerokość kontenera powiadomień
-*/
 
 /* Poniżej 700px – skracamy padding i minimalnie zmniejszamy ikonę powiadomień */
 @media screen and (max-width: 700px) {
@@ -347,7 +351,6 @@
     .rr__navbar-links_logo img {
         width: 100px;
         height: 100px;
-        /* transition pozostaje bez zmian */
     }
 }
 
@@ -383,7 +386,7 @@
     }
 }
 
-/* Poniżej 320px – bardziej ekstremalne zmniejszenie */
+/* Poniżej 320px – ekstremalne zmniejszenie */
 @media screen and (max-width: 320px) {
     .rr__navbar {
         padding: 0.5rem;
@@ -397,7 +400,7 @@
         top: 110px;
         right: 5px;
     }
-    .avatar{
-        scale: 0.8;
+    .avatar {
+        transform: scale(0.8);
     }
 }
