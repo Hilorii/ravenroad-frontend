@@ -43,7 +43,6 @@ const SatisfactionContainer = () => {
                         alt={t('satisfactionContainer.image1Alt')}
                     />
                 </div>
-
                 <div className="text-and-bar-container">
                     <div className="text-box">
                         <h2 className="subtitle">
@@ -55,7 +54,6 @@ const SatisfactionContainer = () => {
                 {t('satisfactionContainer.highlight')}
               </span>
                         </h1>
-
                         <div className="satisfaction">
                             <p className="label">
                                 {t('satisfactionContainer.satisfactionLabel')}
@@ -68,7 +66,6 @@ const SatisfactionContainer = () => {
                                 </div>
                             </div>
                         </div>
-
                         <div className="gradient-and-text">
                             <div className="gradient-bar"></div>
                             <p className="description">
@@ -81,7 +78,6 @@ const SatisfactionContainer = () => {
                         </button>
                     </div>
                 </div>
-
                 <div className="image-box">
                     <img
                         src={satisfyRight}

@@ -6,7 +6,6 @@ import { IoIosArrowBack } from "react-icons/io";
 const BackButton = () => {
     const navigate = useNavigate();
 
-    // Funkcja do nawigacji wstecz
     const goBack = () => {
         navigate(-1);
     };

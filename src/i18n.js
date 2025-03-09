@@ -8,9 +8,9 @@ i18n
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-        fallbackLng: 'en', // Domyślny język
-        supportedLngs: ['en', 'pl', 'de'], // Obsługiwane języki
-        nonExplicitSupportedLngs: true, // Obsługuje kody jak 'en-US' -> 'en'
+        fallbackLng: 'en',
+        supportedLngs: ['en', 'pl', 'de'],
+        nonExplicitSupportedLngs: true,
         interpolation: {
             escapeValue: false,
         },
@@ -21,8 +21,7 @@ i18n
             order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag'],
             caches: ['localStorage', 'cookie'],
         },
-        // Dodanie funkcji obsługującej brakujące tłumaczenia
-        load: 'languageOnly', // Używa tylko 'en', pomijając 'en-US'
+        load: 'languageOnly',
         missingKeyHandler: (lng, ns, key, fallbackValue) => {
             console.warn(`Missing key: ${key} in ${lng}`);
         },

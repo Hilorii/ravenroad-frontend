@@ -1,4 +1,3 @@
-// src/components/CenteredTextWithLogo.jsx
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import rrLogo from '../../assets/RRlogo.png';
@@ -6,12 +5,6 @@ import './centeredTextWithLogo.css';
 
 const CenteredTextWithLogo = () => {
     const { t, i18n } = useTranslation();
-
-    useEffect(() => {
-        console.log('CenteredTextWithLogo rendered');
-        console.log('Aktualny język to:', i18n.language);
-    }, [i18n.language]);
-
     return (
         <div className="centered-container">
             <div className="logo-background">

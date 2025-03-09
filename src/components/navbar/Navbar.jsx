@@ -44,8 +44,6 @@ const Navbar = () => {
     // Otwórz/Zamknij popup z powiadomieniami
     const toggleNotifications = async () => {
         setShowNotifications(prev => !prev);
-
-        // Oznacz jako przeczytane, jeśli są
         if (hasNewNotifications) {
             try {
                 const response = await fetch('http://localhost:5000/notifications/mark-as-read', {

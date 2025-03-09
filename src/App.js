@@ -5,10 +5,7 @@ import {Footer, Blog, Possibility, Features, WhatRR, Header} from "./containers"
 import {CTA, Brand, Navbar, Ad, Cookies} from './components'
 import "./App.css"
 import AnimatedBackground from './assets/AnimatedBackground/AnimatedBackground'
-
-
 import CenteredTextWithLogo from './components/textWithLogo/CenteredTextWithLogo';
-
 import { ProCard } from './components/tamagui/pro-card';
 import { SpinnerLoading } from './components/tamagui/spinner';
 import ServiceContainer from './components/serviceContainer/ServiceContainer';
@@ -25,16 +22,14 @@ const App = () => {
         axios.get('http://localhost:5000/user', { withCredentials: true })
             .then(response => {
                 setUser(response.data);
-                setIsLoading(false); // Ustaw ładowanie na false po otrzymaniu danych
+                setIsLoading(false);
             })
             .catch(error => {
                 console.error('There was an error fetching the user data!', error);
-
-                // Sprawdź, czy użytkownik jest na stronie głównej
                 if (window.location.pathname !== '/') {
-                    navigate('/login'); // Przekierowanie na stronę logowania dla innych stron
+                    navigate('/login');
                 } else {
-                    setIsLoading(false); // Jeśli jest na stronie głównej, zatrzymaj ładowanie
+                    setIsLoading(false);
                 }
             });
     }, [navigate]);
@@ -43,49 +38,46 @@ const App = () => {
         <div className="">
             <AnimatedBackground />
             <Cookies/>
-        <div className="">
             <div className="">
-                <Navbar/>
+                <div className="">
+                    <Navbar/>
+                </div>
+                {user ? (
+                    <div>
+                        <CenteredTextWithLogo/>
+                        <ServiceContainer/>
+                        {/*<Motor/>*/}
+                        <SatisfactionContainer/>
+                        <Header/>
+                        {/*<Brand/>*/}
+                        <Ad/>
+                        {/*<WhatRR/>*/}
+                        <Features/>
+                        <PricingCards/>
+                        {/*<Possibility/>*/}
+                        <CTA/>
+                        {/*<Blog/>*/}
+                        <Footer/>
+                    </div>
+                ) : (
+                    <div>
+                        <CenteredTextWithLogo/>
+                        <ServiceContainer/>
+                        <SatisfactionContainer/>
+                        <Header/>
+                        {/*<Brand/>*/}
+                        <Ad/>
+                        {/*<WhatRR/>*/}
+                        <Features/>
+                        <PricingCards/>
+                        {/*<Possibility/>*/}
+                        <CTA/>
+                        {/*<Blog/>*/}
+                        <Footer/>
+                    </div>
+                )}
             </div>
-            {user ? (
-                <div>
-                    <CenteredTextWithLogo/>
-                    <ServiceContainer/>
-                    {/*<Motor/>*/}
-                    <SatisfactionContainer/>
-                    <Header/>
-                    {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
-                    <Ad/>
-                    {/*<WhatRR/>*/}
-                    <Features/>
-                    <PricingCards/>
-                    {/*<Possibility/>*/}
-                    <CTA/>
-                    {/*<Blog/>*/}
-                    <Footer/>
-                </div>
-            ) : (
-                <div>
-                    <CenteredTextWithLogo/>
-                    <ServiceContainer/>
-                    <SatisfactionContainer/>
-                    <Header/>
-                    {/*<Brand/> /!* ZMIENIĆ MARKI*!/*/}
-                    <Ad/>
-                    {/*<WhatRR/>*/}
-                    <Features/>
-                    <PricingCards/>
-                    {/*<Possibility/>*/}
-                    <CTA/>
-                    {/*<Blog/>*/}
-                    <Footer/>
-                </div>
-            )}
-
-
         </div>
-        </div>
-
     )
 }
 export default App
