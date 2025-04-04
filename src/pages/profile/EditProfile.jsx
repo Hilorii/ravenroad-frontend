@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaChevronDown, FaCar, FaTruck, FaMotorcycle, FaBicycle } from 'react-icons/fa';
+import { useAlerts } from '../../contexts/AlertsContext';
 import "./EditProfile.css";
 
 const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }) => {
@@ -8,6 +9,7 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
     // Pola formularza
     const [username, setUsername] = useState(initialUsername || '');
     const [email, setEmail] = useState(initialEmail || '');
+
     // Hasła (tylko do nowego endpointu)
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -21,8 +23,11 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
 
     // Obsługa komunikatów błędów
     const [formError, setFormError] = useState('');
-    // Obsługa komunikatu sukcesu
-    const [successMessage, setSuccessMessage] = useState('');
+
+    // --------------------------
+    // Kontekst alertów
+    // --------------------------
+    const { addAlert } = useAlerts();
 
     // --------------------------
     // 1) Pobierz preferencje z bazy
@@ -60,7 +65,6 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
         setIsOpen(!isOpen);
         if (!isOpen) {
             setFormError('');
-            setSuccessMessage('');
         }
     };
 
@@ -75,7 +79,6 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormError('');
-        setSuccessMessage('');
 
         // Walidacja prosta
         if (!userId) {
@@ -85,10 +88,7 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
 
         try {
             // a) Najpierw aktualizujemy dane profilu
-            const profileUpdateBody = {
-                username,
-                email,
-            };
+            const profileUpdateBody = { username, email };
 
             const profileRes = await fetch(`http://localhost:5000/user/${userId}`, {
                 method: 'PUT',
@@ -116,11 +116,7 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
                     return;
                 }
 
-                const passwordBody = {
-                    oldPassword,
-                    newPassword,
-                    confirmPassword
-                };
+                const passwordBody = { oldPassword, newPassword, confirmPassword };
 
                 const passRes = await fetch(`http://localhost:5000/user/${userId}/password`, {
                     method: 'PUT',
@@ -163,7 +159,9 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
 
             // Jeśli wszystkie operacje się udały:
             const updatedProfile = await profileRes.json();
-            setSuccessMessage('Zmiany zostały zapisane!');
+
+            // *** Tutaj wywołujemy globalny alert: ***
+            addAlert("Zmiany zostały zapisane!", "success");
 
             // Wywołaj callback do odświeżenia w rodzicu, jeśli jest
             if (onProfileUpdated) {
@@ -198,9 +196,8 @@ const EditProfile = ({ userId, initialUsername, onProfileUpdated, initialEmail }
                 style={{ maxHeight: isOpen ? '650px' : '0px' }}
             >
                 <form className="edit-profile-form" onSubmit={handleSubmit}>
-                    {/* Błąd lub sukces nad formularzem */}
+                    {/* Błąd nad formularzem */}
                     {formError && <div className="form-error">{formError}</div>}
-                    {successMessage && <div className="form-success">{successMessage}</div>}
 
                     <div className="field">
                         <label>Nazwa użytkownika</label>

@@ -1,0 +1,48 @@
+/* components/AlertsContainer.css */
+
+/* Kontener zbiorczy wszystkich alertów */
+.myproject-alerts-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 300px;
+    z-index: 9999; /* by były nad innymi elementami */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Każdy pojedynczy alert */
+.myproject-alert {
+    font-family: var(--font-family);
+    padding: 12px 16px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    animation: myproject-alert-fade-in 0.3s ease;
+}
+
+/* Typy alertów (różne kolory tła) */
+.myproject-alert.info {
+    background-color: #31708f;
+}
+
+.myproject-alert.success {
+    background-color: #3c763d;
+}
+
+.myproject-alert.error {
+    background-color: #a94442;
+}
+
+/* prosta animacja fade-in + przesunięcie */
+@keyframes myproject-alert-fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(30%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

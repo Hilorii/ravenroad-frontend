@@ -4,14 +4,18 @@ import './profile.css';
 import { Navbar } from '../../components/index';
 import { FaCamera, FaCar, FaTruck, FaMotorcycle, FaBicycle } from 'react-icons/fa';
 import { useUser } from '../../contexts/UserContext';
+import { useAlerts } from '../../contexts/AlertsContext';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import { Footer } from "../../containers";
 import EditProfile from './EditProfile';
-import Squares from '../../components/linkSquares/LinkSquares'
+import Squares from '../../components/linkSquares/LinkSquares';
 
 const ProfilePage = () => {
     const { username } = useParams();
     const { user } = useUser(); // Zakładamy, że z kontekstu otrzymujesz obiekt { id, username, email, ...}
+
+    // KONTEKST ALERTÓW:
+    const { addAlert } = useAlerts();
 
     // Wyświetlana nazwa: jeśli w kontekście brak usera, użyj param z URL (lub 'Username')
     const displayName = user?.username || username || 'Username';
@@ -30,7 +34,7 @@ const ProfilePage = () => {
     const avatarInputRef = useRef(null);
     const bannerInputRef = useRef(null);
 
-    // Pobieranie danych o użytkowniku (avatar, banner)
+    // 1) Pobranie danych o użytkowniku (avatar, banner)
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -56,7 +60,7 @@ const ProfilePage = () => {
         fetchUserData();
     }, []);
 
-    // Pobieranie preferencji pojazdów
+    // 2) Pobranie preferencji pojazdów
     useEffect(() => {
         if (!user?.id) return;
 
@@ -84,9 +88,9 @@ const ProfilePage = () => {
         fetchPreferences();
     }, [user?.id]);
 
-    /**
-     * Obsługa zmiany avatara
-     */
+    // ---------------------------
+    // 3) Obsługa zmiany avatara
+    // ---------------------------
     const handleAvatarChange = async (e) => {
         const file = e.target.files[0];
         if (!file || !user?.id) return;
@@ -102,6 +106,7 @@ const ProfilePage = () => {
             });
 
             if (!response.ok) {
+                // Gdy serwer zwróci błąd, rzucamy i łapiemy w catch
                 throw new Error('Failed to upload avatar');
             }
 
@@ -110,17 +115,22 @@ const ProfilePage = () => {
                 setAvatarUrl(`http://localhost:5000/uploads/${data.user.avatar}`);
             }
 
-            // Odśwież całą stronę (np. by zaktualizować Navbar):
+            // Wyświetlamy ALERT o sukcesie:
+            addAlert('Avatar został pomyślnie zaktualizowany!', 'success', 3000);
+
+            // Jeśli chcesz, możesz odświeżyć stronę:
             window.location.reload();
 
         } catch (err) {
             console.error(err);
+            // Wyświetlamy ALERT błędu:
+            addAlert('Wystąpił błąd przy aktualizacji avatara!', 'error', 3000);
         }
     };
 
-    /**
-     * Obsługa zmiany bannera
-     */
+    // ---------------------------
+    // 4) Obsługa zmiany bannera
+    // ---------------------------
     const handleBannerChange = async (e) => {
         const file = e.target.files[0];
         if (!file || !user?.id) return;
@@ -144,8 +154,15 @@ const ProfilePage = () => {
                 setBannerUrl(`http://localhost:5000/uploads/${data.user.banner}`);
             }
 
+            // ALERT - success
+            addAlert('Banner został pomyślnie zaktualizowany!', 'success', 3000);
+
+            // Odśwież, jeśli chcesz:
+            // window.location.reload();
         } catch (err) {
             console.error(err);
+            // ALERT - error
+            addAlert('Wystąpił błąd przy aktualizacji bannera!', 'error', 3000);
         }
     };
 
@@ -240,7 +257,7 @@ const ProfilePage = () => {
                 />
             )}
 
-            <Squares/>
+            <Squares />
 
             <Footer />
         </div>

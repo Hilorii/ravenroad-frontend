@@ -50,6 +50,11 @@ import CollaborationPage from './pages/collaboration/Collaboration';
 import DeleteDataPage from './pages/deleteData/DeleteData';
 import ForgotPasswordPage from './pages/resetPassword/ForgotPassword';
 
+
+//PROVIDERS
+import { AlertsProvider } from './contexts/AlertsContext';
+import AlertsContainer from './components/alerts/AlertsContainer';
+
 //POZOSTAŁE
 import FAQ from './pages/FAQ/FAQ';
 
@@ -75,73 +80,76 @@ root.render(
     <React.StrictMode>
         {/*<TamaguiProvider config={tamaguiConfig}>*/}
             <PortalProvider>
-                <UserProvider>
-                    <Router>
-                        {/*<Cookies/>*/}
-                        <Routes>
-                            {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
-                            <Route path="/" element={<App />} />
-                            <Route path="/login" element={<LoginPage1 />} />
-                            <Route path="/register" element={<RegisterPage />} />
-                            <Route path="/passwordForgot" element={<PasswordForgotPage />} />
-                            <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
-                            <Route path="/pl/termsofuse" element={<TermsOfUsePage/>} />
-                            <Route path="/en/termsofuse" element={<TermsOfUsePageEN/>} />
-                            <Route path="/de/termsofuse" element={<TermsOfUsePageDE/>} />
-                            <Route path="/deleteData" element={<DeleteDataPage/>} />
-                            <Route path="/pricing" element={<PricingPage/>} />
-                            <Route path="/notify" element={<ConstructionPage/>} />
-                            <Route path="/contact" element={<ContactPage/>} />
-                            <Route path="/help" element={<HelpPage/>} />
-                            <Route path="/about" element={<AboutPage/>} />
-                            <Route path="/team" element={<TeamPage/>} />
-                            <Route path="/pricing/purchase" element={<PurchasePage/>} />
-                            {/*<Route path="/routes" element={<RoutesPage/>} />*/}
-                            {/*<Route path="/addRoute" element={<AddRoutePage/>} />*/}
-                            {/*<Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />*/}
-                            {/*<Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />*/}
-                            <Route path="/collaboration" element={<CollaborationPage/>} />
-                            {/*<Route path="/readyRoutes" element={<ReadyRoutesPage/>} />*/}
-                            {/*<Route path="/editRoute/:id" element={<EditRoutePage/>} />*/}
-                            {/*<Route path="/addGroup" element={<AddGroupPage/>} />*/}
-                            {/*<Route path="/editGroup/:id" element={<EditGroupPage/>} />*/}
-                            {/*<Route path="/editEvent/:id" element={<EditEventPage/>} />*/}
-                            {/*<Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />*/}
-                            {/*<Route path="/eventDetails/:id" element={<EventDetailsPage/>} />*/}
-                            {/*<Route path="/searchGroups" element={<SearchGroupsPage/>} />*/}
-                            {/*<Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />*/}
-                            {/*<Route path="/readyRouteDetails/:id" element={<ReadyRoutesDetailsPage/>} />*/}
-                            {/*<Route path="/createEvent" element={<AddEventPage/>} />*/}
-                            {/*<Route path="/joinEvents" element={<JoinEventPage/>} />*/}
-                            {/*<Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />*/}
-                            <Route path="/password-reset" element={<ForgotPasswordPage/>} />
-                            <Route path="*" element={<PageNotFoundPage/>} />
+                <AlertsProvider>
+                    <UserProvider>
+                        <Router>
+                            {/*<Cookies/>*/}
+                            <Routes>
+                                {/*JEŚLI STRONA NIE BEDZIE W BUDOWIE TE ŚCIEŻKI ODKOMENTOWAĆ*/}
+                                <Route path="/" element={<App />} />
+                                <Route path="/login" element={<LoginPage1 />} />
+                                <Route path="/register" element={<RegisterPage />} />
+                                <Route path="/passwordForgot" element={<PasswordForgotPage />} />
+                                <Route path="/profile/:username" element={<PrivateRoute element={<ProfilePage/>} />} />
+                                <Route path="/pl/termsofuse" element={<TermsOfUsePage/>} />
+                                <Route path="/en/termsofuse" element={<TermsOfUsePageEN/>} />
+                                <Route path="/de/termsofuse" element={<TermsOfUsePageDE/>} />
+                                <Route path="/deleteData" element={<DeleteDataPage/>} />
+                                <Route path="/pricing" element={<PricingPage/>} />
+                                <Route path="/notify" element={<ConstructionPage/>} />
+                                <Route path="/contact" element={<ContactPage/>} />
+                                <Route path="/help" element={<HelpPage/>} />
+                                <Route path="/about" element={<AboutPage/>} />
+                                <Route path="/team" element={<TeamPage/>} />
+                                <Route path="/pricing/purchase" element={<PurchasePage/>} />
+                                {/*<Route path="/routes" element={<RoutesPage/>} />*/}
+                                {/*<Route path="/addRoute" element={<AddRoutePage/>} />*/}
+                                {/*<Route path="/addRoute" element={<PrivateRoute element={<AddRoutePage/>} />} />*/}
+                                {/*<Route path="/routeDetails/:id" element={<RouteDetailsPage/>} />*/}
+                                <Route path="/collaboration" element={<CollaborationPage/>} />
+                                {/*<Route path="/readyRoutes" element={<ReadyRoutesPage/>} />*/}
+                                {/*<Route path="/editRoute/:id" element={<EditRoutePage/>} />*/}
+                                {/*<Route path="/addGroup" element={<AddGroupPage/>} />*/}
+                                {/*<Route path="/editGroup/:id" element={<EditGroupPage/>} />*/}
+                                {/*<Route path="/editEvent/:id" element={<EditEventPage/>} />*/}
+                                {/*<Route path="/groupDetails/:id" element={<GroupDetailsPage/>} />*/}
+                                {/*<Route path="/eventDetails/:id" element={<EventDetailsPage/>} />*/}
+                                {/*<Route path="/searchGroups" element={<SearchGroupsPage/>} />*/}
+                                {/*<Route path="/searchedGroupDetails/:id" element={<SearchedGroupDetailsPage/>} />*/}
+                                {/*<Route path="/readyRouteDetails/:id" element={<ReadyRoutesDetailsPage/>} />*/}
+                                {/*<Route path="/createEvent" element={<AddEventPage/>} />*/}
+                                {/*<Route path="/joinEvents" element={<JoinEventPage/>} />*/}
+                                {/*<Route path="/joinEventDetails/:id" element={<JoinEventDetailsPage/>} />*/}
+                                <Route path="/password-reset" element={<ForgotPasswordPage/>} />
+                                <Route path="*" element={<PageNotFoundPage/>} />
 
-                            {/*POZOSTAŁE*/}
-                            <Route path="/FAQ" element={<FAQ/>} />
+                                {/*POZOSTAŁE*/}
+                                <Route path="/FAQ" element={<FAQ/>} />
 
 
-                            {/*GROUPS*/}
-                            <Route path="/groups" element={<Groups/>} />
-                            <Route path="/groupDetails/:id" element={<GroupDetails />} />
-                            <Route path="/editGroup/:id" element={<EditGroup />} />
-                            <Route path="/create-group" element={<CreateGroup />} />
+                                {/*GROUPS*/}
+                                <Route path="/groups" element={<Groups/>} />
+                                <Route path="/groupDetails/:id" element={<GroupDetails />} />
+                                <Route path="/editGroup/:id" element={<EditGroup />} />
+                                <Route path="/create-group" element={<CreateGroup />} />
 
-                            {/*ROUTES*/}
+                                {/*ROUTES*/}
 
-                            {/*EVENTS*/}
-                            <Route path="/events" element={<Events/>} />
-                            <Route path="/eventDetails/:id" element={<EventDetails />} />
-                            <Route path="/editEvent/:id" element={<EditEvent />} />
-                            <Route path="/create-event" element={<CreateEvent />} />
+                                {/*EVENTS*/}
+                                <Route path="/events" element={<Events/>} />
+                                <Route path="/eventDetails/:id" element={<EventDetails />} />
+                                <Route path="/editEvent/:id" element={<EditEvent />} />
+                                <Route path="/create-event" element={<CreateEvent />} />
 
-                            {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
-                            {/*<Route path="/" element={<Navigate to="/construction" replace />} />*/}
-                            {/*<Route path="/" element={<Navigate to="/main" replace />} />*/}
-                            {/*<Route path="/construction" element={<ConstructionPage />} />*/}
-                        </Routes>
-                    </Router>
-                </UserProvider>
+                                {/*JEŚLI STRONA JEST W BUDOWIEE TYLKO TA ŚCIEŻKA MA BYĆ ODKOMENTOWANA*/}
+                                {/*<Route path="/" element={<Navigate to="/construction" replace />} />*/}
+                                {/*<Route path="/" element={<Navigate to="/main" replace />} />*/}
+                                {/*<Route path="/construction" element={<ConstructionPage />} />*/}
+                            </Routes>
+                        </Router>
+                        <AlertsContainer />
+                    </UserProvider>
+                </AlertsProvider>
             </PortalProvider>
         {/*</TamaguiProvider>*/}
     </React.StrictMode>
