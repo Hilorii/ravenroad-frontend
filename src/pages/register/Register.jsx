@@ -17,12 +17,12 @@ const Register = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
 
+    // Jeśli poprzednia strona przekazała e-mail w location.state,
+    // wypełnij tym adresem pole email.
     useEffect(() => {
-        // Jeśli poprzednia strona przekazała e-mail w location.state,
-        // wypełnij tym adresem pole email.
         if (location.state && location.state.email) {
-            setFormData(prevFormData => ({
-                ...prevFormData,
+            setFormData(prev => ({
+                ...prev,
                 email: location.state.email
             }));
         }
@@ -33,10 +33,19 @@ const Register = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    // ---------------------------
+    //   Submit (rejestracja)
+    // ---------------------------
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Sprawdzenie, czy hasła się zgadzają
+        // Podstawowa walidacja na froncie
+        if (!formData.username || !formData.email || !formData.password) {
+            setErrorMessage('Wszystkie pola muszą być wypełnione.');
+            setSuccessMessage('');
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
             setErrorMessage('Hasła nie są zgodne.');
             setSuccessMessage('');
@@ -46,16 +55,19 @@ const Register = () => {
         setErrorMessage('');
         setSuccessMessage('');
 
-        axios.post('http://localhost:5000/signup', formData)
-            .then(response => {
+        axios
+            .post('http://localhost:5000/signup', formData)
+            .then((response) => {
+                // Jeśli backend zwróci 201 albo 200 i nie ma błędu w response.data
                 if ((response.status === 201 || response.status === 200) && response.data && !response.data.error) {
                     setSuccessMessage('Użytkownik został pomyślnie zarejestrowany.');
+                    // Przekierowanie do logowania z niewielkim opóźnieniem
                     setTimeout(() => navigate('/login'), 2500);
                 } else {
                     setErrorMessage(response.data.error || 'Nieoczekiwany format odpowiedzi');
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error('Wystąpił błąd podczas rejestracji!', error);
                 if (!error.response) {
                     setErrorMessage('Nie można połączyć z serwerem. Upewnij się, że serwer działa.');
@@ -67,12 +79,13 @@ const Register = () => {
             });
     };
 
-    // Funkcja logowania przez Google
+    // ----------------------------
+    //   Logowanie Google/Facebook
+    // ----------------------------
     const handleGoogleLogin = () => {
         window.location.href = 'http://localhost:5000/auth/google';
     };
 
-    // Funkcja logowania przez Facebook
     const handleFacebookLogin = () => {
         window.location.href = 'http://localhost:5000/auth/facebook';
     };
@@ -130,6 +143,7 @@ const Register = () => {
                         Sign Up
                     </button>
                 </form>
+
                 <div className="login-divider">
                     <span>OR</span>
                 </div>
