@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { useAlerts } from '../../contexts/AlertsContext'; // <-- Kontekst alertów
 import Navbar from "../../components/navbar/Navbar";
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
@@ -19,6 +20,9 @@ import {
 export default function Events() {
     const { user } = useUser();
     const navigate = useNavigate();
+
+    // KONTEKST ALERTÓW:
+    const { addAlert } = useAlerts();
 
     // --------------------------
     // Tablice eventów
@@ -211,6 +215,10 @@ export default function Events() {
             fetchUserEvents();
             fetchActiveEvents();
             fetchInactiveEvents();
+
+            // ALERT: Opuszczenie wydarzenia
+            addAlert('Opuszczono wydarzenie', 'success');
+
         } catch (err) {
             setError(err.message);
         } finally {
@@ -226,7 +234,7 @@ export default function Events() {
     // ------------
     //  DOŁĄCZANIE
     // ------------
-    const handleJoinEvent = async (eventId) => {
+    const handleJoinEvent = async (eventId, isPrivate) => {
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(`http://localhost:3000/joinEvent/${eventId}`, {
@@ -244,6 +252,13 @@ export default function Events() {
             fetchProposedEvents();
             fetchActiveEvents();
             fetchInactiveEvents();
+
+            // Wyświetlamy ALERT w zależności od rodzaju eventu
+            if (isPrivate === 1) {
+                addAlert('Wysłano prośbę o dołączenie do wydarzenia', 'success');
+            } else {
+                addAlert('Dołączono do wydarzenia', 'success');
+            }
         } catch (err) {
             setError(err.message);
         }
@@ -274,6 +289,10 @@ export default function Events() {
             fetchUserEvents();
             fetchActiveEvents();
             fetchInactiveEvents();
+
+            // ALERT: Usunięto wydarzenie
+            addAlert('Usunięto wydarzenie', 'success');
+
         } catch (err) {
             setError(err.message);
         } finally {
@@ -401,7 +420,7 @@ export default function Events() {
                                             <FaPlus
                                                 className="event-icon"
                                                 title="Dołącz do wydarzenia"
-                                                onClick={() => handleJoinEvent(event.id)}
+                                                onClick={() => handleJoinEvent(event.id, event.private)}
                                             />
                                         </div>
                                     </div>
@@ -532,7 +551,7 @@ export default function Events() {
                                         <FaPlus
                                             className="event-icon"
                                             title="Dołącz do wydarzenia"
-                                            onClick={() => handleJoinEvent(event.id)}
+                                            onClick={() => handleJoinEvent(event.id, event.private)}
                                         />
                                     </div>
                                 </div>
