@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
+import { useAlerts } from '../../contexts/AlertsContext'; // <--- IMPORT KONTEKSTU ALERTÓW
 import Navbar from "../../components/navbar/Navbar";
 import './Groups.css';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
@@ -19,6 +20,9 @@ import {
 export default function Groups() {
     const { user } = useUser();
     const navigate = useNavigate();
+
+    // Podpinamy KONTEKST ALERTÓW:
+    const { addAlert } = useAlerts();
 
     // Stany związane z grupami
     const [userGroups, setUserGroups] = useState([]);
@@ -42,6 +46,9 @@ export default function Groups() {
     const [memberSearchTerm, setMemberSearchTerm] = useState('');
     const [selectedNewAdminId, setSelectedNewAdminId] = useState(null);
 
+    // -------------------------------------------------------------------------
+    //                        USE EFFECTS
+    // -------------------------------------------------------------------------
     useEffect(() => {
         fetchUserGroups();
         fetchProposedGroups();
@@ -139,16 +146,15 @@ export default function Groups() {
     // ----------------------------------------------------------------------------
     //        OPUSZCZANIE GRUPY
     // ----------------------------------------------------------------------------
-
     const confirmLeaveGroup = async (groupId, createdBy) => {
-        // Jeśli zalogowany użytkownik jest właścicielem (created_by = id usera)
+        // Jeśli zalogowany użytkownik jest właścicielem
         if (user && createdBy === user.id) {
             // Otwieramy modal do wyboru nowego admina
             setOwnerGroupIdToLeave(groupId);
             // Pobierz listę członków tej grupy
             fetchGroupMembers(groupId);
         } else {
-            // W przeciwnym wypadku (zwykły członek) – otwieramy modal potwierdzający wyjście
+            // W przeciwnym wypadku – otwieramy modal potwierdzający wyjście
             setGroupIdToLeave(groupId);
         }
     };
@@ -172,6 +178,9 @@ export default function Groups() {
 
             // Usuwamy grupę z listy userGroups
             setUserGroups((prev) => prev.filter((group) => group.id !== groupIdToLeave));
+
+            // ALERT: Opuszczenie grupy
+            addAlert('Opuszczono grupę', 'success');
         } catch (err) {
             console.error(err.message);
         } finally {
@@ -200,8 +209,7 @@ export default function Groups() {
 
             const data = await response.json();
 
-            // Odfiltruj z listy zalogowanego usera (właściciela),
-            // żeby nie mógł sam siebie wybrać.
+            // Odfiltruj z listy zalogowanego usera (właściciela)
             const filteredOwner = data.filter(
                 (member) => member.username !== user?.username
             );
@@ -244,8 +252,11 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd przy przenoszeniu własności grupy');
             }
 
-            // Jeżeli wszystko OK, usuwamy tę grupę z local state
+            // Usuwamy tę grupę z local state
             setUserGroups((prev) => prev.filter((group) => group.id !== ownerGroupIdToLeave));
+
+            // ALERT: Właściciel też „opuszcza” grupę
+            addAlert('Opuszczono grupę', 'success');
         } catch (err) {
             console.error('Błąd przenoszenia własności:', err);
         } finally {
@@ -269,7 +280,7 @@ export default function Groups() {
     // ----------------------------------------------------------------------------
     //        DOŁĄCZANIE GRUPY
     // ----------------------------------------------------------------------------
-    const handleJoinGroup = async (groupId) => {
+    const handleJoinGroup = async (groupId, isPrivate) => {
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(`http://localhost:3000/joinGroup/${groupId}`, {
@@ -287,6 +298,13 @@ export default function Groups() {
             // Po dołączeniu odświeżamy listy
             fetchUserGroups();
             fetchProposedGroups();
+
+            // Wyświetlamy ALERT w zależności od rodzaju grupy
+            if (isPrivate === 1) {
+                addAlert('Wysłano prośbę o dołączenie', 'success');
+            } else {
+                addAlert('Dołączono do grupy', 'success');
+            }
         } catch (err) {
             console.error(err.message);
         }
@@ -315,7 +333,12 @@ export default function Groups() {
                 throw new Error(data.error || 'Błąd podczas usuwania grupy');
             }
 
+            // Usuwamy grupę z listy userGroups
             setUserGroups((prev) => prev.filter((group) => group.id !== groupIdToDelete));
+
+            // ALERT: Usunięcie grupy
+            addAlert('Usunięto grupę', 'success');
+
         } catch (err) {
             console.error(err.message);
         } finally {
@@ -447,7 +470,7 @@ export default function Groups() {
                                             <FaPlus
                                                 className="group-icon"
                                                 title="Dołącz do grupy"
-                                                onClick={() => handleJoinGroup(group.id)}
+                                                onClick={() => handleJoinGroup(group.id, group.private)}
                                             />
                                         </div>
                                     </div>
@@ -535,7 +558,7 @@ export default function Groups() {
                                         <FaPlus
                                             className="group-icon"
                                             title="Dołącz do grupy"
-                                            onClick={() => handleJoinGroup(group.id)}
+                                            onClick={() => handleJoinGroup(group.id, group.private)}
                                         />
                                     </div>
                                 </div>
