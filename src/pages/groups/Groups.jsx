@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
-import { useAlerts } from '../../contexts/AlertsContext'; // <--- IMPORT KONTEKSTU ALERTÓW
+import { useAlerts } from '../../contexts/AlertsContext';
 import Navbar from "../../components/navbar/Navbar";
 import './Groups.css';
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
@@ -20,41 +20,42 @@ import {
 export default function Groups() {
     const { user } = useUser();
     const navigate = useNavigate();
+    const location = useLocation();
 
-    // Podpinamy KONTEKST ALERTÓW:
     const { addAlert } = useAlerts();
 
-    // Stany związane z grupami
+    // Ref zapobiegający powtórnemu alertowi
+    const groupCreatedRef = useRef(false);
+
     const [userGroups, setUserGroups] = useState([]);
     const [proposedGroups, setProposedGroups] = useState([]);
 
-    // Stany związane z wyszukiwarką (grupy)
+    // Wyszukiwarka
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [searchError, setSearchError] = useState(null);
 
-    // **Stany do modali usuwania oraz opuszczania grupy**
+    // Modale
     const [groupIdToDelete, setGroupIdToDelete] = useState(null);
-
-    // Stan do zwykłego opuszczenia grupy (jeśli nie jesteś właścicielem)
     const [groupIdToLeave, setGroupIdToLeave] = useState(null);
 
-    // Stany do opuszczenia grupy przez właściciela
     const [ownerGroupIdToLeave, setOwnerGroupIdToLeave] = useState(null);
     const [groupMembers, setGroupMembers] = useState([]);
     const [filteredMembers, setFilteredMembers] = useState([]);
     const [memberSearchTerm, setMemberSearchTerm] = useState('');
     const [selectedNewAdminId, setSelectedNewAdminId] = useState(null);
 
-    // -------------------------------------------------------------------------
-    //                        USE EFFECTS
-    // -------------------------------------------------------------------------
+    // ---------------------------
+    // Pobierz grupy przy starcie
+    // ---------------------------
     useEffect(() => {
         fetchUserGroups();
         fetchProposedGroups();
     }, []);
 
-    // Reset komunikatu o błędzie wyszukiwania (grup) po 5 sekundach
+    // ---------------------------
+    // Błąd wyszukiwania -> timer
+    // ---------------------------
     useEffect(() => {
         if (searchError) {
             const timer = setTimeout(() => {
@@ -64,7 +65,9 @@ export default function Groups() {
         }
     }, [searchError]);
 
-    // Gdy zmienia się "memberSearchTerm", od razu filtrujemy "groupMembers"
+    // ---------------------------
+    // Filtrowanie członków
+    // ---------------------------
     useEffect(() => {
         if (!memberSearchTerm.trim()) {
             setFilteredMembers(groupMembers);
@@ -77,9 +80,26 @@ export default function Groups() {
         }
     }, [memberSearchTerm, groupMembers]);
 
-    // --------------------------------------------------------------------------
-    //                            POBIERANIE GRUP
-    // --------------------------------------------------------------------------
+    // ---------------------------
+    // Sprawdzamy, czy utworzono grupę
+    // ---------------------------
+    useEffect(() => {
+        // if location.state.groupCreated i jednocześnie !groupCreatedRef.current
+        if (location.state?.groupCreated && !groupCreatedRef.current) {
+            // Ustawiamy groupCreatedRef na true -> alert pojawi się tylko raz
+            groupCreatedRef.current = true;
+
+            // Wywołujemy normalny alert (np. 5 sekund)
+            addAlert('Nowa grupa została pomyślnie utworzona!', 'success', 5000);
+
+            // Czyścimy state, by nie powtórzyć
+            navigate('/groups', { replace: true, state: {} });
+        }
+    }, [location.state, addAlert, navigate]);
+
+    // ---------------------------
+    // Pobranie list grup
+    // ---------------------------
     const fetchUserGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -109,9 +129,7 @@ export default function Groups() {
         try {
             const token = localStorage.getItem('token');
             const response = await fetch('http://localhost:3000/proposedGroups', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (!response.ok) {
@@ -130,61 +148,51 @@ export default function Groups() {
         }
     };
 
-    // --------------------------------------------------------------------------
-    //                           OBŁUGA GRUP (CRUD)
-    // --------------------------------------------------------------------------
-    // Edycja grupy
+    // ---------------------------
+    // Edycja / Detale
+    // ---------------------------
     const handleEditGroup = (groupId) => {
         navigate(`/editGroup/${groupId}`);
     };
 
-    // Detale grupy
     const handleViewDetails = (groupId) => {
         navigate(`/groupDetails/${groupId}`);
     };
 
     // ----------------------------------------------------------------------------
-    //        OPUSZCZANIE GRUPY
+    // OPUSZCZANIE GRUPY
     // ----------------------------------------------------------------------------
     const confirmLeaveGroup = async (groupId, createdBy) => {
-        // Jeśli zalogowany użytkownik jest właścicielem
         if (user && createdBy === user.id) {
-            // Otwieramy modal do wyboru nowego admina
             setOwnerGroupIdToLeave(groupId);
-            // Pobierz listę członków tej grupy
             fetchGroupMembers(groupId);
         } else {
-            // W przeciwnym wypadku – otwieramy modal potwierdzający wyjście
             setGroupIdToLeave(groupId);
         }
     };
 
-    // Zwykłe wyjście z grupy (dla nie-właściciela)
     const handleConfirmLeave = async () => {
         if (!groupIdToLeave) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/leaveGroup/${groupIdToLeave}`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await fetch(
+                `http://localhost:3000/leaveGroup/${groupIdToLeave}`,
+                {
+                    method: 'POST',
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.error || 'Błąd podczas opuszczania grupy');
             }
-
-            // Usuwamy grupę z listy userGroups
-            setUserGroups((prev) => prev.filter((group) => group.id !== groupIdToLeave));
-
-            // ALERT: Opuszczenie grupy
+            setUserGroups((prev) =>
+                prev.filter((g) => g.id !== groupIdToLeave)
+            );
             addAlert('Opuszczono grupę', 'success');
         } catch (err) {
             console.error(err.message);
         } finally {
-            // Zamykamy modal
             setGroupIdToLeave(null);
         }
     };
@@ -193,27 +201,25 @@ export default function Groups() {
         setGroupIdToLeave(null);
     };
 
-    // Opuszczanie grupy jako właściciel – pobieranie listy członków
+    // ----------------------------------------------------------------------------
+    // Właściciel -> przeniesienie admina
+    // ----------------------------------------------------------------------------
     const fetchGroupMembers = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/group/${groupId}/members/ownership`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await fetch(
+                `http://localhost:3000/group/${groupId}/members/ownership`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             if (!response.ok) {
                 throw new Error('Błąd podczas pobierania członków grupy');
             }
-
             const data = await response.json();
-
-            // Odfiltruj z listy zalogowanego usera (właściciela)
             const filteredOwner = data.filter(
                 (member) => member.username !== user?.username
             );
-
             setGroupMembers(filteredOwner);
             setFilteredMembers(filteredOwner);
         } catch (err) {
@@ -221,18 +227,10 @@ export default function Groups() {
         }
     };
 
-    // Zmiana właściciela i opuszczenie grupy w jednym kroku
     const handleTransferOwnership = async () => {
         if (!ownerGroupIdToLeave || !selectedNewAdminId) return;
-
         try {
             const token = localStorage.getItem('token');
-
-            console.log('Próba przeniesienia własności grupy:', {
-                groupId: ownerGroupIdToLeave,
-                newAdminId: selectedNewAdminId
-            });
-
             const response = await fetch(
                 `http://localhost:3000/group/${ownerGroupIdToLeave}/transferOwnership`,
                 {
@@ -241,26 +239,20 @@ export default function Groups() {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify({
-                        newAdminId: selectedNewAdminId,
-                    }),
+                    body: JSON.stringify({ newAdminId: selectedNewAdminId }),
                 }
             );
-
             if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.error || 'Błąd przy przenoszeniu własności grupy');
             }
-
-            // Usuwamy tę grupę z local state
-            setUserGroups((prev) => prev.filter((group) => group.id !== ownerGroupIdToLeave));
-
-            // ALERT: Właściciel też „opuszcza” grupę
+            setUserGroups((prev) =>
+                prev.filter((g) => g.id !== ownerGroupIdToLeave)
+            );
             addAlert('Opuszczono grupę', 'success');
         } catch (err) {
             console.error('Błąd przenoszenia własności:', err);
         } finally {
-            // Zamykamy modal i resetujemy stany
             setOwnerGroupIdToLeave(null);
             setGroupMembers([]);
             setFilteredMembers([]);
@@ -278,28 +270,25 @@ export default function Groups() {
     };
 
     // ----------------------------------------------------------------------------
-    //        DOŁĄCZANIE GRUPY
+    // DOŁĄCZANIE
     // ----------------------------------------------------------------------------
     const handleJoinGroup = async (groupId, isPrivate) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/joinGroup/${groupId}`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await fetch(
+                `http://localhost:3000/joinGroup/${groupId}`,
+                {
+                    method: 'POST',
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.error || 'Błąd podczas dołączania do grupy');
             }
-
-            // Po dołączeniu odświeżamy listy
             fetchUserGroups();
             fetchProposedGroups();
 
-            // Wyświetlamy ALERT w zależności od rodzaju grupy
             if (isPrivate === 1) {
                 addAlert('Wysłano prośbę o dołączenie', 'success');
             } else {
@@ -311,7 +300,7 @@ export default function Groups() {
     };
 
     // ----------------------------------------------------------------------------
-    //        USUWANIE GRUPY (z modalem potwierdzenia)
+    // USUWANIE GRUPY
     // ----------------------------------------------------------------------------
     const confirmDeleteGroup = (groupId) => {
         setGroupIdToDelete(groupId);
@@ -321,24 +310,21 @@ export default function Groups() {
         if (!groupIdToDelete) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3000/deleteGroup/${groupIdToDelete}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            const response = await fetch(
+                `http://localhost:3000/deleteGroup/${groupIdToDelete}`,
+                {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.error || 'Błąd podczas usuwania grupy');
             }
-
-            // Usuwamy grupę z listy userGroups
-            setUserGroups((prev) => prev.filter((group) => group.id !== groupIdToDelete));
-
-            // ALERT: Usunięcie grupy
+            setUserGroups((prev) =>
+                prev.filter((g) => g.id !== groupIdToDelete)
+            );
             addAlert('Usunięto grupę', 'success');
-
         } catch (err) {
             console.error(err.message);
         } finally {
@@ -351,7 +337,7 @@ export default function Groups() {
     };
 
     // ----------------------------------------------------------------------------
-    //        NAWIGACJA
+    // NAWIGACJA
     // ----------------------------------------------------------------------------
     const handleNavigateToRoutes = () => {
         navigate('/routes');
@@ -362,13 +348,12 @@ export default function Groups() {
     };
 
     // ----------------------------------------------------------------------------
-    //        WYSZUKIWANIE GRUP (górne pole w komponencie)
+    // WYSZUKIWANIE
     // ----------------------------------------------------------------------------
     const handleSearch = async (e) => {
         e.preventDefault();
-        if (!searchQuery.trim()) {
-            return;
-        }
+        if (!searchQuery.trim()) return;
+
         try {
             const token = localStorage.getItem('token');
             setSearchError(null);
@@ -376,17 +361,13 @@ export default function Groups() {
             const response = await fetch(
                 `http://localhost:3000/searchGroups?query=${encodeURIComponent(searchQuery)}`,
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 }
             );
-
             if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.error || 'Błąd podczas wyszukiwania grup');
             }
-
             const data = await response.json();
             setSearchResults(data);
         } catch (err) {
@@ -402,14 +383,13 @@ export default function Groups() {
     };
 
     // ----------------------------------------------------------------------------
-    //        RENDER
+    // RENDER
     // ----------------------------------------------------------------------------
     return (
         <div>
             <AnimatedBackground />
             <Navbar />
 
-            {/* Title Section with TRASY - GRUPY - EVENTY */}
             <div className="title-container">
                 <h2 className="title-item no-glow" onClick={handleNavigateToRoutes}>
                     TRASY
@@ -420,7 +400,6 @@ export default function Groups() {
                 </h2>
             </div>
 
-            {/* Pasek wyszukiwania (grupy) */}
             <div className="search-container">
                 <form onSubmit={handleSearch}>
                     <input
@@ -436,7 +415,6 @@ export default function Groups() {
                 </form>
             </div>
 
-            {/* Sekcja wyników wyszukiwania */}
             {searchResults !== null && (
                 <div className="groups-wrapper">
                     <div className="groups-box search-results-box">
@@ -470,13 +448,17 @@ export default function Groups() {
                                             <FaPlus
                                                 className="group-icon"
                                                 title="Dołącz do grupy"
-                                                onClick={() => handleJoinGroup(group.id, group.private)}
+                                                onClick={() =>
+                                                    handleJoinGroup(group.id, group.private)
+                                                }
                                             />
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <p className="error-message">Brak wyników wyszukiwania.</p>
+                                <p className="error-message">
+                                    Brak wyników wyszukiwania.
+                                </p>
                             )}
                         </div>
                     </div>
@@ -484,7 +466,6 @@ export default function Groups() {
             )}
 
             <div className="groups-wrapper">
-                {/* TWOJE GRUPY */}
                 <div className="groups-box">
                     <h2 className="groups-box-title">TWOJE GRUPY</h2>
                     <div className="groups-list">
@@ -525,7 +506,9 @@ export default function Groups() {
                                         <FaSignOutAlt
                                             className="group-icon"
                                             title="Opuść grupę"
-                                            onClick={() => confirmLeaveGroup(group.id, group.created_by)}
+                                            onClick={() =>
+                                                confirmLeaveGroup(group.id, group.created_by)
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -534,7 +517,6 @@ export default function Groups() {
                     </div>
                 </div>
 
-                {/* PROPONOWANE GRUPY */}
                 <div className="groups-box">
                     <h2 className="groups-box-title">PROPONOWANE GRUPY</h2>
                     <div className="groups-list">
@@ -558,7 +540,9 @@ export default function Groups() {
                                         <FaPlus
                                             className="group-icon"
                                             title="Dołącz do grupy"
-                                            onClick={() => handleJoinGroup(group.id, group.private)}
+                                            onClick={() =>
+                                                handleJoinGroup(group.id, group.private)
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -568,7 +552,6 @@ export default function Groups() {
                 </div>
             </div>
 
-            {/* Modal potwierdzenia usunięcia */}
             {groupIdToDelete && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -591,7 +574,6 @@ export default function Groups() {
                 </div>
             )}
 
-            {/* Modal potwierdzenia opuszczenia grupy (dla zwykłych członków) */}
             {groupIdToLeave && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -614,7 +596,6 @@ export default function Groups() {
                 </div>
             )}
 
-            {/* Modal przekazania właściciela (opuszczenie grupy przez właściciela) */}
             {ownerGroupIdToLeave && (
                 <div className="modal-overlay">
                     <div className="modal-content owner-leave-modal">
@@ -624,7 +605,6 @@ export default function Groups() {
                             administratora. Zaznacz jedną osobę poniżej:
                         </p>
 
-                        {/* Wyszukiwanie użytkowników w tej grupie */}
                         <input
                             type="text"
                             placeholder="Wyszukaj użytkownika..."
@@ -640,15 +620,14 @@ export default function Groups() {
                                 </p>
                             ) : (
                                 filteredMembers.map((member, index) => (
-                                    <label
-                                        key={index}
-                                        className="owner-member-item"
-                                    >
+                                    <label key={index} className="owner-member-item">
                                         <input
                                             type="radio"
                                             name="newAdmin"
                                             checked={selectedNewAdminId === member.user_id}
-                                            onChange={() => setSelectedNewAdminId(member.user_id)}
+                                            onChange={() =>
+                                                setSelectedNewAdminId(member.user_id)
+                                            }
                                         />
                                         <img
                                             src={`http://localhost:5000/uploads/${member.avatar}`}

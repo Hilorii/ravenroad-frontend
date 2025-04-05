@@ -55,34 +55,27 @@ export default function CreateGroup() {
             const token = localStorage.getItem('token');
             const formData = new FormData();
 
-            // Uzupełniamy dane formularza
             formData.append('name', name);
             formData.append('description', description);
             formData.append('private', isPrivate ? 1 : 0);
             formData.append('visible', isVisible ? 1 : 0);
 
-            // Avatar grupy
             if (imageFile) {
                 formData.append('image', imageFile);
             }
-
-            // Banner grupy
             if (bannerFile) {
                 formData.append('banner', bannerFile);
             }
 
-            // Preferencje pojazdów
             formData.append('car', vehiclePreferences.car ? 1 : 0);
             formData.append('truck', vehiclePreferences.truck ? 1 : 0);
             formData.append('motorcycle', vehiclePreferences.motorcycle ? 1 : 0);
             formData.append('bike', vehiclePreferences.bike ? 1 : 0);
 
-            // Wysyłamy żądanie POST do createGroup
             const response = await fetch('http://localhost:3000/createGroup', {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                    // Nie ustawiamy "Content-Type", bo używamy FormData
+                    Authorization: `Bearer ${token}`
                 },
                 body: formData
             });
@@ -92,8 +85,11 @@ export default function CreateGroup() {
                 throw new Error(errData.error || 'Błąd podczas tworzenia grupy');
             }
 
-            // Jeśli wszystko OK, przenosimy użytkownika np. na listę grup:
-            navigate(`/groups`);
+            // Kluczowy moment:
+            // Przekazujemy groupCreated: true w location.state
+            navigate('/groups', {
+                state: { groupCreated: true },
+            });
 
         } catch (err) {
             setError(err.message);
@@ -178,11 +174,10 @@ export default function CreateGroup() {
 
                     {/* Preferencje pojazdów */}
                     <div className="group-vehicle-preferences">
-            <span className="group-vehicle-preferences-label">
-              Preferencje pojazdów:
-            </span>
+                        <span className="group-vehicle-preferences-label">
+                            Preferencje pojazdów:
+                        </span>
                         <div className="group-vehicle-icons-row">
-                            {/* Samochód */}
                             <div
                                 className={`group-vehicle-icon ${
                                     vehiclePreferences.car ? 'selected' : ''
@@ -192,7 +187,6 @@ export default function CreateGroup() {
                                 <FaCar className="group-pref-icon" />
                             </div>
 
-                            {/* Ciężarówka */}
                             <div
                                 className={`group-vehicle-icon ${
                                     vehiclePreferences.truck ? 'selected' : ''
@@ -202,7 +196,6 @@ export default function CreateGroup() {
                                 <FaTruck className="group-pref-icon" />
                             </div>
 
-                            {/* Motocykl */}
                             <div
                                 className={`group-vehicle-icon ${
                                     vehiclePreferences.motorcycle ? 'selected' : ''
@@ -212,7 +205,6 @@ export default function CreateGroup() {
                                 <FaMotorcycle className="group-pref-icon" />
                             </div>
 
-                            {/* Rower */}
                             <div
                                 className={`group-vehicle-icon ${
                                     vehiclePreferences.bike ? 'selected' : ''
