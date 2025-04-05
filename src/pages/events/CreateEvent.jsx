@@ -31,7 +31,7 @@ export default function CreateEvent() {
     const [imageFile, setImageFile] = useState(null);
     const [bannerFile, setBannerFile] = useState(null);
 
-    // Preferencje pojazdów – stan lokalny (tak samo jak w CreateGroup, ale z innymi klasami)
+    // Preferencje pojazdów
     const [vehiclePreferences, setVehiclePreferences] = useState({
         car: false,
         truck: false,
@@ -56,7 +56,7 @@ export default function CreateEvent() {
             const token = localStorage.getItem('token');
             const formData = new FormData();
 
-            // Uzupełniamy FormData:
+            // Uzupełniamy FormData
             formData.append('name', name);
             formData.append('description', description);
 
@@ -68,7 +68,7 @@ export default function CreateEvent() {
             formData.append('private', isPrivate ? 1 : 0);
             formData.append('visible', isVisible ? 1 : 0);
 
-            // Pliki (jeśli zostały wybrane)
+            // Pliki
             if (imageFile) {
                 formData.append('image', imageFile);
             }
@@ -76,7 +76,7 @@ export default function CreateEvent() {
                 formData.append('banner', bannerFile);
             }
 
-            // Preferencje pojazdów (dodajemy je do formData tak jak w CreateGroup)
+            // Preferencje pojazdów
             formData.append('car', vehiclePreferences.car ? 1 : 0);
             formData.append('truck', vehiclePreferences.truck ? 1 : 0);
             formData.append('motorcycle', vehiclePreferences.motorcycle ? 1 : 0);
@@ -87,7 +87,6 @@ export default function CreateEvent() {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`
-                    // Uwaga: nie ustawiamy Content-Type na multipart/form-data – zrobi to za nas FormData.
                 },
                 body: formData
             });
@@ -97,11 +96,11 @@ export default function CreateEvent() {
                 throw new Error(errData.error || 'Błąd podczas tworzenia wydarzenia');
             }
 
-            // (Opcjonalnie) Odbieramy odpowiedź serwera (np. ID wydarzenia)
-            // const createdEvent = await response.json();
+            // Po pomyślnym utworzeniu wydarzenia przekazujemy flagę eventCreated
+            navigate('/events', {
+                state: { eventCreated: true },
+            });
 
-            // Po pomyślnym utworzeniu wydarzenia przekierowujemy np. do listy eventów:
-            navigate(`/events`);
         } catch (err) {
             setError(err.message);
         }
@@ -208,14 +207,11 @@ export default function CreateEvent() {
                         onChange={(e) => setBannerFile(e.target.files[0])}
                     />
 
-                    {/* Preferencje pojazdów – w tym samym stylu co w CreateGroup, ale z klasami event-create-... */}
                     <div className="event-create-vehicle-preferences">
-            <span className="event-create-vehicle-preferences-label">
-              Preferencje pojazdów:
-            </span>
+                        <span className="event-create-vehicle-preferences-label">
+                            Preferencje pojazdów:
+                        </span>
                         <div className="event-create-vehicle-icons-row">
-
-                            {/* Samochód */}
                             <div
                                 className={`event-create-vehicle-icon ${
                                     vehiclePreferences.car ? 'selected' : ''
@@ -225,7 +221,6 @@ export default function CreateEvent() {
                                 <FaCar className="event-create-pref-icon" />
                             </div>
 
-                            {/* Ciężarówka */}
                             <div
                                 className={`event-create-vehicle-icon ${
                                     vehiclePreferences.truck ? 'selected' : ''
@@ -235,7 +230,6 @@ export default function CreateEvent() {
                                 <FaTruck className="event-create-pref-icon" />
                             </div>
 
-                            {/* Motocykl */}
                             <div
                                 className={`event-create-vehicle-icon ${
                                     vehiclePreferences.motorcycle ? 'selected' : ''
@@ -245,7 +239,6 @@ export default function CreateEvent() {
                                 <FaMotorcycle className="event-create-pref-icon" />
                             </div>
 
-                            {/* Rower */}
                             <div
                                 className={`event-create-vehicle-icon ${
                                     vehiclePreferences.bike ? 'selected' : ''

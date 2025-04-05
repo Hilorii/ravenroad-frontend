@@ -6,9 +6,8 @@ import Footer from '../../containers/footer/Footer';
 import './EditGroup.css';
 import BackButton from '../../components/backBt/BackButton';
 
-// Ikony z react-icons
+// Ikony
 import {
-    FaChevronDown,
     FaCar,
     FaTruck,
     FaMotorcycle,
@@ -36,7 +35,7 @@ export default function EditGroup() {
     const [bannerFile, setBannerFile] = useState(null);
     const [oldBanner, setOldBanner] = useState(null);
 
-    // Preferencje pojazdów – stan lokalny
+    // Preferencje pojazdów
     const [vehiclePreferences, setVehiclePreferences] = useState({
         car: false,
         truck: false,
@@ -44,9 +43,7 @@ export default function EditGroup() {
         bike: false
     });
 
-    // -----------------------------------------------------------
-    //  1. Pobieranie danych grupy
-    // -----------------------------------------------------------
+    // 1. Pobierz dane grupy
     useEffect(() => {
         fetchGroupDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,30 +60,26 @@ export default function EditGroup() {
 
             if (!response.ok) {
                 const errData = await response.json();
-                throw new Error(errData.error || 'Błąd podczas pobierania szczegółów grupy');
+                throw new Error(
+                    errData.error || 'Błąd podczas pobierania szczegółów grupy'
+                );
             }
 
             const data = await response.json();
             setGroup(data);
 
-            // Uzupełniamy formularz danymi z bazy
+            // Ustawiamy wartości do formularza
             setName(data.name || '');
             setDescription(data.description || '');
             setIsPrivate(!!data.private);
             setIsVisible(!!data.visible);
 
-            // Zapamiętujemy stare pliki (by usunąć je na serwerze, jeśli uploadujemy nowe)
-            if (data.image) {
-                setOldImage(data.image);
-            }
-            if (data.banner) {
-                setOldBanner(data.banner);
-            }
+            if (data.image) setOldImage(data.image);
+            if (data.banner) setOldBanner(data.banner);
 
-            // Jeżeli w odpowiedzi są preferencje pojazdów, to ustawiamy je w stanie:
+            // Preferencje pojazdów
             if (data.vehiclePreferences) {
                 setVehiclePreferences({
-                    // UWAGA: używamy "== 1", bo z bazy może przychodzić string '1'
                     car: data.vehiclePreferences.car == 1,
                     truck: data.vehiclePreferences.truck == 1,
                     motorcycle: data.vehiclePreferences.motorcycle == 1,
@@ -98,11 +91,10 @@ export default function EditGroup() {
         }
     };
 
-    // -----------------------------------------------------------
-    //  2. Obsługa zatwierdzenia formularza (PUT /groups/:id)
-    // -----------------------------------------------------------
+    // 2. Obsługa zatwierdzenia formularza (PUT /groups/:id)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
 
         try {
             const token = localStorage.getItem('token');
@@ -113,15 +105,16 @@ export default function EditGroup() {
             formData.append('private', isPrivate ? 1 : 0);
             formData.append('visible', isVisible ? 1 : 0);
 
-            // Avatar grupy
+            // Jeśli użytkownik wgrał nowy avatar
             if (imageFile) {
                 formData.append('image', imageFile);
             }
+            // Stary plik (by usunąć na serwerze)
             if (oldImage) {
                 formData.append('oldImage', oldImage);
             }
 
-            // Banner grupy
+            // Banner
             if (bannerFile) {
                 formData.append('banner', bannerFile);
             }
@@ -145,18 +138,22 @@ export default function EditGroup() {
 
             if (!response.ok) {
                 const errData = await response.json();
-                throw new Error(errData.message || 'Błąd podczas aktualizacji grupy');
+                throw new Error(
+                    errData.error || 'Błąd podczas aktualizacji grupy'
+                );
             }
 
-            navigate(`/groups`);
+            // Po pomyślnym zapisie – na /groups z flagą "groupEdited: true"
+            navigate('/groups', {
+                state: { groupEdited: true }
+            });
+
         } catch (err) {
             setError(err.message);
         }
     };
 
-    // -----------------------------------------------------------
-    //  3. Przełączanie preferencji pojazdów (on/off)
-    // -----------------------------------------------------------
+    // 3. Przełączanie preferencji pojazdów
     const togglePreference = (prefKey) => {
         setVehiclePreferences((prev) => ({
             ...prev,
@@ -164,9 +161,7 @@ export default function EditGroup() {
         }));
     };
 
-    // -----------------------------------------------------------
-    //  4. Render – obsługa błędów lub oczekiwanie na dane
-    // -----------------------------------------------------------
+    // 4. Obsługa błędów / oczekiwanie
     if (error) {
         return (
             <>
@@ -193,19 +188,17 @@ export default function EditGroup() {
         );
     }
 
-    // -----------------------------------------------------------
-    //  5. Render – formularz edycji grupy
-    // -----------------------------------------------------------
+    // 5. Render formularza
     return (
         <>
             <AnimatedBackground />
             <Navbar />
             <BackButton />
+
             <div className="edit-group-container">
                 <h2 className="edit-group-title">Edytuj grupę</h2>
 
                 <form onSubmit={handleSubmit} className="edit-group-form">
-                    {/* Nazwa */}
                     <label htmlFor="group-name">Nazwa grupy:</label>
                     <input
                         id="group-name"
@@ -215,7 +208,6 @@ export default function EditGroup() {
                         required
                     />
 
-                    {/* Opis */}
                     <label htmlFor="group-description">Opis:</label>
                     <textarea
                         id="group-description"
@@ -225,7 +217,6 @@ export default function EditGroup() {
                         maxLength={1000}
                     />
 
-                    {/* Prywatna */}
                     <div className="checkbox-wrapper">
                         <input
                             id="private-checkbox"
@@ -236,7 +227,6 @@ export default function EditGroup() {
                         <label htmlFor="private-checkbox">Prywatna:</label>
                     </div>
 
-                    {/* Widoczna */}
                     <div className="checkbox-wrapper">
                         <input
                             id="visible-checkbox"
@@ -247,7 +237,6 @@ export default function EditGroup() {
                         <label htmlFor="visible-checkbox">Widoczna:</label>
                     </div>
 
-                    {/* Avatar grupy */}
                     <label htmlFor="group-image">Avatar grupy:</label>
                     <input
                         id="group-image"
@@ -256,7 +245,6 @@ export default function EditGroup() {
                         onChange={(e) => setImageFile(e.target.files[0])}
                     />
 
-                    {/* Banner grupy */}
                     <label htmlFor="group-banner">Banner grupy:</label>
                     <input
                         id="group-banner"
@@ -265,34 +253,39 @@ export default function EditGroup() {
                         onChange={(e) => setBannerFile(e.target.files[0])}
                     />
 
-                    {/* Preferencje pojazdów */}
                     <div className="group-vehicle-preferences">
-                        <span className="group-vehicle-preferences-label">Preferencje pojazdów:</span>
+                        <span className="group-vehicle-preferences-label">
+                            Preferencje pojazdów:
+                        </span>
                         <div className="group-vehicle-icons-row">
-                            {/* Samochód */}
                             <div
-                                className={`group-vehicle-icon ${vehiclePreferences.car ? 'selected' : ''}`}
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.car ? 'selected' : ''
+                                }`}
                                 onClick={() => togglePreference('car')}
                             >
                                 <FaCar className="group-pref-icon" />
                             </div>
-                            {/* Ciężarówka */}
                             <div
-                                className={`group-vehicle-icon ${vehiclePreferences.truck ? 'selected' : ''}`}
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.truck ? 'selected' : ''
+                                }`}
                                 onClick={() => togglePreference('truck')}
                             >
                                 <FaTruck className="group-pref-icon" />
                             </div>
-                            {/* Motocykl */}
                             <div
-                                className={`group-vehicle-icon ${vehiclePreferences.motorcycle ? 'selected' : ''}`}
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.motorcycle ? 'selected' : ''
+                                }`}
                                 onClick={() => togglePreference('motorcycle')}
                             >
                                 <FaMotorcycle className="group-pref-icon" />
                             </div>
-                            {/* Rower */}
                             <div
-                                className={`group-vehicle-icon ${vehiclePreferences.bike ? 'selected' : ''}`}
+                                className={`group-vehicle-icon ${
+                                    vehiclePreferences.bike ? 'selected' : ''
+                                }`}
                                 onClick={() => togglePreference('bike')}
                             >
                                 <FaBicycle className="group-pref-icon" />
@@ -300,7 +293,6 @@ export default function EditGroup() {
                         </div>
                     </div>
 
-                    {/* Przycisk zapisu */}
                     <button type="submit" className="group-submit-button">
                         Zapisz zmiany
                     </button>

@@ -24,8 +24,9 @@ export default function Groups() {
 
     const { addAlert } = useAlerts();
 
-    // Ref zapobiegający powtórnemu alertowi
+    // Dwa refy zapobiegające ponownemu alertowi
     const groupCreatedRef = useRef(false);
+    const groupEditedRef = useRef(false);
 
     const [userGroups, setUserGroups] = useState([]);
     const [proposedGroups, setProposedGroups] = useState([]);
@@ -45,29 +46,21 @@ export default function Groups() {
     const [memberSearchTerm, setMemberSearchTerm] = useState('');
     const [selectedNewAdminId, setSelectedNewAdminId] = useState(null);
 
-    // ---------------------------
-    // Pobierz grupy przy starcie
-    // ---------------------------
+    // 1) Pobieranie grup na starcie
     useEffect(() => {
         fetchUserGroups();
         fetchProposedGroups();
     }, []);
 
-    // ---------------------------
-    // Błąd wyszukiwania -> timer
-    // ---------------------------
+    // 2) Błąd wyszukiwania -> timer
     useEffect(() => {
         if (searchError) {
-            const timer = setTimeout(() => {
-                setSearchError(null);
-            }, 5000);
+            const timer = setTimeout(() => setSearchError(null), 5000);
             return () => clearTimeout(timer);
         }
     }, [searchError]);
 
-    // ---------------------------
-    // Filtrowanie członków
-    // ---------------------------
+    // 3) Filtrowanie członków
     useEffect(() => {
         if (!memberSearchTerm.trim()) {
             setFilteredMembers(groupMembers);
@@ -80,26 +73,26 @@ export default function Groups() {
         }
     }, [memberSearchTerm, groupMembers]);
 
-    // ---------------------------
-    // Sprawdzamy, czy utworzono grupę
-    // ---------------------------
+    // 4) Obsługa location.state -> groupCreated / groupEdited
     useEffect(() => {
-        // if location.state.groupCreated i jednocześnie !groupCreatedRef.current
+        // If utworzono nową grupę
         if (location.state?.groupCreated && !groupCreatedRef.current) {
-            // Ustawiamy groupCreatedRef na true -> alert pojawi się tylko raz
             groupCreatedRef.current = true;
-
-            // Wywołujemy normalny alert (np. 5 sekund)
             addAlert('Nowa grupa została pomyślnie utworzona!', 'success', 5000);
+            // Czyścimy state
+            navigate('/groups', { replace: true, state: {} });
+        }
 
-            // Czyścimy state, by nie powtórzyć
+        // If edytowano istniejącą grupę
+        else if (location.state?.groupEdited && !groupEditedRef.current) {
+            groupEditedRef.current = true;
+            addAlert('Grupa została pomyślnie zaktualizowana!', 'success', 5000);
+            // Czyścimy state
             navigate('/groups', { replace: true, state: {} });
         }
     }, [location.state, addAlert, navigate]);
 
-    // ---------------------------
-    // Pobranie list grup
-    // ---------------------------
+    // -------------- POBIERANIE GRUP --------------
     const fetchUserGroups = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -148,9 +141,7 @@ export default function Groups() {
         }
     };
 
-    // ---------------------------
-    // Edycja / Detale
-    // ---------------------------
+    // -------------- EDYCJA / DETALE --------------
     const handleEditGroup = (groupId) => {
         navigate(`/editGroup/${groupId}`);
     };
@@ -159,9 +150,7 @@ export default function Groups() {
         navigate(`/groupDetails/${groupId}`);
     };
 
-    // ----------------------------------------------------------------------------
-    // OPUSZCZANIE GRUPY
-    // ----------------------------------------------------------------------------
+    // -------------- OPUSZCZANIE GRUPY --------------
     const confirmLeaveGroup = async (groupId, createdBy) => {
         if (user && createdBy === user.id) {
             setOwnerGroupIdToLeave(groupId);
@@ -201,9 +190,7 @@ export default function Groups() {
         setGroupIdToLeave(null);
     };
 
-    // ----------------------------------------------------------------------------
-    // Właściciel -> przeniesienie admina
-    // ----------------------------------------------------------------------------
+    // -------------- WŁAŚCICIEL -> PRZENIESIENIE ADMINA --------------
     const fetchGroupMembers = async (groupId) => {
         try {
             const token = localStorage.getItem('token');
@@ -269,9 +256,7 @@ export default function Groups() {
         setSelectedNewAdminId(null);
     };
 
-    // ----------------------------------------------------------------------------
-    // DOŁĄCZANIE
-    // ----------------------------------------------------------------------------
+    // -------------- DOŁĄCZANIE GRUPY --------------
     const handleJoinGroup = async (groupId, isPrivate) => {
         try {
             const token = localStorage.getItem('token');
@@ -299,9 +284,7 @@ export default function Groups() {
         }
     };
 
-    // ----------------------------------------------------------------------------
-    // USUWANIE GRUPY
-    // ----------------------------------------------------------------------------
+    // -------------- USUWANIE GRUPY --------------
     const confirmDeleteGroup = (groupId) => {
         setGroupIdToDelete(groupId);
     };
@@ -336,9 +319,7 @@ export default function Groups() {
         setGroupIdToDelete(null);
     };
 
-    // ----------------------------------------------------------------------------
-    // NAWIGACJA
-    // ----------------------------------------------------------------------------
+    // -------------- NAWIGACJA --------------
     const handleNavigateToRoutes = () => {
         navigate('/routes');
     };
@@ -347,9 +328,7 @@ export default function Groups() {
         navigate('/events');
     };
 
-    // ----------------------------------------------------------------------------
-    // WYSZUKIWANIE
-    // ----------------------------------------------------------------------------
+    // -------------- WYSZUKIWANIE --------------
     const handleSearch = async (e) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
@@ -382,9 +361,7 @@ export default function Groups() {
         setSearchError(null);
     };
 
-    // ----------------------------------------------------------------------------
-    // RENDER
-    // ----------------------------------------------------------------------------
+    // -------------- RENDER --------------
     return (
         <div>
             <AnimatedBackground />
@@ -456,9 +433,7 @@ export default function Groups() {
                                     </div>
                                 ))
                             ) : (
-                                <p className="error-message">
-                                    Brak wyników wyszukiwania.
-                                </p>
+                                <p className="error-message">Brak wyników wyszukiwania.</p>
                             )}
                         </div>
                     </div>
@@ -552,6 +527,7 @@ export default function Groups() {
                 </div>
             </div>
 
+            {/* Modal: usunięcie grupy */}
             {groupIdToDelete && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -574,6 +550,7 @@ export default function Groups() {
                 </div>
             )}
 
+            {/* Modal: opuszczenie grupy (zwykły członek) */}
             {groupIdToLeave && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -596,6 +573,7 @@ export default function Groups() {
                 </div>
             )}
 
+            {/* Modal: właściciel -> przeniesienie admina */}
             {ownerGroupIdToLeave && (
                 <div className="modal-overlay">
                     <div className="modal-content owner-leave-modal">

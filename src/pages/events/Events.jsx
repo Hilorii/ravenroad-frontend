@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../../contexts/UserContext';
-import { useAlerts } from '../../contexts/AlertsContext'; // <-- Kontekst alertów
+import { useAlerts } from '../../contexts/AlertsContext';
 import Navbar from "../../components/navbar/Navbar";
 import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground';
 import Footer from '../../containers/footer/Footer';
@@ -20,48 +20,41 @@ import {
 export default function Events() {
     const { user } = useUser();
     const navigate = useNavigate();
+    const location = useLocation();
 
     // KONTEKST ALERTÓW:
     const { addAlert } = useAlerts();
 
+    // Dwa refy do zapobiegania podwójnym alertom
+    const eventCreatedRef = useRef(false);
+    const eventEditedRef = useRef(false);
+
     // --------------------------
     // Tablice eventów
     // --------------------------
-    const [userEvents, setUserEvents] = useState([]);       // Wydarzenia użytkownika
-    const [proposedEvents, setProposedEvents] = useState([]); // Proponowane wydarzenia
-    const [myActiveEvents, setMyActiveEvents] = useState([]);  // Aktywne wydarzenia
-    const [myEndedEvents, setMyEndedEvents] = useState([]);    // Zakończone wydarzenia
+    const [userEvents, setUserEvents] = useState([]);
+    const [proposedEvents, setProposedEvents] = useState([]);
+    const [myActiveEvents, setMyActiveEvents] = useState([]);
+    const [myEndedEvents, setMyEndedEvents] = useState([]);
 
-    // --------------------------
     // Błędy / Wyszukiwanie
-    // --------------------------
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [searchError, setSearchError] = useState(null);
 
-    // --------------------------
-    // Modal: USUWANIE wydarzenia
-    // --------------------------
+    // Modale: USUWANIE / OPUSZCZANIE
     const [eventIdToDelete, setEventIdToDelete] = useState(null);
-
-    // --------------------------
-    // Modal: OPUSZCZANIE wydarzenia
-    // --------------------------
     const [eventIdToLeave, setEventIdToLeave] = useState(null);
 
-    // --------------------------------------------------
-    //  Pomocnicze funkcje do sprawdzania stanu wydarzeń
-    // --------------------------------------------------
+    // Pomocnicze
     const isActiveEvent = (eventId) =>
         myActiveEvents.some((ev) => ev.id === eventId);
 
     const isEndedEvent = (eventId) =>
         myEndedEvents.some((ev) => ev.id === eventId);
 
-    // ----------------------------------
-    //  Metody pobierające z backendu
-    // ----------------------------------
+    // Metody pobierające
     const fetchUserEvents = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
@@ -69,7 +62,6 @@ export default function Events() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (!response.ok) {
-                // Jeśli brak eventów (404), ustawiamy pustą listę
                 if (response.status === 404) {
                     setUserEvents([]);
                     return;
@@ -147,9 +139,7 @@ export default function Events() {
         }
     }, []);
 
-    // ------------------------------
     // useEffect: pobierz wszystkie
-    // ------------------------------
     useEffect(() => {
         fetchUserEvents();
         fetchProposedEvents();
@@ -162,9 +152,7 @@ export default function Events() {
         fetchInactiveEvents
     ]);
 
-    // ------------------------------
-    //  Resetowanie błędów
-    // ------------------------------
+    // Resetowanie błędów
     useEffect(() => {
         if (error) {
             const timer = setTimeout(() => setError(null), 5000);
@@ -179,6 +167,24 @@ export default function Events() {
         }
     }, [searchError]);
 
+    // ---------------------------
+    //  Obsługa eventCreated / eventEdited z location.state
+    // ---------------------------
+    useEffect(() => {
+        // 1) Jeśli wróciliśmy z utworzenia eventu
+        if (location.state?.eventCreated && !eventCreatedRef.current) {
+            eventCreatedRef.current = true;
+            addAlert('Wydarzenie zostało pomyślnie utworzone!', 'success', 5000);
+            navigate('/events', { replace: true, state: {} });
+        }
+        // 2) Jeśli wróciliśmy z edycji eventu
+        else if (location.state?.eventEdited && !eventEditedRef.current) {
+            eventEditedRef.current = true;
+            addAlert('Wydarzenie zostało pomyślnie zaktualizowane!', 'success', 5000);
+            navigate('/events', { replace: true, state: {} });
+        }
+    }, [location.state, addAlert, navigate]);
+
     // ---------------------------------------------------------
     //  Akcje: edycja, detale, dołącz, potwierdzanie modali itd.
     // ---------------------------------------------------------
@@ -190,9 +196,7 @@ export default function Events() {
         navigate(`/eventDetails/${eventId}`);
     };
 
-    // --------------------------------------
-    //  OPUSZCZANIE WYDARZENIA z potwierdzeniem
-    // --------------------------------------
+    // OPUSZCZANIE WYDARZENIA
     const confirmLeaveEvent = (eventId) => {
         setEventIdToLeave(eventId);
     };
@@ -211,7 +215,7 @@ export default function Events() {
                 throw new Error(data.error || 'Błąd podczas opuszczania wydarzenia.');
             }
 
-            // Po opuszczeniu odśwież
+            // Odśwież
             fetchUserEvents();
             fetchActiveEvents();
             fetchInactiveEvents();
@@ -231,9 +235,7 @@ export default function Events() {
         setEventIdToLeave(null);
     };
 
-    // ------------
-    //  DOŁĄCZANIE
-    // ------------
+    // DOŁĄCZANIE
     const handleJoinEvent = async (eventId, isPrivate) => {
         try {
             const token = localStorage.getItem('token');
@@ -253,7 +255,6 @@ export default function Events() {
             fetchActiveEvents();
             fetchInactiveEvents();
 
-            // Wyświetlamy ALERT w zależności od rodzaju eventu
             if (isPrivate === 1) {
                 addAlert('Wysłano prośbę o dołączenie do wydarzenia', 'success');
             } else {
@@ -264,9 +265,7 @@ export default function Events() {
         }
     };
 
-    // ---------------------------------------------
-    //  USUWANIE WYDARZENIA z potwierdzeniem (modal)
-    // ---------------------------------------------
+    // USUWANIE WYDARZENIA
     const confirmDeleteEvent = (eventId) => {
         setEventIdToDelete(eventId);
     };
@@ -290,7 +289,6 @@ export default function Events() {
             fetchActiveEvents();
             fetchInactiveEvents();
 
-            // ALERT: Usunięto wydarzenie
             addAlert('Usunięto wydarzenie', 'success');
 
         } catch (err) {
@@ -304,9 +302,7 @@ export default function Events() {
         setEventIdToDelete(null);
     };
 
-    // ----------------------------------
-    // Nawigacja (trasy / grupy)
-    // ----------------------------------
+    // NAWIGACJA
     const handleNavigateToRoutes = () => {
         navigate('/routes');
     };
@@ -315,9 +311,7 @@ export default function Events() {
         navigate('/groups');
     };
 
-    // ----------------------------------
-    //  Wyszukiwanie
-    // ----------------------------------
+    // WYSZUKIWANIE
     const handleSearch = async (e) => {
         e.preventDefault();
         if (!searchQuery.trim()) return;
@@ -410,17 +404,17 @@ export default function Events() {
                                         />
                                         <span className="event-name">{event.name}</span>
                                         <div className="event-actions">
-                                            {/* Detale */}
                                             <FaInfoCircle
                                                 className="event-icon"
                                                 title="Detale wydarzenia"
                                                 onClick={() => handleViewDetails(event.id)}
                                             />
-                                            {/* Dołącz */}
                                             <FaPlus
                                                 className="event-icon"
                                                 title="Dołącz do wydarzenia"
-                                                onClick={() => handleJoinEvent(event.id, event.private)}
+                                                onClick={() =>
+                                                    handleJoinEvent(event.id, event.private)
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -448,7 +442,6 @@ export default function Events() {
 
                                 return (
                                     <div key={event.id} className="event-item">
-                                        {/* Korona, jeśli user jest twórcą */}
                                         {user && event.created_by === user.id && (
                                             <FaCrown className="event-crown" />
                                         )}
@@ -551,7 +544,9 @@ export default function Events() {
                                         <FaPlus
                                             className="event-icon"
                                             title="Dołącz do wydarzenia"
-                                            onClick={() => handleJoinEvent(event.id, event.private)}
+                                            onClick={() =>
+                                                handleJoinEvent(event.id, event.private)
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -580,7 +575,6 @@ export default function Events() {
                                         className="event-avatar"
                                     />
                                     <span className="event-name">{event.name}</span>
-                                    {/* Tylko detale */}
                                     <div className="event-actions">
                                         <FaInfoCircle
                                             className="event-icon"
@@ -605,7 +599,6 @@ export default function Events() {
                         ) : (
                             myEndedEvents.map((event) => (
                                 <div key={event.id} className="event-item">
-                                    {/* Korona, jeśli user jest właścicielem */}
                                     {user && event.created_by === user.id && (
                                         <FaCrown className="event-crown" />
                                     )}
@@ -617,13 +610,11 @@ export default function Events() {
                                     />
                                     <span className="event-name">{event.name}</span>
                                     <div className="event-actions">
-                                        {/* Detale zawsze */}
                                         <FaInfoCircle
                                             className="event-icon"
                                             title="Detale wydarzenia"
                                             onClick={() => handleViewDetails(event.id)}
                                         />
-                                        {/* Jeśli jestem właścicielem => usuń, w przeciwnym razie => opuść */}
                                         {user && event.created_by === user.id ? (
                                             <FaTrash
                                                 className="event-icon"
@@ -645,7 +636,7 @@ export default function Events() {
                 </div>
             </div>
 
-            {/* Modal potwierdzenia USUNIĘCIA wydarzenia */}
+            {/* Modal USUNIĘCIA wydarzenia */}
             {eventIdToDelete && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -668,7 +659,7 @@ export default function Events() {
                 </div>
             )}
 
-            {/* Modal potwierdzenia OPUSZCZENIA wydarzenia */}
+            {/* Modal OPUSZCZENIA wydarzenia */}
             {eventIdToLeave && (
                 <div className="modal-overlay">
                     <div className="modal-content">

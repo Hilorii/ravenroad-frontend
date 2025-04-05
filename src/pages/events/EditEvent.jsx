@@ -47,7 +47,7 @@ export default function EditEvent() {
         bike: false
     });
 
-    // Funkcja do przełączania stanu preferencji pojazdu
+    // Przełączanie preferencji pojazdów
     const togglePreference = (prefKey) => {
         setVehiclePreferences((prev) => ({
             ...prev,
@@ -90,7 +90,7 @@ export default function EditEvent() {
                 : '';
 
             const start_time_formatted = data.start_time
-                ? data.start_time.substring(0, 5) // "HH:MM"
+                ? data.start_time.substring(0, 5)
                 : '';
             const end_time_formatted = data.end_time
                 ? data.end_time.substring(0, 5)
@@ -168,18 +168,21 @@ export default function EditEvent() {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`
-                    // Nie ustawiamy tu "Content-Type", bo używamy FormData
                 },
                 body: formData
             });
 
             if (!response.ok) {
                 const errData = await response.json();
-                throw new Error(errData.message || 'Błąd podczas aktualizacji wydarzenia');
+                throw new Error(
+                    errData.message || 'Błąd podczas aktualizacji wydarzenia'
+                );
             }
 
-            // Po udanej aktualizacji wracamy np. na listę wydarzeń
-            navigate(`/events`);
+            // Po udanej aktualizacji -> events z flagą eventEdited: true
+            navigate(`/events`, {
+                state: { eventEdited: true }
+            });
         } catch (err) {
             setError(err.message);
         }
@@ -311,7 +314,6 @@ export default function EditEvent() {
                             Preferencje pojazdów:
                         </span>
                         <div className="edit-event-vehicle-icons-row">
-
                             {/* Samochód */}
                             <div
                                 className={`edit-event-vehicle-icon ${
