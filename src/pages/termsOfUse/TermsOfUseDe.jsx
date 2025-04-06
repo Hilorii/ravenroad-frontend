@@ -1,15 +1,42 @@
 import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import NavbarTmp from '../../components/navbar/NavbarTmp';
 import './termsOfUse.css';
-
+import AnimatedBackground from '../../assets/AnimatedBackground/AnimatedBackground'
+import PL from '../../assets/pl-circle.png';
+import DE from '../../assets/de-circle.png';
+import EN from '../../assets/uk-circle.png';
 const TermsOfUseDe = () => {
     return (
         <div className="App">
-            <div className="gradient__bg">
-                <NavbarTmp/>
+            <div className="">
+                <AnimatedBackground />
+                <Navbar/>
                 <div className="terms-of-use-page">
-                    {/*<Navbar />*/}
+
+                    {/* Sekcja z flagami */}
+                    <div className="flags-container-terms">
+                        <a href="/pl/termsofuse">
+                            <img
+                                src={PL}
+                                alt="Polska"
+                                className="flag-img-terms"
+                            />
+                        </a>
+                        <a href="/en/termsofuse">
+                            <img
+                                src={EN}
+                                alt="English"
+                                className="flag-img-terms"
+                            />
+                        </a>
+                        <a href="/de/termsofuse">
+                            <img
+                                src={DE}
+                                alt="Deutsch"
+                                className="flag-img-terms"
+                            />
+                        </a>
+                    </div>
                     <div className="content">
                         <br/>
                         <br/>

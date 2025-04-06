@@ -353,7 +353,7 @@ const Navbar = () => {
                     ) : (
                         <>
                             <p className="nav-p">
-                                <Link to="login">{t('navbar.menuItems.login')}</Link>
+                                <Link to="/login">{t('navbar.menuItems.login')}</Link>
                             </p>
                             <button
                                 className="signup"

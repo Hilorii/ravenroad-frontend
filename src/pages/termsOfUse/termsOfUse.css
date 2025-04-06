@@ -5,8 +5,8 @@
 .content {
     max-width: 800px;
     margin: auto;
-    font-family: Arial, sans-serif;
     color: white;
+    font-family: var(--font-family);
 }
 .formularz{
     width: 800px;
@@ -21,3 +21,47 @@
 /*    font-size: 1.25rem;*/
 /*    margin-bottom: 10px;*/
 /*}*/
+
+
+/* Główny kontener dla strony z regulaminem */
+.terms-container-terms {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Tytuł */
+.title-terms {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Kontener na flagi */
+.flags-container-terms {
+    display: flex;
+    gap: 1rem; /* Odległość między flagami */
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+/* Style dla obrazków flag */
+.flag-img-terms {
+    width: 40px; /* Możesz dostosować rozmiar */
+    height: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer; /* Rączka po najechaniu */
+}
+
+/* Efekt powiększenia na hover */
+.flag-img-terms:hover {
+    transform: scale(1.1);
+}
+
+/* Przykładowa sekcja treści */
+.content-terms {
+    line-height: 1.6;
+    font-size: 1rem;
+}
+

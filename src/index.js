@@ -19,9 +19,6 @@ import LoginPage1 from './pages/login/Login1';
 import RegisterPage from './pages/register/Register';
 import PasswordForgotPage from './pages/passwordForgot/PasswordForgot';
 import ProfilePage from './pages/profile/Profile';
-import TermsOfUsePage from './pages/termsOfUse/TermsOfUse';
-import TermsOfUsePageEN from './pages/termsOfUse/TermsOfUseEn';
-import TermsOfUsePageDE from './pages/termsOfUse/TermsOfUseDe';
 import PricingPage from './pages/pricing/Pricing';
 import ConstructionPage from './pages/underConstruction/UnderConstruction';
 import ContactPage from './pages/contact/Contact';
@@ -57,6 +54,9 @@ import AlertsContainer from './components/alerts/AlertsContainer';
 
 //POZOSTAŁE
 import FAQ from './pages/FAQ/FAQ';
+import TermsOfUsePage from './pages/termsOfUse/TermsOfUse';
+import TermsOfUsePageEN from './pages/termsOfUse/TermsOfUseEn';
+import TermsOfUsePageDE from './pages/termsOfUse/TermsOfUseDe';
 
 //GROUPS
 import Groups from './pages/groups/Groups';
