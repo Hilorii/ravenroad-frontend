@@ -1,34 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
-import './ad.css';
+import React, { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { collaborationMail } from '../../components/info';
-import adIcon from "../../assets/ad-label-icon.svg";
+import './ad.css';
 
-const Ad = () => {
+export default function Ad() {
     const { t } = useTranslation();
-
-    // Ref na kontener (div.middle)
     const adRef = useRef(null);
-
-    // Stan do śledzenia widoczności sekcji
     const [isVisible, setIsVisible] = useState(false);
 
-    // Intersection Observer: po doskrolowaniu ustawiamy "isVisible = true"
+    // Obserwacja momentu, kiedy komponent pojawia się w polu widzenia
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
-                    observer.unobserve(entry.target); // Animacja tylko raz
+                    observer.unobserve(entry.target);
                 }
             },
-            { threshold: 0.1 } // Wywołanie, gdy 10% sekcji jest widoczne
+            { threshold: 0.1 }
         );
 
         if (adRef.current) {
             observer.observe(adRef.current);
         }
-
         return () => {
             if (adRef.current) {
                 observer.unobserve(adRef.current);
@@ -36,27 +29,42 @@ const Ad = () => {
         };
     }, []);
 
+    // W tytule chcemy gradient tylko na słowie "Raven Road"
+    // Zakładam, że w plikach i18n masz coś w stylu: "ad": { "title": "Reklama w aplikacji Raven Road", ... }
+    // i że EXACT luki i wielkość liter w tym kluczu pasują do replace (lub dopasuj do faktycznego napisu).
+    const adTitleWithGradient = t('ad.title').replace(
+        'Raven Road',
+        `<span class="gradient-text-ad">Raven Road</span>`
+    );
+
     return (
-        <div className="middle" id="ad" ref={adRef}>
-            <div className={`ad-container ${isVisible ? 'animate-in-ad' : 'hidden-element'}`}>
-                <img src={adIcon} alt="Ad Icon" className="ad-icon"/>
-                <h2 className="ad-title">
-                    {t('ad.title').replace('Raven Road', '')}
-                    <span className="ad-rr gradient__text"> Raven Road </span>
-                </h2>
-                <p className="ad-text">
-                    {t('ad.text')}<br/>
-                    <a href={`mailto:${collaborationMail}`}>{collaborationMail}</a>
-                </p>
-                <p className="ad-contact">
-                    {t('ad.contact')}<br/>
-                </p>
-                <a href={`mailto:${collaborationMail}`} className="ad-button">
+        <div
+            ref={adRef}
+            className={`rr__ad-container-ad ${isVisible ? 'visible-ad' : ''}`}
+        >
+            {/* Oznaczenie, że to reklama */}
+            <div className="ad-badge-ad">AD</div>
+
+            {/* Tytuł z gradientem w słowach "Raven Road" */}
+            <h2
+                className="ad-title-ad"
+                dangerouslySetInnerHTML={{ __html: adTitleWithGradient }}
+            />
+
+            {/* Tekst reklamy – biały */}
+            <p className="ad-text-ad">
+                {t('ad.text')}
+            </p>
+
+            <p className="ad-contact-ad">
+                {t('ad.contact')}
+            </p>
+
+            <a href="mailto:kontakt@ravenroad.pl" className="ad-button-link-ad">
+                <button type="button" className="ad-button-ad">
                     {t('ad.button')}
-                </a>
-            </div>
+                </button>
+            </a>
         </div>
     );
-};
-
-export default Ad;
+}

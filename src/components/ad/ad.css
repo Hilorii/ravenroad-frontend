@@ -1,186 +1,100 @@
-.ad-container {
-    position: relative;
-    text-align: center;
-    padding: 20px;
-    background-color: transparent;
-    color: white;
-    border-radius: 10px;
-    z-index: 1;
-    overflow: hidden; /* Ukrywanie elementów poza kontenerem */
-    font-family: var(--font-family);
-    width: 60%;
-    margin: 30px auto; /* Wycentrowanie kontenera */
-    margin-bottom: 60px;
-    margin-top: 60px;
-
-    /* Płynna transformacja (przygotowanie pod hover) */
-    transition: transform 0.5s ease;
-}
-
-/* ────────────────────────────────────────────────────────────────────────── */
-/* ANIMACJA Z LEWEJ (fadeInLeft)                                            */
-/* ────────────────────────────────────────────────────────────────────────── */
-
-/* 1) Początkowy stan (niewidoczny, przesunięty w lewo) */
-.hidden-element {
-    opacity: 0;
-    transform: translateX(-50px);
-}
-
-/* 2) Po wejściu w viewport klasa zmienia się na .animate-in-ad */
-.animate-in-ad {
-    animation: fadeInLeft 1s ease forwards;
-}
-
-@keyframes fadeInLeft {
+@keyframes slideInLeft-ad {
     0% {
         opacity: 0;
         transform: translateX(-50px);
     }
     100% {
         opacity: 1;
-        transform: none; /* Po animacji: brak transformacji */
+        transform: translateX(0);
     }
 }
 
-/* ────────────────────────────────────────────────────────────────────────── */
-/* WŁAŚCIWE OBRACANIE NA HOVER                                              */
-/* ────────────────────────────────────────────────────────────────────────── */
-
-/* Stosujemy bardziej konkretny selektor (.ad-container.animate-in-ad:hover)
-   aby nadpisać finalny stan animacji (transform: none). */
-.ad-container.animate-in-ad:hover {
-    transform: rotate(-3deg);
-}
-
-/* ────────────────────────────────────────────────────────────────────────── */
-/*  POZOSTAŁE STYLE                                                         */
-/* ────────────────────────────────────────────────────────────────────────── */
-
-.ad-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, #AE67FA, #F49867, #AE67FA);
-    z-index: -2;
-    border-radius: 10px;
-    padding: 4px;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    background-size: 300% 300%;
-    animation: gradient-scroll 5s infinite linear;
-}
-
-.ad-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-        /* Lewy border z przerwą */
-            linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%) left,
-                /* Prawy border z przerwą */
-            linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%) right;
-    background-repeat: no-repeat, no-repeat;
-    background-size: 5px 100%, 5px 100%;
-}
-
-/* Animacja przesuwającego się gradientu */
-@keyframes gradient-scroll {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.ad-icon {
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg);
-    width: 100px;
-    height: 100px;
-    margin: -4px;
-    transition: transform 0.3s ease, filter 0.3s ease, fill 0.3s ease;
-}
-
-.ad-icon:hover {
-    transform: scale(1.1);
-}
-
-@media screen and (max-width: 1000px) {
-    .ad-icon {
-        width: 70px;
-        height: 70px;
-    }
-}
-
-.ad-rr {
-    font-size: 28px;
-    transition: font-size 0.3s ease;
-}
-.ad-rr:hover {
-    font-size: 32px;
-}
-
-.ad-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.ad-text {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.ad-email {
+/* Kontener główny */
+.rr__ad-container-ad {
+    font-family: var(--font-family);
+    background: transparent;
     color: #fff;
-    text-decoration: none;
+    max-width: 600px;
+    margin: 2rem auto;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    border: 2px solid transparent;
+    border-image: linear-gradient(90deg, #AE67FA, #F49867) 1;
+    border-radius: 8px;
+    opacity: 0;
+}
+
+/* Gdy element wejdzie w pole widzenia, włącz animację "slideInLeft-ad" */
+.rr__ad-container-ad.visible-ad {
+    animation: slideInLeft-ad 0.8s ease forwards;
+}
+
+/* Oznaczenie "AD" */
+.ad-badge-ad {
+    font-size: 0.85rem;
     font-weight: bold;
-}
-
-.ad-contact {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.ad-phone {
-    color: #fff;
-    text-decoration: none;
-}
-
-.ad-button {
+    padding: 0.3rem 0.6rem;
+    background: rgba(0,0,0,0.4);
+    border-radius: 4px;
     display: inline-block;
-    padding: 10px 20px;
-    background: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);
+    margin-bottom: 1rem;
+}
+
+/* Tytuł z wstrzykniętym gradientem (dla Raven Road) */
+.ad-title-ad {
+    margin: 0.5rem 0 1rem;
+    font-size: 1.8rem;
+    line-height: 1.2;
+}
+
+/* Sam gradient tekstu dla Raven Road */
+.gradient-text-ad {
+    background: linear-gradient(90deg, #AE67FA, #F49867);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Tekst opisu */
+.ad-text-ad {
+    margin: 0.5rem 0 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Dodatkowe informacje */
+.ad-contact-ad {
+    margin: 1rem 0 1.5rem;
+    font-size: 1rem;
+}
+
+/* Link (bez podkreślenia) */
+.ad-button-link-ad {
+    text-decoration: none;
+}
+
+/* Przycisk – gradient w tle, efekt hover */
+.ad-button-ad {
+    font-family: var(--font-family);
+    background: linear-gradient(90deg, #AE67FA, #F49867);
     color: #fff;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 4px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+
+    /* Płynna zmiana wyglądu przy hover */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.ad-button:hover {
-    background: linear-gradient(89.97deg, #F49867 1.84%, #AE67FA 102.67%);
-    color: #333;
-    transform: scale(0.95);
+.ad-button-ad:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
 }
 
-@media screen and (max-width: 250px) {
-    .ad-text {
-        font-size: 13px;
-        margin-bottom: 10px;
-    }
+/* Możesz też dodać delikatny efekt po najechaniu na cały kontener */
+.rr__ad-container-ad:hover {
+    /* Subtelny "pulso" cienia */
+    box-shadow: 0 0 10px rgba(174,103,250,0.2), 0 0 20px rgba(244,152,103,0.2);
 }
