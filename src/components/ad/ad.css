@@ -1,3 +1,8 @@
+/*
+  Kluczowe klatki do animacji "slide in" z lewej strony.
+  Po przekroczeniu progu IntersectionObserver
+  kontener dostaje klasę .visible-ad i uruchamia się animacja.
+*/
 @keyframes slideInLeft-ad {
     0% {
         opacity: 0;
@@ -19,40 +24,68 @@
     text-align: center;
     position: relative;
     padding: 2rem;
-    border: 2px solid transparent;
-    border-image: linear-gradient(90deg, #AE67FA, #F49867) 1;
-    border-radius: 8px;
+    /* Na start niewidoczny */
     opacity: 0;
+
+    /*
+      Gradientowy border ze WSZYSTKIMI krawędziami
+      + zaokrąglenie. Dzięki border-image gradient
+      będzie też miał "radius" w rogach.
+    */
+    border: 2px solid;
+    border-image: linear-gradient(90deg, #AE67FA, #F49867) 1;
+    border-image-slice: 1;
+    border-radius: 16px;
+
+    /*
+      Po najechaniu można dodać delikatny cień,
+      ale kluczowa jest interakcja .:active => "zapalenie".
+    */
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Gdy element wejdzie w pole widzenia, włącz animację "slideInLeft-ad" */
+/* Po tym jak element wejdzie w pole widzenia => animacja wjazdu */
 .rr__ad-container-ad.visible-ad {
     animation: slideInLeft-ad 0.8s ease forwards;
 }
 
-/* Oznaczenie "AD" */
-.ad-badge-ad {
-    font-size: 0.85rem;
-    font-weight: bold;
-    padding: 0.3rem 0.6rem;
-    background: rgba(0,0,0,0.4);
-    border-radius: 4px;
-    display: inline-block;
-    margin-bottom: 1rem;
+/* Subtelne powiększenie i cień na hover, jeśli chcesz bardziej interaktywnie */
+.rr__ad-container-ad:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 20px rgba(174,103,250,0.2), 0 0 40px rgba(244,152,103,0.2);
 }
 
-/* Tytuł z wstrzykniętym gradientem (dla Raven Road) */
+/* Po kliknięciu => wolniejsza animacja "rozświetlenia" (zapalenia) */
+.rr__ad-container-ad:active {
+    box-shadow: 0 0 25px rgba(174,103,250,0.4), 0 0 50px rgba(244,152,103,0.4);
+    transition: box-shadow 0.5s ease; /* wolniejsza */
+}
+
+/* Tytuł reklamy */
 .ad-title-ad {
     margin: 0.5rem 0 1rem;
     font-size: 1.8rem;
     line-height: 1.2;
 }
 
-/* Sam gradient tekstu dla Raven Road */
+/* Gradient w słowach "Raven Road" +
+   efekt powiększenia (powodujący przesunięcie tekstu) */
 .gradient-text-ad {
     background: linear-gradient(90deg, #AE67FA, #F49867);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    /*
+      By font-size transition zadziałał,
+      a tekst "rozpychał" resztę (reflow),
+      zostawiamy go jako inline (domyślnie <span> jest inline).
+      Dodajemy transition na font-size.
+    */
+    transition: font-size 0.3s ease;
+}
+
+.gradient-text-ad:hover {
+    font-size: 1.1em; /* powiększenie, przesunie sąsiadujący tekst */
 }
 
 /* Tekst opisu */
@@ -62,18 +95,17 @@
     line-height: 1.5;
 }
 
-/* Dodatkowe informacje */
+/* Dane kontaktowe */
 .ad-contact-ad {
     margin: 1rem 0 1.5rem;
     font-size: 1rem;
 }
 
-/* Link (bez podkreślenia) */
+/* Przycisk i link (bez podkreślenia) */
 .ad-button-link-ad {
     text-decoration: none;
 }
 
-/* Przycisk – gradient w tle, efekt hover */
 .ad-button-ad {
     font-family: var(--font-family);
     background: linear-gradient(90deg, #AE67FA, #F49867);
@@ -84,17 +116,17 @@
     font-size: 1rem;
     cursor: pointer;
 
-    /* Płynna zmiana wyglądu przy hover */
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
+/* Hover na przycisku – delikatne powiększenie i przyciemnienie */
 .ad-button-ad:hover {
     transform: scale(1.05);
     opacity: 0.9;
 }
 
-/* Możesz też dodać delikatny efekt po najechaniu na cały kontener */
-.rr__ad-container-ad:hover {
-    /* Subtelny "pulso" cienia */
-    box-shadow: 0 0 10px rgba(174,103,250,0.2), 0 0 20px rgba(244,152,103,0.2);
+/* Kliknięcie przycisku – inna dynamika (wolniejsza) */
+.ad-button-ad:active {
+    transform: scale(0.98);
+    transition: all 0.5s ease; /* wolniejsza animacja na klik */
 }

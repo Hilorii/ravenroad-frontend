@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { collaborationMail } from '../info'; // <-- dopasuj ścieżkę importu
 import './ad.css';
 
 export default function Ad() {
@@ -29,9 +30,7 @@ export default function Ad() {
         };
     }, []);
 
-    // W tytule chcemy gradient tylko na słowie "Raven Road"
-    // Zakładam, że w plikach i18n masz coś w stylu: "ad": { "title": "Reklama w aplikacji Raven Road", ... }
-    // i że EXACT luki i wielkość liter w tym kluczu pasują do replace (lub dopasuj do faktycznego napisu).
+    // Gradient tylko w słowach "Raven Road", a nie w całym tytule
     const adTitleWithGradient = t('ad.title').replace(
         'Raven Road',
         `<span class="gradient-text-ad">Raven Road</span>`
@@ -42,10 +41,7 @@ export default function Ad() {
             ref={adRef}
             className={`rr__ad-container-ad ${isVisible ? 'visible-ad' : ''}`}
         >
-            {/* Oznaczenie, że to reklama */}
-            <div className="ad-badge-ad">AD</div>
-
-            {/* Tytuł z gradientem w słowach "Raven Road" */}
+            {/* Tytuł z wstrzykniętym gradientem w słowach "Raven Road" */}
             <h2
                 className="ad-title-ad"
                 dangerouslySetInnerHTML={{ __html: adTitleWithGradient }}
@@ -56,11 +52,13 @@ export default function Ad() {
                 {t('ad.text')}
             </p>
 
+            {/* Zamiast t('ad.contact') wstawiamy proste zdanie z mailem z info.js */}
             <p className="ad-contact-ad">
-                {t('ad.contact')}
+                Napisz do nas na: <strong>{collaborationMail}</strong>
             </p>
 
-            <a href="mailto:kontakt@ravenroad.pl" className="ad-button-link-ad">
+            {/* Przykładowy przycisk z mailem (lub cokolwiek innego) */}
+            <a href={`mailto:${collaborationMail}`} className="ad-button-link-ad">
                 <button type="button" className="ad-button-ad">
                     {t('ad.button')}
                 </button>
